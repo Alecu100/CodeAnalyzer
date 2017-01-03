@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Connection.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="WorkflowItem.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="Expander.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="ResizeChrome.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="ScrollBar.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="ScrollViewer.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="Slider.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="Stencils\FlowChartStencils.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="Stencils\ShapeStencils.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="Stencils\SymbolStencils.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
