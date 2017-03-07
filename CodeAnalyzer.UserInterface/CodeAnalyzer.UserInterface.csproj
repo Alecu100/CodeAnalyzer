@@ -81,8 +81,8 @@
     <Compile Include="Controls\Base\WorkflowConnector.cs" />
     <Compile Include="Controls\Base\WorkflowConnectorInfo.cs" />
     <Compile Include="Controls\Base\WorkflowItem.cs" />
-    <Compile Include="Controls\Diagrams\Interfaces\IWorkflowDiagramGenerator.cs" />
-    <Compile Include="Controls\Diagrams\Interfaces\IWorkflowDiagramSizes.cs" />
+    <Compile Include="Interfaces\IWorkflowDiagramGenerator.cs" />
+    <Compile Include="Interfaces\IWorkflowDiagramSizes.cs" />
     <Compile Include="Controls\Diagrams\WorkflowDiagramGenerator.cs" />
     <Compile Include="Controls\Diagrams\WorkflowDiagramSizes.cs" />
     <Compile Include="Controls\Views\GenerateWorkflowDiagramControl.xaml.cs">
@@ -276,6 +276,9 @@
       <Project>{882F4464-2A84-4576-B6EA-1EFFD4FCF4A5}</Project>
       <Name>CodeAnalyzer.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\Diagrams\Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

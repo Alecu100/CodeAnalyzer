@@ -17,7 +17,7 @@
 
 using CodeAnalyzer.UserInterface.Controls.Base;
 
-namespace CodeAnalyzer.UserInterface.Controls.Diagrams.Interfaces
+namespace CodeAnalyzer.UserInterface.Interfaces
 {
     #region Using
 

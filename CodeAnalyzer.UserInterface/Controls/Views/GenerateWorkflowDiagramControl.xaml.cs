@@ -26,7 +26,6 @@ using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Constants;
 using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Listeners;
-using CodeAnalyzer.UserInterface.Controls.Diagrams.Interfaces;
 using CodeAnalyzer.UserInterface.Interfaces;
 using StructureMap;
 

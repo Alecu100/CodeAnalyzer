@@ -21,7 +21,7 @@ using System.Linq;
 using System.Windows.Controls;
 using CodeAnalyzer.UserInterface.Controls.Base;
 using CodeAnalyzer.UserInterface.Controls.Base.Enums;
-using CodeAnalyzer.UserInterface.Controls.Diagrams.Interfaces;
+using CodeAnalyzer.UserInterface.Interfaces;
 
 namespace CodeAnalyzer.UserInterface.Controls.Diagrams
 {

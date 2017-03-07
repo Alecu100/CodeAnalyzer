@@ -15,7 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
-using CodeAnalyzer.UserInterface.Controls.Diagrams.Interfaces;
+using CodeAnalyzer.UserInterface.Interfaces;
 
 namespace CodeAnalyzer.UserInterface.Controls.Diagrams
 {
