@@ -96,7 +96,6 @@
     <Compile Include="Interfaces\IEvaluatedObjectsHeap.cs" />
     <Compile Include="Interfaces\IEvaluatedTypesInfoTable.cs" />
     <Compile Include="Listeners\WorkflowEvaluatorEvaluatorListener.cs" />
-    <Compile Include="Members\DelegateRelatedTypeEvaluator.cs" />
     <Compile Include="Members\EvaluatedConstructor.cs" />
     <Compile Include="Members\EvaluatedField.cs" />
     <Compile Include="Members\EvaluatedGenericParameter.cs" />

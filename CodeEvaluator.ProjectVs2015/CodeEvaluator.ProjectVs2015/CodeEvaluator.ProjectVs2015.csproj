@@ -50,7 +50,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="RomSoft.Client.DebugPackage.cs" />
+    <Compile Include="CodeEvaluatorVs2015Package.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
-    <VSCTCompile Include="RomSoft.Client.Debug.vsct" />
+    <VSCTCompile Include="CodeEvaluatorVs2015Package.vsct" />
     <Content Include="stylesheet.css" />
   </ItemGroup>
   <ItemGroup>
