@@ -1,10 +1,10 @@
 ﻿// Guids.cs
 // MUST match guids.h
 
-namespace RomSoft.Client.Debug
-{
-    using System;
+using System;
 
+namespace CodeEvaluator.ProjectVs2015
+{
     static class GuidList
     {
         public const string guidRomSoft_Client_DebugPkgString = "99a8ee3a-13db-4bea-b139-af41a28b9caa";

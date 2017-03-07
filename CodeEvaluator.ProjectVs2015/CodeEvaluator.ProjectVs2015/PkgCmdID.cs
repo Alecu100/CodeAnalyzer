@@ -15,7 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
-namespace RomSoft.Client.Debug
+namespace CodeEvaluator.ProjectVs2015
 {
     internal static class PkgCmdIDList
     {

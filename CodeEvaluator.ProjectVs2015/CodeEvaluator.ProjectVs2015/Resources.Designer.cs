@@ -8,10 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RomSoft.Client.Debug {
-    using System;
-    
-    
+namespace CodeEvaluator.ProjectVs2015 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
