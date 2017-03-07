@@ -1,5 +1,0 @@
-C:\ren\6-imp\src-experimental\RomSoft.Debug\bin\Debug\RomSoft.Debug.dll
-C:\ren\6-imp\src-experimental\RomSoft.Debug\bin\Debug\RomSoft.Debug.pdb
-C:\ren\6-imp\src-experimental\RomSoft.Debug\obj\Debug\RomSoft.Debug.csprojResolveAssemblyReference.cache
-C:\ren\6-imp\src-experimental\RomSoft.Debug\obj\Debug\RomSoft.Debug.dll
-C:\ren\6-imp\src-experimental\RomSoft.Debug\obj\Debug\RomSoft.Debug.pdb
