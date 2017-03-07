@@ -18,12 +18,13 @@
 using System.Collections.Generic;
 using CodeAnalysis.Core.Constants;
 using CodeAnalysis.Core.Interfaces;
+using EnvDTE;
+using VSLangProj;
 
 namespace CodeAnalysis.Core.Common
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
@@ -32,6 +33,33 @@ namespace CodeAnalysis.Core.Common
         #region Fields
 
         private List<ProjectItem> _loadedProjectItems;
+
+        #endregion
+
+        #region Private Methods and Operators
+
+        private void AddProjectItem(ProjectItem projectItem)
+        {
+            if (projectItem.Kind == VsConstants.FolderFileKind)
+            {
+                foreach (var item in projectItem.ProjectItems)
+                {
+                    var childProjectItem = item as ProjectItem;
+
+                    if (childProjectItem != null)
+                    {
+                        AddProjectItem(childProjectItem);
+                    }
+                }
+
+                return;
+            }
+
+            if (projectItem.Kind == VsConstants.CsFileKind)
+            {
+                _loadedProjectItems.Add(projectItem);
+            }
+        }
 
         #endregion
 
@@ -78,33 +106,6 @@ namespace CodeAnalysis.Core.Common
             }
 
             return _loadedProjectItems;
-        }
-
-        #endregion
-
-        #region Private Methods and Operators
-
-        private void AddProjectItem(ProjectItem projectItem)
-        {
-            if (projectItem.Kind == VsConstants.FolderFileKind)
-            {
-                foreach (var item in projectItem.ProjectItems)
-                {
-                    var childProjectItem = item as ProjectItem;
-
-                    if (childProjectItem != null)
-                    {
-                        AddProjectItem(childProjectItem);
-                    }
-                }
-
-                return;
-            }
-
-            if (projectItem.Kind == VsConstants.CsFileKind)
-            {
-                _loadedProjectItems.Add(projectItem);
-            }
         }
 
         #endregion

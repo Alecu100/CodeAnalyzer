@@ -16,12 +16,13 @@
 //  -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using EnvDTE;
+using VSLangProj;
 
 namespace CodeAnalysis.Core.Interfaces
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 

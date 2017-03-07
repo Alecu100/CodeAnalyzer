@@ -1,16 +1,16 @@
 ﻿//  Project              : GLP
 //  Module               : RomSoft.Client.Debug.dll
-//  File                 : StaticEvaluator.cs
+//  File                 : CodeEvaluator.cs
 //  Author               : Alecsandru
 //  Last Updated         : 19/12/2015 at 1:20
 //  
 // 
-//  Contains             : Implementation of the StaticEvaluator.cs class.
-//  Classes              : StaticEvaluator.cs
+//  Contains             : Implementation of the CodeEvaluator.cs class.
+//  Classes              : CodeEvaluator.cs
 // 
 //  
 //  ----------------------------------------------------------------------- 
-//   <copyright file="StaticEvaluator.cs" company="Sysmex"> 
+//   <copyright file="CodeEvaluator.cs" company="Sysmex"> 
 //       Copyright (c) Sysmex. All rights reserved. 
 //   </copyright> 
 //  -----------------------------------------------------------------------
@@ -27,7 +27,7 @@ namespace CodeAnalysis.Core.Common
 
     #endregion
 
-    public class StaticEvaluator : IStaticEvaluator
+    public class CodeEvaluator : ICodeEvaluator
     {
         #region Fields
 

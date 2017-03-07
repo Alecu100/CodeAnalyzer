@@ -1,16 +1,16 @@
 ﻿//  Project              : GLP
 //  Module               : RomSoft.Client.Debug.dll
-//  File                 : IStaticEvaluator.cs
+//  File                 : ICodeEvaluator.cs
 //  Author               : Alecsandru
 //  Last Updated         : 16/11/2015 at 17:44
 //  
 // 
-//  Contains             : Implementation of the IStaticEvaluator.cs class.
-//  Classes              : IStaticEvaluator.cs
+//  Contains             : Implementation of the ICodeEvaluator.cs class.
+//  Classes              : ICodeEvaluator.cs
 // 
 //  
 //  ----------------------------------------------------------------------- 
-//   <copyright file="IStaticEvaluator.cs" company="Sysmex"> 
+//   <copyright file="ICodeEvaluator.cs" company="Sysmex"> 
 //       Copyright (c) Sysmex. All rights reserved. 
 //   </copyright> 
 //  -----------------------------------------------------------------------
@@ -25,7 +25,7 @@ namespace CodeAnalysis.Core.Interfaces
 
     #endregion
 
-    public interface IStaticEvaluator
+    public interface ICodeEvaluator
     {
         #region Public Methods and Operators
 

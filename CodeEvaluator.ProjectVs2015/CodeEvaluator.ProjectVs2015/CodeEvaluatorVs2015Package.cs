@@ -17,19 +17,23 @@
 
 using System;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using CodeAnalyzer.UserInterface.Controls.Diagrams;
+using CodeAnalyzer.UserInterface.Controls.Windows;
+using CodeAnalyzer.UserInterface.Interfaces;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using StructureMap;
 
 namespace CodeEvaluator.ProjectVs2015
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
@@ -53,7 +57,7 @@ namespace CodeEvaluator.ProjectVs2015
     // This attribute registers a tool window exposed by this package.
     [ProvideToolWindow(typeof(GenerateWorkflowDiagramWindow))]
     [Guid(GuidList.guidRomSoft_Client_DebugPkgString)]
-    public sealed class RomSoftClientDebugPackage : Package
+    public sealed class CodeEvaluatorVs2015Package : Package
     {
         #region Constructors and Destructors
 
@@ -64,9 +68,9 @@ namespace CodeEvaluator.ProjectVs2015
         ///     not sited yet inside Visual Studio environment. The place to do all the other
         ///     initialization is the Initialize method.
         /// </summary>
-        public RomSoftClientDebugPackage()
+        public CodeEvaluatorVs2015Package()
         {
-            System.Diagnostics.Debug.WriteLine(CultureInfo.CurrentCulture.ToString(), "Entering constructor for: {0}",
+            Debug.WriteLine(CultureInfo.CurrentCulture.ToString(), "Entering constructor for: {0}",
                 ToString());
         }
 
@@ -80,7 +84,7 @@ namespace CodeEvaluator.ProjectVs2015
         /// </summary>
         protected override void Initialize()
         {
-            System.Diagnostics.Debug.WriteLine(CultureInfo.CurrentCulture.ToString(), "Entering Initialize() of: {0}",
+            Debug.WriteLine(CultureInfo.CurrentCulture.ToString(), "Entering Initialize() of: {0}",
                 ToString());
             base.Initialize();
 
@@ -95,40 +99,6 @@ namespace CodeEvaluator.ProjectVs2015
 
         private void RegisterInternalServices()
         {
-            ObjectFactory.Configure(config => config.For<IParsedSourceFilesCache>().Use(new ParsedSourceFilesCache()));
-            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IParsedSourceFilesCache>()));
-            ObjectFactory.Configure(config => config.For<IProjectFilesProvider>().Use(() => new ProjectFilesProvider()));
-            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IProjectFilesProvider>()));
-            ObjectFactory.Configure(
-                config => config.For<ISyntaxNodeEvaluatorFactory>().Use(new SyntaxNodeEvaluatorFactory()));
-            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ISyntaxNodeEvaluatorFactory>()));
-            ObjectFactory.Configure(
-                config => config.For<ISyntaxNodeNamespaceProvider>().Use(() => new SyntaxNodeNamespaceProvider()));
-            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ISyntaxNodeNamespaceProvider>()));
-            ObjectFactory.Configure(
-                config => config.For<IStaticWorkflowEvaluator>().Use(() => new StaticWorkflowEvaluator()));
-            ObjectFactory.Configure(config => config.For<IParsedSourceFilesCache>().Use(new ParsedSourceFilesCache()));
-            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IParsedSourceFilesCache>()));
-            ObjectFactory.Configure(
-                config => config.For<ITrackedVariableTypeInfosCache>().Use(new TrackedVariableTypeInfosCache()));
-            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ITrackedVariableTypeInfosCache>()));
-            ObjectFactory.Configure(
-                config => config.For<ITrackedVariableEvaluatorFactory>().Use(new TrackedVariableEvaluatorFactory()));
-            ObjectFactory.Configure(config => config.For<ITrackedVariablesHeap>().Use(new TrackedVariablesHeap()));
-            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ITrackedVariablesHeap>()));
-            ObjectFactory.Configure(
-                config =>
-                    config.For<ITrackedVariableEvaluatorFactory>().Use(() => new TrackedVariableEvaluatorFactory()));
-            ObjectFactory.Configure(
-                config => config.For<ITrackedVariableAllocator>().Use(() => new TrackedVariableAllocator()));
-            ObjectFactory.Configure(
-                config =>
-                    config.For<IStaticWorkflowEvaluatorExecutionFrameFactory>()
-                        .Use(new StaticWorkflowEvaluatorExecutionFrameFactory()));
-
-            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ITrackedVariableAllocator>()));
-            ObjectFactory.Configure(config => config.For<ISystemSettings>().Use(new SystemSettings()));
-            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ISystemSettings>()));
             ObjectFactory.Configure(
                 config => config.For<IWorkflowDiagramGenerator>().Use(() => new WorkflowDiagramGenerator()));
             ObjectFactory.Configure(config => config.For<IWorkflowDiagramSizes>().Use(() => new WorkflowDiagramSizes()));

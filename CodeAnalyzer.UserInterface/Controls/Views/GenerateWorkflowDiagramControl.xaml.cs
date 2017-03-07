@@ -527,7 +527,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
 
         private void BtnStartSearch_OnClick(object sender, RoutedEventArgs e)
         {
-            var staticWorkflowEvaluator = ObjectFactory.GetInstance<IStaticEvaluator>();
+            var staticWorkflowEvaluator = ObjectFactory.GetInstance<ICodeEvaluator>();
 
             staticWorkflowEvaluator.EvaluateWorkflow(
                 new List<IStaticWorkflowEvaluatorListener> { new WorkflowEvaluatorEvaluatorListener() },
