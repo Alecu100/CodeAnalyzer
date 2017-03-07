@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{67FE9B13-30FF-4954-8DC4-5CE0B34D3DE4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeAnalyzer.UserInterface</RootNamespace>
+    <AssemblyName>CodeAnalyzer.UserInterface</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="envdte100, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="envdte90, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\Base\Adorners\ResizeAdorner.cs" />
+    <Compile Include="Controls\Base\Adorners\ResizeChrome.cs" />
+    <Compile Include="Controls\Base\Adorners\RubberbandAdorner.cs" />
+    <Compile Include="Controls\Base\Adorners\WorkflowConnectionAdorner.cs" />
+    <Compile Include="Controls\Base\Adorners\WorkflowConnectorAdorner.cs" />
+    <Compile Include="Controls\Base\DependencyObjectHelpers.cs" />
+    <Compile Include="Controls\Base\DragableScrollViewer.cs" />
+    <Compile Include="Controls\Base\DragThumb.cs" />
+    <Compile Include="Controls\Base\Enums\EArrowSymbol.cs" />
+    <Compile Include="Controls\Base\Enums\EConnectorOrientation.cs" />
+    <Compile Include="Controls\Base\Enums\EWorkflowItemType.cs" />
+    <Compile Include="Controls\Base\ISelectable.cs" />
+    <Compile Include="Controls\Base\PathFinder.cs" />
+    <Compile Include="Controls\Base\RelativePositionPanel.cs" />
+    <Compile Include="Controls\Base\ResizeDecorator.cs" />
+    <Compile Include="Controls\Base\ResizeThumb.cs" />
+    <Compile Include="Controls\Base\RubberbandAdorner.cs" />
+    <Compile Include="Controls\Base\Toolbox.cs" />
+    <Compile Include="Controls\Base\ToolboxItem.cs" />
+    <Compile Include="Controls\Base\WorkflowCanvas.cs" />
+    <Compile Include="Controls\Base\WorkflowConnection.cs" />
+    <Compile Include="Controls\Base\WorkflowConnector.cs" />
+    <Compile Include="Controls\Base\WorkflowConnectorInfo.cs" />
+    <Compile Include="Controls\Base\WorkflowItem.cs" />
+    <Compile Include="Controls\Diagrams\Interfaces\IWorkflowDiagramGenerator.cs" />
+    <Compile Include="Controls\Diagrams\Interfaces\IWorkflowDiagramSizes.cs" />
+    <Compile Include="Controls\Diagrams\WorkflowDiagramGenerator.cs" />
+    <Compile Include="Controls\Diagrams\WorkflowDiagramSizes.cs" />
+    <Compile Include="Controls\Views\GenerateWorkflowDiagramControl.xaml.cs">
+      <DependentUpon>GenerateWorkflowDiagramControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Windows\GenerateWorkflowDiagramWindow.cs" />
+    <Compile Include="Interfaces\IXamlResourcesRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\Views\GenerateWorkflowDiagramControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\AllResourcesRoot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stencils\SymbolStencils.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\GroupBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\ScrollBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\ScrollViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\Shared.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\ToolTip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Resource Include="Resources\WorkflowItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Tooltip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\ToolboxItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Toolbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\ToolBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Stencils\ShapeStencils.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Stencils\FlowChartStencils.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\StatusBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Slider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\ScrollViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\ScrollBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\ResizeChrome.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\Connection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\arrow_run_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\attention.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BreakpointEnabled_6584_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Camera_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Camera_32xSM.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\chart1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\chart2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\chart3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\hexagon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\mail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\nuclear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\printer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ring.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\software.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\StatusAnnotationRed_No_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\StatusAnnotations_Critical_16xLG_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\StatusAnnotations_Play_16xLG_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\StatusAnnotations_Stop_16xLG_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\walk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Workflow_32xMD.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\WorkflowActivity_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\world.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\Images.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Package.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeAnalyzer.Core\CodeAnalyzer.Core.csproj">
+      <Project>{882F4464-2A84-4576-B6EA-1EFFD4FCF4A5}</Project>
+      <Name>CodeAnalyzer.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

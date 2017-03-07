@@ -1,0 +1,4 @@
+D:\CodeAnalyzer\CodeAnalyzer.Workflow\bin\Debug\CodeAnalyzer.Workflow.dll
+D:\CodeAnalyzer\CodeAnalyzer.Workflow\bin\Debug\CodeAnalyzer.Workflow.pdb
+D:\CodeAnalyzer\CodeAnalyzer.Workflow\obj\Debug\CodeAnalyzer.Workflow.dll
+D:\CodeAnalyzer\CodeAnalyzer.Workflow\obj\Debug\CodeAnalyzer.Workflow.pdb

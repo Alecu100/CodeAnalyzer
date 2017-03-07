@@ -45,15 +45,13 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Diagrams\WorkflowEvaluator.cs" />
-    <Compile Include="Diagrams\EWorkflowStepType.cs" />
-    <Compile Include="Diagrams\WorkflowExecutionSnapshot.cs" />
-    <Compile Include="Diagrams\Workflow.cs" />
-    <Compile Include="Diagrams\WorkflowStep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Diagrams\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

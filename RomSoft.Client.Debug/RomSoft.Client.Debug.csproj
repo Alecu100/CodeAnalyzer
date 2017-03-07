@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <SccProjectName>SAK</SccProjectName>
@@ -10,6 +10,11 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>12.0</OldToolsVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -269,102 +274,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Base\Adorners\ResizeAdorner.cs" />
-    <Compile Include="Controls\Base\Adorners\ResizeChrome.cs" />
-    <Compile Include="Controls\Base\Adorners\RubberbandAdorner.cs" />
-    <Compile Include="Controls\Base\WorkflowConnection.cs" />
-    <Compile Include="Controls\Base\Adorners\WorkflowConnectionAdorner.cs" />
-    <Compile Include="Controls\Base\WorkflowConnector.cs" />
-    <Compile Include="Controls\Base\Adorners\WorkflowConnectorAdorner.cs" />
-    <Compile Include="Controls\Base\WorkflowConnectorInfo.cs" />
-    <Compile Include="Controls\Base\DependencyObjectHelpers.cs" />
-    <Compile Include="Controls\Base\Enums\EWorkflowItemType.cs" />
-    <Compile Include="Controls\Base\WorkflowCanvas.cs" />
-    <Compile Include="Controls\Base\WorkflowItem.cs" />
-    <Compile Include="Controls\Base\DragableScrollViewer.cs" />
-    <Compile Include="Controls\Base\DragThumb.cs" />
-    <Compile Include="Controls\Base\Enums\EArrowSymbol.cs" />
-    <Compile Include="Controls\Base\Enums\EConnectorOrientation.cs" />
-    <Compile Include="Controls\Base\ISelectable.cs" />
-    <Compile Include="Controls\Base\PathFinder.cs" />
-    <Compile Include="Controls\Base\RelativePositionPanel.cs" />
-    <Compile Include="Controls\Base\ResizeDecorator.cs" />
-    <Compile Include="Controls\Base\ResizeThumb.cs" />
-    <Compile Include="Controls\Base\RubberbandAdorner.cs" />
-    <Compile Include="Controls\Base\Toolbox.cs" />
-    <Compile Include="Controls\Base\ToolboxItem.cs" />
-    <Compile Include="Controls\Diagrams\Interfaces\IWorkflowDiagramSizes.cs" />
-    <Compile Include="Controls\Diagrams\Interfaces\IWorkflowDiagramGenerator.cs" />
-    <Compile Include="Controls\Diagrams\WorkflowDiagramGenerator.cs" />
-    <Compile Include="Controls\Diagrams\WorkflowDiagramSizes.cs" />
-    <Compile Include="Controls\Views\GenerateWorkflowDiagramControl.xaml.cs">
-      <DependentUpon>GenerateWorkflowDiagramControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Windows\GenerateWorkflowDiagramWindow.cs" />
     <Compile Include="Guids.cs" />
-    <Compile Include="Library\Common\ProjectFilesProvider.cs" />
-    <Compile Include="Library\Common\ProjectSettings.cs" />
-    <Compile Include="Library\Common\StaticWorkflowEvaluator.cs" />
-    <Compile Include="Library\Common\StaticWorkflowEvaluatorExecutionFrame.cs" />
-    <Compile Include="Library\Common\StaticWorkflowEvaluatorContext.cs" />
-    <Compile Include="Library\Common\StaticWorkflowEvaluatorExecutionFrameFactory.cs" />
-    <Compile Include="Library\Common\StaticWorkflowEvaluatorParameters.cs" />
-    <Compile Include="Library\Common\SyntaxNodeEvaluatorFactory.cs" />
-    <Compile Include="Library\Common\SyntaxNodeNamespaceProvider.cs" />
-    <Compile Include="Library\Common\SyntaxNodeResolverFoundNode.cs" />
-    <Compile Include="Library\Common\SystemSettings.cs" />
-    <Compile Include="Library\Interfaces\IXamlResourcesRepository.cs" />
-    <Compile Include="Library\Interfaces\ITrackedVariableAllocator.cs" />
-    <Compile Include="Library\Members\TrackedConstructor.cs" />
-    <Compile Include="Library\Members\TrackedField.cs" />
-    <Compile Include="Library\Members\TrackedGenericParameter.cs" />
-    <Compile Include="Library\Members\TrackedMember.cs" />
-    <Compile Include="Library\Members\TrackedMethod.cs" />
-    <Compile Include="Library\Members\TrackedMethodBase.cs" />
-    <Compile Include="Library\Members\TrackedMethodParameter.cs" />
-    <Compile Include="Library\Members\TrackedProperty.cs" />
-    <Compile Include="Library\Members\TrackedPropertyGetAccessor.cs" />
-    <Compile Include="Library\Members\TrackedPropertySetAccessor.cs" />
-    <Compile Include="Library\Members\TrackedVariable.cs" />
-    <Compile Include="Library\Members\TrackedVariableEvaluatorFactory.cs" />
-    <Compile Include="Library\Members\TrackedVariableAllocator.cs" />
-    <Compile Include="Library\Members\TrackedVariableHistory.cs" />
-    <Compile Include="Library\Members\TrackedVariableReference.cs" />
-    <Compile Include="Library\Members\TrackedVariablesHeap.cs" />
-    <Compile Include="Library\Members\TrackedTypeInfo.cs" />
-    <Compile Include="Library\Members\TrackedVariableTypeInfosCache.cs" />
-    <Compile Include="Library\Constants\VsConstants.cs" />
-    <Compile Include="Library\Interfaces\IParsedSourceFilesCache.cs" />
-    <Compile Include="Library\Interfaces\IProjectFilesProvider.cs" />
-    <Compile Include="Library\Interfaces\IStaticWorkflowEvaluator.cs" />
-    <Compile Include="Library\Interfaces\IStaticWorkflowEvaluatorExecutionFrameFactory.cs" />
-    <Compile Include="Library\Interfaces\IStaticWorkflowEvaluatorListener.cs" />
-    <Compile Include="Library\Interfaces\ISyntaxNodeEvaluator.cs" />
-    <Compile Include="Library\Interfaces\ISyntaxNodeEvaluatorFactory.cs" />
-    <Compile Include="Library\Common\ParsedSourceFilesCache.cs" />
-    <Compile Include="Library\Interfaces\ISyntaxNodeNamespaceProvider.cs" />
-    <Compile Include="Library\Interfaces\ISystemSettings.cs" />
-    <Compile Include="Library\Interfaces\ITrackedVariableEvaluator.cs" />
-    <Compile Include="Library\Interfaces\ITrackedVariableEvaluatorFactory.cs" />
-    <Compile Include="Library\Interfaces\ITrackedVariablesHeap.cs" />
-    <Compile Include="Library\Interfaces\ITrackedVariableTypeInfosCache.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\BaseSyntaxNodeEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\BlockSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\ConstructorDeclarationSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\EqualsValueClauseSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\ExpressionStatementSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\ForStatementSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\IdentifierNameSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\IfStatementSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\InvocationExpressionSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\LocalDeclarationStatementSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\MemberAccessExpressionSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\MethodDeclarationSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\BaseMethodDeclarationSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\ReturnStatementSyntaxEvaluator.cs" />
-    <Compile Include="Library\SyntaxNodeEvaluators\VariableDeclarationSyntaxEvaluator.cs" />
-    <Compile Include="Library\Members\DelegateRelatedTypeEvaluator.cs" />
-    <Compile Include="Library\Listeners\WorkflowEvaluatorEvaluatorListener.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -401,141 +311,7 @@
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Images.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\arrow.png" />
-    <Resource Include="Resources\Images\arrow_run_16xLG.png" />
-    <Resource Include="Resources\Images\attention.png" />
-    <Resource Include="Resources\Images\BreakpointEnabled_6584_32x.png" />
-    <Resource Include="Resources\Images\Camera_16xLG.png" />
-    <Resource Include="Resources\Images\Camera_32xSM.png" />
-    <Resource Include="Resources\Images\chart1.png" />
-    <Resource Include="Resources\Images\chart2.png" />
-    <Resource Include="Resources\Images\chart3.png" />
-    <Resource Include="Resources\Images\cross.png" />
-    <Resource Include="Resources\Images\hexagon.png" />
-    <Resource Include="Resources\Images\info.png" />
-    <Resource Include="Resources\Images\mail.png" />
-    <Resource Include="Resources\Images\nuclear.png" />
-    <Resource Include="Resources\Images\plus.png" />
-    <Resource Include="Resources\Images\printer.png" />
-    <Resource Include="Resources\Images\ring.png" />
-    <Resource Include="Resources\Images\software.png" />
-    <Resource Include="Resources\Images\StatusAnnotationRed_No_16xLG.png" />
-    <Resource Include="Resources\Images\StatusAnnotations_Critical_16xLG_color.png" />
-    <Resource Include="Resources\Images\StatusAnnotations_Play_16xLG_color.png" />
-    <Resource Include="Resources\Images\StatusAnnotations_Stop_16xLG_color.png" />
-    <Resource Include="Resources\Images\walk.png" />
-    <Resource Include="Resources\Images\WorkflowActivity_16xLG.png" />
-    <Resource Include="Resources\Images\Workflow_32xMD.png" />
-    <Resource Include="Resources\Images\world.png" />
-    <Content Include="Resources\Package.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\Views\GenerateWorkflowDiagramControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\AllResourcesRoot.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Resource Include="Resources\Connection.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\WorkflowItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\Expander.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\ResizeChrome.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\ScrollBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\ScrollViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\Slider.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\StatusBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\Stencils\FlowChartStencils.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\Stencils\ShapeStencils.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Page Include="Resources\Stencils\SymbolStencils.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\Expander.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\GroupBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ScrollBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ScrollViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\Shared.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ToolTip.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Resource Include="Resources\ToolBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\Toolbox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\ToolboxItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="Resources\Tooltip.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Library\VariableExpressionEvaluators\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RomSoft.Debug\RomSoft.Debug.csproj">
-      <Project>{539338b2-fb0e-4dcd-b344-b26b38e2b2a5}</Project>
-      <Name>RomSoft.Debug</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>
