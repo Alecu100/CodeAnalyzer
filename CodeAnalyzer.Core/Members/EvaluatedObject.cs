@@ -60,9 +60,11 @@ namespace CodeAnalysis.Core.Members
 
         #region Fields
 
-        private readonly List<EvaluatedObjectHistory> _history = new List<EvaluatedObjectHistory>();
+        protected readonly List<EvaluatedObjectHistory> _history = new List<EvaluatedObjectHistory>();
 
-        private readonly List<EvaluatedObjectReference> _fields = new List<EvaluatedObjectReference>();
+        protected readonly List<EvaluatedObjectReference> _fields = new List<EvaluatedObjectReference>();
+
+        protected EvaluatedTypeInfo _typeInfo;
 
         #endregion
 
@@ -105,7 +107,11 @@ namespace CodeAnalysis.Core.Members
         /// <value>
         ///     The type information.
         /// </value>
-        public EvaluatedTypeInfo TypeInfo { get; set; }
+        public EvaluatedTypeInfo TypeInfo
+        {
+            get { return _typeInfo; }
+            set { _typeInfo = value; }
+        }
 
         #endregion
     }

@@ -16,5 +16,5 @@ DEBUG;TRACE
 18154522815
 Controls\Views\GenerateWorkflowDiagramControl.xaml;Resources\AllResourcesRoot.xaml;Resources\Stencils\SymbolStencils.xaml;Resources\Styles\Expander.xaml;Resources\Styles\GroupBox.xaml;Resources\Styles\ScrollBar.xaml;Resources\Styles\ScrollViewer.xaml;Resources\Styles\Shared.xaml;Resources\Styles\ToolTip.xaml;
 
-True
+False
 

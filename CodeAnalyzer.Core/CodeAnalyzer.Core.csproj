@@ -96,7 +96,7 @@
     <Compile Include="Members\EvaluatedMethod.cs" />
     <Compile Include="Members\EvaluatedMethodBase.cs" />
     <Compile Include="Members\EvaluatedMethodParameter.cs" />
-    <Compile Include="Members\EvaluatedObjectWithMethodReference.cs" />
+    <Compile Include="Members\EvaluatedDelegate.cs" />
     <Compile Include="Members\EvaluatedProperty.cs" />
     <Compile Include="Members\EvaluatedPropertyGetAccessor.cs" />
     <Compile Include="Members\EvaluatedPropertySetAccessor.cs" />
