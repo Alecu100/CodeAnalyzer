@@ -23,17 +23,20 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using CodeAnalysis.Core.Common;
-using CodeAnalysis.Core.Constants;
 using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Listeners;
 using CodeAnalyzer.UserInterface.Interfaces;
+using CodeAnalyzer.Workflow;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.VisualStudio.Shell.Interop;
 using StructureMap;
 
 namespace CodeAnalyzer.UserInterface.Controls.Views
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
@@ -42,36 +45,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
     /// </summary>
     public partial class GenerateWorkflowDiagramControl : IVsSolutionEvents, IXamlResourcesRepository
     {
-        #region Fields
-
-        private Solution _currentSolution;
-
-        private ClassDeclarationSyntax _selectedClassDeclarationSyntax;
-
-        private ProjectItem _selectedFile;
-
-        private MethodDeclarationSyntax _selectedMethodDeclarationSyntax;
-
-        private Project _selectedProject;
-
-        private readonly ObservableCollection<Project> _availableProjects = new ObservableCollection<Project>();
-
-        private readonly ObservableCollection<ClassDeclarationSyntax> _loadedClasses =
-            new ObservableCollection<ClassDeclarationSyntax>();
-
-        private readonly ObservableCollection<MethodDeclarationSyntax> _loadedMethods =
-            new ObservableCollection<MethodDeclarationSyntax>();
-
-        private readonly ObservableCollection<ProjectItem> _loadedProjectItems = new ObservableCollection<ProjectItem>();
-
-        private readonly ObservableCollection<Project> _loadedProjects = new ObservableCollection<Project>();
-
-        private readonly ObservableCollection<Project> _selectedProjects = new ObservableCollection<Project>();
-
-        private readonly uint _solutionCookie;
-
-        #endregion
-
         #region Constructors and Destructors
 
         public GenerateWorkflowDiagramControl()
@@ -89,62 +62,46 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
 
         #endregion
 
+        #region Fields
+
+        private Solution _currentSolution;
+
+        private ClassDeclarationSyntax _selectedClassDeclarationSyntax;
+
+        private ProjectItem _selectedFile;
+
+        private MethodDeclarationSyntax _selectedMethodDeclarationSyntax;
+
+        private Project _selectedProject;
+
+        private readonly ObservableCollection<MethodDeclarationSyntax> _loadedMethods =
+            new ObservableCollection<MethodDeclarationSyntax>();
+
+        private readonly uint _solutionCookie;
+
+        #endregion
+
         #region Public Properties
 
-        public ObservableCollection<Project> AvailableProjects
-        {
-            get
-            {
-                return _availableProjects;
-            }
-        }
+        public ObservableCollection<Project> AvailableProjects { get; } = new ObservableCollection<Project>();
 
-        public ObservableCollection<ClassDeclarationSyntax> LoadedClasses
-        {
-            get
-            {
-                return _loadedClasses;
-            }
-        }
+        public ObservableCollection<ClassDeclarationSyntax> LoadedClasses { get; } =
+            new ObservableCollection<ClassDeclarationSyntax>();
 
         public ObservableCollection<MethodDeclarationSyntax> LoadedMethods
         {
-            get
-            {
-                return _loadedMethods;
-            }
+            get { return _loadedMethods; }
         }
 
-        public ObservableCollection<ProjectItem> LoadedProjectItems
-        {
-            get
-            {
-                return _loadedProjectItems;
-            }
-        }
+        public ObservableCollection<ProjectItem> LoadedProjectItems { get; } = new ObservableCollection<ProjectItem>();
 
-        public ObservableCollection<Project> LoadedProjects
-        {
-            get
-            {
-                return _loadedProjects;
-            }
-        }
+        public ObservableCollection<Project> LoadedProjects { get; } = new ObservableCollection<Project>();
 
-        public ObservableCollection<Project> SelectedProjects
-        {
-            get
-            {
-                return _selectedProjects;
-            }
-        }
+        public ObservableCollection<Project> SelectedProjects { get; } = new ObservableCollection<Project>();
 
         public ISystemSettings SystemSettings
         {
-            get
-            {
-                return ObjectFactory.GetInstance<ISystemSettings>();
-            }
+            get { return ObjectFactory.GetInstance<ISystemSettings>(); }
         }
 
         #endregion
@@ -208,13 +165,13 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         public int OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)
         {
             object objProj;
-            pHierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out objProj);
+            pHierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int) __VSHPROPID.VSHPROPID_ExtObject, out objProj);
 
             var projectItem = objProj as Project;
 
             if (projectItem != null && projectItem.Kind.ToUpperInvariant() == VsConstants.CsProjectKind)
             {
-                _loadedProjects.Add(projectItem);
+                LoadedProjects.Add(projectItem);
 
                 var currentProjectSettings =
                     SystemSettings.GetProjectSettingsByFullSolutionName(
@@ -223,11 +180,11 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
                 if (currentProjectSettings != null
                     && currentProjectSettings.SelectedProjects.Contains(projectItem.UniqueName))
                 {
-                    _selectedProjects.Add(projectItem);
+                    SelectedProjects.Add(projectItem);
                 }
                 else
                 {
-                    _availableProjects.Add(projectItem);
+                    AvailableProjects.Add(projectItem);
                 }
 
                 if (currentProjectSettings != null
@@ -322,28 +279,28 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
 
             var selectedProjects = new List<string>();
 
-            foreach (var selectedProject in _selectedProjects)
+            foreach (var selectedProject in SelectedProjects)
             {
                 selectedProjects.Add(selectedProject.UniqueName);
             }
 
             SystemSettings.AddOrReplaceProjectSettings(
                 new ProjectSettings
-                    {
-                        SelectedProjects = selectedProjects,
-                        SelectedClassName =
-                            _selectedClassDeclarationSyntax != null
-                                ? _selectedClassDeclarationSyntax.Identifier.ValueText
-                                : null,
-                        SelectedMethodName =
-                            _selectedMethodDeclarationSyntax != null
-                                ? _selectedMethodDeclarationSyntax.Identifier.ValueText
-                                : null,
-                        SelectedProjectName =
-                            _selectedProject != null ? _selectedProject.UniqueName : null,
-                        SelectedFileName = _selectedFile != null ? _selectedFile.Name : null,
-                        FullSolutionName = _currentSolution.FullName
-                    });
+                {
+                    SelectedProjects = selectedProjects,
+                    SelectedClassName =
+                        _selectedClassDeclarationSyntax != null
+                            ? _selectedClassDeclarationSyntax.Identifier.ValueText
+                            : null,
+                    SelectedMethodName =
+                        _selectedMethodDeclarationSyntax != null
+                            ? _selectedMethodDeclarationSyntax.Identifier.ValueText
+                            : null,
+                    SelectedProjectName =
+                        _selectedProject != null ? _selectedProject.UniqueName : null,
+                    SelectedFileName = _selectedFile != null ? _selectedFile.Name : null,
+                    FullSolutionName = _currentSolution.FullName
+                });
             SystemSettings.Save();
 
             return VSConstants.S_OK;
@@ -440,7 +397,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
             {
                 var classDeclarationSyntax = syntaxNode as ClassDeclarationSyntax;
 
-                _loadedClasses.Add(classDeclarationSyntax);
+                LoadedClasses.Add(classDeclarationSyntax);
                 return;
             }
 
@@ -456,7 +413,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
             var syntaxTree = CSharpSyntaxTree.ParseText(allCode);
             var syntaxNode = syntaxTree.GetRoot();
 
-            _loadedClasses.Clear();
+            LoadedClasses.Clear();
             AddAllClassesFromSyntaxNode(syntaxNode);
         }
 
@@ -530,7 +487,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
             var staticWorkflowEvaluator = ObjectFactory.GetInstance<ICodeEvaluator>();
 
             staticWorkflowEvaluator.Evaluate(
-                new List<ICodeEvaluatorListener> { new WorkflowEvaluatorEvaluatorListener() },
+                new List<ICodeEvaluatorListener> {new WorkflowEvaluatorEvaluatorListener()},
                 SelectedProjects,
                 _selectedClassDeclarationSyntax,
                 _selectedMethodDeclarationSyntax);
@@ -579,11 +536,11 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         {
             if (e.AddedItems.Count > 0 && e.AddedItems[0] is Project)
             {
-                var project = (Project)e.AddedItems[0];
+                var project = (Project) e.AddedItems[0];
                 LoadedProjectItems.Clear();
                 var sourceFilesProvider = ObjectFactory.GetInstance<IProjectFilesProvider>();
                 var allSourceFileNamesFromProjects =
-                    sourceFilesProvider.GetAllSourceFileNamesFromProjects(new List<Project> { project }).ToList();
+                    sourceFilesProvider.GetAllSourceFileNamesFromProjects(new List<Project> {project}).ToList();
 
                 _selectedProject = project;
 
@@ -591,20 +548,20 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
 
                 foreach (var sourceFile in allSourceFileNamesFromProjects)
                 {
-                    _loadedProjectItems.Add(sourceFile);
+                    LoadedProjectItems.Add(sourceFile);
                 }
 
-                if (_selectedProjects.All(p => p != project))
+                if (SelectedProjects.All(p => p != project))
                 {
-                    _selectedProjects.Add(project);
-                    _availableProjects.Remove(project);
+                    SelectedProjects.Add(project);
+                    AvailableProjects.Remove(project);
                 }
             }
         }
 
         private int CompareSourceFiles(ProjectItem item1, ProjectItem item2)
         {
-            return String.CompareOrdinal(item1.Name, item2.Name);
+            return string.CompareOrdinal(item1.Name, item2.Name);
         }
 
         private void OnLayoutUpdated(object sender, EventArgs eventArgs)

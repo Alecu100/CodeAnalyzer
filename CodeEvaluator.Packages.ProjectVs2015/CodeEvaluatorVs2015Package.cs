@@ -21,7 +21,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using CodeAnalyzer.UserInterface.Controls.Diagrams;
-using CodeAnalyzer.UserInterface.Controls.Windows;
 using CodeAnalyzer.UserInterface.Interfaces;
 using CodeEvaluator.Packages.Core;
 using CodeEvaluator.Packages.Core.Interfaces;

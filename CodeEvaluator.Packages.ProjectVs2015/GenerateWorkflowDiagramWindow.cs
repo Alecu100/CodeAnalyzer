@@ -17,12 +17,12 @@
 
 using System.Runtime.InteropServices;
 using CodeAnalyzer.UserInterface.Controls.Views;
+using Microsoft.VisualStudio.Shell;
 
-namespace CodeAnalyzer.UserInterface.Controls.Windows
+namespace CodeEvaluator.ProjectVs2015
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 

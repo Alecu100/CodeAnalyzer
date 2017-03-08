@@ -92,7 +92,10 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                 }
             }
 
-            workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult = reference;
+            if (foundReference)
+            {
+                workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult = reference;
+            }
         }
 
         private void TryToFindReferenceInLocalReferences(
