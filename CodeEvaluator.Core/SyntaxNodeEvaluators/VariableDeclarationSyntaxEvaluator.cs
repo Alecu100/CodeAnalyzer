@@ -16,11 +16,9 @@
 //  -----------------------------------------------------------------------
 
 using CodeAnalysis.Core.Common;
-using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using StructureMap;
 
 namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 {
@@ -43,8 +41,6 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
             StaticWorkflowEvaluatorContext workflowEvaluatorContext)
         {
             var variableDeclarationSyntax = (VariableDeclarationSyntax) syntaxNode;
-            var trackedVariableExpressionEvaluatorFactory =
-                ObjectFactory.GetInstance<ITrackedVariableEvaluatorFactory>();
             var thisTypeInfo = workflowEvaluatorContext.CurrentExecutionFrame.ThisReference.EvaluatedObjects[0].TypeInfo;
 
             foreach (var variableDeclarator in variableDeclarationSyntax.Variables)
@@ -57,16 +53,10 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     IdentifierText = variableDeclarator.Identifier.ValueText
                 };
 
-                var trackedVariableTypeInfo =
-                    EvaluatedTypesInfoTable.GetTypeInfo(
-                        variableDeclarationSyntax.Type.GetText().ToString(),
-                        thisTypeInfo.UsingDirectives,
-                        thisTypeInfo.NamespaceDeclarations);
-
-                if (trackedVariableTypeInfo != null)
-                {
-                    reference.TypeInfo = trackedVariableTypeInfo;
-                }
+                reference.TypeInfo = EvaluatedTypesInfoTable.GetTypeInfo(
+                    variableDeclarationSyntax.Type.GetText().ToString(),
+                    thisTypeInfo.UsingDirectives,
+                    thisTypeInfo.NamespaceDeclarations);
 
                 workflowEvaluatorContext.CurrentExecutionFrame.LocalReferences.Add(reference);
 
@@ -79,39 +69,17 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     {
                         syntaxNodeEvaluator.EvaluateSyntaxNode(variableDeclarator.Initializer, workflowEvaluatorContext);
 
-                        if (workflowEvaluatorContext.CurrentExecutionFrame.ReturnedMethodParameters.Count > 0)
+                        if (workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult != null)
                         {
-                            foreach (
-                                var storedOutput in
-                                    workflowEvaluatorContext.CurrentExecutionFrame.ReturnedMethodParameters)
-                            {
-                                var trackedVariableReference = storedOutput;
+                            reference.AssignEvaluatedObject(
+                                workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult);
 
-                                if (trackedVariableReference != null)
-                                {
-                                    reference.AddVariables(trackedVariableReference.EvaluatedObjects);
-
-                                    if (reference.TypeInfo == null)
-                                    {
-                                        reference.TypeInfo = trackedVariableReference.TypeInfo;
-                                    }
-                                }
-                            }
-
-                            workflowEvaluatorContext.CurrentExecutionFrame.ReturnedMethodParameters.Clear();
+                            workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult = null;
                         }
                     }
                 }
 
-                var trackedVariableExpressionEvaluator =
-                    trackedVariableExpressionEvaluatorFactory.GetVariableExpressionEvaluator(
-                        reference,
-                        variableDeclarator.Initializer);
-
-                if (trackedVariableExpressionEvaluator != null)
-                {
-                    trackedVariableExpressionEvaluator.EvaluateVariable(reference, variableDeclarator.Initializer);
-                }
+                workflowEvaluatorContext.CurrentExecutionFrame.LocalReferences.Add(reference);
             }
 
             workflowEvaluatorContext.PopSyntaxNodeEvaluator();

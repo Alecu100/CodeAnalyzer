@@ -18,13 +18,13 @@
 using System.Linq;
 using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Members;
+using CodeAnalyzer.Workflow;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeAnalysis.Core.Listeners
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
@@ -72,7 +72,7 @@ namespace CodeAnalysis.Core.Listeners
             {
                 if (syntaxNodes[0] is MemberAccessExpressionSyntax)
                 {
-                    var memberAccessExpression = (MemberAccessExpressionSyntax)syntaxNodes[0];
+                    var memberAccessExpression = (MemberAccessExpressionSyntax) syntaxNodes[0];
                     var methodAndClass = memberAccessExpression.ChildNodes().ToList();
 
                     if (methodAndClass.Count == 2)

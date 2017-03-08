@@ -46,12 +46,12 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     syntaxNodeEvaluator.EvaluateSyntaxNode(returnStatementSyntax.Expression, workflowEvaluatorContext);
                 }
 
-                if (workflowEvaluatorContext.CurrentExecutionFrame.AccessedMember != null)
+                if (workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult != null)
                 {
                     workflowEvaluatorContext.CurrentExecutionFrame.ReturningMethodParameters.Add(
-                        workflowEvaluatorContext.CurrentExecutionFrame.AccessedMember.Move());
+                        workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult.Move());
 
-                    workflowEvaluatorContext.CurrentExecutionFrame.AccessedMember = null;
+                    workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult = null;
                 }
 
                 if (workflowEvaluatorContext.CurrentExecutionFrame.ReturnedMethodParameters.Count > 0)

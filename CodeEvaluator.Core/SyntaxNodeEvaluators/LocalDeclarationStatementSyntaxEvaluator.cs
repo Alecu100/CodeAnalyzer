@@ -16,12 +16,13 @@
 //  -----------------------------------------------------------------------
 
 using CodeAnalysis.Core.Common;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
@@ -38,7 +39,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
             SyntaxNode syntaxNode,
             StaticWorkflowEvaluatorContext workflowEvaluatorContext)
         {
-            var localDeclarationStatementSyntax = (LocalDeclarationStatementSyntax)syntaxNode;
+            var localDeclarationStatementSyntax = (LocalDeclarationStatementSyntax) syntaxNode;
 
             var syntaxNodeEvaluator =
                 SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(localDeclarationStatementSyntax.Declaration);

@@ -17,6 +17,7 @@
 
 using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Members;
+using StructureMap;
 
 namespace CodeAnalysis.Core.Common
 {
@@ -64,12 +65,12 @@ namespace CodeAnalysis.Core.Common
 
             var trackedVariableAllocator = ObjectFactory.GetInstance<IEvaluatedObjectAllocator>();
             var allocateVariable = trackedVariableAllocator.AllocateVariable(evaluatedType);
-            var trackedVariableReference = new EvaluatedObjectReference();
+            var thisEvaluatedObjectReference = new EvaluatedObjectReference();
 
-            trackedVariableReference = trackedVariableReference.AssignEvaluatedObject(allocateVariable);
-            trackedVariableReference.TypeInfo = evaluatedType;
-            staticWorkflowEvaluatorExecutionFrame.ThisReference = trackedVariableReference;
-            staticWorkflowEvaluatorExecutionFrame.PassedMethodParameters[-1] = trackedVariableReference.Move();
+            thisEvaluatedObjectReference.AssignEvaluatedObject(allocateVariable);
+            thisEvaluatedObjectReference.TypeInfo = evaluatedType;
+            staticWorkflowEvaluatorExecutionFrame.ThisReference = thisEvaluatedObjectReference;
+            staticWorkflowEvaluatorExecutionFrame.PassedMethodParameters[-1] = thisEvaluatedObjectReference.Move();
 
             return staticWorkflowEvaluatorExecutionFrame;
         }

@@ -18,7 +18,6 @@
 using System.Collections.Generic;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeAnalysis.Core.Common
 {
@@ -31,7 +30,7 @@ namespace CodeAnalysis.Core.Common
     {
         private readonly EvaluatedObjectReference _returningMethodParameters = new EvaluatedObjectReference();
 
-        private EvaluatedMember _accessedMember;
+        private EvaluatedObjectReference _memberAccessResult;
 
         #region Public Properties
 
@@ -41,19 +40,11 @@ namespace CodeAnalysis.Core.Common
         /// <value>
         ///     The accessed reference.
         /// </value>
-        public EvaluatedMember AccessedMember
+        public EvaluatedObjectReference MemberAccessResult
         {
-            get { return _accessedMember ?? ThisReference; }
-            set { _accessedMember = value; }
+            get { return _memberAccessResult; }
+            set { _memberAccessResult = value; }
         }
-
-        /// <summary>
-        ///     Gets or sets the accessed reference member.
-        /// </summary>
-        /// <value>
-        ///     The accessed reference member.
-        /// </value>
-        public SimpleNameSyntax AccessedReferenceMember { get; set; }
 
         /// <summary>
         ///     Gets or sets the current method.

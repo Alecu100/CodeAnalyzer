@@ -16,12 +16,13 @@
 //  -----------------------------------------------------------------------
 
 using CodeAnalysis.Core.Common;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
@@ -33,26 +34,26 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
             SyntaxNode syntaxNode,
             StaticWorkflowEvaluatorContext workflowEvaluatorContext)
         {
-            var memberAccessExpressionSyntax = (MemberAccessExpressionSyntax)syntaxNode;
+            var memberAccessExpressionSyntax = (MemberAccessExpressionSyntax) syntaxNode;
 
-            workflowEvaluatorContext.CurrentExecutionFrame.AccessedReferenceMember = memberAccessExpressionSyntax.Name;
+            var syntaxNodeEvaluator =
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(memberAccessExpressionSyntax.Expression);
 
-            if (memberAccessExpressionSyntax.Expression == null)
+            if (syntaxNodeEvaluator != null)
             {
-                workflowEvaluatorContext.CurrentExecutionFrame.AccessedMember =
-                    workflowEvaluatorContext.CurrentExecutionFrame.ThisReference.Copy();
+                syntaxNodeEvaluator.EvaluateSyntaxNode(
+                    memberAccessExpressionSyntax.Expression,
+                    workflowEvaluatorContext);
             }
-            else
-            {
-                var syntaxNodeEvaluator =
-                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(memberAccessExpressionSyntax.Expression);
 
-                if (syntaxNodeEvaluator != null)
-                {
-                    syntaxNodeEvaluator.EvaluateSyntaxNode(
-                        memberAccessExpressionSyntax.Expression,
-                        workflowEvaluatorContext);
-                }
+            syntaxNodeEvaluator =
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(memberAccessExpressionSyntax.Name);
+
+            if (syntaxNodeEvaluator != null)
+            {
+                syntaxNodeEvaluator.EvaluateSyntaxNode(
+                    memberAccessExpressionSyntax.Name,
+                    workflowEvaluatorContext);
             }
         }
 

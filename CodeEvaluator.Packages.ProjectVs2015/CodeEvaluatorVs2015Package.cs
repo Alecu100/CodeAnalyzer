@@ -23,6 +23,8 @@ using System.Runtime.InteropServices;
 using CodeAnalyzer.UserInterface.Controls.Diagrams;
 using CodeAnalyzer.UserInterface.Controls.Windows;
 using CodeAnalyzer.UserInterface.Interfaces;
+using CodeEvaluator.Packages.Core;
+using CodeEvaluator.Packages.Core.Interfaces;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
@@ -103,6 +105,8 @@ namespace CodeEvaluator.ProjectVs2015
                 config => config.For<IWorkflowDiagramGenerator>().Use(() => new WorkflowDiagramGenerator()));
             ObjectFactory.Configure(config => config.For<IWorkflowDiagramSizes>().Use(() => new WorkflowDiagramSizes()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IWorkflowDiagramSizes>()));
+            ObjectFactory.Configure(config => config.For<IProjectFilesProvider>().Use(() => new ProjectFilesProvider()));
+            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IProjectFilesProvider>()));
         }
 
         private void RegisterVisualStudioIntegration()

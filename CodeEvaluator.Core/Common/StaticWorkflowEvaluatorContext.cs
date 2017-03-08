@@ -110,7 +110,7 @@ namespace CodeAnalysis.Core.Common
                 var previousExecutionFrame =
                     _staticWorkflowEvaluatorExecutionFrames[_staticWorkflowEvaluatorExecutionFrames.Count - 2];
 
-                previousExecutionFrame.AccessedMember = currentExecutionFrame.ReturningMethodParameters;
+                previousExecutionFrame.MemberAccessResult = currentExecutionFrame.ReturningMethodParameters;
             }
 
             _staticWorkflowEvaluatorExecutionFrames.RemoveAt(_staticWorkflowEvaluatorExecutionFrames.Count - 1);
