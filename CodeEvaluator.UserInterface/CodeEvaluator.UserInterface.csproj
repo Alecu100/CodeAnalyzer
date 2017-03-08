@@ -276,6 +276,10 @@
       <Project>{882F4464-2A84-4576-B6EA-1EFFD4FCF4A5}</Project>
       <Name>CodeEvaluator.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeEvaluator.Workflows\CodeEvaluator.Workflows.csproj">
+      <Project>{0D9F35B5-685B-44F0-867A-A3C798E0FC18}</Project>
+      <Name>CodeEvaluator.Workflows</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

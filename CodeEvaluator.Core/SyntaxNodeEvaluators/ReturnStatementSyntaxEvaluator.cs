@@ -48,22 +48,10 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
                 if (workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult != null)
                 {
-                    workflowEvaluatorContext.CurrentExecutionFrame.ReturningMethodParameters.Add(
-                        workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult.Move());
+                    workflowEvaluatorContext.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
+                        workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult);
 
                     workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult = null;
-                }
-
-                if (workflowEvaluatorContext.CurrentExecutionFrame.ReturnedMethodParameters.Count > 0)
-                {
-                    foreach (var trackedVariableReference in
-                        workflowEvaluatorContext.CurrentExecutionFrame.ReturnedMethodParameters)
-                    {
-                        workflowEvaluatorContext.CurrentExecutionFrame.ReturningMethodParameters.Add(
-                            trackedVariableReference.Move());
-                    }
-
-                    workflowEvaluatorContext.CurrentExecutionFrame.ReturnedMethodParameters.Clear();
                 }
             }
         }

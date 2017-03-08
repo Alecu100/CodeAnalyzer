@@ -66,7 +66,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         private void InitializeThisVariable()
         {
-            _thisReference = _workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters[-1].Move();
+            _thisReference = _workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters[-1];
             _workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters.Remove(-1);
             _evaluatedMethod =
                 _thisReference.TypeInfo.AllMethods.First(

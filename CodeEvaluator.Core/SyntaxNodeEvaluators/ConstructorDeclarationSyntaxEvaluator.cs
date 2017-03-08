@@ -68,7 +68,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
             if (trackedVariableTypeInfo != null)
             {
                 _thisReference = new EvaluatedObjectReference();
-                _thisReference = _thisReference.AssignEvaluatedObject(VariableAllocator.AllocateVariable(trackedVariableTypeInfo));
+                _thisReference.AssignEvaluatedObject(VariableAllocator.AllocateVariable(trackedVariableTypeInfo));
                 _thisReference.TypeInfo = trackedVariableTypeInfo;
                 _evaluatedMethod =
                     trackedVariableTypeInfo.Constructors.First(
@@ -80,7 +80,8 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         private void ReturnThisReference()
         {
-            _workflowEvaluatorContext.CurrentExecutionFrame.ReturningMethodParameters.Add(_thisReference.Copy());
+            _workflowEvaluatorContext.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
+                _thisReference);
         }
 
         #endregion

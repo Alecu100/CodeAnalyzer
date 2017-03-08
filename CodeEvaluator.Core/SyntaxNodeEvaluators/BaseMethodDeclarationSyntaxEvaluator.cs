@@ -80,9 +80,8 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     trackedVariableReference.TypeInfo = trackedMethodParameter.TypeInfo;
                     trackedVariableReference.Identifier = trackedMethodParameter.Identifier;
                     trackedVariableReference.IdentifierText = trackedMethodParameter.IdentifierText;
-                    trackedVariableReference = trackedVariableReference.AddVariables(passedParameters.EvaluatedObjects);
+                    trackedVariableReference.AssignEvaluatedObject(passedParameters);
                     _workflowEvaluatorContext.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
-                    passedParameters.Dispose();
                     _workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters.Remove(i);
                 }
                 else
@@ -99,9 +98,8 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     trackedVariableReference.TypeInfo = trackedMethodParameter.TypeInfo;
                     trackedVariableReference.Identifier = trackedMethodParameter.Identifier;
                     trackedVariableReference.IdentifierText = trackedMethodParameter.IdentifierText;
-                    trackedVariableReference =
-                        trackedVariableReference.AssignEvaluatedObject(
-                            VariableAllocator.AllocateVariable(trackedMethodParameter.TypeInfo));
+                    trackedVariableReference.AssignEvaluatedObject(
+                        VariableAllocator.AllocateVariable(trackedMethodParameter.TypeInfo));
                     _workflowEvaluatorContext.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
                 }
             }

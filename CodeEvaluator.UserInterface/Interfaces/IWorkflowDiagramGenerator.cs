@@ -16,12 +16,12 @@
 //  -----------------------------------------------------------------------
 
 using CodeAnalyzer.UserInterface.Controls.Base;
+using CodeAnalyzer.Workflow;
 
 namespace CodeAnalyzer.UserInterface.Interfaces
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 

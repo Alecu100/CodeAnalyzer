@@ -20,41 +20,18 @@ using CodeAnalysis.Core.Members;
 
 namespace CodeAnalysis.Core.Interfaces
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
     public interface IEvaluatorExecutionFrameFactory
     {
-        #region Public Methods and Operators
-
-        /// <summary>
-        ///     Builds the child execution frame.
-        /// </summary>
-        /// <param name="parentExecutionFrame">The execution frame.</param>
-        /// <returns></returns>
-        EvaluatorExecutionFrame BuildChildExecutionFrameForNestedBlock(
-            EvaluatorExecutionFrame parentExecutionFrame);
-
-        /// <summary>
-        ///     Builds the new type of the execution frame for method call in different.
-        /// </summary>
-        /// <param name="sourceExecutionFrame">The source execution frame.</param>
-        /// <returns></returns>
         EvaluatorExecutionFrame BuildNewExecutionFrameForMethodCall(
             EvaluatedMethodBase targetMethod,
             EvaluatedObjectReference thisReference);
 
-        #endregion
 
-        /// <summary>
-        ///     Builds the initial execution frame.
-        /// </summary>
-        /// <param name="evaluatedType">Type of the tracked.</param>
-        /// <param name="startMethod">The start method.</param>
-        /// <returns></returns>
         EvaluatorExecutionFrame BuildInitialExecutionFrame(EvaluatedTypeInfo evaluatedType);
     }
 }

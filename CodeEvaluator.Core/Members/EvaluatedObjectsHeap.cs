@@ -46,20 +46,6 @@ namespace CodeAnalysis.Core.Members
             item.ParentHeap = this;
         }
 
-        /// <summary>
-        ///     Removes the specified item.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        public void Remove(EvaluatedObject item)
-        {
-            var allReferences = item.References.ToArray();
-
-            foreach (var trackedVariableReference in allReferences)
-            {
-                item.RemoveReference(trackedVariableReference);
-            }
-        }
-
         #endregion
     }
 }

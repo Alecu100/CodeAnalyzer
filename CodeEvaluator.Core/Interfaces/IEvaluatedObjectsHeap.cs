@@ -20,22 +20,12 @@ using CodeAnalysis.Core.Members;
 
 namespace CodeAnalysis.Core.Interfaces
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
     public interface IEvaluatedObjectsHeap : IList<EvaluatedObject>
     {
-        #region Public Methods and Operators
-
-        /// <summary>
-        /// Removes the specified tracked variable.
-        /// </summary>
-        /// <param name="evaluatedObject">The tracked variable.</param>
-        void Remove(EvaluatedObject evaluatedObject);
-
-        #endregion
     }
 }

@@ -22,39 +22,19 @@ using System.Windows.Controls;
 using CodeAnalyzer.UserInterface.Controls.Base;
 using CodeAnalyzer.UserInterface.Controls.Base.Enums;
 using CodeAnalyzer.UserInterface.Interfaces;
+using CodeAnalyzer.Workflow;
+using CodeAnalyzer.Workflow.Enums;
+using StructureMap;
 
 namespace CodeAnalyzer.UserInterface.Controls.Diagrams
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
     public class WorkflowDiagramGenerator : IWorkflowDiagramGenerator
     {
-        #region Fields
-
-        private Stack<Tuple<WorkflowStep, WorkflowStep, Workflow>> _itemsToBeProcessed;
-
-        private readonly Dictionary<WorkflowStep, List<WorkflowStep>> _children =
-            new Dictionary<WorkflowStep, List<WorkflowStep>>();
-
-        private readonly Dictionary<WorkflowItem, WorkflowStep> _createdItemsForSteps =
-            new Dictionary<WorkflowItem, WorkflowStep>();
-
-        private readonly Dictionary<int, List<WorkflowStep>> _levels = new Dictionary<int, List<WorkflowStep>>();
-
-        private readonly Dictionary<WorkflowStep, int> _levelsForCreatedItems = new Dictionary<WorkflowStep, int>();
-
-        private readonly Dictionary<WorkflowStep, List<WorkflowStep>> _parents =
-            new Dictionary<WorkflowStep, List<WorkflowStep>>();
-
-        private readonly Dictionary<WorkflowStep, WorkflowItem> _stepsForCreatedItems =
-            new Dictionary<WorkflowStep, WorkflowItem>();
-
-        #endregion
-
         #region Constructors and Destructors
 
         public WorkflowDiagramGenerator()
@@ -91,6 +71,28 @@ namespace CodeAnalyzer.UserInterface.Controls.Diagrams
 
             PopulateWorkflowItemConnections(canvas);
         }
+
+        #endregion
+
+        #region Fields
+
+        private Stack<Tuple<WorkflowStep, WorkflowStep, Workflow.Workflow>> _itemsToBeProcessed;
+
+        private readonly Dictionary<WorkflowStep, List<WorkflowStep>> _children =
+            new Dictionary<WorkflowStep, List<WorkflowStep>>();
+
+        private readonly Dictionary<WorkflowItem, WorkflowStep> _createdItemsForSteps =
+            new Dictionary<WorkflowItem, WorkflowStep>();
+
+        private readonly Dictionary<int, List<WorkflowStep>> _levels = new Dictionary<int, List<WorkflowStep>>();
+
+        private readonly Dictionary<WorkflowStep, int> _levelsForCreatedItems = new Dictionary<WorkflowStep, int>();
+
+        private readonly Dictionary<WorkflowStep, List<WorkflowStep>> _parents =
+            new Dictionary<WorkflowStep, List<WorkflowStep>>();
+
+        private readonly Dictionary<WorkflowStep, WorkflowItem> _stepsForCreatedItems =
+            new Dictionary<WorkflowStep, WorkflowItem>();
 
         #endregion
 
@@ -216,21 +218,21 @@ namespace CodeAnalyzer.UserInterface.Controls.Diagrams
                 }
             }
 
-            var maxLevelWidth = (maxItemsPerLevel - 1) * WorkflowDiagramSizes.MinimumColumnSpacing
-                                + maxItemsPerLevel * WorkflowDiagramSizes.ColumnWidth
-                                + 2 * WorkflowDiagramSizes.MinimumMargin;
+            var maxLevelWidth = (maxItemsPerLevel - 1)*WorkflowDiagramSizes.MinimumColumnSpacing
+                                + maxItemsPerLevel*WorkflowDiagramSizes.ColumnWidth
+                                + 2*WorkflowDiagramSizes.MinimumMargin;
 
             foreach (var row in _levels)
             {
-                var topDistance = (row.Key - 1) * (WorkflowDiagramSizes.RowSpacing + WorkflowDiagramSizes.RowHeight)
+                var topDistance = (row.Key - 1)*(WorkflowDiagramSizes.RowSpacing + WorkflowDiagramSizes.RowHeight)
                                   + WorkflowDiagramSizes.MinimumMargin;
 
-                for (int column = 0; column < row.Value.Count; column++)
+                for (var column = 0; column < row.Value.Count; column++)
                 {
                     var currentStep = row.Value[column];
                     var currentDiagramItem = _stepsForCreatedItems[currentStep];
 
-                    var leftDistance = (maxLevelWidth / (row.Value.Count + 1)) * (column + 1);
+                    var leftDistance = maxLevelWidth/(row.Value.Count + 1)*(column + 1);
 
                     Canvas.SetTop(currentDiagramItem, topDistance);
                     Canvas.SetLeft(currentDiagramItem, leftDistance);
