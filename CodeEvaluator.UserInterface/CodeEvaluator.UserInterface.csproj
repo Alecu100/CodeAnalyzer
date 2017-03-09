@@ -275,10 +275,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\Images.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeEvaluator.Core\CodeEvaluator.Core.csproj">

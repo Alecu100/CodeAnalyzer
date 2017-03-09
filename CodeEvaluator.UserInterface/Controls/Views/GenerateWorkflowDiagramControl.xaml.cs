@@ -113,14 +113,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
 
         #region Public Methods and Operators
 
-        /// <summary>
-        ///     Notifies listening clients that a solution has been closed.
-        /// </summary>
-        /// <returns>
-        ///     If the method succeeds, it returns <see cref="F:Microsoft.VisualStudio.VSConstants.S_OK" />. If it fails, it
-        ///     returns an error code.
-        /// </returns>
-        /// <param name="pUnkReserved">[in] Reserved for future use.</param>
         public void OnAfterCloseSolution( /*object pUnkReserved*/)
         {
             LoadedProjects.Clear();
@@ -132,36 +124,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
             //return VSConstants.S_OK;
         }
 
-        /// <summary>
-        ///     Notifies listening clients that the project has been loaded.
-        /// </summary>
-        /// <returns>
-        ///     If the method succeeds, it returns <see cref="F:Microsoft.VisualStudio.VSConstants.S_OK" />. If it fails, it
-        ///     returns an error code.
-        /// </returns>
-        /// <param name="pStubHierarchy">
-        ///     [in] Pointer to the <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsHierarchy" />
-        ///     interface of the placeholder hierarchy for the unloaded project.
-        /// </param>
-        /// <param name="pRealHierarchy">
-        ///     [in] Pointer to the <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsHierarchy" />
-        ///     interface of the project that was loaded.
-        /// </param>
-        /// <summary>
-        ///     Notifies listening clients that the project has been opened.
-        /// </summary>
-        /// <returns>
-        ///     If the method succeeds, it returns <see cref="F:Microsoft.VisualStudio.VSConstants.S_OK" />. If it fails, it
-        ///     returns an error code.
-        /// </returns>
-        /// <param name="pHierarchy">
-        ///     [in] Pointer to the <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsHierarchy" />
-        ///     interface of the project being loaded.
-        /// </param>
-        /// <param name="fAdded">
-        ///     [in] true if the project is added to the solution after the solution is opened. false if the
-        ///     project is added to the solution while the solution is being opened.
-        /// </param>
         public void OnAfterOpenProject(IProjectWrapper loadedProject)
         {
             //object objProj;
@@ -219,18 +181,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
             }
         }
 
-        /// <summary>
-        ///     Notifies listening clients that the solution has been opened.
-        /// </summary>
-        /// <returns>
-        ///     If the method succeeds, it returns <see cref="F:Microsoft.VisualStudio.VSConstants.S_OK" />. If it fails, it
-        ///     returns an error code.
-        /// </returns>
-        /// <param name="pUnkReserved">[in] Reserved for future use.</param>
-        /// <param name="fNewSolution">
-        ///     [in] true if the solution is being created. false if the solution was created previously or
-        ///     is being loaded.
-        /// </param>
         public void OnAfterOpenSolution(ISolutionWrapper newSolution /*object pUnkReserved, int fNewSolution*/)
         {
             //var dte = ObjectFactory.GetInstance<DTE>();
@@ -238,35 +188,12 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
             //return VSConstants.S_OK;
         }
 
-        /// <summary>
-        ///     Notifies listening clients that the project is about to be closed.
-        /// </summary>
-        /// <returns>
-        ///     If the method succeeds, it returns <see cref="F:Microsoft.VisualStudio.VSConstants.S_OK" />. If it fails, it
-        ///     returns an error code.
-        /// </returns>
-        /// <param name="pHierarchy">
-        ///     [in] Pointer to the <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsHierarchy" />
-        ///     interface of the project being closed.
-        /// </param>
-        /// <param name="fRemoved">
-        ///     [in] true if the project was removed from the solution before the solution was closed. false if
-        ///     the project was removed from the solution while the solution was being closed.
-        /// </param>
-        /// <summary>
-        ///     Notifies listening clients that the solution is about to be closed.
-        /// </summary>
-        /// <returns>
-        ///     If the method succeeds, it returns <see cref="F:Microsoft.VisualStudio.VSConstants.S_OK" />. If it fails, it
-        ///     returns an error code.
-        /// </returns>
-        /// <param name="pUnkReserved">[in] Reserved for future use.</param>
-        public void OnBeforeCloseSolution(object pUnkReserved)
+        public void OnBeforeCloseSolution()
         {
-            //if (_currentSolution == null)
-            //{
-            //    return VSConstants.S_OK;
-            //}
+            if (_currentSolution == null)
+            {
+                return;
+            }
 
             var selectedProjects = new List<string>();
 

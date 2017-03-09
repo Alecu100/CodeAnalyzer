@@ -24,6 +24,7 @@ using CodeAnalyzer.UserInterface.Controls.Diagrams;
 using CodeAnalyzer.UserInterface.Interfaces;
 using CodeEvaluator.Packages.Core;
 using CodeEvaluator.Packages.Core.Interfaces;
+using CodeEvaluator.ProjectVs2015.Wrappers;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
@@ -121,6 +122,10 @@ namespace CodeEvaluator.ProjectVs2015
                 var menuToolWin = new MenuCommand(ShowToolWindow, toolwndCommandID);
                 mcs.AddCommand(menuToolWin);
             }
+
+            var solution = ObjectFactory.GetInstance<IVsSolution>();
+            uint cookie;
+            solution.AdviseSolutionEvents(new VsSolutionEventsWrapper(), out cookie);
         }
 
         private void RegisterVisualStudioServices()
