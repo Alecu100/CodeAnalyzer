@@ -15,13 +15,13 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System.Windows;
 using CodeAnalyzer.UserInterface.Controls.Base.Enums;
 
 namespace CodeAnalyzer.UserInterface.Controls.Base
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 

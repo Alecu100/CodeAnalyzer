@@ -22,8 +22,8 @@ using System.Windows.Controls;
 using CodeAnalyzer.UserInterface.Controls.Base;
 using CodeAnalyzer.UserInterface.Controls.Base.Enums;
 using CodeAnalyzer.UserInterface.Interfaces;
-using CodeAnalyzer.Workflow;
-using CodeAnalyzer.Workflow.Enums;
+using CodeEvaluator.Workflows;
+using CodeEvaluator.Workflows.Enums;
 using StructureMap;
 
 namespace CodeAnalyzer.UserInterface.Controls.Diagrams
@@ -76,7 +76,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Diagrams
 
         #region Fields
 
-        private Stack<Tuple<WorkflowStep, WorkflowStep, Workflow.Workflow>> _itemsToBeProcessed;
+        private Stack<Tuple<WorkflowStep, WorkflowStep, Workflow>> _itemsToBeProcessed;
 
         private readonly Dictionary<WorkflowStep, List<WorkflowStep>> _children =
             new Dictionary<WorkflowStep, List<WorkflowStep>>();

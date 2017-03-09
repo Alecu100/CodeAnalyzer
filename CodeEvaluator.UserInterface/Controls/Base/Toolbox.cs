@@ -15,13 +15,13 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System.Windows;
 using System.Windows.Controls;
 
 namespace CodeAnalyzer.UserInterface.Controls.Base
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
@@ -41,14 +41,8 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
         public Size ItemSize
         {
-            get
-            {
-                return _itemSize;
-            }
-            set
-            {
-                _itemSize = value;
-            }
+            get { return _itemSize; }
+            set { _itemSize = value; }
         }
 
         #endregion
@@ -65,7 +59,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
         // Determines if the specified item is (or is eligible to be) its own container.        
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
-            return (item is ToolboxItem);
+            return item is ToolboxItem;
         }
 
         #endregion

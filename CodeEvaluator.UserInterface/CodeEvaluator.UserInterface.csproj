@@ -33,15 +33,6 @@
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="envdte100, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="envdte90, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeAnalysis.Common.1.3.2\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
       <Private>True</Private>
@@ -50,7 +41,6 @@
       <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.1.3.2\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
@@ -101,7 +91,6 @@
     <Compile Include="Controls\Base\WorkflowConnector.cs" />
     <Compile Include="Controls\Base\WorkflowConnectorInfo.cs" />
     <Compile Include="Controls\Base\WorkflowItem.cs" />
-    <Compile Include="Interfaces\IProjectWrapper.cs" />
     <Compile Include="Interfaces\IWorkflowDiagramGenerator.cs" />
     <Compile Include="Interfaces\IWorkflowDiagramSizes.cs" />
     <Compile Include="Controls\Diagrams\WorkflowDiagramGenerator.cs" />
@@ -111,8 +100,6 @@
     </Compile>
     <Compile Include="Interfaces\IXamlResourcesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interfaces\IProjectItemWrapper.cs" />
-    <Compile Include="Interfaces\ISolutionWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\Views\GenerateWorkflowDiagramControl.xaml">

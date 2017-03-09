@@ -16,27 +16,18 @@
 //  -----------------------------------------------------------------------
 
 using System;
-using CodeAnalyzer.Workflow.Enums;
+using CodeEvaluator.Workflows.Enums;
 
-namespace CodeAnalyzer.Workflow
+namespace CodeEvaluator.Workflows
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
     [Serializable]
     public class WorkflowExecutionSnapshot
     {
-        #region Fields
-
-        private Workflow _activeWorkflow;
-
-        private WorkflowStep _startStep;
-
-        #endregion
-
         #region Constructors and Destructors
 
         public WorkflowExecutionSnapshot()
@@ -50,6 +41,14 @@ namespace CodeAnalyzer.Workflow
 
         #endregion
 
+        #region Fields
+
+        private Workflow _activeWorkflow;
+
+        private WorkflowStep _startStep;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -60,14 +59,8 @@ namespace CodeAnalyzer.Workflow
         /// </value>
         public Workflow ActiveWorkflow
         {
-            get
-            {
-                return _activeWorkflow;
-            }
-            set
-            {
-                _activeWorkflow = value;
-            }
+            get { return _activeWorkflow; }
+            set { _activeWorkflow = value; }
         }
 
         /// <summary>
@@ -78,14 +71,8 @@ namespace CodeAnalyzer.Workflow
         /// </value>
         public WorkflowStep StartStep
         {
-            get
-            {
-                return _startStep;
-            }
-            set
-            {
-                _startStep = value;
-            }
+            get { return _startStep; }
+            set { _startStep = value; }
         }
 
         #endregion

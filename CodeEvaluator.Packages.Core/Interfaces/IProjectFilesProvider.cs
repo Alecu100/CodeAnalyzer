@@ -16,7 +16,7 @@
 //  -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using EnvDTE;
+using CodeAnalyzer.UserInterface.Interfaces;
 
 namespace CodeEvaluator.Packages.Core.Interfaces
 {
@@ -29,7 +29,7 @@ namespace CodeEvaluator.Packages.Core.Interfaces
     {
         #region Public Methods and Operators
 
-        IList<ProjectItem> GetAllSourceFileNamesFromProjects(IList<Project> searchLocations);
+        IList<IProjectItemWrapper> GetAllSourceFileNamesFromProjects(IList<IProjectWrapper> searchLocations);
 
         #endregion
     }

@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CodeAnalyzer.Workflow
+namespace CodeEvaluator.Workflows
 {
     #region Using
 

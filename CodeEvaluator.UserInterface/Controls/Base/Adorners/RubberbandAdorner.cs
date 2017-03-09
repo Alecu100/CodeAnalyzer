@@ -16,6 +16,7 @@
 //  -----------------------------------------------------------------------
 
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -24,30 +25,13 @@ using System.Windows.Shapes;
 
 namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
     public class RubberbandAdorner : Adorner
     {
-        #region Fields
-
-        private readonly Canvas _adornerCanvas;
-
-        private readonly Rectangle _rubberband;
-
-        private readonly VisualCollection _visuals;
-
-        private readonly WorkflowCanvas _workflowCanvas;
-
-        private Point? _endPoint;
-
-        private Point? _startPoint;
-
-        #endregion
-
         #region Constructors and Destructors
 
         public RubberbandAdorner(WorkflowCanvas workflowCanvas, Point? dragStartPoint)
@@ -64,7 +48,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
             _rubberband = new Rectangle();
             _rubberband.Stroke = Brushes.Navy;
             _rubberband.StrokeThickness = 1;
-            _rubberband.StrokeDashArray = new DoubleCollection(new double[] { 2 });
+            _rubberband.StrokeDashArray = new DoubleCollection(new double[] {2});
 
             _adornerCanvas.Children.Add(_rubberband);
         }
@@ -75,11 +59,24 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 
         protected override int VisualChildrenCount
         {
-            get
-            {
-                return _visuals.Count;
-            }
+            get { return _visuals.Count; }
         }
+
+        #endregion
+
+        #region Fields
+
+        private readonly Canvas _adornerCanvas;
+
+        private readonly Rectangle _rubberband;
+
+        private readonly VisualCollection _visuals;
+
+        private readonly WorkflowCanvas _workflowCanvas;
+
+        private Point? _endPoint;
+
+        private Point? _startPoint;
 
         #endregion
 
@@ -132,11 +129,11 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 
         private void UpdateRubberband()
         {
-            double left = Math.Min(_startPoint.Value.X, _endPoint.Value.X);
-            double top = Math.Min(_startPoint.Value.Y, _endPoint.Value.Y);
+            var left = Math.Min(_startPoint.Value.X, _endPoint.Value.X);
+            var top = Math.Min(_startPoint.Value.Y, _endPoint.Value.Y);
 
-            double width = Math.Abs(_startPoint.Value.X - _endPoint.Value.X);
-            double height = Math.Abs(_startPoint.Value.Y - _endPoint.Value.Y);
+            var width = Math.Abs(_startPoint.Value.X - _endPoint.Value.X);
+            var height = Math.Abs(_startPoint.Value.Y - _endPoint.Value.Y);
 
             _rubberband.Width = width;
             _rubberband.Height = height;
@@ -149,8 +146,8 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
             var rubberBand = new Rect(_startPoint.Value, _endPoint.Value);
             foreach (WorkflowItem item in _workflowCanvas.Children)
             {
-                Rect itemRect = VisualTreeHelper.GetDescendantBounds(item);
-                Rect itemBounds = item.TransformToAncestor(_workflowCanvas).TransformBounds(itemRect);
+                var itemRect = VisualTreeHelper.GetDescendantBounds(item);
+                var itemBounds = item.TransformToAncestor(_workflowCanvas).TransformBounds(itemRect);
 
                 if (rubberBand.Contains(itemBounds))
                 {

@@ -16,9 +16,8 @@
 //  -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using CodeAnalyzer.UserInterface.Interfaces;
 using CodeEvaluator.Packages.Core.Interfaces;
-using EnvDTE;
-using VSLangProj;
 
 namespace CodeEvaluator.Packages.Core
 {
@@ -31,24 +30,38 @@ namespace CodeEvaluator.Packages.Core
     {
         #region Fields
 
-        private List<ProjectItem> _loadedProjectItems;
+        private List<IProjectItemWrapper> _loadedProjectItems;
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public IList<IProjectItemWrapper> GetAllSourceFileNamesFromProjects(IList<IProjectWrapper> searchLocations)
+        {
+            _loadedProjectItems = new List<IProjectItemWrapper>();
+
+            foreach (var project in searchLocations)
+            {
+                foreach (var projectItem in project.ProjectItems)
+                {
+                    AddProjectItem(projectItem);
+                }
+            }
+
+            return _loadedProjectItems;
+        }
 
         #endregion
 
         #region Private Methods and Operators
 
-        private void AddProjectItem(ProjectItem projectItem)
+        private void AddProjectItem(IProjectItemWrapper projectItem)
         {
             if (projectItem.Kind == VsConstants.FolderFileKind)
             {
                 foreach (var item in projectItem.ProjectItems)
                 {
-                    var childProjectItem = item as ProjectItem;
-
-                    if (childProjectItem != null)
-                    {
-                        AddProjectItem(childProjectItem);
-                    }
+                    AddProjectItem(item);
                 }
 
                 return;
@@ -58,53 +71,6 @@ namespace CodeEvaluator.Packages.Core
             {
                 _loadedProjectItems.Add(projectItem);
             }
-        }
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        public List<Reference> GetAllReferencesFromProjects(IList<Project> searchLocations)
-        {
-            var references = new List<Reference>();
-
-            foreach (var searchLocation in searchLocations)
-            {
-                var vsProject = searchLocation.Object as VSProject;
-                if (vsProject != null)
-                {
-                    foreach (var referenceObj in vsProject.References)
-                    {
-                        var reference = referenceObj as Reference;
-                        if (reference != null)
-                        {
-                            references.Add(reference);
-                        }
-                    }
-                }
-            }
-
-            return references;
-        }
-
-        public IList<ProjectItem> GetAllSourceFileNamesFromProjects(IList<Project> searchLocations)
-        {
-            _loadedProjectItems = new List<ProjectItem>();
-
-            foreach (var project in searchLocations)
-            {
-                foreach (var item in project.ProjectItems)
-                {
-                    var projectItem = item as ProjectItem;
-
-                    if (projectItem != null)
-                    {
-                        AddProjectItem(projectItem);
-                    }
-                }
-            }
-
-            return _loadedProjectItems;
         }
 
         #endregion

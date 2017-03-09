@@ -18,7 +18,7 @@ namespace CodeAnalysis.Core.Configuration
                 config => config.For<ISyntaxNodeNamespaceProvider>().Use(() => new SyntaxNodeNamespaceProvider()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ISyntaxNodeNamespaceProvider>()));
             ObjectFactory.Configure(
-                config => config.For<ICodeEvaluator>().Use(() => new CodeEvaluator()));
+                config => config.For<ICodeEvaluator>().Use(() => new Common.CodeEvaluator()));
             ObjectFactory.Configure(config => config.For<IParsedSourceFilesCache>().Use(new ParsedSourceFilesCache()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IParsedSourceFilesCache>()));
             ObjectFactory.Configure(

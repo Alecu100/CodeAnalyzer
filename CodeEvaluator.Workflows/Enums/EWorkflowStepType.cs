@@ -17,7 +17,7 @@
 
 using System;
 
-namespace CodeAnalyzer.Workflow.Enums
+namespace CodeEvaluator.Workflows.Enums
 {
     [Serializable]
     public enum EWorkflowStepType

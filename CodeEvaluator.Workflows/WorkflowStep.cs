@@ -17,9 +17,9 @@
 
 using System;
 using System.Collections.Generic;
-using CodeAnalyzer.Workflow.Enums;
+using CodeEvaluator.Workflows.Enums;
 
-namespace CodeAnalyzer.Workflow
+namespace CodeEvaluator.Workflows
 {
     #region Using
 

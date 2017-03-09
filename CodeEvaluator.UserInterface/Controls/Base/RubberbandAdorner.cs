@@ -15,6 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -22,14 +23,53 @@ using System.Windows.Media;
 
 namespace CodeAnalyzer.UserInterface.Controls.Base
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
     public class RubberbandAdorner : Adorner
     {
+        #region Constructors and Destructors
+
+        public RubberbandAdorner(WorkflowCanvas workflowCanvas, Point? dragStartPoint)
+            : base(workflowCanvas)
+        {
+            _workflowCanvas = workflowCanvas;
+            _startPoint = dragStartPoint;
+            _rubberbandPen = new Pen(Brushes.LightSlateGray, 1);
+            _rubberbandPen.DashStyle = new DashStyle(new double[] {2}, 1);
+        }
+
+        #endregion
+
+        #region Private Methods and Operators
+
+        private void UpdateSelection()
+        {
+            foreach (var item in _workflowCanvas.SelectedItems)
+            {
+                item.IsSelected = false;
+            }
+            _workflowCanvas.SelectedItems.Clear();
+
+            var rubberBand = new Rect(_startPoint.Value, _endPoint.Value);
+            foreach (Control item in _workflowCanvas.Children)
+            {
+                var itemRect = VisualTreeHelper.GetDescendantBounds(item);
+                var itemBounds = item.TransformToAncestor(_workflowCanvas).TransformBounds(itemRect);
+
+                if (rubberBand.Contains(itemBounds) && item is ISelectable)
+                {
+                    var selectableItem = item as ISelectable;
+                    selectableItem.IsSelected = true;
+                    _workflowCanvas.SelectedItems.Add(selectableItem);
+                }
+            }
+        }
+
+        #endregion
+
         #region Fields
 
         private readonly Pen _rubberbandPen;
@@ -39,19 +79,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
         private Point? _endPoint;
 
         private Point? _startPoint;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        public RubberbandAdorner(WorkflowCanvas workflowCanvas, Point? dragStartPoint)
-            : base(workflowCanvas)
-        {
-            _workflowCanvas = workflowCanvas;
-            _startPoint = dragStartPoint;
-            _rubberbandPen = new Pen(Brushes.LightSlateGray, 1);
-            _rubberbandPen.DashStyle = new DashStyle(new double[] { 2 }, 1);
-        }
 
         #endregion
 
@@ -90,7 +117,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
             }
 
             // remove this adorner from adorner layer
-            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(_workflowCanvas);
+            var adornerLayer = AdornerLayer.GetAdornerLayer(_workflowCanvas);
             if (adornerLayer != null)
             {
                 adornerLayer.Remove(this);
@@ -111,33 +138,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
             if (_startPoint.HasValue && _endPoint.HasValue)
             {
                 dc.DrawRectangle(Brushes.Transparent, _rubberbandPen, new Rect(_startPoint.Value, _endPoint.Value));
-            }
-        }
-
-        #endregion
-
-        #region Private Methods and Operators
-
-        private void UpdateSelection()
-        {
-            foreach (var item in _workflowCanvas.SelectedItems)
-            {
-                item.IsSelected = false;
-            }
-            _workflowCanvas.SelectedItems.Clear();
-
-            var rubberBand = new Rect(_startPoint.Value, _endPoint.Value);
-            foreach (Control item in _workflowCanvas.Children)
-            {
-                Rect itemRect = VisualTreeHelper.GetDescendantBounds(item);
-                Rect itemBounds = item.TransformToAncestor(_workflowCanvas).TransformBounds(itemRect);
-
-                if (rubberBand.Contains(itemBounds) && item is ISelectable)
-                {
-                    var selectableItem = item as ISelectable;
-                    selectableItem.IsSelected = true;
-                    _workflowCanvas.SelectedItems.Add(selectableItem);
-                }
             }
         }
 

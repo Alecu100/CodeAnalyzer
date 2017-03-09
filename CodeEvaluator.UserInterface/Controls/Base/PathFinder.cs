@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using CodeAnalyzer.UserInterface.Controls.Base.Enums;
 
@@ -43,18 +44,19 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
         #region Public Methods and Operators
 
-        public static List<Point> GetConnectionLine(WorkflowConnectorInfo source, WorkflowConnectorInfo sink, bool showLastLine)
+        public static List<Point> GetConnectionLine(WorkflowConnectorInfo source, WorkflowConnectorInfo sink,
+            bool showLastLine)
         {
             var linePoints = new List<Point>();
 
-            Rect rectSource = GetRectWithMargin(source, Margin);
-            Rect rectSink = GetRectWithMargin(sink, Margin);
+            var rectSource = GetRectWithMargin(source, Margin);
+            var rectSink = GetRectWithMargin(sink, Margin);
 
-            Point startPoint = GetOffsetPoint(source, rectSource);
-            Point endPoint = GetOffsetPoint(sink, rectSink);
+            var startPoint = GetOffsetPoint(source, rectSource);
+            var endPoint = GetOffsetPoint(sink, rectSink);
 
             linePoints.Add(startPoint);
-            Point currentPoint = startPoint;
+            var currentPoint = startPoint;
 
             if (!rectSink.Contains(currentPoint) && !rectSource.Contains(endPoint))
             {
@@ -62,14 +64,14 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
                 {
                     #region source node
 
-                    if (IsPointVisible(currentPoint, endPoint, new[] { rectSource, rectSink }))
+                    if (IsPointVisible(currentPoint, endPoint, new[] {rectSource, rectSink}))
                     {
                         linePoints.Add(endPoint);
                         currentPoint = endPoint;
                         break;
                     }
 
-                    Point neighbour = GetNearestVisibleNeighborSink(currentPoint, endPoint, sink, rectSource, rectSink);
+                    var neighbour = GetNearestVisibleNeighborSink(currentPoint, endPoint, sink, rectSource, rectSink);
                     if (!double.IsNaN(neighbour.X))
                     {
                         linePoints.Add(neighbour);
@@ -81,11 +83,11 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
                     if (currentPoint == startPoint)
                     {
                         bool flag;
-                        Point n = GetNearestNeighborSource(source, endPoint, rectSource, rectSink, out flag);
+                        var n = GetNearestNeighborSource(source, endPoint, rectSource, rectSink, out flag);
                         linePoints.Add(n);
                         currentPoint = n;
 
-                        if (!IsRectVisible(currentPoint, rectSink, new[] { rectSource }))
+                        if (!IsRectVisible(currentPoint, rectSink, new[] {rectSource}))
                         {
                             Point n1, n2;
                             GetOppositeCorners(source.Orientation, rectSource, out n1, out n2);
@@ -99,7 +101,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
                                 linePoints.Add(n2);
                                 currentPoint = n2;
                             }
-                            if (!IsRectVisible(currentPoint, rectSink, new[] { rectSource }))
+                            if (!IsRectVisible(currentPoint, rectSink, new[] {rectSource}))
                             {
                                 if (flag)
                                 {
@@ -125,8 +127,8 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
                         GetNeighborCorners(sink.Orientation, rectSink, out s1, out s2);
                         GetOppositeCorners(sink.Orientation, rectSink, out n1, out n2);
 
-                        bool n1Visible = IsPointVisible(currentPoint, n1, new[] { rectSource, rectSink });
-                        bool n2Visible = IsPointVisible(currentPoint, n2, new[] { rectSource, rectSink });
+                        var n1Visible = IsPointVisible(currentPoint, n1, new[] {rectSource, rectSink});
+                        var n2Visible = IsPointVisible(currentPoint, n2, new[] {rectSource, rectSink});
 
                         if (n1Visible && n2Visible)
                         {
@@ -166,7 +168,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
                                 break;
                             }
 
-                            if ((Distance(n1, endPoint) <= Distance(n2, endPoint)))
+                            if (Distance(n1, endPoint) <= Distance(n2, endPoint))
                             {
                                 linePoints.Add(n1);
                                 if (rectSource.Contains(s1))
@@ -237,7 +239,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
             linePoints = OptimizeLinePoints(
                 linePoints,
-                new[] { rectSource, rectSink },
+                new[] {rectSource, rectSink},
                 source.Orientation,
                 sink.Orientation);
 
@@ -251,29 +253,29 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
             EConnectorOrientation preferredOrientation)
         {
             var linePoints = new List<Point>();
-            Rect rectSource = GetRectWithMargin(source, 10);
-            Point startPoint = GetOffsetPoint(source, rectSource);
-            Point endPoint = sinkPoint;
+            var rectSource = GetRectWithMargin(source, 10);
+            var startPoint = GetOffsetPoint(source, rectSource);
+            var endPoint = sinkPoint;
 
             linePoints.Add(startPoint);
-            Point currentPoint = startPoint;
+            var currentPoint = startPoint;
 
             if (!rectSource.Contains(endPoint))
             {
                 while (true)
                 {
-                    if (IsPointVisible(currentPoint, endPoint, new[] { rectSource }))
+                    if (IsPointVisible(currentPoint, endPoint, new[] {rectSource}))
                     {
                         linePoints.Add(endPoint);
                         break;
                     }
 
                     bool sideFlag;
-                    Point n = GetNearestNeighborSource(source, endPoint, rectSource, out sideFlag);
+                    var n = GetNearestNeighborSource(source, endPoint, rectSource, out sideFlag);
                     linePoints.Add(n);
                     currentPoint = n;
 
-                    if (IsPointVisible(currentPoint, endPoint, new[] { rectSource }))
+                    if (IsPointVisible(currentPoint, endPoint, new[] {rectSource}))
                     {
                         linePoints.Add(endPoint);
                         break;
@@ -302,7 +304,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
             {
                 linePoints = OptimizeLinePoints(
                     linePoints,
-                    new[] { rectSource },
+                    new[] {rectSource},
                     source.Orientation,
                     preferredOrientation);
             }
@@ -310,7 +312,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
             {
                 linePoints = OptimizeLinePoints(
                     linePoints,
-                    new[] { rectSource },
+                    new[] {rectSource},
                     source.Orientation,
                     GetOpositeOrientation(source.Orientation));
             }
@@ -405,7 +407,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
                 return n1;
             }
 
-            if ((Distance(n1, endPoint) <= Distance(n2, endPoint)))
+            if (Distance(n1, endPoint) <= Distance(n2, endPoint))
             {
                 flag = true;
                 return n1;
@@ -423,7 +425,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
             Point n1, n2; // neighbors
             GetNeighborCorners(source.Orientation, rectSource, out n1, out n2);
 
-            if ((Distance(n1, endPoint) <= Distance(n2, endPoint)))
+            if (Distance(n1, endPoint) <= Distance(n2, endPoint))
             {
                 flag = true;
                 return n1;
@@ -442,8 +444,8 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
             Point s1, s2; // neighbors on sink side
             GetNeighborCorners(sink.Orientation, rectSink, out s1, out s2);
 
-            bool flag1 = IsPointVisible(currentPoint, s1, new[] { rectSource, rectSink });
-            bool flag2 = IsPointVisible(currentPoint, s2, new[] { rectSource, rectSink });
+            var flag1 = IsPointVisible(currentPoint, s1, new[] {rectSource, rectSink});
+            var flag2 = IsPointVisible(currentPoint, s2, new[] {rectSource, rectSink});
 
             if (flag1) // s1 visible
             {
@@ -459,7 +461,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
                         return s1;
                     }
 
-                    if ((Distance(s1, endPoint) <= Distance(s2, endPoint)))
+                    if (Distance(s1, endPoint) <= Distance(s2, endPoint))
                     {
                         return s1;
                     }
@@ -661,13 +663,13 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
             EConnectorOrientation sinkOrientation)
         {
             var points = new List<Point>();
-            int cut = 0;
+            var cut = 0;
 
-            for (int i = 0; i < linePoints.Count; i++)
+            for (var i = 0; i < linePoints.Count; i++)
             {
                 if (i >= cut)
                 {
-                    for (int k = linePoints.Count - 1; k > i; k--)
+                    for (var k = linePoints.Count - 1; k > i; k--)
                     {
                         if (IsPointVisible(linePoints[i], linePoints[k], rectangles))
                         {
@@ -681,7 +683,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
             #region Line
 
-            for (int j = 0; j < points.Count - 1; j++)
+            for (var j = 0; j < points.Count - 1; j++)
             {
                 if (points[j].X != points[j + 1].X && points[j].Y != points[j + 1].Y)
                 {
@@ -711,8 +713,8 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
                     if ((orientationFrom == EConnectorOrientation.Left || orientationFrom == EConnectorOrientation.Right)
                         && (orientationTo == EConnectorOrientation.Left || orientationTo == EConnectorOrientation.Right))
                     {
-                        double centerX = Math.Min(points[j].X, points[j + 1].X)
-                                         + Math.Abs(points[j].X - points[j + 1].X) / 2;
+                        var centerX = Math.Min(points[j].X, points[j + 1].X)
+                                      + Math.Abs(points[j].X - points[j + 1].X)/2;
                         points.Insert(j + 1, new Point(centerX, points[j].Y));
                         points.Insert(j + 2, new Point(centerX, points[j + 2].Y));
                         if (points.Count - 1 > j + 3)
@@ -725,8 +727,8 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
                     if ((orientationFrom == EConnectorOrientation.Top || orientationFrom == EConnectorOrientation.Bottom)
                         && (orientationTo == EConnectorOrientation.Top || orientationTo == EConnectorOrientation.Bottom))
                     {
-                        double centerY = Math.Min(points[j].Y, points[j + 1].Y)
-                                         + Math.Abs(points[j].Y - points[j + 1].Y) / 2;
+                        var centerY = Math.Min(points[j].Y, points[j + 1].Y)
+                                      + Math.Abs(points[j].Y - points[j + 1].Y)/2;
                         points.Insert(j + 1, new Point(points[j].X, centerY));
                         points.Insert(j + 2, new Point(points[j + 2].X, centerY));
                         if (points.Count - 1 > j + 3)

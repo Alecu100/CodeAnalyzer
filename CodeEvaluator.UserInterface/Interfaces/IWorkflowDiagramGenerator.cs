@@ -16,7 +16,7 @@
 //  -----------------------------------------------------------------------
 
 using CodeAnalyzer.UserInterface.Controls.Base;
-using CodeAnalyzer.Workflow;
+using CodeEvaluator.Workflows;
 
 namespace CodeAnalyzer.UserInterface.Interfaces
 {

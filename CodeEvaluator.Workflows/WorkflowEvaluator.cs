@@ -15,9 +15,10 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
-using CodeAnalyzer.Workflow.Enums;
 
-namespace CodeAnalyzer.Workflow
+using CodeEvaluator.Workflows.Enums;
+
+namespace CodeEvaluator.Workflows
 {
 
     #region Using
@@ -26,21 +27,13 @@ namespace CodeAnalyzer.Workflow
 
     public static class WorkflowEvaluator
     {
-        #region Static Fields
+        #region Public Properties
 
-        private static WorkflowExecutionSnapshot currentExecutionSnapshot;
+        public static WorkflowExecutionSnapshot CurrentExecutionSnapshot { get; private set; }
 
         #endregion
 
-        #region Public Properties
-
-        public static WorkflowExecutionSnapshot CurrentExecutionSnapshot
-        {
-            get
-            {
-                return currentExecutionSnapshot;
-            }
-        }
+        #region Static Fields
 
         #endregion
 
@@ -52,15 +45,15 @@ namespace CodeAnalyzer.Workflow
         /// <param name="name">The name.</param>
         public static void AddDecision(string name, string description)
         {
-            var workflowStep = new WorkflowStep(EWorkflowStepType.Decision, currentExecutionSnapshot.ActiveWorkflow);
+            var workflowStep = new WorkflowStep(EWorkflowStepType.Decision, CurrentExecutionSnapshot.ActiveWorkflow);
             workflowStep.Label = name;
             workflowStep.Description = description;
-            currentExecutionSnapshot.ActiveWorkflow.Steps.Add(workflowStep);
-            if (currentExecutionSnapshot.ActiveWorkflow.LastStep != null)
+            CurrentExecutionSnapshot.ActiveWorkflow.Steps.Add(workflowStep);
+            if (CurrentExecutionSnapshot.ActiveWorkflow.LastStep != null)
             {
-                currentExecutionSnapshot.ActiveWorkflow.LastStep.NextStep = workflowStep;
+                CurrentExecutionSnapshot.ActiveWorkflow.LastStep.NextStep = workflowStep;
             }
-            currentExecutionSnapshot.ActiveWorkflow.LastStep = workflowStep;
+            CurrentExecutionSnapshot.ActiveWorkflow.LastStep = workflowStep;
         }
 
         /// <summary>
@@ -69,15 +62,15 @@ namespace CodeAnalyzer.Workflow
         /// <param name="name">The name.</param>
         public static void AddProcess(string name, string description)
         {
-            var workflowStep = new WorkflowStep(EWorkflowStepType.Process, currentExecutionSnapshot.ActiveWorkflow);
+            var workflowStep = new WorkflowStep(EWorkflowStepType.Process, CurrentExecutionSnapshot.ActiveWorkflow);
             workflowStep.Label = name;
             workflowStep.Description = description;
-            currentExecutionSnapshot.ActiveWorkflow.Steps.Add(workflowStep);
-            if (currentExecutionSnapshot.ActiveWorkflow.LastStep != null)
+            CurrentExecutionSnapshot.ActiveWorkflow.Steps.Add(workflowStep);
+            if (CurrentExecutionSnapshot.ActiveWorkflow.LastStep != null)
             {
-                currentExecutionSnapshot.ActiveWorkflow.LastStep.NextStep = workflowStep;
+                CurrentExecutionSnapshot.ActiveWorkflow.LastStep.NextStep = workflowStep;
             }
-            currentExecutionSnapshot.ActiveWorkflow.LastStep = workflowStep;
+            CurrentExecutionSnapshot.ActiveWorkflow.LastStep = workflowStep;
         }
 
         /// <summary>
@@ -85,10 +78,10 @@ namespace CodeAnalyzer.Workflow
         /// </summary>
         public static void BeginWorkflow()
         {
-            var workflowScope = new Workflow(currentExecutionSnapshot.ActiveWorkflow.LastStep);
-            currentExecutionSnapshot.ActiveWorkflow.LastStep.ActiveChildWorkflows.Add(workflowScope);
-            currentExecutionSnapshot.ActiveWorkflow.LastStep.AllChildWorkflows.Add(workflowScope);
-            currentExecutionSnapshot.ActiveWorkflow = workflowScope;
+            var workflowScope = new Workflow(CurrentExecutionSnapshot.ActiveWorkflow.LastStep);
+            CurrentExecutionSnapshot.ActiveWorkflow.LastStep.ActiveChildWorkflows.Add(workflowScope);
+            CurrentExecutionSnapshot.ActiveWorkflow.LastStep.AllChildWorkflows.Add(workflowScope);
+            CurrentExecutionSnapshot.ActiveWorkflow = workflowScope;
         }
 
         /// <summary>
@@ -96,7 +89,7 @@ namespace CodeAnalyzer.Workflow
         /// </summary>
         public static void EndWorkflow()
         {
-            currentExecutionSnapshot.ActiveWorkflow = currentExecutionSnapshot.ActiveWorkflow.ParentStep.ParentWorkflow;
+            CurrentExecutionSnapshot.ActiveWorkflow = CurrentExecutionSnapshot.ActiveWorkflow.ParentStep.ParentWorkflow;
         }
 
         /// <summary>
@@ -104,7 +97,7 @@ namespace CodeAnalyzer.Workflow
         /// </summary>
         public static void Initialize()
         {
-            currentExecutionSnapshot = new WorkflowExecutionSnapshot();
+            CurrentExecutionSnapshot = new WorkflowExecutionSnapshot();
         }
 
         /// <summary>
@@ -113,12 +106,12 @@ namespace CodeAnalyzer.Workflow
         public static void StopWorkflow()
         {
             var stopStep = new WorkflowStep(EWorkflowStepType.Stop, "Stop");
-            currentExecutionSnapshot.ActiveWorkflow.ParentStep.ActiveChildWorkflows.Remove(
-                currentExecutionSnapshot.ActiveWorkflow);
-            currentExecutionSnapshot.ActiveWorkflow.LastStep.NextStep = stopStep;
-            currentExecutionSnapshot.ActiveWorkflow.Steps.Add(stopStep);
-            currentExecutionSnapshot.ActiveWorkflow.LastStep = stopStep;
-            currentExecutionSnapshot.ActiveWorkflow = currentExecutionSnapshot.ActiveWorkflow.ParentStep.ParentWorkflow;
+            CurrentExecutionSnapshot.ActiveWorkflow.ParentStep.ActiveChildWorkflows.Remove(
+                CurrentExecutionSnapshot.ActiveWorkflow);
+            CurrentExecutionSnapshot.ActiveWorkflow.LastStep.NextStep = stopStep;
+            CurrentExecutionSnapshot.ActiveWorkflow.Steps.Add(stopStep);
+            CurrentExecutionSnapshot.ActiveWorkflow.LastStep = stopStep;
+            CurrentExecutionSnapshot.ActiveWorkflow = CurrentExecutionSnapshot.ActiveWorkflow.ParentStep.ParentWorkflow;
         }
 
         #endregion

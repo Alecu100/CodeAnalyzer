@@ -22,17 +22,16 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Listeners;
 using CodeAnalyzer.UserInterface.Interfaces;
-using CodeAnalyzer.Workflow;
 using CodeEvaluator.Packages.Core;
 using CodeEvaluator.Packages.Core.Interfaces;
+using CodeEvaluator.Workflows;
+using EnvDTE;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.VisualStudio.Shell.Interop;
 using StructureMap;
 
 namespace CodeAnalyzer.UserInterface.Controls.Views
@@ -45,7 +44,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
     /// <summary>
     ///     Interaction logic for MyControl.xaml
     /// </summary>
-    public partial class GenerateWorkflowDiagramControl : IVsSolutionEvents, IXamlResourcesRepository
+    public partial class GenerateWorkflowDiagramControl : IXamlResourcesRepository
     {
         #region Constructors and Destructors
 
@@ -53,9 +52,9 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         {
             InitializeComponent();
 
-            var solution = ObjectFactory.GetInstance<IVsSolution>();
+            //var solution = ObjectFactory.GetInstance<IVsSolution>();
 
-            solution.AdviseSolutionEvents(this, out _solutionCookie);
+            //solution.AdviseSolutionEvents(this, out _solutionCookie);
 
             LayoutUpdated += OnLayoutUpdated;
 
@@ -79,13 +78,14 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         private readonly ObservableCollection<MethodDeclarationSyntax> _loadedMethods =
             new ObservableCollection<MethodDeclarationSyntax>();
 
-        private readonly uint _solutionCookie;
+        //private readonly uint _solutionCookie;
 
         #endregion
 
         #region Public Properties
 
-        public ObservableCollection<IProjectWrapper> AvailableProjects { get; } = new ObservableCollection<IProjectWrapper>();
+        public ObservableCollection<IProjectWrapper> AvailableProjects { get; } =
+            new ObservableCollection<IProjectWrapper>();
 
         public ObservableCollection<ClassDeclarationSyntax> LoadedClasses { get; } =
             new ObservableCollection<ClassDeclarationSyntax>();
@@ -95,11 +95,14 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
             get { return _loadedMethods; }
         }
 
-        public ObservableCollection<IProjectItemWrapper> LoadedProjectItems { get; } = new ObservableCollection<IProjectItemWrapper>();
+        public ObservableCollection<IProjectItemWrapper> LoadedProjectItems { get; } =
+            new ObservableCollection<IProjectItemWrapper>();
 
-        public ObservableCollection<IProjectWrapper> LoadedProjects { get; } = new ObservableCollection<IProjectWrapper>();
+        public ObservableCollection<IProjectWrapper> LoadedProjects { get; } =
+            new ObservableCollection<IProjectWrapper>();
 
-        public ObservableCollection<IProjectWrapper> SelectedProjects { get; } = new ObservableCollection<IProjectWrapper>();
+        public ObservableCollection<IProjectWrapper> SelectedProjects { get; } =
+            new ObservableCollection<IProjectWrapper>();
 
         public ISystemSettings SystemSettings
         {
@@ -118,7 +121,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     returns an error code.
         /// </returns>
         /// <param name="pUnkReserved">[in] Reserved for future use.</param>
-        public int OnAfterCloseSolution(object pUnkReserved)
+        public void OnAfterCloseSolution( /*object pUnkReserved*/)
         {
             LoadedProjects.Clear();
             AvailableProjects.Clear();
@@ -126,7 +129,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
             LoadedMethods.Clear();
             LoadedProjectItems.Clear();
             SelectedProjects.Clear();
-            return VSConstants.S_OK;
+            //return VSConstants.S_OK;
         }
 
         /// <summary>
@@ -144,11 +147,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     [in] Pointer to the <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsHierarchy" />
         ///     interface of the project that was loaded.
         /// </param>
-        public int OnAfterLoadProject(IVsHierarchy pStubHierarchy, IVsHierarchy pRealHierarchy)
-        {
-            return VSConstants.S_OK;
-        }
-
         /// <summary>
         ///     Notifies listening clients that the project has been opened.
         /// </summary>
@@ -164,36 +162,34 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     [in] true if the project is added to the solution after the solution is opened. false if the
         ///     project is added to the solution while the solution is being opened.
         /// </param>
-        public int OnAfterOpenProject(IProjectWrapper projectItem)
+        public void OnAfterOpenProject(IProjectWrapper loadedProject)
         {
-            object objProj;
-            pHierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int) __VSHPROPID.VSHPROPID_ExtObject, out objProj);
+            //object objProj;
+            //pHierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int) __VSHPROPID.VSHPROPID_ExtObject, out objProj);
 
-            var projectItem = objProj as Project;
-
-            if (projectItem != null && projectItem.Kind.ToUpperInvariant() == VsConstants.CsProjectKind)
+            if (loadedProject != null && loadedProject.Kind.ToUpperInvariant() == VsConstants.CsProjectKind)
             {
-                LoadedProjects.Add(projectItem);
+                LoadedProjects.Add(loadedProject);
 
                 var currentProjectSettings =
                     SystemSettings.GetProjectSettingsByFullSolutionName(
                         _currentSolution != null ? _currentSolution.FullName : string.Empty);
 
                 if (currentProjectSettings != null
-                    && currentProjectSettings.SelectedProjects.Contains(projectItem.UniqueName))
+                    && currentProjectSettings.SelectedProjects.Contains(loadedProject.UniqueName))
                 {
-                    SelectedProjects.Add(projectItem);
+                    SelectedProjects.Add(loadedProject);
                 }
                 else
                 {
-                    AvailableProjects.Add(projectItem);
+                    AvailableProjects.Add(loadedProject);
                 }
 
                 if (currentProjectSettings != null
-                    && currentProjectSettings.SelectedProjectName == projectItem.UniqueName)
+                    && currentProjectSettings.SelectedProjectName == loadedProject.UniqueName)
                 {
-                    cmbTargetProject.SelectedItem = projectItem;
-                    var projectItems = cmbTargetFile.Items.Cast<ProjectItem>();
+                    cmbTargetProject.SelectedItem = loadedProject;
+                    var projectItems = cmbTargetFile.Items.Cast<IProjectItemWrapper>();
                     var selectedFile =
                         projectItems.FirstOrDefault(p => p.Name == currentProjectSettings.SelectedFileName);
 
@@ -221,8 +217,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
                     }
                 }
             }
-
-            return VSConstants.S_OK;
         }
 
         /// <summary>
@@ -237,11 +231,11 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     [in] true if the solution is being created. false if the solution was created previously or
         ///     is being loaded.
         /// </param>
-        public int OnAfterOpenSolution(object pUnkReserved, int fNewSolution)
+        public void OnAfterOpenSolution(ISolutionWrapper newSolution /*object pUnkReserved, int fNewSolution*/)
         {
-            var dte = ObjectFactory.GetInstance<DTE>();
-            _currentSolution = dte.Solution;
-            return VSConstants.S_OK;
+            //var dte = ObjectFactory.GetInstance<DTE>();
+            _currentSolution = newSolution;
+            //return VSConstants.S_OK;
         }
 
         /// <summary>
@@ -259,11 +253,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     [in] true if the project was removed from the solution before the solution was closed. false if
         ///     the project was removed from the solution while the solution was being closed.
         /// </param>
-        public int OnBeforeCloseProject(IVsHierarchy pHierarchy, int fRemoved)
-        {
-            return VSConstants.S_OK;
-        }
-
         /// <summary>
         ///     Notifies listening clients that the solution is about to be closed.
         /// </summary>
@@ -272,12 +261,12 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     returns an error code.
         /// </returns>
         /// <param name="pUnkReserved">[in] Reserved for future use.</param>
-        public int OnBeforeCloseSolution(object pUnkReserved)
+        public void OnBeforeCloseSolution(object pUnkReserved)
         {
-            if (_currentSolution == null)
-            {
-                return VSConstants.S_OK;
-            }
+            //if (_currentSolution == null)
+            //{
+            //    return VSConstants.S_OK;
+            //}
 
             var selectedProjects = new List<string>();
 
@@ -305,7 +294,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
                 });
             SystemSettings.Save();
 
-            return VSConstants.S_OK;
+            //return VSConstants.S_OK;
         }
 
         /// <summary>
@@ -323,11 +312,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     [in] Pointer to the <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsHierarchy" />
         ///     interface of the placeholder hierarchy for the project being unloaded.
         /// </param>
-        public int OnBeforeUnloadProject(IVsHierarchy pRealHierarchy, IVsHierarchy pStubHierarchy)
-        {
-            return VSConstants.S_OK;
-        }
-
         /// <summary>
         ///     Queries listening clients as to whether the project can be closed.
         /// </summary>
@@ -347,11 +331,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     [out] true if the client vetoed the closing of the project. false if the client approved the
         ///     closing of the project.
         /// </param>
-        public int OnQueryCloseProject(IVsHierarchy pHierarchy, int fRemoving, ref int pfCancel)
-        {
-            return VSConstants.S_OK;
-        }
-
         /// <summary>
         ///     Queries listening clients as to whether the solution can be closed.
         /// </summary>
@@ -364,11 +343,6 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     [out] true if the client vetoed closing the solution. false if the client approved closing the
         ///     solution.
         /// </param>
-        public int OnQueryCloseSolution(object pUnkReserved, ref int pfCancel)
-        {
-            return VSConstants.S_OK;
-        }
-
         /// <summary>
         ///     Queries listening clients as to whether the project can be unloaded.
         /// </summary>
@@ -384,15 +358,14 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     [out] true if the client vetoed unloading the project. false if the client approved unloading
         ///     the project.
         /// </param>
-        public int OnQueryUnloadProject(IVsHierarchy pRealHierarchy, ref int pfCancel)
-        {
-            return VSConstants.S_OK;
-        }
+        //public int OnQueryUnloadProject(IVsHierarchy pRealHierarchy, ref int pfCancel)
+        //{
+        //    return VSConstants.S_OK;
+        //}
 
         #endregion
 
         #region Private Methods and Operators
-
         private void AddAllClassesFromSyntaxNode(SyntaxNode syntaxNode)
         {
             if (syntaxNode is ClassDeclarationSyntax)
@@ -440,11 +413,11 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         {
             if (lstAvailableProjects.SelectedItems.Count > 0)
             {
-                var itemsToAdd = new List<Project>();
+                var itemsToAdd = new List<IProjectWrapper>();
 
                 foreach (var selectedItem in lstAvailableProjects.SelectedItems)
                 {
-                    var project = selectedItem as Project;
+                    var project = selectedItem as IProjectWrapper;
 
                     if (project != null)
                     {
@@ -464,11 +437,11 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         {
             if (lstSelectedProjects.SelectedItems.Count > 0)
             {
-                var itemsToRemove = new List<Project>();
+                var itemsToRemove = new List<IProjectWrapper>();
 
                 foreach (var selectedItem in lstSelectedProjects.SelectedItems)
                 {
-                    var project = selectedItem as Project;
+                    var project = selectedItem as IProjectWrapper;
 
                     if (project != null)
                     {
@@ -487,10 +460,19 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         private void BtnStartSearch_OnClick(object sender, RoutedEventArgs e)
         {
             var staticWorkflowEvaluator = ObjectFactory.GetInstance<ICodeEvaluator>();
+            var projectFilesProvider = ObjectFactory.GetInstance<IProjectFilesProvider>();
+            var allSourceFileNamesFromProjects = projectFilesProvider.GetAllSourceFileNamesFromProjects(SelectedProjects);
+
+            var codeFileNames = new List<string>();
+
+            foreach (var allSourceFileNamesFromProject in allSourceFileNamesFromProjects)
+            {
+                codeFileNames.AddRange(allSourceFileNamesFromProject.FileNames);
+            }
 
             staticWorkflowEvaluator.Evaluate(
                 new List<ICodeEvaluatorListener> {new WorkflowEvaluatorEvaluatorListener()},
-                SelectedProjects,
+                codeFileNames,
                 _selectedClassDeclarationSyntax,
                 _selectedMethodDeclarationSyntax);
 
@@ -522,14 +504,14 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
 
         private void CmbTargetFile_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count > 0 && e.AddedItems[0] is ProjectItem)
+            if (e.AddedItems.Count > 0 && e.AddedItems[0] is IProjectItemWrapper)
             {
-                var projectItem = e.AddedItems[0] as ProjectItem;
+                var projectItem = e.AddedItems[0] as IProjectItemWrapper;
                 _selectedFile = projectItem;
 
-                for (short i = 0; i < projectItem.FileCount; i++)
+                foreach (var fileName in projectItem.FileNames)
                 {
-                    AddClassesFromFile(projectItem.FileNames[i]);
+                    AddClassesFromFile(fileName);
                 }
             }
         }
@@ -538,11 +520,11 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         {
             if (e.AddedItems.Count > 0 && e.AddedItems[0] is Project)
             {
-                var project = (Project) e.AddedItems[0];
+                var project = (IProjectWrapper) e.AddedItems[0];
                 LoadedProjectItems.Clear();
                 var sourceFilesProvider = ObjectFactory.GetInstance<IProjectFilesProvider>();
                 var allSourceFileNamesFromProjects =
-                    sourceFilesProvider.GetAllSourceFileNamesFromProjects(new List<Project> {project}).ToList();
+                    sourceFilesProvider.GetAllSourceFileNamesFromProjects(new List<IProjectWrapper> {project}).ToList();
 
                 _selectedProject = project;
 
@@ -561,7 +543,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
             }
         }
 
-        private int CompareSourceFiles(ProjectItem item1, ProjectItem item2)
+        private int CompareSourceFiles(IProjectItemWrapper item1, IProjectItemWrapper item2)
         {
             return string.CompareOrdinal(item1.Name, item2.Name);
         }

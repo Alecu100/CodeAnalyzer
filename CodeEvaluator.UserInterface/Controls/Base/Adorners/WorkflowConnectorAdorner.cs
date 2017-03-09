@@ -15,7 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -23,14 +23,27 @@ using CodeAnalyzer.UserInterface.Controls.Base.Enums;
 
 namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
     public class WorkflowConnectorAdorner : Adorner
     {
+        #region Constructors and Destructors
+
+        public WorkflowConnectorAdorner(WorkflowCanvas workflow, WorkflowConnector sourceWorkflowConnector)
+            : base(workflow)
+        {
+            _workflowCanvas = workflow;
+            _sourceWorkflowConnector = sourceWorkflowConnector;
+            _drawingPen = new Pen(Brushes.LightSlateGray, 1);
+            _drawingPen.LineJoin = PenLineJoin.Round;
+            Cursor = Cursors.Cross;
+        }
+
+        #endregion
+
         #region Fields
 
         private readonly WorkflowCanvas _workflowCanvas;
@@ -47,28 +60,11 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 
         #endregion
 
-        #region Constructors and Destructors
-
-        public WorkflowConnectorAdorner(WorkflowCanvas workflow, WorkflowConnector sourceWorkflowConnector)
-            : base(workflow)
-        {
-            _workflowCanvas = workflow;
-            _sourceWorkflowConnector = sourceWorkflowConnector;
-            _drawingPen = new Pen(Brushes.LightSlateGray, 1);
-            _drawingPen.LineJoin = PenLineJoin.Round;
-            Cursor = Cursors.Cross;
-        }
-
-        #endregion
-
         #region Properties
 
         private WorkflowConnector HitWorkflowConnector
         {
-            get
-            {
-                return _hitWorkflowConnector;
-            }
+            get { return _hitWorkflowConnector; }
             set
             {
                 if (_hitWorkflowConnector != value)
@@ -80,10 +76,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 
         private WorkflowItem HitWorkflowItem
         {
-            get
-            {
-                return _hitWorkflowItem;
-            }
+            get { return _hitWorkflowItem; }
             set
             {
                 if (_hitWorkflowItem != value)
@@ -132,8 +125,8 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
         {
             if (HitWorkflowConnector != null)
             {
-                WorkflowConnector sourceWorkflowConnector = _sourceWorkflowConnector;
-                WorkflowConnector sinkWorkflowConnector = HitWorkflowConnector;
+                var sourceWorkflowConnector = _sourceWorkflowConnector;
+                var sinkWorkflowConnector = HitWorkflowConnector;
                 var newConnection = new WorkflowConnection(sourceWorkflowConnector, sinkWorkflowConnector);
 
                 // connections are added with z-index of zero
@@ -149,7 +142,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
                 ReleaseMouseCapture();
             }
 
-            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(_workflowCanvas);
+            var adornerLayer = AdornerLayer.GetAdornerLayer(_workflowCanvas);
             if (adornerLayer != null)
             {
                 adornerLayer.Remove(this);
@@ -185,7 +178,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
                 targetOrientation = EConnectorOrientation.None;
             }
 
-            List<Point> pathPoints = PathFinder.GetConnectionLine(
+            var pathPoints = PathFinder.GetConnectionLine(
                 _sourceWorkflowConnector.GetInfo(),
                 position,
                 targetOrientation);
@@ -204,7 +197,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 
         private void HitTesting(Point hitPoint)
         {
-            bool hitConnectorFlag = false;
+            var hitConnectorFlag = false;
 
             var hitObject = _workflowCanvas.InputHitTest(hitPoint) as DependencyObject;
             while (hitObject != null && hitObject != _sourceWorkflowConnector.ParentWorkflowItem

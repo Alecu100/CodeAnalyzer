@@ -15,28 +15,20 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
     public class ResizeAdorner : Adorner
     {
-        #region Fields
-
-        private readonly ResizeChrome _chrome;
-
-        private readonly VisualCollection _visuals;
-
-        #endregion
-
         #region Constructors and Destructors
 
         public ResizeAdorner(ContentControl designerItem)
@@ -54,11 +46,16 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 
         protected override int VisualChildrenCount
         {
-            get
-            {
-                return _visuals.Count;
-            }
+            get { return _visuals.Count; }
         }
+
+        #endregion
+
+        #region Fields
+
+        private readonly ResizeChrome _chrome;
+
+        private readonly VisualCollection _visuals;
 
         #endregion
 
