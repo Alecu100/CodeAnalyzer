@@ -34,8 +34,6 @@ namespace CodeAnalysis.Core.Configuration
                         .Use(new EvaluatorExecutionFrameFactory()));
 
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IEvaluatedObjectAllocator>()));
-            ObjectFactory.Configure(config => config.For<ISystemSettings>().Use(new SystemSettings()));
-            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ISystemSettings>()));
         }
     }
 }

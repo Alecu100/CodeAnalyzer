@@ -47,8 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IProjectFilesProvider.cs" />
+    <Compile Include="Interfaces\ISystemSettings.cs" />
     <Compile Include="ProjectFilesProvider.cs" />
+    <Compile Include="ProjectSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemSettings.cs" />
     <Compile Include="VsConstants.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

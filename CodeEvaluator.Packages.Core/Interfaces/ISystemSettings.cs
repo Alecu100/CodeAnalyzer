@@ -16,9 +16,8 @@
 //  -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using CodeAnalysis.Core.Common;
 
-namespace CodeAnalysis.Core.Interfaces
+namespace CodeEvaluator.Packages.Core.Interfaces
 {
     #region Using
 

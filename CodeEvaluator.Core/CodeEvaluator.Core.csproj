@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ParsedSourceFilesCache.cs" />
-    <Compile Include="Common\ProjectSettings.cs" />
     <Compile Include="Common\CodeEvaluator.cs" />
     <Compile Include="Common\StaticWorkflowEvaluatorContext.cs" />
     <Compile Include="Common\EvaluatorExecutionFrame.cs" />
@@ -72,7 +71,6 @@
     <Compile Include="Common\StaticWorkflowEvaluatorParameters.cs" />
     <Compile Include="Common\SyntaxNodeEvaluatorFactory.cs" />
     <Compile Include="Common\SyntaxNodeNamespaceProvider.cs" />
-    <Compile Include="Common\SystemSettings.cs" />
     <Compile Include="Configuration\StandardSetupBootstrapper.cs" />
     <Compile Include="Interfaces\IParsedSourceFilesCache.cs" />
     <Compile Include="Interfaces\ICodeEvaluator.cs" />
@@ -81,7 +79,6 @@
     <Compile Include="Interfaces\ISyntaxNodeEvaluator.cs" />
     <Compile Include="Interfaces\ISyntaxNodeEvaluatorFactory.cs" />
     <Compile Include="Interfaces\ISyntaxNodeNamespaceProvider.cs" />
-    <Compile Include="Interfaces\ISystemSettings.cs" />
     <Compile Include="Interfaces\IEvaluatedObjectAllocator.cs" />
     <Compile Include="Interfaces\IEvaluatedObjectsHeap.cs" />
     <Compile Include="Interfaces\IEvaluatedTypesInfoTable.cs" />

@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="envdte100, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -47,6 +50,7 @@
       <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.1.3.2\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
@@ -97,6 +101,7 @@
     <Compile Include="Controls\Base\WorkflowConnector.cs" />
     <Compile Include="Controls\Base\WorkflowConnectorInfo.cs" />
     <Compile Include="Controls\Base\WorkflowItem.cs" />
+    <Compile Include="Interfaces\IProjectWrapper.cs" />
     <Compile Include="Interfaces\IWorkflowDiagramGenerator.cs" />
     <Compile Include="Interfaces\IWorkflowDiagramSizes.cs" />
     <Compile Include="Controls\Diagrams\WorkflowDiagramGenerator.cs" />
@@ -106,6 +111,8 @@
     </Compile>
     <Compile Include="Interfaces\IXamlResourcesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interfaces\IProjectItemWrapper.cs" />
+    <Compile Include="Interfaces\ISolutionWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\Views\GenerateWorkflowDiagramControl.xaml">
@@ -290,6 +297,10 @@
     <ProjectReference Include="..\CodeEvaluator.Core\CodeEvaluator.Core.csproj">
       <Project>{882F4464-2A84-4576-B6EA-1EFFD4FCF4A5}</Project>
       <Name>CodeEvaluator.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeEvaluator.Packages.Core\CodeEvaluator.Packages.Core.csproj">
+      <Project>{C0A5ED9F-551B-4B73-BD08-85DA235F8AAF}</Project>
+      <Name>CodeEvaluator.Packages.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeEvaluator.Workflows\CodeEvaluator.Workflows.csproj">
       <Project>{0D9F35B5-685B-44F0-867A-A3C798E0FC18}</Project>

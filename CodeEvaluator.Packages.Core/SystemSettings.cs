@@ -20,9 +20,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using CodeAnalysis.Core.Interfaces;
+using CodeEvaluator.Packages.Core.Interfaces;
 
-namespace CodeAnalysis.Core.Common
+namespace CodeEvaluator.Packages.Core
 {
     #region Using
 

@@ -27,6 +27,8 @@ using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Listeners;
 using CodeAnalyzer.UserInterface.Interfaces;
 using CodeAnalyzer.Workflow;
+using CodeEvaluator.Packages.Core;
+using CodeEvaluator.Packages.Core.Interfaces;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -64,15 +66,15 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
 
         #region Fields
 
-        private Solution _currentSolution;
+        private ISolutionWrapper _currentSolution;
 
         private ClassDeclarationSyntax _selectedClassDeclarationSyntax;
 
-        private ProjectItem _selectedFile;
+        private IProjectItemWrapper _selectedFile;
 
         private MethodDeclarationSyntax _selectedMethodDeclarationSyntax;
 
-        private Project _selectedProject;
+        private IProjectWrapper _selectedProject;
 
         private readonly ObservableCollection<MethodDeclarationSyntax> _loadedMethods =
             new ObservableCollection<MethodDeclarationSyntax>();
@@ -83,7 +85,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
 
         #region Public Properties
 
-        public ObservableCollection<Project> AvailableProjects { get; } = new ObservableCollection<Project>();
+        public ObservableCollection<IProjectWrapper> AvailableProjects { get; } = new ObservableCollection<IProjectWrapper>();
 
         public ObservableCollection<ClassDeclarationSyntax> LoadedClasses { get; } =
             new ObservableCollection<ClassDeclarationSyntax>();
@@ -93,11 +95,11 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
             get { return _loadedMethods; }
         }
 
-        public ObservableCollection<ProjectItem> LoadedProjectItems { get; } = new ObservableCollection<ProjectItem>();
+        public ObservableCollection<IProjectItemWrapper> LoadedProjectItems { get; } = new ObservableCollection<IProjectItemWrapper>();
 
-        public ObservableCollection<Project> LoadedProjects { get; } = new ObservableCollection<Project>();
+        public ObservableCollection<IProjectWrapper> LoadedProjects { get; } = new ObservableCollection<IProjectWrapper>();
 
-        public ObservableCollection<Project> SelectedProjects { get; } = new ObservableCollection<Project>();
+        public ObservableCollection<IProjectWrapper> SelectedProjects { get; } = new ObservableCollection<IProjectWrapper>();
 
         public ISystemSettings SystemSettings
         {
@@ -162,7 +164,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
         ///     [in] true if the project is added to the solution after the solution is opened. false if the
         ///     project is added to the solution while the solution is being opened.
         /// </param>
-        public int OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)
+        public int OnAfterOpenProject(IProjectWrapper projectItem)
         {
             object objProj;
             pHierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int) __VSHPROPID.VSHPROPID_ExtObject, out objProj);

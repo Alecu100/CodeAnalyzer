@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace CodeAnalysis.Core.Common
+namespace CodeEvaluator.Packages.Core
 {
     #region Using
 
