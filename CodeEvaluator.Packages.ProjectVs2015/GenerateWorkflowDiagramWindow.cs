@@ -44,7 +44,7 @@ namespace CodeEvaluator.ProjectVs2015
         public GenerateWorkflowDiagramWindow()
             : base(null)
         {
-            Caption = Resources.ToolWindowTitle;
+            Caption = VSPackage._110;
 
             BitmapResourceID = 301;
             BitmapIndex = 1;

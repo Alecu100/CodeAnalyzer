@@ -149,7 +149,7 @@ namespace CodeEvaluator.ProjectVs2015
             var window = FindToolWindow(typeof(GenerateWorkflowDiagramWindow), 0, true);
             if ((null == window) || (null == window.Frame))
             {
-                throw new NotSupportedException(Resources.CanNotCreateWindow);
+                throw new NotSupportedException(VSPackage._112);
             }
             var windowFrame = (IVsWindowFrame) window.Frame;
             ErrorHandler.ThrowOnFailure(windowFrame.Show());
