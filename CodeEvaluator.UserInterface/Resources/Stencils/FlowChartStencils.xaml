@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:base="clr-namespace:RomSoft.Client.Debug.Controls.Base;assembly=RomSoft.Client.Debug">
+                    xmlns:base1="clr-namespace:CodeAnalyzer.UserInterface.Controls.Base;assembly=CodeEvaluator.UserInterface">
 
     <Brush x:Key="ItemStroke">#FFD69436</Brush>
     <LinearGradientBrush x:Key="ItemBrush" StartPoint="0,0" EndPoint="0,1">
@@ -31,7 +31,7 @@
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <LinearGradientBrush.GradientStops>
-                        <GradientStop Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type base:WorkflowItem}}, Path=Label}" Offset="0" />
+                        <GradientStop Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type base1:WorkflowItem}}, Path=Label}" Offset="0" />
                         <GradientStop Color="Gainsboro" Offset="1" />
                     </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
@@ -279,265 +279,268 @@
         <Setter Property="Stroke" Value="Transparent" />
     </Style>
 
-    <base:Toolbox x:Key="FlowChartStencils" ItemSize="60,50" SnapsToDevicePixels="True"
+    <base1:Toolbox x:Key="FlowChartStencils" ItemSize="60,50" SnapsToDevicePixels="True"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ItemsControl.Items>
 
             <Path Style="{StaticResource Process}" ToolTip="Process">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Process_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource Decision}" ToolTip="Decision">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Decision_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource Document}" ToolTip="Document">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Document_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
-                <base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.ConnectorDecoratorTemplate>
                     <ControlTemplate>
-                        <base:RelativePositionPanel Margin="-4">
-                            <base:WorkflowConnector Orientation="Top" base:RelativePositionPanel.RelativePosition="0.5,0" />
-                            <base:WorkflowConnector Orientation="Left" base:RelativePositionPanel.RelativePosition="0,0.5" />
-                            <base:WorkflowConnector Orientation="Right" base:RelativePositionPanel.RelativePosition="1,0.5" />
-                            <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.5,0.93" />
-                        </base:RelativePositionPanel>
+                        <base1:RelativePositionPanel Margin="-4">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0" />
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0,0.5" />
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="1,0.5" />
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,0.93" />
+                        </base1:RelativePositionPanel>
                     </ControlTemplate>
-                </base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.ConnectorDecoratorTemplate>
             </Path>
 
             <Path Style="{StaticResource Data}" ToolTip="Data">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Data_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
-                <base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.ConnectorDecoratorTemplate>
                     <ControlTemplate>
-                        <base:RelativePositionPanel Margin="-4">
-                            <base:WorkflowConnector Orientation="Top" base:RelativePositionPanel.RelativePosition="0.5,0" />
-                            <base:WorkflowConnector Orientation="Left" base:RelativePositionPanel.RelativePosition="0.09,0.5" />
-                            <base:WorkflowConnector Orientation="Right" base:RelativePositionPanel.RelativePosition="0.91,0.5" />
-                            <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.5,1" />
-                        </base:RelativePositionPanel>
+                        <base1:RelativePositionPanel Margin="-4">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0" />
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.09,0.5" />
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.91,0.5" />
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1" />
+                        </base1:RelativePositionPanel>
                     </ControlTemplate>
-                </base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.ConnectorDecoratorTemplate>
             </Path>
 
-            <Path Style="{StaticResource StartStop}" ToolTip="Start">
-                <base:WorkflowItem.DragThumbTemplate>
+            <Path ToolTip="Start">
+                <Path.Style>
+                    <StaticResource ResourceKey="StartStop" />
+                </Path.Style>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Start_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource PaperTape}" ToolTip="Paper Tape">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource PaperTape_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
-                <base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.ConnectorDecoratorTemplate>
                     <ControlTemplate>
-                        <base:RelativePositionPanel Margin="-4">
-                            <base:WorkflowConnector Orientation="Top" base:RelativePositionPanel.RelativePosition="0.5,0.07" />
-                            <base:WorkflowConnector Orientation="Left" base:RelativePositionPanel.RelativePosition="0,0.5" />
-                            <base:WorkflowConnector Orientation="Right" base:RelativePositionPanel.RelativePosition="1,0.5" />
-                            <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.5,0.93" />
-                        </base:RelativePositionPanel>
+                        <base1:RelativePositionPanel Margin="-4">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0.07" />
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0,0.5" />
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="1,0.5" />
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,0.93" />
+                        </base1:RelativePositionPanel>
                     </ControlTemplate>
-                </base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.ConnectorDecoratorTemplate>
             </Path>
 
             <Path Style="{StaticResource Predefined}" ToolTip="Predefined">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Predefined_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource StoredData}" ToolTip="Stored Data">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource StoredData_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
-                <base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.ConnectorDecoratorTemplate>
                     <ControlTemplate>
-                        <base:RelativePositionPanel Margin="-4">
-                            <base:WorkflowConnector Orientation="Top" base:RelativePositionPanel.RelativePosition="0.5,0" />
-                            <base:WorkflowConnector Orientation="Left" base:RelativePositionPanel.RelativePosition="0,0.5" />
-                            <base:WorkflowConnector Orientation="Right" base:RelativePositionPanel.RelativePosition="0.9,0.5" />
-                            <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.5,1" />
-                        </base:RelativePositionPanel>
+                        <base1:RelativePositionPanel Margin="-4">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0" />
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0,0.5" />
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.9,0.5" />
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1" />
+                        </base1:RelativePositionPanel>
                     </ControlTemplate>
-                </base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.ConnectorDecoratorTemplate>
             </Path>
 
             <Path Style="{StaticResource InternalStorage}" ToolTip="Internal Storage">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource InternalStorage_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource SequentialData}" ToolTip="Sequential Data">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource SequentialData_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource DirectData}" ToolTip="Direct Data">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource DirectData_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource ManualInput}" ToolTip="Manual Input">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource ManualInput_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
-                <base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.ConnectorDecoratorTemplate>
                     <ControlTemplate>
-                        <base:RelativePositionPanel Margin="-4">
-                            <base:WorkflowConnector Orientation="Top" base:RelativePositionPanel.RelativePosition="0.5,0.12" />
-                            <base:WorkflowConnector Orientation="Left" base:RelativePositionPanel.RelativePosition="0,0.5" />
-                            <base:WorkflowConnector Orientation="Right" base:RelativePositionPanel.RelativePosition="1,0.5" />
-                            <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.5,1" />
-                        </base:RelativePositionPanel>
+                        <base1:RelativePositionPanel Margin="-4">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0.12" />
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0,0.5" />
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="1,0.5" />
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1" />
+                        </base1:RelativePositionPanel>
                     </ControlTemplate>
-                </base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.ConnectorDecoratorTemplate>
             </Path>
 
             <Path Style="{StaticResource Card}" ToolTip="Card">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Card_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource Delay}" ToolTip="Delay">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Delay_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource Terminator}" ToolTip="Terminator">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Terminator_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource Display}" ToolTip="Display">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Display_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource LoopLimit}" ToolTip="Loop Limit">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource LoopLimit_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource Preparation}" ToolTip="Preparation">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource Preparation_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
 
             <Path Style="{StaticResource ManualOperation}" ToolTip="Manual Operation">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource ManualOperation_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
-                <base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.ConnectorDecoratorTemplate>
                     <ControlTemplate>
-                        <base:RelativePositionPanel Margin="-4">
-                            <base:WorkflowConnector Orientation="Top" base:RelativePositionPanel.RelativePosition="0.5,0" />
-                            <base:WorkflowConnector Orientation="Left" base:RelativePositionPanel.RelativePosition="0.1,0.5" />
-                            <base:WorkflowConnector Orientation="Right" base:RelativePositionPanel.RelativePosition="0.9,0.5" />
-                            <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.5,1" />
-                        </base:RelativePositionPanel>
+                        <base1:RelativePositionPanel Margin="-4">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0" />
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.1,0.5" />
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.9,0.5" />
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1" />
+                        </base1:RelativePositionPanel>
                     </ControlTemplate>
-                </base:WorkflowItem.ConnectorDecoratorTemplate>
+                </base1:WorkflowItem.ConnectorDecoratorTemplate>
             </Path>
 
             <Path Style="{StaticResource OffPageReference}" ToolTip="Off Page Reference">
-                <base:WorkflowItem.DragThumbTemplate>
+                <base1:WorkflowItem.DragThumbTemplate>
                     <ControlTemplate>
                         <Path Style="{StaticResource OffPageReference_DragThumb}" />
                     </ControlTemplate>
-                </base:WorkflowItem.DragThumbTemplate>
+                </base1:WorkflowItem.DragThumbTemplate>
             </Path>
         </ItemsControl.Items>
-    </base:Toolbox>
+    </base1:Toolbox>
 
-    <Style x:Key="WorkflowItemDecission" TargetType="base:WorkflowItem">
+    <Style x:Key="WorkflowItemDecission" TargetType="base1:WorkflowItem">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type base:WorkflowItem}">
+                <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
                     <Grid Width="120" Height="100">
 
                         <Path Style="{StaticResource Decision}" ToolTip="Decision" Grid.Column="0" Grid.Row="0">
-                            <base:WorkflowItem.DragThumbTemplate>
+                            <base1:WorkflowItem.DragThumbTemplate>
                                 <ControlTemplate>
                                     <Path Style="{StaticResource Decision_DragThumb}" />
                                 </ControlTemplate>
-                            </base:WorkflowItem.DragThumbTemplate>
+                            </base1:WorkflowItem.DragThumbTemplate>
                         </Path>
 
                         <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
                             <TextBlock
-                                Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type base:WorkflowItem}}, Path=Label}"
+                                Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type base1:WorkflowItem}}, Path=Label}"
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
-                        <base:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
-                            <base:WorkflowConnector Orientation="Top" base:RelativePositionPanel.RelativePosition="0.5,0"
+                        <base1:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0"
                                             x:Name="ConnectorTop" />
-                            <base:WorkflowConnector Orientation="Left" base:RelativePositionPanel.RelativePosition="0.09,0.5"
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.09,0.5"
                                             x:Name="ConnectorLeft" />
-                            <base:WorkflowConnector Orientation="Right" base:RelativePositionPanel.RelativePosition="0.91,0.5"
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.91,0.5"
                                             x:Name="ConnectorRight" />
-                            <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.5,1"
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1"
                                             x:Name="ConnectorBottom" />
-                        </base:RelativePositionPanel>
+                        </base1:RelativePositionPanel>
 
-                        <base:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
+                        <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
 
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -562,40 +565,40 @@
 
     </Style>
 
-    <Style x:Key="WorkflowItemProcess" TargetType="base:WorkflowItem">
+    <Style x:Key="WorkflowItemProcess" TargetType="base1:WorkflowItem">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type base:WorkflowItem}">
+                <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
                     <Grid Width="120" Height="100" x:Name="Grid">
 
                         <Path Style="{StaticResource Process}" ToolTip="Process">
-                            <base:WorkflowItem.DragThumbTemplate>
+                            <base1:WorkflowItem.DragThumbTemplate>
                                 <ControlTemplate>
                                     <Path Style="{StaticResource Process_DragThumb}" />
                                 </ControlTemplate>
-                            </base:WorkflowItem.DragThumbTemplate>
+                            </base1:WorkflowItem.DragThumbTemplate>
                         </Path>
 
                         <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
                             <TextBlock
-                                Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type base:WorkflowItem}}, Path=Label}"
+                                Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type base1:WorkflowItem}}, Path=Label}"
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
 
-                        <base:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
-                            <base:WorkflowConnector Orientation="Top" base:RelativePositionPanel.RelativePosition="0.5,0"
+                        <base1:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0"
                                             x:Name="ConnectorTop" />
-                            <base:WorkflowConnector Orientation="Left" base:RelativePositionPanel.RelativePosition="0.09,0.5"
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.09,0.5"
                                             x:Name="ConnectorLeft" />
-                            <base:WorkflowConnector Orientation="Right" base:RelativePositionPanel.RelativePosition="0.91,0.5"
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.91,0.5"
                                             x:Name="ConnectorRight" />
-                            <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.5,1"
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1"
                                             x:Name="ConnectorBottom" />
-                        </base:RelativePositionPanel>
+                        </base1:RelativePositionPanel>
 
-                        <base:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
+                        <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -610,7 +613,7 @@
             </Setter.Value>
         </Setter>
 
-        <Setter Property="base:WorkflowItem.DragThumbTemplate">
+        <Setter Property="base1:WorkflowItem.DragThumbTemplate">
             <Setter.Value>
                 <ControlTemplate>
                     <Path Style="{StaticResource Data_DragThumb}" />
@@ -619,40 +622,40 @@
         </Setter>
     </Style>
 
-    <Style x:Key="WorkflowItemStartStop" TargetType="base:WorkflowItem">
+    <Style x:Key="WorkflowItemStartStop" TargetType="base1:WorkflowItem">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type base:WorkflowItem}">
+                <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
                     <Grid Width="100" Height="100" x:Name="Grid">
 
                         <Path Style="{StaticResource StartStop}" ToolTip="Stop">
-                            <base:WorkflowItem.DragThumbTemplate>
+                            <base1:WorkflowItem.DragThumbTemplate>
                                 <ControlTemplate>
                                     <Path Style="{StaticResource Process_DragThumb}" />
                                 </ControlTemplate>
-                            </base:WorkflowItem.DragThumbTemplate>
+                            </base1:WorkflowItem.DragThumbTemplate>
                         </Path>
 
                         <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
                             <TextBlock
-                                Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type base:WorkflowItem}}, Path=Label}"
+                                Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type base1:WorkflowItem}}, Path=Label}"
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
 
-                        <base:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
-                            <base:WorkflowConnector Orientation="Top" base:RelativePositionPanel.RelativePosition="0.5,0"
+                        <base1:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0"
                                             x:Name="ConnectorTop" />
-                            <base:WorkflowConnector Orientation="Left" base:RelativePositionPanel.RelativePosition="0.09,0.5"
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.09,0.5"
                                             x:Name="ConnectorLeft" />
-                            <base:WorkflowConnector Orientation="Right" base:RelativePositionPanel.RelativePosition="0.91,0.5"
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.91,0.5"
                                             x:Name="ConnectorRight" />
-                            <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.5,1"
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1"
                                             x:Name="ConnectorBottom" />
-                        </base:RelativePositionPanel>
+                        </base1:RelativePositionPanel>
 
-                        <base:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
+                        <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -667,7 +670,7 @@
             </Setter.Value>
         </Setter>
 
-        <Setter Property="base:WorkflowItem.DragThumbTemplate">
+        <Setter Property="base1:WorkflowItem.DragThumbTemplate">
             <Setter.Value>
                 <ControlTemplate>
                     <Path Style="{StaticResource Data_DragThumb}" />

@@ -28,13 +28,12 @@ using CodeAnalyzer.UserInterface.Interfaces;
 using CodeEvaluator.Packages.Core;
 using CodeEvaluator.Packages.Core.Interfaces;
 using CodeEvaluator.Workflows;
-using EnvDTE;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using StructureMap;
 
-namespace CodeAnalyzer.UserInterface.Controls.Views
+namespace CodeEvaluator.UserInterface.Controls.Views
 {
 
     #region Using
@@ -445,7 +444,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Views
 
         private void CmbTargetProject_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count > 0 && e.AddedItems[0] is Project)
+            if (e.AddedItems.Count > 0 && e.AddedItems[0] is IProjectWrapper)
             {
                 var project = (IProjectWrapper) e.AddedItems[0];
                 LoadedProjectItems.Clear();

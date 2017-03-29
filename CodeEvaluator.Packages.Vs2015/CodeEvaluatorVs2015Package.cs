@@ -3,11 +3,12 @@ using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using CodeAnalysis.Core.Configuration;
 using CodeAnalyzer.UserInterface.Controls.Diagrams;
 using CodeAnalyzer.UserInterface.Interfaces;
 using CodeEvaluator.Packages.Core;
 using CodeEvaluator.Packages.Core.Interfaces;
-using CodeEvaluator.ProjectVs2015.Wrappers;
+using CodeEvaluator.Packages.Vs2015.Wrappers;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
@@ -15,7 +16,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using StructureMap;
 
-namespace CodeEvaluator.ProjectVs2015
+namespace CodeEvaluator.Packages.Vs2015
 {
 
     #region Using
@@ -73,9 +74,15 @@ namespace CodeEvaluator.ProjectVs2015
                 ToString());
             base.Initialize();
 
-            RegisterVisualStudioIntegration();
             RegisterVisualStudioServices();
             RegisterInternalServices();
+            RegisterCodeAnalyzerServices();
+            RegisterVisualStudioIntegration();
+        }
+
+        private void RegisterCodeAnalyzerServices()
+        {
+            StandardSetupBootstrapper.RegisterStandardComponents();
         }
 
         #endregion
@@ -90,6 +97,8 @@ namespace CodeEvaluator.ProjectVs2015
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IWorkflowDiagramSizes>()));
             ObjectFactory.Configure(config => config.For<IProjectFilesProvider>().Use(() => new ProjectFilesProvider()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IProjectFilesProvider>()));
+            ObjectFactory.Configure(config => config.For<ISystemSettings>().Use(new SystemSettings()));
+            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ISystemSettings>()));
         }
 
         private void RegisterVisualStudioIntegration()
@@ -117,6 +126,7 @@ namespace CodeEvaluator.ProjectVs2015
             ObjectFactory.Configure(config => config.For<DTE2>().Use(() => GetService(typeof(DTE2)) as DTE2));
             ObjectFactory.Configure(
                 config => config.For<IVsSolution>().Use(() => GetService(typeof(SVsSolution)) as IVsSolution));
+            ObjectFactory.Configure(config => config.For<Package>().Use(this));
         }
 
         /// <summary>
@@ -132,7 +142,7 @@ namespace CodeEvaluator.ProjectVs2015
             var window = FindToolWindow(typeof(GenerateWorkflowDiagramWindow), 0, true);
             if ((null == window) || (null == window.Frame))
             {
-                throw new NotSupportedException(VSPackage._112);
+                throw new NotSupportedException(Resources._112);
             }
             var windowFrame = (IVsWindowFrame) window.Frame;
             ErrorHandler.ThrowOnFailure(windowFrame.Show());

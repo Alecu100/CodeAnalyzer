@@ -49,13 +49,13 @@ namespace CodeAnalysis.Core.Common
             EvaluatedMethodBase targetMethod,
             EvaluatedObjectReference thisReference)
         {
-            var staticWorkflowEvaluatorExecutionFrame = new EvaluatorExecutionFrame();
+            var newExecutionFrameForMethodCall = new EvaluatorExecutionFrame();
 
-            staticWorkflowEvaluatorExecutionFrame.CurrentMethod = targetMethod;
-            staticWorkflowEvaluatorExecutionFrame.ThisReference = thisReference;
-            staticWorkflowEvaluatorExecutionFrame.CurrentSyntaxNode = targetMethod.Declaration;
+            newExecutionFrameForMethodCall.CurrentMethod = targetMethod;
+            newExecutionFrameForMethodCall.ThisReference = thisReference;
+            newExecutionFrameForMethodCall.CurrentSyntaxNode = targetMethod.Declaration;
 
-            return staticWorkflowEvaluatorExecutionFrame;
+            return newExecutionFrameForMethodCall;
         }
 
         #endregion

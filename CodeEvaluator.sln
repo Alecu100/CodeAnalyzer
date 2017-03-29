@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEvaluator.Workflows", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEvaluator.Packages.Core", "CodeEvaluator.Packages.Core\CodeEvaluator.Packages.Core.csproj", "{C0A5ED9F-551B-4B73-BD08-85DA235F8AAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEvaluator.Packages.ProjectVs2015", "CodeEvaluator.Packages.ProjectVs2015\CodeEvaluator.Packages.ProjectVs2015.csproj", "{A500714C-C17F-4486-9183-A5434B05EAF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEvaluator.Packages.Vs2015", "CodeEvaluator.Packages.Vs2015\CodeEvaluator.Packages.Vs2015.csproj", "{D8407669-D43D-47E9-8A5F-B81DC0606A89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{C0A5ED9F-551B-4B73-BD08-85DA235F8AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0A5ED9F-551B-4B73-BD08-85DA235F8AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0A5ED9F-551B-4B73-BD08-85DA235F8AAF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A500714C-C17F-4486-9183-A5434B05EAF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A500714C-C17F-4486-9183-A5434B05EAF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A500714C-C17F-4486-9183-A5434B05EAF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A500714C-C17F-4486-9183-A5434B05EAF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

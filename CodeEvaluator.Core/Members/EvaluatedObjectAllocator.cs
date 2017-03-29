@@ -37,6 +37,8 @@ namespace CodeAnalysis.Core.Members
         {
             var trackedVariable = new EvaluatedObject();
 
+            trackedVariable.TypeInfo = typeInfo;
+
             foreach (var trackedField in typeInfo.AllFields)
             {
                 var trackedVariableReference = new EvaluatedObjectReference();
