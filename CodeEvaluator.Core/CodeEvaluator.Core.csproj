@@ -79,6 +79,7 @@
     <Compile Include="Common\SyntaxNodeEvaluatorFactory.cs" />
     <Compile Include="Common\SyntaxNodeNamespaceProvider.cs" />
     <Compile Include="Configuration\StandardSetupBootstrapper.cs" />
+    <Compile Include="Enums\EMemberFlags.cs" />
     <Compile Include="Interfaces\IParsedSourceFilesCache.cs" />
     <Compile Include="Interfaces\ICodeEvaluator.cs" />
     <Compile Include="Interfaces\IEvaluatorExecutionFrameFactory.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Members\EvaluatedProperty.cs" />
     <Compile Include="Members\EvaluatedPropertyGetAccessor.cs" />
     <Compile Include="Members\EvaluatedPropertySetAccessor.cs" />
+    <Compile Include="Members\EvaluatedStaticObject.cs" />
     <Compile Include="Members\EvaluatedTypeInfo.cs" />
     <Compile Include="Members\EvaluatedObject.cs" />
     <Compile Include="Members\EvaluatedObjectAllocator.cs" />

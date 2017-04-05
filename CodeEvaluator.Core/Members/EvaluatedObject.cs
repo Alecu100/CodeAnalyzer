@@ -16,6 +16,7 @@
 //  -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Interfaces;
 using Microsoft.CodeAnalysis;
@@ -30,15 +31,6 @@ namespace CodeAnalysis.Core.Members
 
     public class EvaluatedObject
     {
-        #region Constructors and Destructors
-
-        public EvaluatedObject()
-        {
-            ObjectFactory.BuildUp(this);
-        }
-
-        #endregion
-
         #region Public Methods and Operators
 
         /// <summary>
@@ -54,6 +46,25 @@ namespace CodeAnalysis.Core.Members
             };
 
             _history.Add(evaluatedObjectHistory);
+        }
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public EvaluatedObject(EvaluatedTypeInfo typeInfo, List<EvaluatedObjectReference> fields)
+        {
+            ObjectFactory.BuildUp(this);
+
+            _typeInfo = typeInfo;
+            _fields.AddRange(fields);
+        }
+
+        protected EvaluatedObject(EvaluatedTypeInfo typeInfo)
+        {
+            ObjectFactory.BuildUp(this);
+
+            _typeInfo = typeInfo;
         }
 
         #endregion
@@ -76,9 +87,9 @@ namespace CodeAnalysis.Core.Members
         /// <value>
         ///     The member variables.
         /// </value>
-        public List<EvaluatedObjectReference> Fields
+        public virtual IReadOnlyList<EvaluatedObjectReference> Fields
         {
-            get { return _fields; }
+            get { return _fields.Union(_typeInfo.SharedStaticObject._fields).ToList(); }
         }
 
 
@@ -88,7 +99,7 @@ namespace CodeAnalysis.Core.Members
         /// <value>
         ///     The history.
         /// </value>
-        public IReadOnlyList<EvaluatedObjectHistory> History
+        public virtual List<EvaluatedObjectHistory> History
         {
             get { return _history; }
         }
@@ -107,10 +118,9 @@ namespace CodeAnalysis.Core.Members
         /// <value>
         ///     The type information.
         /// </value>
-        public EvaluatedTypeInfo TypeInfo
+        public virtual EvaluatedTypeInfo TypeInfo
         {
             get { return _typeInfo; }
-            set { _typeInfo = value; }
         }
 
         #endregion

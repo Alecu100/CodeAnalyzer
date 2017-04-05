@@ -27,6 +27,18 @@ namespace CodeAnalysis.Core.Members
 
     public class EvaluatedTypeInfo : EvaluatedMember
     {
+        private readonly EvaluatedStaticObject _sharedStaticObject;
+
+        public EvaluatedTypeInfo()
+        {
+            _sharedStaticObject = new EvaluatedStaticObject(this);
+        }
+
+        public EvaluatedStaticObject SharedStaticObject
+        {
+            get { return _sharedStaticObject; }
+        }
+
         #region Fields
 
         #endregion

@@ -15,6 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using CodeAnalysis.Core.Interfaces;
 
 namespace CodeAnalysis.Core.Members
@@ -35,9 +36,7 @@ namespace CodeAnalysis.Core.Members
         /// <returns></returns>
         public EvaluatedObject AllocateVariable(EvaluatedTypeInfo typeInfo)
         {
-            var trackedVariable = new EvaluatedObject();
-
-            trackedVariable.TypeInfo = typeInfo;
+            var fields = new List<EvaluatedObjectReference>();
 
             foreach (var trackedField in typeInfo.AllFields)
             {
@@ -47,7 +46,7 @@ namespace CodeAnalysis.Core.Members
                 trackedVariableReference.Identifier = trackedField.Identifier;
                 trackedVariableReference.IdentifierText = trackedField.IdentifierText;
                 trackedVariableReference.FullIdentifierText = trackedField.FullIdentifierText;
-                trackedVariable.Fields.Add(trackedVariableReference);
+                fields.Add(trackedVariableReference);
             }
 
             foreach (var trackedProperty in typeInfo.AllProperties)
@@ -58,9 +57,11 @@ namespace CodeAnalysis.Core.Members
                     trackedVariableReference.Declaration = trackedProperty.Declaration;
                     trackedVariableReference.TypeInfo = trackedProperty.TypeInfo;
                     trackedVariableReference.IdentifierText = "<" + trackedProperty.IdentifierText + ">";
-                    trackedVariable.Fields.Add(trackedVariableReference);
+                    fields.Add(trackedVariableReference);
                 }
             }
+
+            var trackedVariable = new EvaluatedObject(typeInfo, fields);
 
             return trackedVariable;
         }

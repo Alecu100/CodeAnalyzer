@@ -15,6 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using CodeAnalysis.Core.Enums;
 using Microsoft.CodeAnalysis;
 
 namespace CodeAnalysis.Core.Members
@@ -60,21 +61,7 @@ namespace CodeAnalysis.Core.Members
         /// </value>
         public string IdentifierText { get; set; }
 
-        /// <summary>
-        ///     Gets or sets a value indicating whether this instance is external.
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if this instance is external; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsExternal { get; set; }
-
-        /// <summary>
-        ///     Gets or sets a value indicating whether this instance is static.
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if this instance is static; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsStatic { get; set; }
+        public EMemberFlags MemberFlags { get; set; }
 
         #endregion
     }
