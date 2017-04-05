@@ -80,6 +80,7 @@
     <Compile Include="Common\SyntaxNodeNamespaceProvider.cs" />
     <Compile Include="Configuration\StandardSetupBootstrapper.cs" />
     <Compile Include="Enums\EMemberFlags.cs" />
+    <Compile Include="Extensions\EvaluatedMemberExtensions.cs" />
     <Compile Include="Interfaces\IParsedSourceFilesCache.cs" />
     <Compile Include="Interfaces\ICodeEvaluator.cs" />
     <Compile Include="Interfaces\IEvaluatorExecutionFrameFactory.cs" />

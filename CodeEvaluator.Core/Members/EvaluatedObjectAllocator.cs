@@ -16,6 +16,8 @@
 //  -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
+using CodeAnalysis.Core.Extensions;
 using CodeAnalysis.Core.Interfaces;
 
 namespace CodeAnalysis.Core.Members
@@ -38,7 +40,8 @@ namespace CodeAnalysis.Core.Members
         {
             var fields = new List<EvaluatedObjectReference>();
 
-            foreach (var trackedField in typeInfo.AllFields)
+            foreach (
+                var trackedField in typeInfo.AllFields.Where(field => !field.IsStatic()))
             {
                 var trackedVariableReference = new EvaluatedObjectReference();
                 trackedVariableReference.Declaration = trackedField.Declaration;
@@ -49,7 +52,9 @@ namespace CodeAnalysis.Core.Members
                 fields.Add(trackedVariableReference);
             }
 
-            foreach (var trackedProperty in typeInfo.AllProperties)
+            foreach (
+                var trackedProperty in
+                    typeInfo.AllProperties.Where(prop => !prop.IsStatic()))
             {
                 if (trackedProperty.IsAutoProperty)
                 {
