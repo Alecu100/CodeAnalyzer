@@ -35,13 +35,13 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
         ///     Evaluates the syntax node.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
-        /// <param name="workflowEvaluatorContext">The workflow evaluator stack.</param>
+        /// <param name="workflowEvaluatorExecutionState">The workflow evaluator stack.</param>
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            StaticWorkflowEvaluatorContext workflowEvaluatorContext)
+            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
             var variableDeclarationSyntax = (VariableDeclarationSyntax) syntaxNode;
-            var thisTypeInfo = workflowEvaluatorContext.CurrentExecutionFrame.ThisReference.EvaluatedObjects[0].TypeInfo;
+            var thisTypeInfo = workflowEvaluatorExecutionState.CurrentExecutionFrame.ThisReference.EvaluatedObjects[0].TypeInfo;
 
             foreach (var variableDeclarator in variableDeclarationSyntax.Variables)
             {
@@ -58,7 +58,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     thisTypeInfo.UsingDirectives,
                     thisTypeInfo.NamespaceDeclarations);
 
-                workflowEvaluatorContext.CurrentExecutionFrame.LocalReferences.Add(reference);
+                workflowEvaluatorExecutionState.CurrentExecutionFrame.LocalReferences.Add(reference);
 
                 if (variableDeclarator.Initializer != null && variableDeclarator.Initializer.Value != null)
                 {
@@ -67,22 +67,22 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
                     if (syntaxNodeEvaluator != null)
                     {
-                        syntaxNodeEvaluator.EvaluateSyntaxNode(variableDeclarator.Initializer, workflowEvaluatorContext);
+                        syntaxNodeEvaluator.EvaluateSyntaxNode(variableDeclarator.Initializer, workflowEvaluatorExecutionState);
 
-                        if (workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult != null)
+                        if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult != null)
                         {
                             reference.AssignEvaluatedObject(
-                                workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult);
+                                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult);
 
-                            workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult = null;
+                            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult = null;
                         }
                     }
                 }
 
-                workflowEvaluatorContext.CurrentExecutionFrame.LocalReferences.Add(reference);
+                workflowEvaluatorExecutionState.CurrentExecutionFrame.LocalReferences.Add(reference);
             }
 
-            workflowEvaluatorContext.PopSyntaxNodeEvaluator();
+            workflowEvaluatorExecutionState.PopSyntaxNodeEvaluator();
         }
 
         #endregion

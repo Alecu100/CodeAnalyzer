@@ -1,16 +1,16 @@
 ﻿//  Project              : GLP
 //  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatorExecutionFrame.cs
+//  File                 : CodeEvaluatorExecutionFrame.cs
 //  Author               : Alecsandru
 //  Last Updated         : 18/12/2015 at 22:29
 //  
 // 
-//  Contains             : Implementation of the EvaluatorExecutionFrame.cs class.
-//  Classes              : EvaluatorExecutionFrame.cs
+//  Contains             : Implementation of the CodeEvaluatorExecutionFrame.cs class.
+//  Classes              : CodeEvaluatorExecutionFrame.cs
 // 
 //  
 //  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatorExecutionFrame.cs" company="Sysmex"> 
+//   <copyright file="CodeEvaluatorExecutionFrame.cs" company="Sysmex"> 
 //       Copyright (c) Sysmex. All rights reserved. 
 //   </copyright> 
 //  -----------------------------------------------------------------------
@@ -26,7 +26,7 @@ namespace CodeAnalysis.Core.Common
 
     #endregion
 
-    public class EvaluatorExecutionFrame
+    public class CodeEvaluatorExecutionFrame
     {
         private readonly EvaluatedObjectReference _returningMethodParameters = new EvaluatedObjectReference();
 

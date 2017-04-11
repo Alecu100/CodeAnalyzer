@@ -72,10 +72,10 @@
   <ItemGroup>
     <Compile Include="Common\ParsedSourceFilesCache.cs" />
     <Compile Include="Common\CodeEvaluator.cs" />
-    <Compile Include="Common\StaticWorkflowEvaluatorContext.cs" />
-    <Compile Include="Common\EvaluatorExecutionFrame.cs" />
+    <Compile Include="Common\CodeEvaluatorExecutionState.cs" />
+    <Compile Include="Common\CodeEvaluatorExecutionFrame.cs" />
     <Compile Include="Common\EvaluatorExecutionFrameFactory.cs" />
-    <Compile Include="Common\StaticWorkflowEvaluatorParameters.cs" />
+    <Compile Include="Common\CodeEvaluatorParameters.cs" />
     <Compile Include="Common\SyntaxNodeEvaluatorFactory.cs" />
     <Compile Include="Common\SyntaxNodeNamespaceProvider.cs" />
     <Compile Include="Configuration\StandardSetupBootstrapper.cs" />

@@ -36,14 +36,14 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
         ///     Evaluates the syntax node.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
-        /// <param name="workflowEvaluatorContext">The workflow evaluator stack.</param>
+        /// <param name="workflowEvaluatorExecutionState">The workflow evaluator stack.</param>
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            StaticWorkflowEvaluatorContext workflowEvaluatorContext)
+            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
             var invocationExpressionSyntax = (InvocationExpressionSyntax) syntaxNode;
 
-            foreach (var staticWorkflowListener in workflowEvaluatorContext.Parameters.Listeners)
+            foreach (var staticWorkflowListener in workflowEvaluatorExecutionState.Parameters.Listeners)
             {
                 staticWorkflowListener.BeforeMethodCalled(invocationExpressionSyntax);
             }
@@ -57,13 +57,13 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                 {
                     syntaxNodeEvaluator.EvaluateSyntaxNode(
                         invocationExpressionSyntax.Expression,
-                        workflowEvaluatorContext);
+                        workflowEvaluatorExecutionState);
 
 
-                    if (workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult != null)
+                    if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult != null)
                     {
                         var accessedReferenceMember =
-                            workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult;
+                            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult;
 
                         foreach (var evaluatedObject in accessedReferenceMember.EvaluatedObjects)
                         {
@@ -82,7 +82,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                                 continue;
                             }
 
-                            workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters[-1] =
+                            workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters[-1] =
                                 evaluatedDelegate.Fields.First();
 
                             for (var i = 0; i < invocationExpressionSyntax.ArgumentList.Arguments.Count; i++)
@@ -93,28 +93,28 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
                                 if (nodeEvaluator != null)
                                 {
-                                    workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult = null;
+                                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult = null;
 
                                     nodeEvaluator.EvaluateSyntaxNode(
                                         argumentSyntax.Expression,
-                                        workflowEvaluatorContext);
+                                        workflowEvaluatorExecutionState);
                                 }
 
-                                if (workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult != null)
+                                if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult != null)
                                 {
-                                    workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters[i] =
-                                        workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult;
+                                    workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters[i] =
+                                        workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult;
                                 }
                             }
 
-                            workflowEvaluatorContext.CurrentExecutionFrame.MemberAccessResult = null;
+                            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult = null;
 
                             var methodEvaluator =
                                 SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(currentMethod.Declaration);
 
                             if (methodEvaluator != null)
                             {
-                                methodEvaluator.EvaluateSyntaxNode(currentMethod.Declaration, workflowEvaluatorContext);
+                                methodEvaluator.EvaluateSyntaxNode(currentMethod.Declaration, workflowEvaluatorExecutionState);
                             }
                         }
                     }

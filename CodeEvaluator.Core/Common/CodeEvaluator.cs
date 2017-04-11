@@ -35,7 +35,7 @@ namespace CodeAnalysis.Core.Common
 
         #region Public Properties
 
-        public StaticWorkflowEvaluatorContext Context { get; private set; }
+        public CodeEvaluatorExecutionState ExecutionState { get; private set; }
 
         #endregion
 
@@ -66,9 +66,9 @@ namespace CodeAnalysis.Core.Common
         private void InitializeContext(
             IList<ICodeEvaluatorListener> listeners)
         {
-            Context = new StaticWorkflowEvaluatorContext();
-            Context.Parameters = new StaticWorkflowEvaluatorParameters();
-            Context.Parameters.Listeners.AddRange(listeners);
+            ExecutionState = new CodeEvaluatorExecutionState();
+            ExecutionState.Parameters = new CodeEvaluatorParameters();
+            ExecutionState.Parameters.Listeners.AddRange(listeners);
         }
 
         private void InitializeExecutionFrame(ClassDeclarationSyntax targetClass)
@@ -80,7 +80,7 @@ namespace CodeAnalysis.Core.Common
             var initialExecutionFrame =
                 staticWorkflowEvaluatorExecutionFrameFactory.BuildInitialExecutionFrame(trackedTypeInfo);
 
-            Context.PushFramePassingParametersFromPreviousFrame(initialExecutionFrame);
+            ExecutionState.PushFramePassingParametersFromPreviousFrame(initialExecutionFrame);
         }
 
         private void ParseSourceFilesFromSelectedProjects(IList<string> codeFileNames)
@@ -105,7 +105,7 @@ namespace CodeAnalysis.Core.Common
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(startMethod, Context);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(startMethod, ExecutionState);
             }
         }
 

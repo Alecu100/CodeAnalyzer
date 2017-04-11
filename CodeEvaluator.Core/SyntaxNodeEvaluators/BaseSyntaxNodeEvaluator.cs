@@ -44,19 +44,19 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
         ///     Evaluates the syntax node.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
-        /// <param name="workflowEvaluatorContext">The workflow evaluator stack.</param>
+        /// <param name="workflowEvaluatorExecutionState">The workflow evaluator stack.</param>
         public virtual void EvaluateSyntaxNode(
             SyntaxNode syntaxNode,
-            StaticWorkflowEvaluatorContext workflowEvaluatorContext)
+            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
-            var previousSyntaxNode = workflowEvaluatorContext.CurrentExecutionFrame.CurrentSyntaxNode;
-            workflowEvaluatorContext.PushSyntaxNodeEvaluator(this);
-            workflowEvaluatorContext.CurrentExecutionFrame.CurrentSyntaxNode = syntaxNode;
+            var previousSyntaxNode = workflowEvaluatorExecutionState.CurrentExecutionFrame.CurrentSyntaxNode;
+            workflowEvaluatorExecutionState.PushSyntaxNodeEvaluator(this);
+            workflowEvaluatorExecutionState.CurrentExecutionFrame.CurrentSyntaxNode = syntaxNode;
 
-            EvaluateSyntaxNodeInternal(syntaxNode, workflowEvaluatorContext);
+            EvaluateSyntaxNodeInternal(syntaxNode, workflowEvaluatorExecutionState);
 
-            workflowEvaluatorContext.CurrentExecutionFrame.CurrentSyntaxNode = previousSyntaxNode;
-            workflowEvaluatorContext.PopSyntaxNodeEvaluator();
+            workflowEvaluatorExecutionState.CurrentExecutionFrame.CurrentSyntaxNode = previousSyntaxNode;
+            workflowEvaluatorExecutionState.PopSyntaxNodeEvaluator();
         }
 
         #endregion
@@ -65,7 +65,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         protected virtual void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            StaticWorkflowEvaluatorContext workflowEvaluatorContext)
+            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
         }
 

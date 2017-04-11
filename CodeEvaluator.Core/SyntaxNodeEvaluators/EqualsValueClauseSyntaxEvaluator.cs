@@ -32,7 +32,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            StaticWorkflowEvaluatorContext workflowEvaluatorContext)
+            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
             var equalsValueClauseSyntax = (EqualsValueClauseSyntax) syntaxNode;
 
@@ -40,7 +40,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(equalsValueClauseSyntax.Value, workflowEvaluatorContext);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(equalsValueClauseSyntax.Value, workflowEvaluatorExecutionState);
             }
         }
 

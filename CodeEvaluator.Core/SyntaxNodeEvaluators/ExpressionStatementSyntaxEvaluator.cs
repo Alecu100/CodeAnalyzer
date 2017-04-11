@@ -34,10 +34,10 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
         ///     Evaluates the syntax node.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
-        /// <param name="workflowEvaluatorContext">The workflow evaluator stack.</param>
+        /// <param name="workflowEvaluatorExecutionState">The workflow evaluator stack.</param>
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            StaticWorkflowEvaluatorContext workflowEvaluatorContext)
+            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
             var expressionStatementSyntax = (ExpressionStatementSyntax) syntaxNode;
             var syntaxNodeEvaluator =
@@ -45,7 +45,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(expressionStatementSyntax.Expression, workflowEvaluatorContext);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(expressionStatementSyntax.Expression, workflowEvaluatorExecutionState);
             }
         }
 

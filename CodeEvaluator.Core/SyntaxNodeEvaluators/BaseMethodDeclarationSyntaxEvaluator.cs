@@ -44,7 +44,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         protected EvaluatedMethodBase _evaluatedMethod;
 
-        protected StaticWorkflowEvaluatorContext _workflowEvaluatorContext;
+        protected CodeEvaluatorExecutionState _workflowEvaluatorExecutionState;
 
         #endregion
 
@@ -58,17 +58,17 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                 staticWorkflowEvaluatorExecutionFrameFactory.BuildNewExecutionFrameForMethodCall(
                     _evaluatedMethod,
                     _thisReference);
-            _workflowEvaluatorContext.PushFramePassingParametersFromPreviousFrame(buildNewExecutionFrameForMethodCall);
+            _workflowEvaluatorExecutionState.PushFramePassingParametersFromPreviousFrame(buildNewExecutionFrameForMethodCall);
         }
 
         protected void InitializeParameters()
         {
             for (var i = 0; i < _evaluatedMethod.Parameters.Count; i++)
             {
-                if (_workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters.ContainsKey(i))
+                if (_workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters.ContainsKey(i))
                 {
                     var trackedMethodParameter = _evaluatedMethod.Parameters[i];
-                    var passedParameters = _workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters[i];
+                    var passedParameters = _workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters[i];
 
                     if (trackedMethodParameter.TypeInfo == null || passedParameters == null)
                     {
@@ -81,8 +81,8 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     trackedVariableReference.Identifier = trackedMethodParameter.Identifier;
                     trackedVariableReference.IdentifierText = trackedMethodParameter.IdentifierText;
                     trackedVariableReference.AssignEvaluatedObject(passedParameters);
-                    _workflowEvaluatorContext.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
-                    _workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters.Remove(i);
+                    _workflowEvaluatorExecutionState.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
+                    _workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters.Remove(i);
                 }
                 else
                 {
@@ -100,14 +100,14 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     trackedVariableReference.IdentifierText = trackedMethodParameter.IdentifierText;
                     trackedVariableReference.AssignEvaluatedObject(
                         VariableAllocator.AllocateVariable(trackedMethodParameter.TypeInfo));
-                    _workflowEvaluatorContext.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
+                    _workflowEvaluatorExecutionState.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
                 }
             }
         }
 
         protected void ResetExecutionFrame()
         {
-            _workflowEvaluatorContext.PopFramePassingReturnedObjectsToPreviousFrame();
+            _workflowEvaluatorExecutionState.PopFramePassingReturnedObjectsToPreviousFrame();
         }
 
         #endregion

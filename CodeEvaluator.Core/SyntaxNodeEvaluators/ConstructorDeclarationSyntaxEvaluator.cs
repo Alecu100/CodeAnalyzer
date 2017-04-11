@@ -34,10 +34,10 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            StaticWorkflowEvaluatorContext workflowEvaluatorContext)
+            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
             _baseMethodDeclarationSyntax = (ConstructorDeclarationSyntax) syntaxNode;
-            _workflowEvaluatorContext = workflowEvaluatorContext;
+            _workflowEvaluatorExecutionState = workflowEvaluatorExecutionState;
 
             InitializeThisVariable();
             InitializeExecutionFrame();
@@ -48,7 +48,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(syntaxNode, workflowEvaluatorContext);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(syntaxNode, workflowEvaluatorExecutionState);
             }
 
             ReturnThisReference();
@@ -80,7 +80,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         private void ReturnThisReference()
         {
-            _workflowEvaluatorContext.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
+            _workflowEvaluatorExecutionState.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
                 _thisReference);
         }
 

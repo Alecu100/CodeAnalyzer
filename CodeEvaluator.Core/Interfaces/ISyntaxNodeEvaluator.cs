@@ -33,8 +33,8 @@ namespace CodeAnalysis.Core.Interfaces
         ///     Evaluates the syntax node.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
-        /// <param name="workflowEvaluatorContext">The workflow evaluator stack.</param>
-        void EvaluateSyntaxNode(SyntaxNode syntaxNode, StaticWorkflowEvaluatorContext workflowEvaluatorContext);
+        /// <param name="workflowEvaluatorExecutionState">The workflow evaluator stack.</param>
+        void EvaluateSyntaxNode(SyntaxNode syntaxNode, CodeEvaluatorExecutionState workflowEvaluatorExecutionState);
 
         #endregion
     }

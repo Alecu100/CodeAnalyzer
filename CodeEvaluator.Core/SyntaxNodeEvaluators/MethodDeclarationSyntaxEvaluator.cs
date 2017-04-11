@@ -39,11 +39,11 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            StaticWorkflowEvaluatorContext workflowEvaluatorContext)
+            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
             _baseMethodDeclarationSyntax = (MethodDeclarationSyntax) syntaxNode;
             _methodDeclarationSyntax = (MethodDeclarationSyntax) syntaxNode;
-            _workflowEvaluatorContext = workflowEvaluatorContext;
+            _workflowEvaluatorExecutionState = workflowEvaluatorExecutionState;
 
             InitializeThisVariable();
             InitializeExecutionFrame();
@@ -54,7 +54,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(_methodDeclarationSyntax.Body, workflowEvaluatorContext);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(_methodDeclarationSyntax.Body, workflowEvaluatorExecutionState);
             }
 
             ResetExecutionFrame();
@@ -66,8 +66,8 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         private void InitializeThisVariable()
         {
-            _thisReference = _workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters[-1];
-            _workflowEvaluatorContext.CurrentExecutionFrame.PassedMethodParameters.Remove(-1);
+            _thisReference = _workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters[-1];
+            _workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters.Remove(-1);
             _evaluatedMethod =
                 _thisReference.TypeInfo.AllMethods.First(
                     method => method.IdentifierText == _methodDeclarationSyntax.Identifier.ValueText);

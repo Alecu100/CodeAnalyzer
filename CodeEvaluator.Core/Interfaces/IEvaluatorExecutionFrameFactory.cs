@@ -27,11 +27,11 @@ namespace CodeAnalysis.Core.Interfaces
 
     public interface IEvaluatorExecutionFrameFactory
     {
-        EvaluatorExecutionFrame BuildNewExecutionFrameForMethodCall(
+        CodeEvaluatorExecutionFrame BuildNewExecutionFrameForMethodCall(
             EvaluatedMethodBase targetMethod,
             EvaluatedObjectReference thisReference);
 
 
-        EvaluatorExecutionFrame BuildInitialExecutionFrame(EvaluatedTypeInfo evaluatedType);
+        CodeEvaluatorExecutionFrame BuildInitialExecutionFrame(EvaluatedTypeInfo evaluatedType);
     }
 }

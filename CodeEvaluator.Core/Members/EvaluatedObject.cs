@@ -38,7 +38,7 @@ namespace CodeAnalysis.Core.Members
         /// </summary>
         /// <param name="expression">The expression.</param>
         /// <param name="executionFrame">The execution frame.</param>
-        public void PushHistory(SyntaxNode expression, EvaluatorExecutionFrame executionFrame)
+        public void PushHistory(SyntaxNode expression, CodeEvaluatorExecutionFrame executionFrame)
         {
             var evaluatedObjectHistory = new EvaluatedObjectHistory
             {

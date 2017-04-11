@@ -1,16 +1,16 @@
 ﻿//  Project              : GLP
 //  Module               : RomSoft.Client.Debug.dll
-//  File                 : StaticWorkflowEvaluatorContext.cs
+//  File                 : CodeEvaluatorExecutionState.cs
 //  Author               : Alecsandru
 //  Last Updated         : 18/12/2015 at 22:32
 //  
 // 
-//  Contains             : Implementation of the StaticWorkflowEvaluatorContext.cs class.
-//  Classes              : StaticWorkflowEvaluatorContext.cs
+//  Contains             : Implementation of the CodeEvaluatorExecutionState.cs class.
+//  Classes              : CodeEvaluatorExecutionState.cs
 // 
 //  
 //  ----------------------------------------------------------------------- 
-//   <copyright file="StaticWorkflowEvaluatorContext.cs" company="Sysmex"> 
+//   <copyright file="CodeEvaluatorExecutionState.cs" company="Sysmex"> 
 //       Copyright (c) Sysmex. All rights reserved. 
 //   </copyright> 
 //  -----------------------------------------------------------------------
@@ -26,14 +26,14 @@ namespace CodeAnalysis.Core.Common
 
     #endregion
 
-    public class StaticWorkflowEvaluatorContext
+    public class CodeEvaluatorExecutionState
     {
         #region Fields
 
-        private StaticWorkflowEvaluatorParameters _parameters;
+        private CodeEvaluatorParameters _parameters;
 
-        private readonly List<EvaluatorExecutionFrame> _staticWorkflowEvaluatorExecutionFrames =
-            new List<EvaluatorExecutionFrame>();
+        private readonly List<CodeEvaluatorExecutionFrame> _staticWorkflowEvaluatorExecutionFrames =
+            new List<CodeEvaluatorExecutionFrame>();
 
         private readonly List<ISyntaxNodeEvaluator> _syntaxNodeEvaluators = new List<ISyntaxNodeEvaluator>();
 
@@ -47,7 +47,7 @@ namespace CodeAnalysis.Core.Common
         /// <value>
         ///     The current execution frame.
         /// </value>
-        public EvaluatorExecutionFrame CurrentExecutionFrame
+        public CodeEvaluatorExecutionFrame CurrentExecutionFrame
         {
             get
             {
@@ -66,7 +66,7 @@ namespace CodeAnalysis.Core.Common
         /// <value>
         ///     The parameters.
         /// </value>
-        public StaticWorkflowEvaluatorParameters Parameters
+        public CodeEvaluatorParameters Parameters
         {
             get { return _parameters; }
             set { _parameters = value; }
@@ -78,7 +78,7 @@ namespace CodeAnalysis.Core.Common
         /// <value>
         ///     The static workflow evaluator execution frames.
         /// </value>
-        public IReadOnlyList<EvaluatorExecutionFrame> StaticWorkflowEvaluatorExecutionFrames
+        public IReadOnlyList<CodeEvaluatorExecutionFrame> StaticWorkflowEvaluatorExecutionFrames
         {
             get { return _staticWorkflowEvaluatorExecutionFrames; }
         }
@@ -128,7 +128,7 @@ namespace CodeAnalysis.Core.Common
         ///     Pushes the execution frame.
         /// </summary>
         /// <param name="executionFrame">The execution frame.</param>
-        public void PushFramePassingParametersFromPreviousFrame(EvaluatorExecutionFrame executionFrame)
+        public void PushFramePassingParametersFromPreviousFrame(CodeEvaluatorExecutionFrame executionFrame)
         {
             if (_staticWorkflowEvaluatorExecutionFrames.Count > 0)
             {

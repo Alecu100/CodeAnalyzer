@@ -32,7 +32,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            StaticWorkflowEvaluatorContext workflowEvaluatorContext)
+            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
             var memberAccessExpressionSyntax = (MemberAccessExpressionSyntax) syntaxNode;
 
@@ -43,7 +43,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
             {
                 syntaxNodeEvaluator.EvaluateSyntaxNode(
                     memberAccessExpressionSyntax.Expression,
-                    workflowEvaluatorContext);
+                    workflowEvaluatorExecutionState);
             }
 
             syntaxNodeEvaluator =
@@ -53,7 +53,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
             {
                 syntaxNodeEvaluator.EvaluateSyntaxNode(
                     memberAccessExpressionSyntax.Name,
-                    workflowEvaluatorContext);
+                    workflowEvaluatorExecutionState);
             }
         }
 

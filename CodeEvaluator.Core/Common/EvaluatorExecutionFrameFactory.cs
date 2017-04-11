@@ -30,9 +30,9 @@ namespace CodeAnalysis.Core.Common
     {
         #region Public Methods and Operators
 
-        public EvaluatorExecutionFrame BuildInitialExecutionFrame(EvaluatedTypeInfo evaluatedType)
+        public CodeEvaluatorExecutionFrame BuildInitialExecutionFrame(EvaluatedTypeInfo evaluatedType)
         {
-            var staticWorkflowEvaluatorExecutionFrame = new EvaluatorExecutionFrame();
+            var staticWorkflowEvaluatorExecutionFrame = new CodeEvaluatorExecutionFrame();
 
             var trackedVariableAllocator = ObjectFactory.GetInstance<IEvaluatedObjectAllocator>();
             var allocateVariable = trackedVariableAllocator.AllocateVariable(evaluatedType);
@@ -45,11 +45,11 @@ namespace CodeAnalysis.Core.Common
             return staticWorkflowEvaluatorExecutionFrame;
         }
 
-        public EvaluatorExecutionFrame BuildNewExecutionFrameForMethodCall(
+        public CodeEvaluatorExecutionFrame BuildNewExecutionFrameForMethodCall(
             EvaluatedMethodBase targetMethod,
             EvaluatedObjectReference thisReference)
         {
-            var newExecutionFrameForMethodCall = new EvaluatorExecutionFrame();
+            var newExecutionFrameForMethodCall = new CodeEvaluatorExecutionFrame();
 
             newExecutionFrameForMethodCall.CurrentMethod = targetMethod;
             newExecutionFrameForMethodCall.ThisReference = thisReference;

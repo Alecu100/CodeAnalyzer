@@ -1,16 +1,16 @@
 ﻿//  Project              : GLP
 //  Module               : RomSoft.Client.Debug.dll
-//  File                 : StaticWorkflowEvaluatorParameters.cs
+//  File                 : CodeEvaluatorParameters.cs
 //  Author               : Alecsandru
 //  Last Updated         : 19/12/2015 at 1:11
 //  
 // 
-//  Contains             : Implementation of the StaticWorkflowEvaluatorParameters.cs class.
-//  Classes              : StaticWorkflowEvaluatorParameters.cs
+//  Contains             : Implementation of the CodeEvaluatorParameters.cs class.
+//  Classes              : CodeEvaluatorParameters.cs
 // 
 //  
 //  ----------------------------------------------------------------------- 
-//   <copyright file="StaticWorkflowEvaluatorParameters.cs" company="Sysmex"> 
+//   <copyright file="CodeEvaluatorParameters.cs" company="Sysmex"> 
 //       Copyright (c) Sysmex. All rights reserved. 
 //   </copyright> 
 //  -----------------------------------------------------------------------
@@ -26,7 +26,7 @@ namespace CodeAnalysis.Core.Common
 
     #endregion
 
-    public class StaticWorkflowEvaluatorParameters
+    public class CodeEvaluatorParameters
     {
         #region Fields
 
