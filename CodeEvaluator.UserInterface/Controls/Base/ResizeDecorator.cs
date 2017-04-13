@@ -31,7 +31,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
     public class ResizeDecorator : Control
     {
-        #region Static Fields
+        #region Static SpecificFields
 
         public static readonly DependencyProperty ShowDecoratorProperty = DependencyProperty.Register(
             "ShowDecorator",
@@ -41,7 +41,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
         #endregion
 
-        #region Fields
+        #region SpecificFields
 
         private Adorner _adorner;
 

@@ -28,7 +28,7 @@ namespace CodeAnalysis.Core.Common
 
     public class CodeEvaluatorParameters
     {
-        #region Fields
+        #region SpecificFields
 
         private readonly List<ICodeEvaluatorListener> _listeners =
             new List<ICodeEvaluatorListener>();

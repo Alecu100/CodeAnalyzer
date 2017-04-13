@@ -69,7 +69,7 @@ namespace CodeAnalysis.Core.Members
 
         #endregion
 
-        #region Fields
+        #region SpecificFields
 
         protected readonly List<EvaluatedObjectHistory> _history = new List<EvaluatedObjectHistory>();
 

@@ -81,7 +81,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     }
                 }
 
-                foreach (var evaluatedMethod in evaluatedObject.TypeInfo.AllMethods)
+                foreach (var evaluatedMethod in evaluatedObject.TypeInfo.AccesibleMethods)
                 {
                     if (evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                     {
@@ -140,7 +140,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     }
                 }
 
-                foreach (var evaluatedMethod in thisEvaluatedObject.TypeInfo.AllMethods)
+                foreach (var evaluatedMethod in thisEvaluatedObject.TypeInfo.AccesibleMethods)
                 {
                     if (evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                     {

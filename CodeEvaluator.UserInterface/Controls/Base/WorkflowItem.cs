@@ -52,7 +52,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
     [TemplatePart(Name = "PART_ContentPresenter", Type = typeof(ContentPresenter))]
     public class WorkflowItem : ContentControl, ISelectable
     {
-        #region Fields
+        #region SpecificFields
 
         #endregion
 
@@ -97,7 +97,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
         #endregion
 
-        #region Static Fields
+        #region Static SpecificFields
 
         public static readonly DependencyProperty ConnectorDecoratorTemplateProperty =
             DependencyProperty.RegisterAttached(

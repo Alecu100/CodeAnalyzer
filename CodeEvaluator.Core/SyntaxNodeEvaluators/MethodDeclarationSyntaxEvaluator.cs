@@ -29,7 +29,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
     public class MethodDeclarationSyntaxEvaluator : BaseMethodDeclarationSyntaxEvaluator
     {
-        #region Fields
+        #region SpecificFields
 
         private MethodDeclarationSyntax _methodDeclarationSyntax;
 
@@ -69,7 +69,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
             _thisReference = _workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters[-1];
             _workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters.Remove(-1);
             _evaluatedMethod =
-                _thisReference.TypeInfo.AllMethods.First(
+                _thisReference.TypeInfo.AccesibleMethods.First(
                     method => method.IdentifierText == _methodDeclarationSyntax.Identifier.ValueText);
         }
 

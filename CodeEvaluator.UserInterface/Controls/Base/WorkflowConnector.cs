@@ -68,7 +68,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
         // drag start point, relative to the DesignerCanvas
 
-        #region Fields
+        #region SpecificFields
 
         private List<WorkflowConnection> _connections;
 

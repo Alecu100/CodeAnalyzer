@@ -31,7 +31,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
         // Defines the ItemHeight and ItemWidth properties of
         // the WrapPanel used for this Toolbox
 
-        #region Fields
+        #region SpecificFields
 
         private Size _itemSize = new Size(50, 50);
 

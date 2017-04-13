@@ -30,7 +30,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
     public class RelativePositionPanel : Panel
     {
-        #region Static Fields
+        #region Static SpecificFields
 
         public static readonly DependencyProperty RelativePositionProperty =
             DependencyProperty.RegisterAttached(

@@ -41,7 +41,7 @@ namespace CodeAnalysis.Core.Members
             var fields = new List<EvaluatedObjectReference>();
 
             foreach (
-                var trackedField in typeInfo.AllFields.Where(field => !field.IsStatic()))
+                var trackedField in typeInfo.AccesibleFields.Where(field => !field.IsStatic()))
             {
                 var trackedVariableReference = new EvaluatedObjectReference();
                 trackedVariableReference.Declaration = trackedField.Declaration;
@@ -54,7 +54,7 @@ namespace CodeAnalysis.Core.Members
 
             foreach (
                 var trackedProperty in
-                    typeInfo.AllProperties.Where(prop => !prop.IsStatic()))
+                    typeInfo.AccesibleProperties.Where(prop => !prop.IsStatic()))
             {
                 if (trackedProperty.IsAutoProperty)
                 {

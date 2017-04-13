@@ -36,7 +36,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
         #endregion
 
-        #region Fields
+        #region SpecificFields
 
         protected BaseMethodDeclarationSyntax _baseMethodDeclarationSyntax;
 

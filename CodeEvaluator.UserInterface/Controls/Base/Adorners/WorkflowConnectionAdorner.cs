@@ -35,7 +35,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 
     public class WorkflowConnectionAdorner : Adorner
     {
-        #region Fields
+        #region SpecificFields
 
         private readonly Canvas _adornerCanvas;
 

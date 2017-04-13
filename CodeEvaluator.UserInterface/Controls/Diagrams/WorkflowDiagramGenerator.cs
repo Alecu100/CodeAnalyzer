@@ -74,7 +74,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Diagrams
 
         #endregion
 
-        #region Fields
+        #region SpecificFields
 
         private Stack<Tuple<WorkflowStep, WorkflowStep, Workflow>> _itemsToBeProcessed;
 

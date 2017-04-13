@@ -32,7 +32,7 @@ namespace CodeAnalysis.Core.Members
 
     public class EvaluatedTypesInfoTable : IEvaluatedTypesInfoTable
     {
-        #region Fields
+        #region SpecificFields
 
         private readonly List<EvaluatedTypeInfo> _evaluatedTypeInfos = new List<EvaluatedTypeInfo>();
 
@@ -144,7 +144,7 @@ namespace CodeAnalysis.Core.Members
         {
             foreach (var evaluatedTypeInfo in _evaluatedTypeInfos)
             {
-                foreach (var evaluatedField in evaluatedTypeInfo.Fields)
+                foreach (var evaluatedField in evaluatedTypeInfo.SpecificFields)
                 {
                     if ((evaluatedField.MemberFlags & EMemberFlags.Static) != 0)
                     {
@@ -390,7 +390,7 @@ namespace CodeAnalysis.Core.Members
 
                 AddMemberFlagsToMember(trackedField, fieldDeclarationSyntax.Modifiers);
 
-                currentTypeInfo.Fields.Add(trackedField);
+                currentTypeInfo.SpecificFields.Add(trackedField);
             }
         }
 
@@ -603,9 +603,9 @@ namespace CodeAnalysis.Core.Members
 
                     foreach (var trackedTypeInfo in allTypeInfos)
                     {
-                        trackedVariableTypeInfo.AllMethods.AddRange(trackedTypeInfo.Methods);
-                        trackedVariableTypeInfo.AllFields.AddRange(trackedTypeInfo.Fields);
-                        trackedVariableTypeInfo.AllProperties.AddRange(trackedTypeInfo.Properties);
+                        trackedVariableTypeInfo.AccesibleMethods.AddRange(trackedTypeInfo.Methods);
+                        trackedVariableTypeInfo.AccesibleFields.AddRange(trackedTypeInfo.SpecificFields);
+                        trackedVariableTypeInfo.AccesibleProperties.AddRange(trackedTypeInfo.Properties);
                     }
                 }
             }
@@ -634,7 +634,7 @@ namespace CodeAnalysis.Core.Members
                         }
                     }
 
-                    foreach (var trackedField in trackedVariableTypeInfo.Fields)
+                    foreach (var trackedField in trackedVariableTypeInfo.SpecificFields)
                     {
                         var fieldDeclarationSyntax = trackedField.Declaration as FieldDeclarationSyntax;
 

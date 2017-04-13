@@ -15,6 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using CodeAnalysis.Core.Extensions;
 using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Members;
 using StructureMap;
@@ -30,19 +31,29 @@ namespace CodeAnalysis.Core.Common
     {
         #region Public Methods and Operators
 
-        public CodeEvaluatorExecutionFrame BuildInitialExecutionFrame(EvaluatedTypeInfo evaluatedType)
+        public CodeEvaluatorExecutionFrame BuildInitialExecutionFrame(EvaluatedTypeInfo evaluatedType,
+            EvaluatedMethod startMethod)
         {
-            var staticWorkflowEvaluatorExecutionFrame = new CodeEvaluatorExecutionFrame();
+            var codeEvaluatorExecutionFrame = new CodeEvaluatorExecutionFrame();
 
-            var trackedVariableAllocator = ObjectFactory.GetInstance<IEvaluatedObjectAllocator>();
-            var allocateVariable = trackedVariableAllocator.AllocateVariable(evaluatedType);
             var thisEvaluatedObjectReference = new EvaluatedObjectReference();
+            if (startMethod.IsStatic())
+            {
+                thisEvaluatedObjectReference.AssignEvaluatedObject(evaluatedType.SharedStaticObject);
+            }
+            else
+            {
+                var trackedVariableAllocator = ObjectFactory.GetInstance<IEvaluatedObjectAllocator>();
+                var allocateVariable = trackedVariableAllocator.AllocateVariable(evaluatedType);
 
-            thisEvaluatedObjectReference.AssignEvaluatedObject(allocateVariable);
-            staticWorkflowEvaluatorExecutionFrame.ThisReference = thisEvaluatedObjectReference;
-            staticWorkflowEvaluatorExecutionFrame.PassedMethodParameters[-1] = thisEvaluatedObjectReference;
+                thisEvaluatedObjectReference.AssignEvaluatedObject(allocateVariable);
+            }
 
-            return staticWorkflowEvaluatorExecutionFrame;
+            codeEvaluatorExecutionFrame.ThisReference = thisEvaluatedObjectReference;
+            codeEvaluatorExecutionFrame.PassedMethodParameters[-1] = thisEvaluatedObjectReference;
+            codeEvaluatorExecutionFrame.CurrentMethod = startMethod;
+
+            return codeEvaluatorExecutionFrame;
         }
 
         public CodeEvaluatorExecutionFrame BuildNewExecutionFrameForMethodCall(

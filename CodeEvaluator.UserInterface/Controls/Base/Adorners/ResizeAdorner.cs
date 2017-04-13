@@ -51,7 +51,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 
         #endregion
 
-        #region Fields
+        #region SpecificFields
 
         private readonly ResizeChrome _chrome;
 

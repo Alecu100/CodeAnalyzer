@@ -17,6 +17,7 @@
 
 using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Members;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeAnalysis.Core.Interfaces
 {
@@ -32,6 +33,6 @@ namespace CodeAnalysis.Core.Interfaces
             EvaluatedObjectReference thisReference);
 
 
-        CodeEvaluatorExecutionFrame BuildInitialExecutionFrame(EvaluatedTypeInfo evaluatedType);
+        CodeEvaluatorExecutionFrame BuildInitialExecutionFrame(EvaluatedTypeInfo evaluatedType, EvaluatedMethod startMethod);
     }
 }

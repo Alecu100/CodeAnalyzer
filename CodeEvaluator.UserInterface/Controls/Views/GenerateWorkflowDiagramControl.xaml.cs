@@ -62,7 +62,7 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
         #endregion
 
-        #region Fields
+        #region SpecificFields
 
         private ISolutionWrapper _currentSolution;
 

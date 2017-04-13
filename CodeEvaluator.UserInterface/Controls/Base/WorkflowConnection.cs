@@ -36,7 +36,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
     public class WorkflowConnection : Control, ISelectable, INotifyPropertyChanged
     {
-        #region Fields
+        #region SpecificFields
 
         public EArrowSymbol sinkArrowSymbol = EArrowSymbol.Arrow;
 

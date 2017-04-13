@@ -30,7 +30,7 @@ namespace CodeAnalysis.Core.Common
 
     public class SyntaxNodeNamespaceProvider : ISyntaxNodeNamespaceProvider
     {
-        #region Fields
+        #region SpecificFields
 
         private List<NamespaceDeclarationSyntax> _foundNamespaceDeclarations;
 

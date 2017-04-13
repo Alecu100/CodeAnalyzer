@@ -44,7 +44,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
 
         #endregion
 
-        #region Fields
+        #region SpecificFields
 
         private readonly WorkflowCanvas _workflowCanvas;
 

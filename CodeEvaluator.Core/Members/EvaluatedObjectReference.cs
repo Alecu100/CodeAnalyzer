@@ -27,7 +27,7 @@ namespace CodeAnalysis.Core.Members
 
     public class EvaluatedObjectReference : EvaluatedMember
     {
-        #region Fields
+        #region SpecificFields
 
         private readonly List<EvaluatedObject> _evaluatedObjects = new List<EvaluatedObject>();
         private VariableDeclaratorSyntax _declarator;

@@ -28,7 +28,7 @@ namespace CodeAnalysis.Core.Common
 
     public class CodeEvaluatorExecutionState
     {
-        #region Fields
+        #region SpecificFields
 
         private CodeEvaluatorParameters _parameters;
 

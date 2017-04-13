@@ -35,7 +35,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
         #endregion
 
-        #region Fields
+        #region SpecificFields
 
         private bool _isDeferredMovingStarted;
 

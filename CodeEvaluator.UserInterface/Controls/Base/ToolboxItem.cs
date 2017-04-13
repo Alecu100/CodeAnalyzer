@@ -35,7 +35,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
     {
         // caches the start point of the drag operation
 
-        #region Fields
+        #region SpecificFields
 
         private Point? _dragStartPoint;
 

@@ -16,6 +16,7 @@
 //  -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using CodeAnalysis.Core.Interfaces;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using StructureMap;
@@ -29,10 +30,6 @@ namespace CodeAnalysis.Core.Common
 
     public class CodeEvaluator : ICodeEvaluator
     {
-        #region Fields
-
-        #endregion
-
         #region Public Properties
 
         public CodeEvaluatorExecutionState ExecutionState { get; private set; }
@@ -53,11 +50,14 @@ namespace CodeAnalysis.Core.Common
 
             ParseSourceFilesFromSelectedProjects(codeFileNames);
 
-            InitializeExecutionFrame(targetClass);
+            InitializeExecutionFrame(targetClass, startMethod);
 
             StartEvaluation(startMethod);
         }
 
+        #endregion
+
+        #region SpecificFields
 
         #endregion
 
@@ -71,14 +71,19 @@ namespace CodeAnalysis.Core.Common
             ExecutionState.Parameters.Listeners.AddRange(listeners);
         }
 
-        private void InitializeExecutionFrame(ClassDeclarationSyntax targetClass)
+        private void InitializeExecutionFrame(ClassDeclarationSyntax targetClass, MethodDeclarationSyntax startMethod)
         {
             var wellKnownTypesCache = ObjectFactory.GetInstance<IEvaluatedTypesInfoTable>();
             var trackedTypeInfo = wellKnownTypesCache.GetTypeInfo(targetClass);
+            var startMethodInfo =
+                trackedTypeInfo.AccesibleMethods.First(
+                    method =>
+                        method.IdentifierText == startMethod.Identifier.ValueText &&
+                        method.Parameters.Count == startMethod.ParameterList.Parameters.Count);
             var staticWorkflowEvaluatorExecutionFrameFactory =
                 ObjectFactory.GetInstance<IEvaluatorExecutionFrameFactory>();
             var initialExecutionFrame =
-                staticWorkflowEvaluatorExecutionFrameFactory.BuildInitialExecutionFrame(trackedTypeInfo);
+                staticWorkflowEvaluatorExecutionFrameFactory.BuildInitialExecutionFrame(trackedTypeInfo, startMethodInfo);
 
             ExecutionState.PushFramePassingParametersFromPreviousFrame(initialExecutionFrame);
         }

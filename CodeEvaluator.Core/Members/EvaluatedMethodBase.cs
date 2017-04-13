@@ -27,7 +27,7 @@ namespace CodeAnalysis.Core.Members
 
     public class EvaluatedMethodBase : EvaluatedMember
     {
-        #region Fields
+        #region SpecificFields
 
         private readonly List<EvaluatedMethodParameter> _parameters = new List<EvaluatedMethodParameter>();
 

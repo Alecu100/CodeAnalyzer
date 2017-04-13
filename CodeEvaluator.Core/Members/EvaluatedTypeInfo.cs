@@ -39,7 +39,7 @@ namespace CodeAnalysis.Core.Members
             get { return _sharedStaticObject; }
         }
 
-        #region Fields
+        #region SpecificFields
 
         #endregion
 
@@ -51,7 +51,7 @@ namespace CodeAnalysis.Core.Members
         /// <value>
         ///     All fields.
         /// </value>
-        public List<EvaluatedField> AllFields { get; } = new List<EvaluatedField>();
+        public List<EvaluatedField> AccesibleFields { get; } = new List<EvaluatedField>();
 
         /// <summary>
         ///     Gets all methods.
@@ -59,7 +59,7 @@ namespace CodeAnalysis.Core.Members
         /// <value>
         ///     All methods.
         /// </value>
-        public List<EvaluatedMethod> AllMethods { get; } = new List<EvaluatedMethod>();
+        public List<EvaluatedMethod> AccesibleMethods { get; } = new List<EvaluatedMethod>();
 
         /// <summary>
         ///     Gets all properties.
@@ -67,7 +67,7 @@ namespace CodeAnalysis.Core.Members
         /// <value>
         ///     All properties.
         /// </value>
-        public List<EvaluatedProperty> AllProperties { get; } = new List<EvaluatedProperty>();
+        public List<EvaluatedProperty> AccesibleProperties { get; } = new List<EvaluatedProperty>();
 
         /// <summary>
         ///     Gets the base type infos.
@@ -91,7 +91,7 @@ namespace CodeAnalysis.Core.Members
         /// <value>
         ///     The fields.
         /// </value>
-        public List<EvaluatedField> Fields { get; } = new List<EvaluatedField>();
+        public List<EvaluatedField> SpecificFields { get; } = new List<EvaluatedField>();
 
         /// <summary>
         ///     Gets or sets the tracked generic parameters.

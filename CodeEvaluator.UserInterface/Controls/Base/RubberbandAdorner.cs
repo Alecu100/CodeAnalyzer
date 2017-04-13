@@ -70,7 +70,7 @@ namespace CodeAnalyzer.UserInterface.Controls.Base
 
         #endregion
 
-        #region Fields
+        #region SpecificFields
 
         private readonly Pen _rubberbandPen;
 
