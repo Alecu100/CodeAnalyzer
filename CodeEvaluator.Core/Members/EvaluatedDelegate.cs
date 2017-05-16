@@ -23,7 +23,7 @@ namespace CodeAnalysis.Core.Members
 
         public override IReadOnlyList<EvaluatedObjectReference> Fields
         {
-            get { return _fields[0].EvaluatedObjects[0].Fields; }
+            get { return _fields; }
         }
 
         public override EvaluatedTypeInfo TypeInfo

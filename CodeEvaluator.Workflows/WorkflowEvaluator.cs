@@ -78,10 +78,20 @@ namespace CodeEvaluator.Workflows
         /// </summary>
         public static void BeginWorkflow()
         {
-            var workflowScope = new Workflow(CurrentExecutionSnapshot.ActiveWorkflow.LastStep);
-            CurrentExecutionSnapshot.ActiveWorkflow.LastStep.ActiveChildWorkflows.Add(workflowScope);
-            CurrentExecutionSnapshot.ActiveWorkflow.LastStep.AllChildWorkflows.Add(workflowScope);
-            CurrentExecutionSnapshot.ActiveWorkflow = workflowScope;
+            if (CurrentExecutionSnapshot.ActiveWorkflow.LastStep != null)
+            {
+                var workflowScope = new Workflow(CurrentExecutionSnapshot.ActiveWorkflow.LastStep);
+                CurrentExecutionSnapshot.ActiveWorkflow.LastStep.ActiveChildWorkflows.Add(workflowScope);
+                CurrentExecutionSnapshot.ActiveWorkflow.LastStep.AllChildWorkflows.Add(workflowScope);
+                CurrentExecutionSnapshot.ActiveWorkflow = workflowScope;
+            }
+            else
+            {
+                var workflowScope = new Workflow(CurrentExecutionSnapshot.StartStep);
+                CurrentExecutionSnapshot.StartStep.ActiveChildWorkflows.Add(workflowScope);
+                CurrentExecutionSnapshot.StartStep.AllChildWorkflows.Add(workflowScope);
+                CurrentExecutionSnapshot.ActiveWorkflow = workflowScope;
+            }
         }
 
         /// <summary>

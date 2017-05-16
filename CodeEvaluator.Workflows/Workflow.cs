@@ -20,23 +20,14 @@ using System.Collections.Generic;
 
 namespace CodeEvaluator.Workflows
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
     [Serializable]
     public class Workflow
     {
-        #region Fields
-
-        private readonly WorkflowStep _parentStep;
-
-        private readonly List<WorkflowStep> _steps = new List<WorkflowStep>();
-
-        #endregion
-
         #region Constructors and Destructors
 
         /// <summary>
@@ -45,8 +36,12 @@ namespace CodeEvaluator.Workflows
         /// <param name="parentStep">The parent step.</param>
         public Workflow(WorkflowStep parentStep)
         {
-            _parentStep = parentStep;
+            ParentStep = parentStep;
         }
+
+        #endregion
+
+        #region Fields
 
         #endregion
 
@@ -66,13 +61,7 @@ namespace CodeEvaluator.Workflows
         /// <value>
         ///     The parent step.
         /// </value>
-        public WorkflowStep ParentStep
-        {
-            get
-            {
-                return _parentStep;
-            }
-        }
+        public WorkflowStep ParentStep { get; }
 
         /// <summary>
         ///     Gets all steps.
@@ -80,13 +69,7 @@ namespace CodeEvaluator.Workflows
         /// <value>
         ///     All steps.
         /// </value>
-        public List<WorkflowStep> Steps
-        {
-            get
-            {
-                return _steps;
-            }
-        }
+        public List<WorkflowStep> Steps { get; } = new List<WorkflowStep>();
 
         #endregion
     }
