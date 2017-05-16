@@ -15,6 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeAnalysis.Core.Members
@@ -24,6 +25,7 @@ namespace CodeAnalysis.Core.Members
 
     #endregion
 
+    [Serializable]
     public class EvaluatedField : EvaluatedMember
     {
         #region Public Properties

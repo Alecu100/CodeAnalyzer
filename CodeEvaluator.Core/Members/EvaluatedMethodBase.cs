@@ -15,21 +15,20 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
 namespace CodeAnalysis.Core.Members
 {
-    #region Using
 
-    
+    #region Using
 
     #endregion
 
+    [Serializable]
     public class EvaluatedMethodBase : EvaluatedMember
     {
         #region SpecificFields
-
-        private readonly List<EvaluatedMethodParameter> _parameters = new List<EvaluatedMethodParameter>();
 
         #endregion
 
@@ -57,13 +56,7 @@ namespace CodeAnalysis.Core.Members
         /// <value>
         ///     The parameters.
         /// </value>
-        public List<EvaluatedMethodParameter> Parameters
-        {
-            get
-            {
-                return _parameters;
-            }
-        }
+        public List<EvaluatedMethodParameter> Parameters { get; } = new List<EvaluatedMethodParameter>();
 
         #endregion
     }

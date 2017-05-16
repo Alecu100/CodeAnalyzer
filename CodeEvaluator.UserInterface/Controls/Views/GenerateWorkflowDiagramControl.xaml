@@ -67,7 +67,7 @@
                             Click="BtnStartSearch_OnClick" />
                     <Button Content="Export Diagram" HorizontalAlignment="Left" Margin="89,16,0,0"
                             VerticalAlignment="Top" Width="95" Height="30" x:Name="btnExportDiagram" Grid.Row="2"
-                            Grid.Column="0" />
+                            Grid.Column="0" Click="btnExportDiagram_Click" />
                     <Button Content="Save Diagram" HorizontalAlignment="Left" Margin="189,16,0,0"
                             VerticalAlignment="Top" Width="81" Height="30" x:Name="btnSaveDiagram" Grid.Row="2"
                             Grid.Column="0" />

@@ -15,6 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System;
 using CodeAnalysis.Core.Enums;
 using Microsoft.CodeAnalysis;
 
@@ -25,6 +26,7 @@ namespace CodeAnalysis.Core.Members
 
     #endregion
 
+    [Serializable]
     public class EvaluatedMember
     {
         #region Public Properties

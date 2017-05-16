@@ -15,6 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -25,19 +26,15 @@ namespace CodeAnalysis.Core.Members
 
     #endregion
 
+    [Serializable]
     public class EvaluatedTypeInfo : EvaluatedMember
     {
-        private readonly EvaluatedStaticObject _sharedStaticObject;
-
         public EvaluatedTypeInfo()
         {
-            _sharedStaticObject = new EvaluatedStaticObject(this);
+            SharedStaticObject = new EvaluatedStaticObject(this);
         }
 
-        public EvaluatedStaticObject SharedStaticObject
-        {
-            get { return _sharedStaticObject; }
-        }
+        public EvaluatedStaticObject SharedStaticObject { get; }
 
         #region SpecificFields
 

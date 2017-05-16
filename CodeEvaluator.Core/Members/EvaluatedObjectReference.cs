@@ -15,6 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -25,6 +26,7 @@ namespace CodeAnalysis.Core.Members
 
     #endregion
 
+    [Serializable]
     public class EvaluatedObjectReference : EvaluatedMember
     {
         #region SpecificFields
@@ -117,6 +119,5 @@ namespace CodeAnalysis.Core.Members
         }
 
         #endregion
-
     }
 }

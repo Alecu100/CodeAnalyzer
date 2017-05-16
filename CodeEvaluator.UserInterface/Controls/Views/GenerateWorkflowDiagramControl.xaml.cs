@@ -63,6 +63,11 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
         #endregion
 
+        private void btnExportDiagram_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         #region SpecificFields
 
         private ISolutionWrapper _currentSolution;
