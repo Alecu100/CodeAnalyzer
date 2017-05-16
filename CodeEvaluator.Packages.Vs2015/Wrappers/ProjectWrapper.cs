@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using CodeAnalyzer.UserInterface.Interfaces;
 using CodeEvaluator.Packages.Core.Interfaces;
 using EnvDTE;
+using VSLangProj;
 
 namespace CodeEvaluator.Packages.Vs2015.Wrappers
 {
@@ -12,6 +12,11 @@ namespace CodeEvaluator.Packages.Vs2015.Wrappers
         public ProjectWrapper(Project project)
         {
             _project = project;
+        }
+
+        public VSProject VsProject
+        {
+            get { return _project.Object as VSProject; }
         }
 
         public string Kind
@@ -39,6 +44,29 @@ namespace CodeEvaluator.Packages.Vs2015.Wrappers
                 }
 
                 return projectItemWrappers;
+            }
+        }
+
+        public IEnumerable<IReference> References
+        {
+            get
+            {
+                var referencesWrappers = new List<IReference>();
+
+                var vsProject = _project.Object as VSProject;
+
+                if (vsProject != null)
+                {
+                    foreach (var reference in vsProject.References)
+                    {
+                        if (reference is Reference)
+                        {
+                            referencesWrappers.Add(new ReferenceWrapper((Reference) reference));
+                        }
+                    }
+                }
+
+                return referencesWrappers;
             }
         }
     }

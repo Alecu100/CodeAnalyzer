@@ -16,7 +16,6 @@
 //  -----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using CodeAnalyzer.UserInterface.Interfaces;
 
 namespace CodeEvaluator.Packages.Core.Interfaces
 {

@@ -24,7 +24,6 @@ using System.Windows;
 using System.Windows.Controls;
 using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Listeners;
-using CodeAnalyzer.UserInterface.Interfaces;
 using CodeEvaluator.Packages.Core;
 using CodeEvaluator.Packages.Core.Interfaces;
 using CodeEvaluator.UserInterface.Interfaces;

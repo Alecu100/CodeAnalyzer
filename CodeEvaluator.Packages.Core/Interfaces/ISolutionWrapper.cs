@@ -1,4 +1,4 @@
-﻿namespace CodeAnalyzer.UserInterface.Interfaces
+﻿namespace CodeEvaluator.Packages.Core.Interfaces
 {
     public interface ISolutionWrapper
     {

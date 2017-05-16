@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using CodeAnalysis.Core.Configuration;
-using CodeAnalyzer.UserInterface.Interfaces;
 using CodeEvaluator.Packages.Core;
 using CodeEvaluator.Packages.Core.Interfaces;
 using CodeEvaluator.Packages.Vs2015.Wrappers;

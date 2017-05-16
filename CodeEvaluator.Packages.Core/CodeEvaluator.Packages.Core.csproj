@@ -53,6 +53,7 @@
     <Compile Include="Interfaces\IProjectFilesProvider.cs" />
     <Compile Include="Interfaces\IProjectItemWrapper.cs" />
     <Compile Include="Interfaces\IProjectWrapper.cs" />
+    <Compile Include="Interfaces\IReference.cs" />
     <Compile Include="Interfaces\ISolutionWrapper.cs" />
     <Compile Include="Interfaces\ISystemSettings.cs" />
     <Compile Include="ProjectFilesProvider.cs" />

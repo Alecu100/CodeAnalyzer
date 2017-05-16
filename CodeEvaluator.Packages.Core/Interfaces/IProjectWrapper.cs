@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
-using CodeEvaluator.Packages.Core.Interfaces;
 
-namespace CodeAnalyzer.UserInterface.Interfaces
+namespace CodeEvaluator.Packages.Core.Interfaces
 {
     public interface IProjectWrapper
     {
         string Kind { get; }
         string UniqueName { get; }
         IEnumerable<IProjectItemWrapper> ProjectItems { get; }
+
+        IEnumerable<IReference> References { get; }
     }
 }

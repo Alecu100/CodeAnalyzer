@@ -1,4 +1,4 @@
-﻿using CodeAnalyzer.UserInterface.Interfaces;
+﻿using CodeEvaluator.Packages.Core.Interfaces;
 using EnvDTE;
 
 namespace CodeEvaluator.Packages.Vs2015.Wrappers
