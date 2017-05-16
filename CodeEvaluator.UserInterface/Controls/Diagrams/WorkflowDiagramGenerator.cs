@@ -244,6 +244,12 @@ namespace CodeEvaluator.UserInterface.Controls.Diagrams
 
         private void QueueNextStepsToBeProcessed(WorkflowStep currentStep)
         {
+            if (currentStep.NextStep != null)
+            {
+                _itemsToBeProcessed.Push(
+                    new Tuple<WorkflowStep, WorkflowStep, Workflow>(currentStep, currentStep.NextStep, null));
+            }
+
             if (currentStep.AllChildWorkflows.Any())
             {
                 foreach (var childWorkflow in currentStep.AllChildWorkflows)
@@ -251,12 +257,6 @@ namespace CodeEvaluator.UserInterface.Controls.Diagrams
                     _itemsToBeProcessed.Push(
                         new Tuple<WorkflowStep, WorkflowStep, Workflow>(currentStep, null, childWorkflow));
                 }
-            }
-
-            if (currentStep.NextStep != null)
-            {
-                _itemsToBeProcessed.Push(
-                    new Tuple<WorkflowStep, WorkflowStep, Workflow>(currentStep, currentStep.NextStep, null));
             }
         }
 
