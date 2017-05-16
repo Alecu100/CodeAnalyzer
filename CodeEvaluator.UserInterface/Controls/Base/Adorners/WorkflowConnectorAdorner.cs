@@ -19,9 +19,9 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using CodeAnalyzer.UserInterface.Controls.Base.Enums;
+using CodeEvaluator.UserInterface.Controls.Base.Enums;
 
-namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
+namespace CodeEvaluator.UserInterface.Controls.Base.Adorners
 {
 
     #region Using

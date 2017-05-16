@@ -18,7 +18,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CodeAnalyzer.UserInterface.Controls.Base
+namespace CodeEvaluator.UserInterface.Controls.Base
 {
 
     #region Using

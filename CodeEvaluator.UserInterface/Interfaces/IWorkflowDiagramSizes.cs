@@ -15,7 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
-namespace CodeAnalyzer.UserInterface.Interfaces
+namespace CodeEvaluator.UserInterface.Interfaces
 {
     public interface IWorkflowDiagramSizes
     {

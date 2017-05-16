@@ -26,7 +26,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Xml;
 
-namespace CodeAnalyzer.UserInterface.Controls.Base
+namespace CodeEvaluator.UserInterface.Controls.Base
 {
     #region Using
 

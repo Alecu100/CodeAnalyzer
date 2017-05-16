@@ -15,10 +15,10 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
-using CodeAnalyzer.UserInterface.Controls.Base;
+using CodeEvaluator.UserInterface.Controls.Base;
 using CodeEvaluator.Workflows;
 
-namespace CodeAnalyzer.UserInterface.Interfaces
+namespace CodeEvaluator.UserInterface.Interfaces
 {
 
     #region Using

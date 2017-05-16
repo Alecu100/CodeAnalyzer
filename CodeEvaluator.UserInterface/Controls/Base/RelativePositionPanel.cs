@@ -20,7 +20,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace CodeAnalyzer.UserInterface.Controls.Base
+namespace CodeEvaluator.UserInterface.Controls.Base
 {
     #region Using
 

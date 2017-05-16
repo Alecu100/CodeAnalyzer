@@ -19,14 +19,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using CodeAnalyzer.UserInterface.Controls.Base;
-using CodeAnalyzer.UserInterface.Controls.Base.Enums;
-using CodeAnalyzer.UserInterface.Interfaces;
+using CodeEvaluator.UserInterface.Controls.Base;
+using CodeEvaluator.UserInterface.Controls.Base.Enums;
+using CodeEvaluator.UserInterface.Interfaces;
 using CodeEvaluator.Workflows;
 using CodeEvaluator.Workflows.Enums;
 using StructureMap;
 
-namespace CodeAnalyzer.UserInterface.Controls.Diagrams
+namespace CodeEvaluator.UserInterface.Controls.Diagrams
 {
 
     #region Using

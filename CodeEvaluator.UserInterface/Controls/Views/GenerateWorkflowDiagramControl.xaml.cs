@@ -27,6 +27,7 @@ using CodeAnalysis.Core.Listeners;
 using CodeAnalyzer.UserInterface.Interfaces;
 using CodeEvaluator.Packages.Core;
 using CodeEvaluator.Packages.Core.Interfaces;
+using CodeEvaluator.UserInterface.Interfaces;
 using CodeEvaluator.Workflows;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;

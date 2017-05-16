@@ -23,7 +23,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
+namespace CodeEvaluator.UserInterface.Controls.Base.Adorners
 {
 
     #region Using

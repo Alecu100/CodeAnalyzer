@@ -16,9 +16,9 @@
 //  -----------------------------------------------------------------------
 
 using System.Windows;
-using CodeAnalyzer.UserInterface.Controls.Base.Enums;
+using CodeEvaluator.UserInterface.Controls.Base.Enums;
 
-namespace CodeAnalyzer.UserInterface.Controls.Base
+namespace CodeEvaluator.UserInterface.Controls.Base
 {
 
     #region Using

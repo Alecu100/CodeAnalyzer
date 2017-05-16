@@ -22,7 +22,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 
-namespace CodeAnalyzer.UserInterface.Controls.Base
+namespace CodeEvaluator.UserInterface.Controls.Base
 {
     #region Using
 

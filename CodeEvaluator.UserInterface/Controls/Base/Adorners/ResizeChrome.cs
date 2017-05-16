@@ -18,7 +18,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CodeAnalyzer.UserInterface.Controls.Base.Adorners
+namespace CodeEvaluator.UserInterface.Controls.Base.Adorners
 {
     #region Using
 

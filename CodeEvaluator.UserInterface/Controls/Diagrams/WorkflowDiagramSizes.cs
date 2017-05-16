@@ -15,9 +15,9 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
-using CodeAnalyzer.UserInterface.Interfaces;
+using CodeEvaluator.UserInterface.Interfaces;
 
-namespace CodeAnalyzer.UserInterface.Controls.Diagrams
+namespace CodeEvaluator.UserInterface.Controls.Diagrams
 {
     #region Using
 

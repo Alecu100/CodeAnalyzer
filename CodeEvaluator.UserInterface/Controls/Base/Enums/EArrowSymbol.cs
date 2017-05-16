@@ -15,7 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
-namespace CodeAnalyzer.UserInterface.Controls.Base.Enums
+namespace CodeEvaluator.UserInterface.Controls.Base.Enums
 {
     public enum EArrowSymbol
     {

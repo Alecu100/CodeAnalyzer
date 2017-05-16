@@ -23,10 +23,10 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using CodeAnalyzer.UserInterface.Controls.Base.Adorners;
-using CodeAnalyzer.UserInterface.Controls.Base.Enums;
+using CodeEvaluator.UserInterface.Controls.Base.Adorners;
+using CodeEvaluator.UserInterface.Controls.Base.Enums;
 
-namespace CodeAnalyzer.UserInterface.Controls.Base
+namespace CodeEvaluator.UserInterface.Controls.Base
 {
 
     #region Using

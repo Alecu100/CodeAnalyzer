@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:base1="clr-namespace:CodeAnalyzer.UserInterface.Controls.Base;assembly=CodeEvaluator.UserInterface">
+                    xmlns:base="clr-namespace:CodeEvaluator.UserInterface.Controls.Base;assembly=CodeEvaluator.UserInterface">
 
   <RadialGradientBrush x:Key="RadialBrushOrange" Center="0.2, 0.2" GradientOrigin="0.2, 0.2" RadiusX="0.8" RadiusY="0.8">
     <GradientStop Color="White" Offset="0"/>
@@ -24,7 +24,7 @@
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
 
-  <base1:Toolbox x:Key="ShapeStencils" ItemSize="60,60">
+  <base:Toolbox x:Key="ShapeStencils" ItemSize="60,60">
     <ItemsControl.Items>
 
       <Ellipse Fill="{StaticResource RadialBrushOrange}" ToolTip="Ellipse" IsHitTestVisible="false">
@@ -51,24 +51,24 @@
             Stroke="#AAFF8C00"
             StrokeThickness="3"
             Data="M 9,2 11,7 17,7 12,10 14,15 9,12 4,15 6,10 1,7 7,7 Z">
-        <base1:WorkflowItem.DragThumbTemplate>
+        <base:WorkflowItem.DragThumbTemplate>
           <ControlTemplate>
             <Path Fill="Transparent" Stretch="Fill" Data="M 9,2 11,7 17,7 12,10 14,15 9,12 4,15 6,10 1,7 7,7 Z"/>
           </ControlTemplate>
-        </base1:WorkflowItem.DragThumbTemplate>
-        <base1:WorkflowItem.ConnectorDecoratorTemplate>
+        </base:WorkflowItem.DragThumbTemplate>
+        <base:WorkflowItem.ConnectorDecoratorTemplate>
           <ControlTemplate>
-            <base1:RelativePositionPanel Margin="-4">
-              <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0"/>
-              <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0,0.385"/>
-              <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="1,0.385"/>
-              <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.185,1"/>
-              <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.815,1"/>
-            </base1:RelativePositionPanel>
+            <base:RelativePositionPanel Margin="-4">
+              <base:WorkflowConnector Orientation="Top" base:RelativePositionPanel.RelativePosition="0.5,0"/>
+              <base:WorkflowConnector Orientation="Left" base:RelativePositionPanel.RelativePosition="0,0.385"/>
+              <base:WorkflowConnector Orientation="Right" base:RelativePositionPanel.RelativePosition="1,0.385"/>
+              <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.185,1"/>
+              <base:WorkflowConnector Orientation="Bottom" base:RelativePositionPanel.RelativePosition="0.815,1"/>
+            </base:RelativePositionPanel>
           </ControlTemplate>
-        </base1:WorkflowItem.ConnectorDecoratorTemplate>
+        </base:WorkflowItem.ConnectorDecoratorTemplate>
       </Path>
       
     </ItemsControl.Items>
-  </base1:Toolbox>     
+  </base:Toolbox>     
 </ResourceDictionary>

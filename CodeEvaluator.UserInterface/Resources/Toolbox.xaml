@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:base="clr-namespace:CodeAnalyzer.UserInterface.Controls.Base">
+                    xmlns:base="clr-namespace:CodeEvaluator.UserInterface.Controls.Base;assembly=CodeEvaluator.UserInterface">
   <Style TargetType="{x:Type base:Toolbox}">
     <Setter Property="SnapsToDevicePixels" Value="true"/>
     <Setter Property="Focusable" Value="False"/>
