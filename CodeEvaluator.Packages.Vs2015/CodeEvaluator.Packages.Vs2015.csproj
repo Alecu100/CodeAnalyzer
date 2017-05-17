@@ -57,13 +57,9 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -179,6 +175,10 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
     <ProjectReference Include="..\CodeEvaluator.Core\CodeEvaluator.Core.csproj">
       <Project>{882F4464-2A84-4576-B6EA-1EFFD4FCF4A5}</Project>
       <Name>CodeEvaluator.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeEvaluator.ExternalTypesReader\CodeEvaluator.ExternalTypesReader.csproj">
+      <Project>{7c52a095-065e-40c2-83e6-5013e3077d9b}</Project>
+      <Name>CodeEvaluator.ExternalTypesReader</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeEvaluator.Packages.Core\CodeEvaluator.Packages.Core.csproj">
       <Project>{c0a5ed9f-551b-4b73-bd08-85da235f8aaf}</Project>

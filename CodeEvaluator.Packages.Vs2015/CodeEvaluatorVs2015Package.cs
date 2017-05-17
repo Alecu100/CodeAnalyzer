@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using CodeAnalysis.Core.Configuration;
+using CodeAnalysis.Core.Interfaces;
+using CodeEvaluator.ExternalTypesReader;
 using CodeEvaluator.Packages.Core;
 using CodeEvaluator.Packages.Core.Interfaces;
 using CodeEvaluator.Packages.Vs2015.Wrappers;
@@ -96,6 +98,7 @@ namespace CodeEvaluator.Packages.Vs2015
             ObjectFactory.Configure(config => config.For<IWorkflowDiagramSizes>().Use(() => new WorkflowDiagramSizes()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IWorkflowDiagramSizes>()));
             ObjectFactory.Configure(config => config.For<IProjectFilesProvider>().Use(() => new ProjectFilesProvider()));
+            ObjectFactory.Configure(config => config.For<IAssemblyTypesReader>().Use(new AssemblyTypesReader()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IProjectFilesProvider>()));
             ObjectFactory.Configure(config => config.For<ISystemSettings>().Use(new SystemSettings()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ISystemSettings>()));

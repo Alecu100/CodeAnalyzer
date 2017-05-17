@@ -40,7 +40,8 @@ namespace CodeAnalysis.Core.Interfaces
             IList<ICodeEvaluatorListener> listeners,
             IList<string> codeFileNames,
             ClassDeclarationSyntax targetClass,
-            MethodDeclarationSyntax startMethod);
+            MethodDeclarationSyntax startMethod,
+            IList<string> assemblyFileNames = null);
 
         #endregion
     }

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEvaluator.Packages.Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEvaluator.Packages.Vs2015", "CodeEvaluator.Packages.Vs2015\CodeEvaluator.Packages.Vs2015.csproj", "{D8407669-D43D-47E9-8A5F-B81DC0606A89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEvaluator.ExternalTypesReader", "CodeEvaluator.ExternalTypesReader\CodeEvaluator.ExternalTypesReader.csproj", "{7C52A095-065E-40C2-83E6-5013E3077D9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C52A095-065E-40C2-83E6-5013E3077D9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C52A095-065E-40C2-83E6-5013E3077D9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C52A095-065E-40C2-83E6-5013E3077D9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C52A095-065E-40C2-83E6-5013E3077D9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

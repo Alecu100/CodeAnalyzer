@@ -9,5 +9,6 @@ namespace CodeEvaluator.Packages.Core.Interfaces
         IEnumerable<IProjectItemWrapper> ProjectItems { get; }
 
         IEnumerable<IReference> References { get; }
+        string Name { get; }
     }
 }

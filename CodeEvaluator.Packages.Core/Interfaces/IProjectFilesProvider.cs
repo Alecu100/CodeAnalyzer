@@ -30,6 +30,8 @@ namespace CodeEvaluator.Packages.Core.Interfaces
 
         IList<IProjectItemWrapper> GetAllSourceFileNamesFromProjects(IList<IProjectWrapper> searchLocations);
 
+        IList<IReference> GetAllReferencesFromProjects(IList<IProjectWrapper> searchLocations);
+
         #endregion
     }
 }

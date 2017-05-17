@@ -64,7 +64,6 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
         private void btnExportDiagram_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         #region SpecificFields
@@ -393,6 +392,7 @@ namespace CodeEvaluator.UserInterface.Controls.Views
             var staticWorkflowEvaluator = ObjectFactory.GetInstance<ICodeEvaluator>();
             var projectFilesProvider = ObjectFactory.GetInstance<IProjectFilesProvider>();
             var allSourceFileNamesFromProjects = projectFilesProvider.GetAllSourceFileNamesFromProjects(SelectedProjects);
+            var allReferencesFromProjects = projectFilesProvider.GetAllReferencesFromProjects(SelectedProjects);
 
             var codeFileNames = new List<string>();
 
@@ -401,11 +401,19 @@ namespace CodeEvaluator.UserInterface.Controls.Views
                 codeFileNames.AddRange(allSourceFileNamesFromProject.FileNames);
             }
 
+            var assemblyFileNames = new List<string>();
+
+            foreach (var allReferencesFromProject in allReferencesFromProjects)
+            {
+                assemblyFileNames.Add(allReferencesFromProject.Path);
+            }
+
             staticWorkflowEvaluator.Evaluate(
                 new List<ICodeEvaluatorListener> {new WorkflowEvaluatorEvaluatorListener()},
                 codeFileNames,
                 _selectedClassDeclarationSyntax,
-                _selectedMethodDeclarationSyntax);
+                _selectedMethodDeclarationSyntax,
+                assemblyFileNames);
 
             var workflowExecutionSnapshot = WorkflowEvaluator.CurrentExecutionSnapshot;
 

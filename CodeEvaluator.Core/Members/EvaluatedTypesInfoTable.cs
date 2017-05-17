@@ -129,8 +129,6 @@ namespace CodeAnalysis.Core.Members
         /// <param name="syntaxTrees">The syntax trees.</param>
         public void RebuildWellKnownTypesWithMethods(IList<SyntaxTree> syntaxTrees)
         {
-            _evaluatedTypeInfos.Clear();
-
             BuildEvaluatedTypeInfos(syntaxTrees);
 
             BuildEvaluatedTypeInfosMemberTypeInfos();
@@ -138,6 +136,16 @@ namespace CodeAnalysis.Core.Members
             BuildEvaluatedTypeInfosInheritedMembers();
 
             BuildEvaluatedTypeInfosStaticSharedObjects();
+        }
+
+        public void ClearTypeInfos()
+        {
+            _evaluatedTypeInfos.Clear();
+        }
+
+        public void RebuildExternalTypeInfos(IList<EvaluatedTypeInfo> externalTypeInfos)
+        {
+            _evaluatedTypeInfos.AddRange(externalTypeInfos);
         }
 
         private void BuildEvaluatedTypeInfosStaticSharedObjects()

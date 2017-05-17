@@ -15,6 +15,7 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CodeAnalysis.Core.Interfaces;
@@ -42,13 +43,14 @@ namespace CodeAnalysis.Core.Common
             IList<ICodeEvaluatorListener> listeners,
             IList<string> codeFileNames,
             ClassDeclarationSyntax targetClass,
-            MethodDeclarationSyntax startMethod)
+            MethodDeclarationSyntax startMethod,
+            IList<string> assemblyFileNames = null)
         {
             InitializeContext(listeners);
 
             ResetSharedResources();
 
-            ParseSourceFilesFromSelectedProjects(codeFileNames);
+            ParseSourceFilesFromSelectedProjects(codeFileNames, assemblyFileNames);
 
             InitializeExecutionFrame(targetClass, startMethod);
 
@@ -88,13 +90,28 @@ namespace CodeAnalysis.Core.Common
             ExecutionState.PushFramePassingParametersFromPreviousFrame(initialExecutionFrame);
         }
 
-        private void ParseSourceFilesFromSelectedProjects(IList<string> codeFileNames)
+        private void ParseSourceFilesFromSelectedProjects(IList<string> codeFileNames, IList<string> assemblyNames)
         {
             var parsedSourceFilesCache = ObjectFactory.GetInstance<IParsedSourceFilesCache>();
             parsedSourceFilesCache.RebuildFromCodeFiles(codeFileNames);
 
-            var wellKnownTypesCache = ObjectFactory.GetInstance<IEvaluatedTypesInfoTable>();
-            wellKnownTypesCache.RebuildWellKnownTypesWithMethods(parsedSourceFilesCache);
+            var evaluatedTypesInfoTable = ObjectFactory.GetInstance<IEvaluatedTypesInfoTable>();
+            evaluatedTypesInfoTable.ClearTypeInfos();
+
+            try
+            {
+                var assemblyTypesReader = ObjectFactory.GetInstance<IAssemblyTypesReader>();
+                var evaluatedTypeInfos = assemblyTypesReader.ReadTypeInfos(assemblyNames);
+
+                evaluatedTypesInfoTable.RebuildExternalTypeInfos(evaluatedTypeInfos);
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                evaluatedTypesInfoTable.RebuildWellKnownTypesWithMethods(parsedSourceFilesCache);
+            }
         }
 
         private void ResetSharedResources()

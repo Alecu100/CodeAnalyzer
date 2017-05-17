@@ -16,6 +16,7 @@
 //  -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using CodeEvaluator.Packages.Core.Interfaces;
 
 namespace CodeEvaluator.Packages.Core
@@ -27,9 +28,27 @@ namespace CodeEvaluator.Packages.Core
 
     public class ProjectFilesProvider : IProjectFilesProvider
     {
-        #region Fields
-
         private List<IProjectItemWrapper> _loadedProjectItems;
+
+        #region Private Methods and Operators
+
+        private void AddProjectItem(IProjectItemWrapper projectItem)
+        {
+            if (projectItem.Kind == VsConstants.FolderFileKind)
+            {
+                foreach (var item in projectItem.ProjectItems)
+                {
+                    AddProjectItem(item);
+                }
+
+                return;
+            }
+
+            if (projectItem.Kind == VsConstants.CsFileKind)
+            {
+                _loadedProjectItems.Add(projectItem);
+            }
+        }
 
         #endregion
 
@@ -50,26 +69,23 @@ namespace CodeEvaluator.Packages.Core
             return _loadedProjectItems;
         }
 
-        #endregion
-
-        #region Private Methods and Operators
-
-        private void AddProjectItem(IProjectItemWrapper projectItem)
+        public IList<IReference> GetAllReferencesFromProjects(IList<IProjectWrapper> searchLocations)
         {
-            if (projectItem.Kind == VsConstants.FolderFileKind)
+            var references = new List<IReference>();
+
+            foreach (var projectWrapper in searchLocations)
             {
-                foreach (var item in projectItem.ProjectItems)
+                foreach (var reference in projectWrapper.References)
                 {
-                    AddProjectItem(item);
+                    if (searchLocations.All(location => !location.Name.Contains(reference.Name)))
+                    {
+                        references.Add(reference);
+                    }
                 }
-
-                return;
             }
 
-            if (projectItem.Kind == VsConstants.CsFileKind)
-            {
-                _loadedProjectItems.Add(projectItem);
-            }
+
+            return references;
         }
 
         #endregion

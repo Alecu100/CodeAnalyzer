@@ -75,6 +75,10 @@ namespace CodeAnalysis.Core.Interfaces
         /// <param name="syntaxTrees">The syntax trees.</param>
         void RebuildWellKnownTypesWithMethods(IList<SyntaxTree> syntaxTrees);
 
+        void ClearTypeInfos();
+
+        void RebuildExternalTypeInfos(IList<EvaluatedTypeInfo> externalTypeInfos);
+
         #endregion
     }
 }

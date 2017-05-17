@@ -29,6 +29,11 @@ namespace CodeEvaluator.Packages.Vs2015.Wrappers
             get { return _project.UniqueName; }
         }
 
+        public string Name
+        {
+            get { return _project.Name; }
+        }
+
         public IEnumerable<IProjectItemWrapper> ProjectItems
         {
             get
