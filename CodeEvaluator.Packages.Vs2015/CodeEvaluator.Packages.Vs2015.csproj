@@ -172,6 +172,10 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodeEvaluator.Bootstrapper\CodeEvaluator.Bootstrapper.csproj">
+      <Project>{55372312-38cd-4376-8cbf-76fa1800c3da}</Project>
+      <Name>CodeEvaluator.Bootstrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeEvaluator.Core\CodeEvaluator.Core.csproj">
       <Project>{882F4464-2A84-4576-B6EA-1EFFD4FCF4A5}</Project>
       <Name>CodeEvaluator.Core</Name>
