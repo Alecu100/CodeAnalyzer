@@ -5,6 +5,6 @@ namespace CodeAnalysis.Core.Interfaces
 {
     public interface IAssemblyTypesReader
     {
-        List<EvaluatedTypeInfo> ReadTypeInfos(IList<string> assemblyFileNames);
+        List<EvaluatedTypeInfo> ReadTypeInfos(List<string> assemblyFileNames);
     }
 }

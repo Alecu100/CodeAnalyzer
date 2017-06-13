@@ -40,11 +40,11 @@ namespace CodeAnalysis.Core.Common
         #region Public Methods and Operators
 
         public void Evaluate(
-            IList<ICodeEvaluatorListener> listeners,
-            IList<string> codeFileNames,
+            List<ICodeEvaluatorListener> listeners,
+            List<string> codeFileNames,
             ClassDeclarationSyntax targetClass,
             MethodDeclarationSyntax startMethod,
-            IList<string> assemblyFileNames = null)
+            List<string> assemblyFileNames = null)
         {
             InitializeContext(listeners);
 
@@ -90,7 +90,7 @@ namespace CodeAnalysis.Core.Common
             ExecutionState.PushFramePassingParametersFromPreviousFrame(initialExecutionFrame);
         }
 
-        private void ParseSourceFilesFromSelectedProjects(IList<string> codeFileNames, IList<string> assemblyNames)
+        private void ParseSourceFilesFromSelectedProjects(IList<string> codeFileNames, List<string> assemblyNames)
         {
             var parsedSourceFilesCache = ObjectFactory.GetInstance<IParsedSourceFilesCache>();
             parsedSourceFilesCache.RebuildFromCodeFiles(codeFileNames);

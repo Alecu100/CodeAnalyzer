@@ -10,32 +10,33 @@ namespace CodeEvaluator.Bootstrapper
     {
         public void LoadAssemblies(List<string> searchDirectories, List<string> assemblyNames)
         {
-            foreach (var assemblyName in assemblyNames)
-            {
-                TryToLoadAssembly(searchDirectories, assemblyName);
-            }
-
-            var assembliesQueue = new Queue<string>();
+            var assembliesQueue = new List<string>();
             var shouldStillTryToLoadAssemblies = true;
 
             foreach (var assemblyName in assemblyNames)
             {
-                assembliesQueue.Enqueue(assemblyName);
+                assembliesQueue.Add(assemblyName);
             }
 
             while (assembliesQueue.Count > 0 && shouldStillTryToLoadAssemblies)
             {
                 shouldStillTryToLoadAssemblies = false;
 
-                var assemblyName = assembliesQueue.Dequeue();
+                var assembliesToRemove = new List<string>();
 
-                if (TryToLoadAssembly(searchDirectories, assemblyName))
+                foreach (var assembly in assembliesQueue)
                 {
-                    shouldStillTryToLoadAssemblies = true;
+                    if (TryToLoadAssembly(searchDirectories, assembly))
+                    {
+                        shouldStillTryToLoadAssemblies = true;
+
+                        assembliesToRemove.Add(assembly);
+                    }
                 }
-                else
+
+                foreach (var assemblyToRemove in assembliesToRemove)
                 {
-                    assembliesQueue.Enqueue(assemblyName);
+                    assembliesQueue.Remove(assemblyToRemove);
                 }
             }
         }
@@ -76,17 +77,19 @@ namespace CodeEvaluator.Bootstrapper
                     try
                     {
                         Assembly.LoadFile(assemblyFile.FullName);
+
                         return true;
                     }
                     catch (Exception)
                     {
-                        var directoryInfos = directoryInfo.GetDirectories();
-
-                        foreach (var newDirectryInfo in directoryInfos)
-                        {
-                            directoriesQueue.Enqueue(newDirectryInfo);
-                        }
                     }
+                }
+
+                var directoryInfos = directoryInfo.GetDirectories();
+
+                foreach (var newDirectryInfo in directoryInfos)
+                {
+                    directoriesQueue.Enqueue(newDirectryInfo);
                 }
             }
 

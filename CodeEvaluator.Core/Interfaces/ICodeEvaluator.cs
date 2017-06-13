@@ -37,11 +37,11 @@ namespace CodeAnalysis.Core.Interfaces
         /// <param name="targetClass">The target class.</param>
         /// <param name="startMethod">The start method.</param>
         void Evaluate(
-            IList<ICodeEvaluatorListener> listeners,
-            IList<string> codeFileNames,
+            List<ICodeEvaluatorListener> listeners,
+            List<string> codeFileNames,
             ClassDeclarationSyntax targetClass,
             MethodDeclarationSyntax startMethod,
-            IList<string> assemblyFileNames = null);
+            List<string> assemblyFileNames = null);
 
         #endregion
     }
