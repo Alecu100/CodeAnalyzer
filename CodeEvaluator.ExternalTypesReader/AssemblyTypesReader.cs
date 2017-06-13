@@ -21,7 +21,6 @@ namespace CodeEvaluator.ExternalTypesReader
             var remoteAppDomain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), adEvidence, domaininfo);
 
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            remoteAppDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
             var instanceFrom =
                 (AssemblyTypesReader)
@@ -34,7 +33,6 @@ namespace CodeEvaluator.ExternalTypesReader
             AppDomain.Unload(remoteAppDomain);
 
             AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
-            remoteAppDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
 
             return readTypeInfosRemote;
         }

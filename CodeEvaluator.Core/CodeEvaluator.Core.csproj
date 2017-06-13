@@ -139,6 +139,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\CodeEvaluator.Bootstrapper\CodeEvaluator.Bootstrapper.csproj">
+      <Project>{55372312-38cd-4376-8cbf-76fa1800c3da}</Project>
+      <Name>CodeEvaluator.Bootstrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeEvaluator.Workflows\CodeEvaluator.Workflows.csproj">
       <Project>{0D9F35B5-685B-44F0-867A-A3C798E0FC18}</Project>
       <Name>CodeEvaluator.Workflows</Name>

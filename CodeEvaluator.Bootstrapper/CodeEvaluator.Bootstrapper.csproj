@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7C52A095-065E-40C2-83E6-5013E3077D9B}</ProjectGuid>
+    <ProjectGuid>{55372312-38CD-4376-8CBF-76FA1800C3DA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeEvaluator.ExternalTypesReader</RootNamespace>
-    <AssemblyName>CodeEvaluator.ExternalTypesReader</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>CodeEvaluator.Bootstrapper</RootNamespace>
+    <AssemblyName>CodeEvaluator.Bootstrapper</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,18 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyTypesReader.cs" />
+    <Compile Include="AssemblyBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CodeEvaluator.Bootstrapper\CodeEvaluator.Bootstrapper.csproj">
-      <Project>{55372312-38cd-4376-8cbf-76fa1800c3da}</Project>
-      <Name>CodeEvaluator.Bootstrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeEvaluator.Core\CodeEvaluator.Core.csproj">
-      <Project>{882F4464-2A84-4576-B6EA-1EFFD4FCF4A5}</Project>
-      <Name>CodeEvaluator.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
