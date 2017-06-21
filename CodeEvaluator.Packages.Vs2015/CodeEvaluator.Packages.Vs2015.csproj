@@ -180,6 +180,10 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
       <Project>{882F4464-2A84-4576-B6EA-1EFFD4FCF4A5}</Project>
       <Name>CodeEvaluator.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeEvaluator.Dto\CodeEvaluator.Dto.csproj">
+      <Project>{A3CE5311-796A-429B-92F6-8116C768F987}</Project>
+      <Name>CodeEvaluator.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeEvaluator.ExternalTypesReader\CodeEvaluator.ExternalTypesReader.csproj">
       <Project>{7c52a095-065e-40c2-83e6-5013e3077d9b}</Project>
       <Name>CodeEvaluator.ExternalTypesReader</Name>

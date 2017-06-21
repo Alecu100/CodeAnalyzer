@@ -17,6 +17,7 @@
 
 using System.Collections.Generic;
 using CodeAnalysis.Core.Members;
+using CodeEvaluator.Dto;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -77,7 +78,7 @@ namespace CodeAnalysis.Core.Interfaces
 
         void ClearTypeInfos();
 
-        void RebuildExternalTypeInfos(IList<EvaluatedTypeInfo> externalTypeInfos);
+        void RebuildExternalTypeInfos(IList<EvaluatedTypeInfoDto> externalTypeInfos);
 
         #endregion
     }

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEvaluator.ExternalTypes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEvaluator.Bootstrapper", "CodeEvaluator.Bootstrapper\CodeEvaluator.Bootstrapper.csproj", "{55372312-38CD-4376-8CBF-76FA1800C3DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeEvaluator.Dto", "CodeEvaluator.Dto\CodeEvaluator.Dto.csproj", "{A3CE5311-796A-429B-92F6-8116C768F987}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{55372312-38CD-4376-8CBF-76FA1800C3DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55372312-38CD-4376-8CBF-76FA1800C3DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55372312-38CD-4376-8CBF-76FA1800C3DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CE5311-796A-429B-92F6-8116C768F987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CE5311-796A-429B-92F6-8116C768F987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CE5311-796A-429B-92F6-8116C768F987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CE5311-796A-429B-92F6-8116C768F987}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,6 +23,12 @@ namespace CodeAnalysis.Core.Enums
 
         Internal = 128,
 
-        New = 256
+        New = 256,
+
+        External = 512,
+
+        ProtectedInternal = 1024,
+
+        Sealed = 2048
     }
 }

@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using CodeAnalysis.Core.Enums;
 using CodeAnalysis.Core.Interfaces;
+using CodeEvaluator.Dto;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -143,9 +144,9 @@ namespace CodeAnalysis.Core.Members
             _evaluatedTypeInfos.Clear();
         }
 
-        public void RebuildExternalTypeInfos(IList<EvaluatedTypeInfo> externalTypeInfos)
+        public void RebuildExternalTypeInfos(IList<EvaluatedTypeInfoDto> externalTypeInfos)
         {
-            _evaluatedTypeInfos.AddRange(externalTypeInfos);
+            //_evaluatedTypeInfos.AddRange(externalTypeInfos);
         }
 
         private void BuildEvaluatedTypeInfosStaticSharedObjects()

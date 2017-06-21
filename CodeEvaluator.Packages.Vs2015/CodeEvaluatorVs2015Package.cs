@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using CodeAnalysis.Core.Configuration;
 using CodeAnalysis.Core.Interfaces;
+using CodeEvaluator.Dto;
 using CodeEvaluator.ExternalTypesReader;
 using CodeEvaluator.Packages.Core;
 using CodeEvaluator.Packages.Core.Interfaces;
