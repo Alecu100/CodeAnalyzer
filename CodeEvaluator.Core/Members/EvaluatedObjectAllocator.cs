@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatedObjectAllocator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 23:08
-//  
-// 
-//  Contains             : Implementation of the EvaluatedObjectAllocator.cs class.
-//  Classes              : EvaluatedObjectAllocator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatedObjectAllocator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CodeAnalysis.Core.Extensions;
 using CodeAnalysis.Core.Interfaces;

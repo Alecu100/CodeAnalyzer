@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : WorkflowEvaluatorEvaluatorListener.cs
-//  Author               : Alecsandru
-//  Last Updated         : 14/12/2015 at 13:45
-//  
-// 
-//  Contains             : Implementation of the WorkflowEvaluatorEvaluatorListener.cs class.
-//  Classes              : WorkflowEvaluatorEvaluatorListener.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="WorkflowEvaluatorEvaluatorListener.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Linq;
+﻿using System.Linq;
 using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Members;
 using CodeEvaluator.Workflows;

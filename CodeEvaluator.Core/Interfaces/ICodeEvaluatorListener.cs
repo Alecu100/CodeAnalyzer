@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : ICodeEvaluatorListener.cs
-//  Author               : Alecsandru
-//  Last Updated         : 04/12/2015 at 22:24
-//  
-// 
-//  Contains             : Implementation of the ICodeEvaluatorListener.cs class.
-//  Classes              : ICodeEvaluatorListener.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="ICodeEvaluatorListener.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using CodeAnalysis.Core.Members;
+﻿using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeAnalysis.Core.Interfaces

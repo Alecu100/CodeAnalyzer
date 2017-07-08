@@ -1,22 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Debug.dll
-//  File                 : WorkflowEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 11/02/2016 at 16:14
-//  
-// 
-//  Contains             : Implementation of the WorkflowEvaluator.cs class.
-//  Classes              : WorkflowEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="WorkflowEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-
-using CodeEvaluator.Workflows.Enums;
+﻿using CodeEvaluator.Workflows.Enums;
 
 namespace CodeEvaluator.Workflows
 {

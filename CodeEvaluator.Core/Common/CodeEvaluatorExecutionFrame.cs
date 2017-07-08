@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : CodeEvaluatorExecutionFrame.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 22:29
-//  
-// 
-//  Contains             : Implementation of the CodeEvaluatorExecutionFrame.cs class.
-//  Classes              : CodeEvaluatorExecutionFrame.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="CodeEvaluatorExecutionFrame.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;
 

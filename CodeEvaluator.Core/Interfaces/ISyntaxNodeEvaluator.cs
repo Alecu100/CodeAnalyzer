@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : ISyntaxNodeEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 16/11/2015 at 15:16
-//  
-// 
-//  Contains             : Implementation of the ISyntaxNodeEvaluator.cs class.
-//  Classes              : ISyntaxNodeEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="ISyntaxNodeEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using CodeAnalysis.Core.Common;
+﻿using CodeAnalysis.Core.Common;
 using Microsoft.CodeAnalysis;
 
 namespace CodeAnalysis.Core.Interfaces

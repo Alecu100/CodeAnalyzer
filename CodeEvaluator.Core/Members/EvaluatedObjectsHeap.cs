@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatedObjectsHeap.cs
-//  Author               : Alecsandru
-//  Last Updated         : 07/12/2015 at 12:50
-//  
-// 
-//  Contains             : Implementation of the EvaluatedObjectsHeap.cs class.
-//  Classes              : EvaluatedObjectsHeap.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatedObjectsHeap.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CodeAnalysis.Core.Interfaces;
 

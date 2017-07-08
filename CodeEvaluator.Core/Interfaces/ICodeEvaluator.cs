@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : ICodeEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 16/11/2015 at 17:44
-//  
-// 
-//  Contains             : Implementation of the ICodeEvaluator.cs class.
-//  Classes              : ICodeEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="ICodeEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeAnalysis.Core.Interfaces

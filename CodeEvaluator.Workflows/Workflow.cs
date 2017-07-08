@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : Sysmex.GLP.Debug.dll
-//  File                 : WorkflowScope.cs
-//  Author               : Alecsandru
-//  Last Updated         : 05/11/2015 at 17:27
-//  
-// 
-//  Contains             : Implementation of the WorkflowScope.cs class.
-//  Classes              : WorkflowScope.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="WorkflowScope.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CodeEvaluator.Workflows

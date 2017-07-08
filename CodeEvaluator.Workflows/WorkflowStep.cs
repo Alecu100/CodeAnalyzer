@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Debug.dll
-//  File                 : WorkflowStep.cs
-//  Author               : Alecsandru
-//  Last Updated         : 10/02/2016 at 15:53
-//  
-// 
-//  Contains             : Implementation of the WorkflowStep.cs class.
-//  Classes              : WorkflowStep.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="WorkflowStep.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using CodeEvaluator.Workflows.Enums;
 

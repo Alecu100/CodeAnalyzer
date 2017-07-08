@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : CodeEvaluatorExecutionState.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 22:32
-//  
-// 
-//  Contains             : Implementation of the CodeEvaluatorExecutionState.cs class.
-//  Classes              : CodeEvaluatorExecutionState.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="CodeEvaluatorExecutionState.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CodeAnalysis.Core.Interfaces;
 

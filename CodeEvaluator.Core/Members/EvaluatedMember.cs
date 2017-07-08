@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatedMember.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 15:38
-//  
-// 
-//  Contains             : Implementation of the EvaluatedMember.cs class.
-//  Classes              : EvaluatedMember.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatedMember.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using CodeAnalysis.Core.Enums;
 using Microsoft.CodeAnalysis;
 

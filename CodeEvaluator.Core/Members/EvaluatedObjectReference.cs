@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatedObjectReference.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 16:51
-//  
-// 
-//  Contains             : Implementation of the EvaluatedObjectReference.cs class.
-//  Classes              : EvaluatedObjectReference.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatedObjectReference.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 

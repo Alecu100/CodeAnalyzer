@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatedObject.cs
-//  Author               : Alecsandru
-//  Last Updated         : 14/12/2015 at 18:00
-//  
-// 
-//  Contains             : Implementation of the EvaluatedObject.cs class.
-//  Classes              : EvaluatedObject.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatedObject.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Interfaces;

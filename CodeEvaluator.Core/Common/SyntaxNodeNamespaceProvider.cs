@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : SyntaxNodeNamespaceProvider.cs
-//  Author               : Alecsandru
-//  Last Updated         : 17/11/2015 at 16:47
-//  
-// 
-//  Contains             : Implementation of the SyntaxNodeNamespaceProvider.cs class.
-//  Classes              : SyntaxNodeNamespaceProvider.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="SyntaxNodeNamespaceProvider.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeAnalysis.Core.Interfaces;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

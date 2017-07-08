@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : IEvaluatedTypesInfoTable.cs
-//  Author               : Alecsandru
-//  Last Updated         : 19/12/2015 at 1:18
-//  
-// 
-//  Contains             : Implementation of the IEvaluatedTypesInfoTable.cs class.
-//  Classes              : IEvaluatedTypesInfoTable.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="IEvaluatedTypesInfoTable.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeAnalysis.Core.Members;
 using CodeEvaluator.Dto;
 using Microsoft.CodeAnalysis;

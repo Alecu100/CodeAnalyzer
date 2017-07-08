@@ -1,11 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatedMethodBase.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 15:37
-//  
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CodeAnalysis.Core.Members

@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatorExecutionFrameFactory.cs
-//  Author               : Alecsandru
-//  Last Updated         : 19/12/2015 at 1:20
-//  
-// 
-//  Contains             : Implementation of the EvaluatorExecutionFrameFactory.cs class.
-//  Classes              : EvaluatorExecutionFrameFactory.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatorExecutionFrameFactory.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using CodeAnalysis.Core.Extensions;
+﻿using CodeAnalysis.Core.Extensions;
 using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Members;
 using StructureMap;

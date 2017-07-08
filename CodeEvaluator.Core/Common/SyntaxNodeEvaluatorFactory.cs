@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : SyntaxNodeEvaluatorFactory.cs
-//  Author               : Alecsandru
-//  Last Updated         : 19/12/2015 at 2:04
-//  
-// 
-//  Contains             : Implementation of the SyntaxNodeEvaluatorFactory.cs class.
-//  Classes              : SyntaxNodeEvaluatorFactory.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="SyntaxNodeEvaluatorFactory.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using CodeAnalysis.Core.Interfaces;
+﻿using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.SyntaxNodeEvaluators;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

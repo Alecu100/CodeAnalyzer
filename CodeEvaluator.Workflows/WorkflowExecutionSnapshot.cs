@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Debug.dll
-//  File                 : WorkflowExecutionSnapshot.cs
-//  Author               : Alecsandru
-//  Last Updated         : 11/02/2016 at 16:11
-//  
-// 
-//  Contains             : Implementation of the WorkflowExecutionSnapshot.cs class.
-//  Classes              : WorkflowExecutionSnapshot.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="WorkflowExecutionSnapshot.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using CodeEvaluator.Workflows.Enums;
 
 namespace CodeEvaluator.Workflows

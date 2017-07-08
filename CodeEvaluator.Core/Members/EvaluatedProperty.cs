@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatedProperty.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 21:59
-//  
-// 
-//  Contains             : Implementation of the EvaluatedProperty.cs class.
-//  Classes              : EvaluatedProperty.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatedProperty.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 
 namespace CodeAnalysis.Core.Members
 {
