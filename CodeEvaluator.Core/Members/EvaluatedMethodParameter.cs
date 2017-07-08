@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatedMethodParameter.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 15:36
-//  
-// 
-//  Contains             : Implementation of the EvaluatedMethodParameter.cs class.
-//  Classes              : EvaluatedMethodParameter.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatedMethodParameter.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 
 namespace CodeAnalysis.Core.Members
 {

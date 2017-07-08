@@ -1,20 +1,3 @@
-//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatedTypeInfo.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 18:46
-//  
-// 
-//  Contains             : Implementation of the EvaluatedTypeInfo.cs class.
-//  Classes              : EvaluatedTypeInfo.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatedTypeInfo.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
 using System;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

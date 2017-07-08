@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : CodeEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 19/12/2015 at 1:20
-//  
-// 
-//  Contains             : Implementation of the CodeEvaluator.cs class.
-//  Classes              : CodeEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="CodeEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using CodeAnalysis.Core.Interfaces;

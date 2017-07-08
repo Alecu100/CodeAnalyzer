@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EvaluatedTypesInfoTable.cs
-//  Author               : Alecsandru
-//  Last Updated         : 19/12/2015 at 1:36
-//  
-// 
-//  Contains             : Implementation of the EvaluatedTypesInfoTable.cs class.
-//  Classes              : EvaluatedTypesInfoTable.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EvaluatedTypesInfoTable.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CodeAnalysis.Core.Enums;
@@ -147,6 +130,186 @@ namespace CodeAnalysis.Core.Members
         public void RebuildExternalTypeInfos(IList<EvaluatedTypeInfoDto> externalTypeInfos)
         {
             //_evaluatedTypeInfos.AddRange(externalTypeInfos);
+
+            var evaluatedTypeInfosDtosMappings = new Dictionary<EvaluatedTypeInfoDto, EvaluatedTypeInfo>();
+
+            var evaluatedMethodMappings = new Dictionary<EvaluatedMethod, EvaluatedMethodDto>();
+            var evaluatedConstructorsMappings = new Dictionary<EvaluatedConstructor, EvaluatedMethodDto>();
+            var evaluatedFieldMappings = new Dictionary<EvaluatedField, EvaluatedTypedMemberDto>();
+            var evaluatedPropertyMappings = new Dictionary<EvaluatedProperty, EvaluatedTypedMemberDto>();
+            var evaluatedMethodParameterMappings = new Dictionary<EvaluatedMethodParameter, EvaluatedTypedMemberDto>();
+
+            foreach (var evaluatedTypeInfoDto in externalTypeInfos)
+            {
+                var evaluatedTypeInfo = new EvaluatedTypeInfo();
+
+                evaluatedTypeInfo.IsValueType = evaluatedTypeInfoDto.IsValueType;
+                evaluatedTypeInfo.IsReferenceType = evaluatedTypeInfoDto.IsReferenceType;
+                evaluatedTypeInfo.IsInterfaceType = evaluatedTypeInfoDto.IsInterfaceType;
+                evaluatedTypeInfo.FullIdentifierText = evaluatedTypeInfoDto.FullIdentifierText;
+                evaluatedTypeInfo.MemberFlags = (EMemberFlags) evaluatedTypeInfoDto.MemberFlags;
+
+                foreach (var evaluatedMethodDto in evaluatedTypeInfoDto.Methods)
+                {
+                    var evaluatedMethod = new EvaluatedMethod();
+
+                    evaluatedMethod.IdentifierText = evaluatedMethodDto.IdentifierText;
+                    evaluatedMethod.FullIdentifierText = evaluatedMethodDto.FullIdentifierText;
+                    evaluatedMethod.MemberFlags = (EMemberFlags) evaluatedTypeInfoDto.MemberFlags;
+
+                    for (int i = 0; i < evaluatedMethodDto.Parameters.Count; i++)
+                    {
+                        var evaluatedTypedMemberDto = evaluatedMethodDto.Parameters[i];
+
+                        var evaluatedMethodParameter = new EvaluatedMethodParameter();
+
+                        evaluatedMethodParameter.Index = i;
+                        evaluatedMethodParameter.MemberFlags = (EMemberFlags) evaluatedTypedMemberDto.MemberFlags;
+                        evaluatedMethodParameter.IdentifierText = evaluatedTypedMemberDto.IdentifierText;
+                        evaluatedMethodParameter.FullIdentifierText = evaluatedTypedMemberDto.FullIdentifierText;
+
+                        evaluatedMethod.Parameters.Add(evaluatedMethodParameter);
+
+                        evaluatedMethodParameterMappings[evaluatedMethodParameter] = evaluatedTypedMemberDto;
+                    }
+
+                    evaluatedTypeInfo.AccesibleMethods.Add(evaluatedMethod);
+
+                    evaluatedMethodMappings[evaluatedMethod] = evaluatedMethodDto;
+                }
+
+                foreach (var evaluatedTypedMemberDto in evaluatedTypeInfoDto.Fields)
+                {
+                    var evaluatedField = new EvaluatedField();
+
+                    evaluatedField.IdentifierText = evaluatedTypedMemberDto.IdentifierText;
+                    evaluatedField.FullIdentifierText = evaluatedTypeInfoDto.FullIdentifierText;
+                    evaluatedField.MemberFlags = (EMemberFlags) evaluatedTypeInfoDto.MemberFlags;
+
+                    evaluatedTypeInfo.AccesibleFields.Add(evaluatedField);
+
+                    evaluatedFieldMappings[evaluatedField] = evaluatedTypedMemberDto;
+                }
+
+                foreach (var evaluatedMethodDto in evaluatedTypeInfoDto.Constructors)
+                {
+                    var evaluatedConstructor = new EvaluatedConstructor();
+
+                    evaluatedConstructor.IdentifierText = evaluatedMethodDto.IdentifierText;
+                    evaluatedConstructor.FullIdentifierText = evaluatedMethodDto.FullIdentifierText;
+                    evaluatedConstructor.MemberFlags = (EMemberFlags)evaluatedTypeInfoDto.MemberFlags;
+
+                    for (int i = 0; i < evaluatedMethodDto.Parameters.Count; i++)
+                    {
+                        var evaluatedTypedMemberDto = evaluatedMethodDto.Parameters[i];
+
+                        var evaluatedMethodParameter = new EvaluatedMethodParameter();
+
+                        evaluatedMethodParameter.Index = i;
+                        evaluatedMethodParameter.MemberFlags = (EMemberFlags)evaluatedTypedMemberDto.MemberFlags;
+                        evaluatedMethodParameter.IdentifierText = evaluatedTypedMemberDto.IdentifierText;
+                        evaluatedMethodParameter.FullIdentifierText = evaluatedTypedMemberDto.FullIdentifierText;
+
+                        evaluatedConstructor.Parameters.Add(evaluatedMethodParameter);
+                    }
+
+                    evaluatedTypeInfo.Constructors.Add(evaluatedConstructor);
+
+                    evaluatedConstructorsMappings[evaluatedConstructor] = evaluatedMethodDto;
+                }
+
+                foreach (var evaluatedPropertyDto in evaluatedTypeInfoDto.Properties)
+                {
+                    var evaluatedProperty = new EvaluatedProperty();
+
+                    evaluatedProperty.IdentifierText = evaluatedPropertyDto.IdentifierText;
+                    evaluatedProperty.FullIdentifierText = evaluatedPropertyDto.FullIdentifierText;
+                    evaluatedProperty.MemberFlags = (EMemberFlags) evaluatedPropertyDto.MemberFlags;
+
+                    if (evaluatedPropertyDto.Getter != null)
+                    {
+                        var evaluatedPropertyGetAccessor = new EvaluatedPropertyGetAccessor();
+
+                        evaluatedPropertyGetAccessor.MemberFlags = (EMemberFlags) evaluatedPropertyDto.Getter.MemberFlags;
+                        evaluatedPropertyGetAccessor.IdentifierText = evaluatedPropertyDto.Getter.IdentifierText;
+
+                        evaluatedProperty.PropertyGetAccessor = evaluatedPropertyGetAccessor;
+                    }
+
+                    if (evaluatedPropertyDto.Setter != null)
+                    {
+                        var evaluatedPropertySetAccessor = new EvaluatedPropertySetAccessor();
+
+                        evaluatedPropertySetAccessor.MemberFlags = (EMemberFlags)evaluatedPropertyDto.Setter.MemberFlags;
+                        evaluatedPropertySetAccessor.IdentifierText = evaluatedPropertyDto.Setter.IdentifierText;
+
+                        var evaluatedMethodParameter = new EvaluatedMethodParameter();
+
+                        evaluatedMethodParameter.Index = 0;
+                        evaluatedMethodParameter.MemberFlags = (EMemberFlags) evaluatedPropertyDto.Setter.Parameters[0].MemberFlags;
+
+                        evaluatedPropertySetAccessor.Parameters.Add(evaluatedMethodParameter);
+
+                        evaluatedMethodParameterMappings[evaluatedMethodParameter] =
+                            evaluatedPropertyDto.Setter.Parameters[0];
+
+                        evaluatedProperty.PropertySetAccessor = evaluatedPropertySetAccessor;
+                    }
+
+                    evaluatedTypeInfo.AccesibleProperties.Add(evaluatedProperty);
+
+                    evaluatedPropertyMappings[evaluatedProperty] = evaluatedPropertyDto;
+                }
+
+                evaluatedTypeInfosDtosMappings[evaluatedTypeInfoDto] = evaluatedTypeInfo;
+
+                _evaluatedTypeInfos.Add(evaluatedTypeInfo);
+            }
+
+            foreach (var evaluatedTypeInfo in _evaluatedTypeInfos)
+            {
+                foreach (var accesibleField in evaluatedTypeInfo.AccesibleFields)
+                {
+                    accesibleField.TypeInfo = evaluatedTypeInfosDtosMappings[evaluatedFieldMappings[accesibleField].TypeInfo];
+                }
+
+                foreach (var accesibleProperty in evaluatedTypeInfo.AccesibleProperties)
+                {
+                    accesibleProperty.TypeInfo = evaluatedTypeInfosDtosMappings[evaluatedPropertyMappings[accesibleProperty].TypeInfo];
+
+                    if (accesibleProperty.PropertySetAccessor != null)
+                    {
+                        accesibleProperty.PropertySetAccessor.Parameters[0].TypeInfo =
+                            evaluatedTypeInfosDtosMappings[evaluatedMethodParameterMappings[accesibleProperty.PropertySetAccessor.Parameters[0]].TypeInfo];
+                    }
+                }
+
+                foreach (var accesibleMethod in evaluatedTypeInfo.AccesibleMethods)
+                {
+                    foreach (var evaluatedMethodParameter in accesibleMethod.Parameters)
+                    {
+                        evaluatedMethodParameter.TypeInfo = evaluatedTypeInfosDtosMappings[evaluatedMethodParameterMappings[evaluatedMethodParameter].TypeInfo];
+                    }
+                }
+
+                foreach (var evaluatedConstructor in evaluatedTypeInfo.Constructors)
+                {
+                    foreach (var evaluatedMethodParameter in evaluatedConstructor.Parameters)
+                    {
+                        evaluatedMethodParameter.TypeInfo = evaluatedTypeInfosDtosMappings[evaluatedMethodParameterMappings[evaluatedMethodParameter].TypeInfo];
+                    }
+                }
+            }
+
+            foreach (var evaluatedTypeInfoDto in externalTypeInfos)
+            {
+                var evaluatedTypeInfosDtosMapping = evaluatedTypeInfosDtosMappings[evaluatedTypeInfoDto];
+
+                foreach (var baseTypeInfo in evaluatedTypeInfoDto.BaseTypeInfos)
+                {
+                    evaluatedTypeInfosDtosMapping.BaseTypeInfos.Add(evaluatedTypeInfosDtosMappings[baseTypeInfo]);
+                }
+            }
         }
 
         private void BuildEvaluatedTypeInfosStaticSharedObjects()
