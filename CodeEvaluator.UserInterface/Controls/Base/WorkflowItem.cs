@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : WorkflowItem.cs
-//  Author               : Alecsandru
-//  Last Updated         : 10/02/2016 at 16:58
-//  
-// 
-//  Contains             : Implementation of the WorkflowItem.cs class.
-//  Classes              : WorkflowItem.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="WorkflowItem.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;

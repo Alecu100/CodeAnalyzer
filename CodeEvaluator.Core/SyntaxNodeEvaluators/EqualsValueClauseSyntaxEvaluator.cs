@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : EqualsValueClauseSyntaxEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 14/12/2015 at 17:02
-//  
-// 
-//  Contains             : Implementation of the EqualsValueClauseSyntaxEvaluator.cs class.
-//  Classes              : EqualsValueClauseSyntaxEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="EqualsValueClauseSyntaxEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using CodeAnalysis.Core.Common;
+﻿using CodeAnalysis.Core.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 

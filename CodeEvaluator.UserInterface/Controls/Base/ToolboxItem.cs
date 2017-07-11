@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : Sysmex.GLP.Client.Debug.dll
-//  File                 : ToolboxItem.cs
-//  Author               : Alecsandru
-//  Last Updated         : 23/10/2015 at 18:11
-//  
-// 
-//  Contains             : Implementation of the ToolboxItem.cs class.
-//  Classes              : ToolboxItem.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="ToolboxItem.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

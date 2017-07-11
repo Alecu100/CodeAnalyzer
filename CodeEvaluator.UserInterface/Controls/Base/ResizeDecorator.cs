@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : Sysmex.GLP.Client.Debug.dll
-//  File                 : ResizeDecorator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 28/10/2015 at 11:22
-//  
-// 
-//  Contains             : Implementation of the ResizeDecorator.cs class.
-//  Classes              : ResizeDecorator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="ResizeDecorator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;

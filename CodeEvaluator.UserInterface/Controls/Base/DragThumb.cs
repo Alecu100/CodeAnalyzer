@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : Sysmex.GLP.Client.Debug.dll
-//  File                 : DragThumb.cs
-//  Author               : Alecsandru
-//  Last Updated         : 26/10/2015 at 11:01
-//  
-// 
-//  Contains             : Implementation of the DragThumb.cs class.
-//  Classes              : DragThumb.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="DragThumb.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;

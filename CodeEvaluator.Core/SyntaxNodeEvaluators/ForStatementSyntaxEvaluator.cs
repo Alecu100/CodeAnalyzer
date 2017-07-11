@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : ForStatementSyntaxEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 11/12/2015 at 18:17
-//  
-// 
-//  Contains             : Implementation of the ForStatementSyntaxEvaluator.cs class.
-//  Classes              : ForStatementSyntaxEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="ForStatementSyntaxEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using CodeAnalysis.Core.Common;
+﻿using CodeAnalysis.Core.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 

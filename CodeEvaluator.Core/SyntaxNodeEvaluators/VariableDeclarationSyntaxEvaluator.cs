@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : VariableDeclarationSyntaxEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 12:54
-//  
-// 
-//  Contains             : Implementation of the VariableDeclarationSyntaxEvaluator.cs class.
-//  Classes              : VariableDeclarationSyntaxEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="VariableDeclarationSyntaxEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using CodeAnalysis.Core.Common;
+﻿using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

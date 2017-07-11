@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : IWorkflowDiagramSizes.cs
-//  Author               : Alecsandru
-//  Last Updated         : 10/02/2016 at 12:22
-//  
-// 
-//  Contains             : Implementation of the IWorkflowDiagramSizes.cs class.
-//  Classes              : IWorkflowDiagramSizes.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="IWorkflowDiagramSizes.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-namespace CodeEvaluator.UserInterface.Interfaces
+﻿namespace CodeEvaluator.UserInterface.Interfaces
 {
     public interface IWorkflowDiagramSizes
     {

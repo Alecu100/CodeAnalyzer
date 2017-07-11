@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : Sysmex.GLP.Client.Debug.dll
-//  File                 : RubberbandAdorner.cs
-//  Author               : Alecsandru
-//  Last Updated         : 05/11/2015 at 14:09
-//  
-// 
-//  Contains             : Implementation of the RubberbandAdorner.cs class.
-//  Classes              : RubberbandAdorner.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="RubberbandAdorner.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;

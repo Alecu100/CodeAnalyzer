@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : Sysmex.GLP.Client.Debug.dll
-//  File                 : DesignerCanvas.cs
-//  Author               : Alecsandru
-//  Last Updated         : 29/10/2015 at 12:53
-//  
-// 
-//  Contains             : Implementation of the DesignerCanvas.cs class.
-//  Classes              : DesignerCanvas.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="DesignerCanvas.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;

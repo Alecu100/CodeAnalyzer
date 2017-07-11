@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : InvocationExpressionSyntaxEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 11/02/2016 at 18:11
-//  
-// 
-//  Contains             : Implementation of the InvocationExpressionSyntaxEvaluator.cs class.
-//  Classes              : InvocationExpressionSyntaxEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="InvocationExpressionSyntaxEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Linq;
+﻿using System.Linq;
 using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;

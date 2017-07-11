@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : BaseSyntaxNodeEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 15/12/2015 at 10:07
-//  
-// 
-//  Contains             : Implementation of the BaseSyntaxNodeEvaluator.cs class.
-//  Classes              : BaseSyntaxNodeEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="BaseSyntaxNodeEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using CodeAnalysis.Core.Common;
+﻿using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Interfaces;
 using Microsoft.CodeAnalysis;
 using StructureMap;

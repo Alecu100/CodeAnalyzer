@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : ISystemSettings.cs
-//  Author               : Alecsandru
-//  Last Updated         : 08/12/2015 at 20:13
-//  
-// 
-//  Contains             : Implementation of the ISystemSettings.cs class.
-//  Classes              : ISystemSettings.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="ISystemSettings.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CodeEvaluator.Packages.Core.Interfaces
 {

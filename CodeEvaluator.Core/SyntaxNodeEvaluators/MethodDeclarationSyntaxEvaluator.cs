@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : MethodDeclarationSyntaxEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 19/12/2015 at 1:52
-//  
-// 
-//  Contains             : Implementation of the MethodDeclarationSyntaxEvaluator.cs class.
-//  Classes              : MethodDeclarationSyntaxEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="MethodDeclarationSyntaxEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Linq;
+﻿using System.Linq;
 using CodeAnalysis.Core.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

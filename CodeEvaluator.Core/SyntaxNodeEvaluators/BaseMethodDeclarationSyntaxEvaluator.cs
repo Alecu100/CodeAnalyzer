@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : BaseMethodDeclarationSyntaxEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 19/12/2015 at 1:07
-//  
-// 
-//  Contains             : Implementation of the BaseMethodDeclarationSyntaxEvaluator.cs class.
-//  Classes              : BaseMethodDeclarationSyntaxEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="BaseMethodDeclarationSyntaxEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using CodeAnalysis.Core.Common;
+﻿using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

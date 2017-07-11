@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : Sysmex.GLP.Client.Debug.dll
-//  File                 : PathFinder.cs
-//  Author               : Alecsandru
-//  Last Updated         : 26/10/2015 at 11:02
-//  
-// 
-//  Contains             : Implementation of the PathFinder.cs class.
-//  Classes              : PathFinder.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="PathFinder.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;

@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : IXamlResourcesRepository.cs
-//  Author               : Alecsandru
-//  Last Updated         : 10/02/2016 at 16:31
-//  
-// 
-//  Contains             : Implementation of the IXamlResourcesRepository.cs class.
-//  Classes              : IXamlResourcesRepository.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="IXamlResourcesRepository.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-namespace CodeEvaluator.UserInterface.Interfaces
+﻿namespace CodeEvaluator.UserInterface.Interfaces
 {
     public interface IXamlResourcesRepository
     {

@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : Sysmex.GLP.Client.Debug.dll
-//  File                 : Connection.cs
-//  Author               : Alecsandru
-//  Last Updated         : 23/10/2015 at 18:16
-//  
-// 
-//  Contains             : Implementation of the Connection.cs class.
-//  Classes              : Connection.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="Connection.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;

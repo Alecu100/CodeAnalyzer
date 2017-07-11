@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : WorkflowDiagramGenerator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 11/02/2016 at 14:28
-//  
-// 
-//  Contains             : Implementation of the WorkflowDiagramGenerator.cs class.
-//  Classes              : WorkflowDiagramGenerator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="WorkflowDiagramGenerator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;

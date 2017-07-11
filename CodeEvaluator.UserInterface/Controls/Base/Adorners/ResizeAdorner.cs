@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : Sysmex.GLP.Client.Debug.dll
-//  File                 : ResizeAdorner.cs
-//  Author               : Alecsandru
-//  Last Updated         : 28/10/2015 at 10:30
-//  
-// 
-//  Contains             : Implementation of the ResizeAdorner.cs class.
-//  Classes              : ResizeAdorner.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="ResizeAdorner.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;

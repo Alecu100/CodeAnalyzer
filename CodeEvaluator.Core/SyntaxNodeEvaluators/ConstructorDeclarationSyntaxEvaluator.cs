@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : ConstructorDeclarationSyntaxEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 19/12/2015 at 0:24
-//  
-// 
-//  Contains             : Implementation of the ConstructorDeclarationSyntaxEvaluator.cs class.
-//  Classes              : ConstructorDeclarationSyntaxEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="ConstructorDeclarationSyntaxEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using System.Linq;
+﻿using System.Linq;
 using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;

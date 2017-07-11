@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : IdentifierNameSyntaxEvaluator.cs
-//  Author               : Alecsandru
-//  Last Updated         : 18/12/2015 at 18:13
-//  
-// 
-//  Contains             : Implementation of the IdentifierNameSyntaxEvaluator.cs class.
-//  Classes              : IdentifierNameSyntaxEvaluator.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="IdentifierNameSyntaxEvaluator.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-using CodeAnalysis.Core.Common;
+﻿using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
