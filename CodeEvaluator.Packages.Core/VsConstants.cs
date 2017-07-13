@@ -27,6 +27,8 @@ namespace CodeEvaluator.Packages.Core
 
         public const string FolderFileKind = "{6BB5F8EF-4483-11D3-8BCF-00C04F8EC28C}";
 
+        public const string VirtualFolderFileKind = "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}";
+
         #endregion
     }
 }

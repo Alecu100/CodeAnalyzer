@@ -15,26 +15,29 @@
 //   </copyright> 
 //  -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using CodeAnalysis.Core.Interfaces;
-using CodeAnalysis.Core.Listeners;
-using CodeEvaluator.Packages.Core;
-using CodeEvaluator.Packages.Core.Interfaces;
-using CodeEvaluator.UserInterface.Interfaces;
-using CodeEvaluator.Workflows;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using StructureMap;
-
 namespace CodeEvaluator.UserInterface.Controls.Views
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+
+    using CodeAnalysis.Core.Interfaces;
+    using CodeAnalysis.Core.Listeners;
+
+    using CodeEvaluator.Packages.Core;
+    using CodeEvaluator.Packages.Core.Interfaces;
+    using CodeEvaluator.UserInterface.Interfaces;
+    using CodeEvaluator.Workflows;
+
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+    using StructureMap;
 
     #region Using
 
@@ -45,6 +48,10 @@ namespace CodeEvaluator.UserInterface.Controls.Views
     /// </summary>
     public partial class GenerateWorkflowDiagramControl : IXamlResourcesRepository
     {
+        private void btnExportDiagram_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
         #region Constructors and Destructors
 
         public GenerateWorkflowDiagramControl()
@@ -58,13 +65,72 @@ namespace CodeEvaluator.UserInterface.Controls.Views
             LayoutUpdated += OnLayoutUpdated;
 
             ObjectFactory.Configure(config => config.For<IXamlResourcesRepository>().Use(this));
+
+            try
+            {
+                var solution = ObjectFactory.GetInstance<ISolutionWrapper>();
+
+                var currentProjectSettings =
+                    SystemSettings.GetProjectSettingsByFullSolutionName(
+                        _currentSolution != null ? _currentSolution.FullName : string.Empty);
+
+                if (solution != null)
+                {
+                    foreach (var project in solution.Projects)
+                    {
+                        AddLoadedProject(project, currentProjectSettings);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void AddLoadedProject(IProjectWrapper project, ProjectSettings currentProjectSettings)
+        {
+            LoadedProjects.Add(project);
+
+            if (currentProjectSettings != null && currentProjectSettings.SelectedProjects.Contains(project.UniqueName))
+            {
+                SelectedProjects.Add(project);
+            }
+            else
+            {
+                AvailableProjects.Add(project);
+            }
+
+            if (currentProjectSettings != null && currentProjectSettings.SelectedProjectName == project.UniqueName)
+            {
+                cmbTargetProject.SelectedItem = project;
+                var projectItems = cmbTargetFile.Items.Cast<IProjectItemWrapper>();
+                var selectedFile = projectItems.FirstOrDefault(p => p.Name == currentProjectSettings.SelectedFileName);
+
+                if (selectedFile != null)
+                {
+                    cmbTargetFile.SelectedItem = selectedFile;
+
+                    var selectedClass =
+                        cmbTargetClass.Items.Cast<ClassDeclarationSyntax>()
+                            .FirstOrDefault(cd => cd.Identifier.ValueText == currentProjectSettings.SelectedClassName);
+
+                    if (selectedClass != null)
+                    {
+                        cmbTargetClass.SelectedItem = selectedClass;
+
+                        var selectedMethod =
+                            cmbStartMethod.Items.Cast<MethodDeclarationSyntax>()
+                                .FirstOrDefault(
+                                    md => md.Identifier.ValueText == currentProjectSettings.SelectedMethodName);
+                        {
+                            cmbStartMethod.SelectedItem = selectedMethod;
+                        }
+                    }
+                }
+            }
         }
 
         #endregion
-
-        private void btnExportDiagram_Click(object sender, RoutedEventArgs e)
-        {
-        }
 
         #region SpecificFields
 
@@ -78,9 +144,6 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
         private IProjectWrapper _selectedProject;
 
-        private readonly ObservableCollection<MethodDeclarationSyntax> _loadedMethods =
-            new ObservableCollection<MethodDeclarationSyntax>();
-
         //private readonly uint _solutionCookie;
 
         #endregion
@@ -93,10 +156,8 @@ namespace CodeEvaluator.UserInterface.Controls.Views
         public ObservableCollection<ClassDeclarationSyntax> LoadedClasses { get; } =
             new ObservableCollection<ClassDeclarationSyntax>();
 
-        public ObservableCollection<MethodDeclarationSyntax> LoadedMethods
-        {
-            get { return _loadedMethods; }
-        }
+        public ObservableCollection<MethodDeclarationSyntax> LoadedMethods { get; } =
+            new ObservableCollection<MethodDeclarationSyntax>();
 
         public ObservableCollection<IProjectItemWrapper> LoadedProjectItems { get; } =
             new ObservableCollection<IProjectItemWrapper>();
@@ -109,7 +170,10 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
         public ISystemSettings SystemSettings
         {
-            get { return ObjectFactory.GetInstance<ISystemSettings>(); }
+            get
+            {
+                return ObjectFactory.GetInstance<ISystemSettings>();
+            }
         }
 
         #endregion
@@ -134,53 +198,11 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
             if (loadedProject != null && loadedProject.Kind.ToUpperInvariant() == VsConstants.CsProjectKind)
             {
-                LoadedProjects.Add(loadedProject);
-
                 var currentProjectSettings =
                     SystemSettings.GetProjectSettingsByFullSolutionName(
                         _currentSolution != null ? _currentSolution.FullName : string.Empty);
 
-                if (currentProjectSettings != null
-                    && currentProjectSettings.SelectedProjects.Contains(loadedProject.UniqueName))
-                {
-                    SelectedProjects.Add(loadedProject);
-                }
-                else
-                {
-                    AvailableProjects.Add(loadedProject);
-                }
-
-                if (currentProjectSettings != null
-                    && currentProjectSettings.SelectedProjectName == loadedProject.UniqueName)
-                {
-                    cmbTargetProject.SelectedItem = loadedProject;
-                    var projectItems = cmbTargetFile.Items.Cast<IProjectItemWrapper>();
-                    var selectedFile =
-                        projectItems.FirstOrDefault(p => p.Name == currentProjectSettings.SelectedFileName);
-
-                    if (selectedFile != null)
-                    {
-                        cmbTargetFile.SelectedItem = selectedFile;
-
-                        var selectedClass =
-                            cmbTargetClass.Items.Cast<ClassDeclarationSyntax>()
-                                .FirstOrDefault(
-                                    cd => cd.Identifier.ValueText == currentProjectSettings.SelectedClassName);
-
-                        if (selectedClass != null)
-                        {
-                            cmbTargetClass.SelectedItem = selectedClass;
-
-                            var selectedMethod =
-                                cmbStartMethod.Items.Cast<MethodDeclarationSyntax>()
-                                    .FirstOrDefault(
-                                        md => md.Identifier.ValueText == currentProjectSettings.SelectedMethodName);
-                            {
-                                cmbStartMethod.SelectedItem = selectedMethod;
-                            }
-                        }
-                    }
-                }
+                AddLoadedProject(loadedProject, currentProjectSettings);
             }
         }
 
@@ -207,21 +229,21 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
             SystemSettings.AddOrReplaceProjectSettings(
                 new ProjectSettings
-                {
-                    SelectedProjects = selectedProjects,
-                    SelectedClassName =
-                        _selectedClassDeclarationSyntax != null
-                            ? _selectedClassDeclarationSyntax.Identifier.ValueText
-                            : null,
-                    SelectedMethodName =
-                        _selectedMethodDeclarationSyntax != null
-                            ? _selectedMethodDeclarationSyntax.Identifier.ValueText
-                            : null,
-                    SelectedProjectName =
-                        _selectedProject != null ? _selectedProject.UniqueName : null,
-                    SelectedFileName = _selectedFile != null ? _selectedFile.Name : null,
-                    FullSolutionName = _currentSolution.FullName
-                });
+                    {
+                        SelectedProjects = selectedProjects,
+                        SelectedClassName =
+                            _selectedClassDeclarationSyntax != null
+                                ? _selectedClassDeclarationSyntax.Identifier.ValueText
+                                : null,
+                        SelectedMethodName =
+                            _selectedMethodDeclarationSyntax != null
+                                ? _selectedMethodDeclarationSyntax.Identifier.ValueText
+                                : null,
+                        SelectedProjectName =
+                            _selectedProject != null ? _selectedProject.UniqueName : null,
+                        SelectedFileName = _selectedFile != null ? _selectedFile.Name : null,
+                        FullSolutionName = _currentSolution.FullName
+                    });
             SystemSettings.Save();
 
             //return VSConstants.S_OK;
@@ -391,7 +413,8 @@ namespace CodeEvaluator.UserInterface.Controls.Views
         {
             var staticWorkflowEvaluator = ObjectFactory.GetInstance<ICodeEvaluator>();
             var projectFilesProvider = ObjectFactory.GetInstance<IProjectFilesProvider>();
-            var allSourceFileNamesFromProjects = projectFilesProvider.GetAllSourceFileNamesFromProjects(SelectedProjects);
+            var allSourceFileNamesFromProjects = projectFilesProvider.GetAllSourceFileNamesFromProjects(
+                SelectedProjects);
             var allReferencesFromProjects = projectFilesProvider.GetAllReferencesFromProjects(SelectedProjects);
 
             var codeFileNames = new List<string>();
@@ -409,7 +432,7 @@ namespace CodeEvaluator.UserInterface.Controls.Views
             }
 
             staticWorkflowEvaluator.Evaluate(
-                new List<ICodeEvaluatorListener> {new WorkflowEvaluatorEvaluatorListener()},
+                new List<ICodeEvaluatorListener> { new WorkflowEvaluatorEvaluatorListener() },
                 codeFileNames,
                 _selectedClassDeclarationSyntax,
                 _selectedMethodDeclarationSyntax,
@@ -459,11 +482,12 @@ namespace CodeEvaluator.UserInterface.Controls.Views
         {
             if (e.AddedItems.Count > 0 && e.AddedItems[0] is IProjectWrapper)
             {
-                var project = (IProjectWrapper) e.AddedItems[0];
+                var project = (IProjectWrapper)e.AddedItems[0];
                 LoadedProjectItems.Clear();
                 var sourceFilesProvider = ObjectFactory.GetInstance<IProjectFilesProvider>();
                 var allSourceFileNamesFromProjects =
-                    sourceFilesProvider.GetAllSourceFileNamesFromProjects(new List<IProjectWrapper> {project}).ToList();
+                    sourceFilesProvider.GetAllSourceFileNamesFromProjects(new List<IProjectWrapper> { project })
+                        .ToList();
 
                 _selectedProject = project;
 
