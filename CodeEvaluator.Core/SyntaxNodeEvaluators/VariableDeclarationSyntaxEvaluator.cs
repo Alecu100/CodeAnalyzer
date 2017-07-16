@@ -64,8 +64,6 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
                 workflowEvaluatorExecutionState.CurrentExecutionFrame.LocalReferences.Add(reference);
             }
-
-            workflowEvaluatorExecutionState.PopSyntaxNodeEvaluator();
         }
 
         #endregion

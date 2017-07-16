@@ -19,6 +19,13 @@ namespace CodeAnalysis.Core.Members
             _referenceType = referenceType;
         }
 
+        public EvaluatedDelegate(EvaluatedTypeInfo referenceType,
+            EvaluatedMethodBase method)
+        {
+            _method = method;
+            _referenceType = referenceType;
+        }
+
         public EvaluatedMethodBase Method
         {
             get { return _method; }

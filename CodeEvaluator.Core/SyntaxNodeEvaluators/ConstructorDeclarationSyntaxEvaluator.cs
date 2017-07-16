@@ -31,7 +31,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(syntaxNode, workflowEvaluatorExecutionState);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(_baseMethodDeclarationSyntax.Body, workflowEvaluatorExecutionState);
             }
 
             ReturnThisReference();

@@ -14,6 +14,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
             SyntaxNode syntaxNode,
             CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
+
             var objectCreationExpressionSyntax = (ObjectCreationExpressionSyntax) syntaxNode;
 
             var syntaxNodeEvaluator =

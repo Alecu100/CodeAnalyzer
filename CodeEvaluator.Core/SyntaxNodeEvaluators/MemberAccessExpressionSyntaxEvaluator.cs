@@ -1,4 +1,5 @@
 ﻿using CodeAnalysis.Core.Common;
+using CodeAnalysis.Core.Enums;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -24,9 +25,13 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
             if (syntaxNodeEvaluator != null)
             {
+                workflowEvaluatorExecutionState.CurrentExecutionFrame.PushAction(EEvaluatorActions.GetMember);
+
                 syntaxNodeEvaluator.EvaluateSyntaxNode(
                     memberAccessExpressionSyntax.Expression,
                     workflowEvaluatorExecutionState);
+
+                workflowEvaluatorExecutionState.CurrentExecutionFrame.PopAction();
             }
 
             syntaxNodeEvaluator =

@@ -39,6 +39,8 @@ namespace CodeAnalysis.Core.Interfaces
             List<UsingDirectiveSyntax> usingDirectives,
             List<MemberDeclarationSyntax> namespaceDeclarations);
 
+        EvaluatedTypeInfo GetTypeInfo(string typeName, EvaluatedTypeInfo evaluatedTypeInfo);
+
         /// <summary>
         ///     Gets the well known type information.
         /// </summary>

@@ -72,6 +72,11 @@ namespace CodeAnalysis.Core.Members
             return null;
         }
 
+        public EvaluatedTypeInfo GetTypeInfo(string typeName, EvaluatedTypeInfo evaluatedTypeInfo)
+        {
+            return GetTypeInfo(typeName, evaluatedTypeInfo.UsingDirectives, evaluatedTypeInfo.NamespaceDeclarations);
+        }
+
         /// <summary>
         ///     Gets the well known type information.
         /// </summary>
@@ -157,7 +162,7 @@ namespace CodeAnalysis.Core.Members
                     evaluatedMethod.FullIdentifierText = evaluatedMethodDto.FullIdentifierText;
                     evaluatedMethod.MemberFlags = (EMemberFlags) evaluatedTypeInfoDto.MemberFlags;
 
-                    for (int i = 0; i < evaluatedMethodDto.Parameters.Count; i++)
+                    for (var i = 0; i < evaluatedMethodDto.Parameters.Count; i++)
                     {
                         var evaluatedTypedMemberDto = evaluatedMethodDto.Parameters[i];
 
@@ -197,16 +202,16 @@ namespace CodeAnalysis.Core.Members
 
                     evaluatedConstructor.IdentifierText = evaluatedMethodDto.IdentifierText;
                     evaluatedConstructor.FullIdentifierText = evaluatedMethodDto.FullIdentifierText;
-                    evaluatedConstructor.MemberFlags = (EMemberFlags)evaluatedTypeInfoDto.MemberFlags;
+                    evaluatedConstructor.MemberFlags = (EMemberFlags) evaluatedTypeInfoDto.MemberFlags;
 
-                    for (int i = 0; i < evaluatedMethodDto.Parameters.Count; i++)
+                    for (var i = 0; i < evaluatedMethodDto.Parameters.Count; i++)
                     {
                         var evaluatedTypedMemberDto = evaluatedMethodDto.Parameters[i];
 
                         var evaluatedMethodParameter = new EvaluatedMethodParameter();
 
                         evaluatedMethodParameter.Index = i;
-                        evaluatedMethodParameter.MemberFlags = (EMemberFlags)evaluatedTypedMemberDto.MemberFlags;
+                        evaluatedMethodParameter.MemberFlags = (EMemberFlags) evaluatedTypedMemberDto.MemberFlags;
                         evaluatedMethodParameter.IdentifierText = evaluatedTypedMemberDto.IdentifierText;
                         evaluatedMethodParameter.FullIdentifierText = evaluatedTypedMemberDto.FullIdentifierText;
 
@@ -230,7 +235,8 @@ namespace CodeAnalysis.Core.Members
                     {
                         var evaluatedPropertyGetAccessor = new EvaluatedPropertyGetAccessor();
 
-                        evaluatedPropertyGetAccessor.MemberFlags = (EMemberFlags) evaluatedPropertyDto.Getter.MemberFlags;
+                        evaluatedPropertyGetAccessor.MemberFlags =
+                            (EMemberFlags) evaluatedPropertyDto.Getter.MemberFlags;
                         evaluatedPropertyGetAccessor.IdentifierText = evaluatedPropertyDto.Getter.IdentifierText;
 
                         evaluatedProperty.PropertyGetAccessor = evaluatedPropertyGetAccessor;
@@ -240,13 +246,15 @@ namespace CodeAnalysis.Core.Members
                     {
                         var evaluatedPropertySetAccessor = new EvaluatedPropertySetAccessor();
 
-                        evaluatedPropertySetAccessor.MemberFlags = (EMemberFlags)evaluatedPropertyDto.Setter.MemberFlags;
+                        evaluatedPropertySetAccessor.MemberFlags =
+                            (EMemberFlags) evaluatedPropertyDto.Setter.MemberFlags;
                         evaluatedPropertySetAccessor.IdentifierText = evaluatedPropertyDto.Setter.IdentifierText;
 
                         var evaluatedMethodParameter = new EvaluatedMethodParameter();
 
                         evaluatedMethodParameter.Index = 0;
-                        evaluatedMethodParameter.MemberFlags = (EMemberFlags) evaluatedPropertyDto.Setter.Parameters[0].MemberFlags;
+                        evaluatedMethodParameter.MemberFlags =
+                            (EMemberFlags) evaluatedPropertyDto.Setter.Parameters[0].MemberFlags;
 
                         evaluatedPropertySetAccessor.Parameters.Add(evaluatedMethodParameter);
 
@@ -270,17 +278,21 @@ namespace CodeAnalysis.Core.Members
             {
                 foreach (var accesibleField in evaluatedTypeInfo.AccesibleFields)
                 {
-                    accesibleField.TypeInfo = evaluatedTypeInfosDtosMappings[evaluatedFieldMappings[accesibleField].TypeInfo];
+                    accesibleField.TypeInfo =
+                        evaluatedTypeInfosDtosMappings[evaluatedFieldMappings[accesibleField].TypeInfo];
                 }
 
                 foreach (var accesibleProperty in evaluatedTypeInfo.AccesibleProperties)
                 {
-                    accesibleProperty.TypeInfo = evaluatedTypeInfosDtosMappings[evaluatedPropertyMappings[accesibleProperty].TypeInfo];
+                    accesibleProperty.TypeInfo =
+                        evaluatedTypeInfosDtosMappings[evaluatedPropertyMappings[accesibleProperty].TypeInfo];
 
                     if (accesibleProperty.PropertySetAccessor != null)
                     {
                         accesibleProperty.PropertySetAccessor.Parameters[0].TypeInfo =
-                            evaluatedTypeInfosDtosMappings[evaluatedMethodParameterMappings[accesibleProperty.PropertySetAccessor.Parameters[0]].TypeInfo];
+                            evaluatedTypeInfosDtosMappings[
+                                evaluatedMethodParameterMappings[accesibleProperty.PropertySetAccessor.Parameters[0]]
+                                    .TypeInfo];
                     }
                 }
 
@@ -288,7 +300,9 @@ namespace CodeAnalysis.Core.Members
                 {
                     foreach (var evaluatedMethodParameter in accesibleMethod.Parameters)
                     {
-                        evaluatedMethodParameter.TypeInfo = evaluatedTypeInfosDtosMappings[evaluatedMethodParameterMappings[evaluatedMethodParameter].TypeInfo];
+                        evaluatedMethodParameter.TypeInfo =
+                            evaluatedTypeInfosDtosMappings[
+                                evaluatedMethodParameterMappings[evaluatedMethodParameter].TypeInfo];
                     }
                 }
 
@@ -296,7 +310,9 @@ namespace CodeAnalysis.Core.Members
                 {
                     foreach (var evaluatedMethodParameter in evaluatedConstructor.Parameters)
                     {
-                        evaluatedMethodParameter.TypeInfo = evaluatedTypeInfosDtosMappings[evaluatedMethodParameterMappings[evaluatedMethodParameter].TypeInfo];
+                        evaluatedMethodParameter.TypeInfo =
+                            evaluatedTypeInfosDtosMappings[
+                                evaluatedMethodParameterMappings[evaluatedMethodParameter].TypeInfo];
                     }
                 }
             }
@@ -400,10 +416,12 @@ namespace CodeAnalysis.Core.Members
 
         private void AddNameToFullNamespace(MemberDeclarationSyntax namespaceDeclaration, StringBuilder fullNamespace)
         {
+            fullNamespace.Append(".");
+
             if (namespaceDeclaration is ClassDeclarationSyntax)
             {
                 var cl = (ClassDeclarationSyntax) namespaceDeclaration;
-                fullNamespace.Append(NormalizeName(cl.Identifier.ValueText));
+                fullNamespace.Append( NormalizeName(cl.Identifier.ValueText));
             }
             else if (namespaceDeclaration is NamespaceDeclarationSyntax)
             {
@@ -886,9 +904,10 @@ namespace CodeAnalysis.Core.Members
                 AddNameToFullNamespace(namespaceDeclaration, fullNamespace);
             }
 
+            fullNamespace.Append(".");
             fullNamespace.Append(NormalizeName(typeDeclarationName));
 
-            if (fullNamespace.Length > 0)
+            if (fullNamespace.Length > 0 && fullNamespace.ToString().StartsWith("."))
             {
                 fullNamespace.Remove(0, 1);
             }
@@ -900,6 +919,7 @@ namespace CodeAnalysis.Core.Members
             var fullNamespace = new StringBuilder();
 
             fullNamespace.Append(usingDirective.Name);
+            fullNamespace.Append(".");
             fullNamespace.Append(NormalizeName(typeDeclarationName));
 
             return fullNamespace.ToString();

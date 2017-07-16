@@ -1,8 +1,10 @@
 ﻿using CodeAnalysis.Core.Common;
 using CodeAnalysis.Core.Enums;
+using CodeAnalysis.Core.Interfaces;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using StructureMap;
 
 namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 {
@@ -61,6 +63,22 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
         private void TryToFindConstructorReference(CodeEvaluatorExecutionState workflowEvaluatorExecutionState,
             IdentifierNameSyntax identifierNameSyntax)
         {
+            var evaluatedTypesInfoTable = ObjectFactory.GetInstance<IEvaluatedTypesInfoTable>();
+
+            var evaluatedTypeInfo = evaluatedTypesInfoTable.GetTypeInfo(identifierNameSyntax.Identifier.ValueText,
+                workflowEvaluatorExecutionState.CurrentExecutionFrame.ThisReference.TypeInfo);
+
+            var reference = new EvaluatedObjectReference();
+
+            foreach (var evaluatedConstructor in evaluatedTypeInfo.Constructors)
+            {
+                var evaluatedDelegate =
+                    new EvaluatedDelegate(
+                        evaluatedTypeInfo, evaluatedConstructor);
+                reference.AssignEvaluatedObject(evaluatedDelegate);
+            }
+
+            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = reference;
         }
 
         #endregion
