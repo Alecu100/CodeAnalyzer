@@ -31,13 +31,23 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
             if (foundReference == false)
             {
-                TryToFindReferenceInLocalReferences(workflowEvaluatorExecutionState, identifierNameSyntax, ref foundReference);
+                TryToFindReferenceInLocalReferences(workflowEvaluatorExecutionState, identifierNameSyntax,
+                    ref foundReference);
             }
 
             if (foundReference == false)
             {
-                TryToFindReferenceInThisReference(workflowEvaluatorExecutionState, identifierNameSyntax, ref foundReference);
+                TryToFindReferenceInThisReference(workflowEvaluatorExecutionState, identifierNameSyntax,
+                    ref foundReference);
             }
+
+            TryToFindConstructorReference(workflowEvaluatorExecutionState, identifierNameSyntax);
+        }
+
+        private void TryToFindConstructorReference(CodeEvaluatorExecutionState workflowEvaluatorExecutionState, IdentifierNameSyntax identifierNameSyntax)
+        {
+            
+
         }
 
         #endregion
@@ -68,7 +78,10 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                 {
                     if (evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                     {
-                        var evaluatedDelegate = new EvaluatedDelegate(evaluatedObject, evaluatedMethod);
+                        var evaluatedDelegate =
+                            new EvaluatedDelegate(
+                                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult.TypeInfo,
+                                evaluatedObject, evaluatedMethod);
                         reference.AssignEvaluatedObject(evaluatedDelegate);
                         foundReference = true;
                     }
@@ -111,7 +124,8 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
             var reference = new EvaluatedObjectReference();
 
             foreach (
-                var thisEvaluatedObject in workflowEvaluatorExecutionState.CurrentExecutionFrame.ThisReference.EvaluatedObjects
+                var thisEvaluatedObject in
+                    workflowEvaluatorExecutionState.CurrentExecutionFrame.ThisReference.EvaluatedObjects
                 )
             {
                 foreach (var field in thisEvaluatedObject.Fields)
@@ -127,7 +141,8 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                 {
                     if (evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                     {
-                        var evaluatedDelegate = new EvaluatedDelegate(thisEvaluatedObject, evaluatedMethod);
+                        var evaluatedDelegate = new EvaluatedDelegate(thisEvaluatedObject.TypeInfo, thisEvaluatedObject,
+                            evaluatedMethod);
                         reference.AssignEvaluatedObject(evaluatedDelegate);
                         foundReference = true;
                     }

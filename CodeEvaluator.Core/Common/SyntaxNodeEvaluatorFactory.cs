@@ -86,6 +86,11 @@ namespace CodeAnalysis.Core.Common
                 return new IdentifierNameSyntaxEvaluator();
             }
 
+            if (syntaxNode is ObjectCreationExpressionSyntax)
+            {
+                return new ObjectCreationExpressionSyntaxEvaluator();
+            }
+
             return null;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CodeAnalysis.Core.Enums;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;
 
@@ -80,6 +81,21 @@ namespace CodeAnalysis.Core.Common
         ///     The this reference.
         /// </value>
         public EvaluatedObjectReference ThisReference { get; set; }
+
+        public List<EEvaluatorActions> Actions { get; } = new List<EEvaluatorActions>();
+
+        public EEvaluatorActions CurrrentAction
+        {
+            get
+            {
+                if (Actions.Count > 0)
+                {
+                    return Actions[Actions.Count - 1];
+                }
+
+                return EEvaluatorActions.None;
+            }
+        }
 
         #endregion
     }

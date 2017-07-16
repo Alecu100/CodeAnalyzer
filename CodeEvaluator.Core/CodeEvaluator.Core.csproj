@@ -79,6 +79,7 @@
     <Compile Include="Common\SyntaxNodeEvaluatorFactory.cs" />
     <Compile Include="Common\SyntaxNodeNamespaceProvider.cs" />
     <Compile Include="Configuration\StandardSetupBootstrapper.cs" />
+    <Compile Include="Enums\EEvaluatorActions.cs" />
     <Compile Include="Enums\EMemberFlags.cs" />
     <Compile Include="Extensions\EvaluatedMemberExtensions.cs" />
     <Compile Include="Interfaces\IParsedSourceFilesCache.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="SyntaxNodeEvaluators\LocalDeclarationStatementSyntaxEvaluator.cs" />
     <Compile Include="SyntaxNodeEvaluators\MemberAccessExpressionSyntaxEvaluator.cs" />
     <Compile Include="SyntaxNodeEvaluators\MethodDeclarationSyntaxEvaluator.cs" />
+    <Compile Include="SyntaxNodeEvaluators\ObjectCreationExpressionSyntaxEvaluator.cs" />
     <Compile Include="SyntaxNodeEvaluators\ReturnStatementSyntaxEvaluator.cs" />
     <Compile Include="SyntaxNodeEvaluators\VariableDeclarationSyntaxEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

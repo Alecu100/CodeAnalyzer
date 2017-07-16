@@ -50,6 +50,11 @@ namespace CodeAnalysis.Core.Members
             _typeInfo = typeInfo;
         }
 
+        protected EvaluatedObject()
+        {
+            ObjectFactory.BuildUp(this);
+        }
+
         #endregion
 
         #region SpecificFields

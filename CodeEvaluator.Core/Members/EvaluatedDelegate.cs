@@ -6,13 +6,17 @@ namespace CodeAnalysis.Core.Members
     {
         private EvaluatedMethodBase _method;
 
-        public EvaluatedDelegate(EvaluatedObject evaluatedObject, EvaluatedMethodBase method) : base(null)
+        private EvaluatedTypeInfo _referenceType;
+
+        public EvaluatedDelegate(EvaluatedTypeInfo referenceType, EvaluatedObject evaluatedObject,
+            EvaluatedMethodBase method)
         {
             var evaluatedObjectReference = new EvaluatedObjectReference();
             evaluatedObjectReference.AssignEvaluatedObject(evaluatedObject);
 
             _fields.Add(evaluatedObjectReference);
             _method = method;
+            _referenceType = referenceType;
         }
 
         public EvaluatedMethodBase Method
@@ -28,7 +32,7 @@ namespace CodeAnalysis.Core.Members
 
         public override EvaluatedTypeInfo TypeInfo
         {
-            get { return _fields[0].EvaluatedObjects[0].TypeInfo; }
+            get { return _referenceType; }
         }
 
         public override List<EvaluatedObjectHistory> History
