@@ -584,7 +584,7 @@ namespace CodeAnalysis.Core.Members
 
             AddMemberFlagsToMember(evaluatedMethod, methodDeclarationSyntax.Modifiers);
 
-            currentTypeInfo.Methods.Add(evaluatedMethod);
+            currentTypeInfo.SpecificMethods.Add(evaluatedMethod);
 
             for (var i = 0; i < methodDeclarationSyntax.ParameterList.Parameters.Count; i++)
             {
@@ -775,7 +775,7 @@ namespace CodeAnalysis.Core.Members
 
                     foreach (var trackedTypeInfo in allTypeInfos)
                     {
-                        trackedVariableTypeInfo.AccesibleMethods.AddRange(trackedTypeInfo.Methods);
+                        trackedVariableTypeInfo.AccesibleMethods.AddRange(trackedTypeInfo.SpecificMethods);
                         trackedVariableTypeInfo.AccesibleFields.AddRange(trackedTypeInfo.SpecificFields);
                         trackedVariableTypeInfo.AccesibleProperties.AddRange(trackedTypeInfo.Properties);
                     }
@@ -850,7 +850,7 @@ namespace CodeAnalysis.Core.Members
                         }
                     }
 
-                    foreach (var trackedMethod in trackedVariableTypeInfo.Methods)
+                    foreach (var trackedMethod in trackedVariableTypeInfo.SpecificMethods)
                     {
                         foreach (var trackedMethodParameter in trackedMethod.Parameters)
                         {

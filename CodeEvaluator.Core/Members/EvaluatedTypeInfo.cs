@@ -135,7 +135,7 @@ namespace CodeAnalysis.Core.Members
         /// <value>
         ///     The methods.
         /// </value>
-        public List<EvaluatedMethod> Methods { get; } = new List<EvaluatedMethod>();
+        public List<EvaluatedMethod> SpecificMethods { get; } = new List<EvaluatedMethod>();
 
         /// <summary>
         ///     Gets the namespace declarations.
