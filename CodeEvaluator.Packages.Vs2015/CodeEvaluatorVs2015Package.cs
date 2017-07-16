@@ -1,26 +1,30 @@
-﻿using System;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using CodeAnalysis.Core.Configuration;
-using CodeAnalysis.Core.Interfaces;
-using CodeEvaluator.Dto;
-using CodeEvaluator.ExternalTypesReader;
-using CodeEvaluator.Packages.Core;
-using CodeEvaluator.Packages.Core.Interfaces;
-using CodeEvaluator.Packages.Vs2015.Wrappers;
-using CodeEvaluator.UserInterface.Controls.Diagrams;
-using CodeEvaluator.UserInterface.Interfaces;
-using EnvDTE;
-using EnvDTE80;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using StructureMap;
-
-namespace CodeEvaluator.Packages.Vs2015
+﻿namespace CodeEvaluator.Packages.Vs2015
 {
+    using System;
+    using System.ComponentModel.Design;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Runtime.InteropServices;
+
+    using CodeAnalysis.Core.Configuration;
+
+    using CodeEvaluator.Dto;
+    using CodeEvaluator.ExternalTypesReader;
+    using CodeEvaluator.Packages.Core;
+    using CodeEvaluator.Packages.Core.Interfaces;
+    using CodeEvaluator.Packages.Vs2015.Wrappers;
+    using CodeEvaluator.UserInterface.Controls.Diagrams;
+    using CodeEvaluator.UserInterface.Interfaces;
+
+    using EnvDTE;
+
+    using EnvDTE80;
+
+    using Microsoft.VisualStudio;
+    using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Shell.Interop;
+
+    using StructureMap;
 
     #region Using
 
@@ -59,8 +63,7 @@ namespace CodeEvaluator.Packages.Vs2015
         /// </summary>
         public CodeEvaluatorVs2015Package()
         {
-            Debug.WriteLine(CultureInfo.CurrentCulture.ToString(), "Entering constructor for: {0}",
-                ToString());
+            Debug.WriteLine(CultureInfo.CurrentCulture.ToString(), "Entering constructor for: {0}", ToString());
         }
 
         #endregion
@@ -73,8 +76,7 @@ namespace CodeEvaluator.Packages.Vs2015
         /// </summary>
         protected override void Initialize()
         {
-            Debug.WriteLine(CultureInfo.CurrentCulture.ToString(), "Entering Initialize() of: {0}",
-                ToString());
+            Debug.WriteLine(CultureInfo.CurrentCulture.ToString(), "Entering Initialize() of: {0}", ToString());
             base.Initialize();
 
             RegisterVisualStudioServices();
@@ -114,7 +116,7 @@ namespace CodeEvaluator.Packages.Vs2015
                 // Create the command for the tool window
                 var toolwndCommandID = new CommandID(
                     GuidList.guidRomSoft_Client_DebugCmdSet,
-                    (int) PkgCmdIDList.CmdGenerateWorkflowDiagram);
+                    (int)PkgCmdIDList.CmdGenerateWorkflowDiagram);
                 var menuToolWin = new MenuCommand(ShowToolWindow, toolwndCommandID);
                 mcs.AddCommand(menuToolWin);
             }
@@ -131,6 +133,14 @@ namespace CodeEvaluator.Packages.Vs2015
             ObjectFactory.Configure(
                 config => config.For<IVsSolution>().Use(() => GetService(typeof(SVsSolution)) as IVsSolution));
             ObjectFactory.Configure(config => config.For<Package>().Use(this));
+            ObjectFactory.Configure(
+                config => config.For<ISolutionWrapper>().Use(
+                    () =>
+                        {
+                            var dte = ObjectFactory.GetInstance<DTE>();
+
+                            return new SolutionWrapper(dte.Solution);
+                        }));
         }
 
         /// <summary>
@@ -148,7 +158,7 @@ namespace CodeEvaluator.Packages.Vs2015
             {
                 throw new NotSupportedException(Resources._112);
             }
-            var windowFrame = (IVsWindowFrame) window.Frame;
+            var windowFrame = (IVsWindowFrame)window.Frame;
             ErrorHandler.ThrowOnFailure(windowFrame.Show());
         }
 
