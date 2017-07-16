@@ -52,12 +52,12 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     {
                         syntaxNodeEvaluator.EvaluateSyntaxNode(variableDeclarator.Initializer, workflowEvaluatorExecutionState);
 
-                        if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult != null)
+                        if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
                         {
                             reference.AssignEvaluatedObject(
-                                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult);
+                                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference);
 
-                            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult = null;
+                            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = null;
                         }
                     }
                 }

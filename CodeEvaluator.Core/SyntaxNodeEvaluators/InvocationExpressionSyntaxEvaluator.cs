@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using CodeAnalysis.Core.Common;
+using CodeAnalysis.Core.Enums;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -38,15 +39,19 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
                 if (syntaxNodeEvaluator != null)
                 {
+                    workflowEvaluatorExecutionState.CurrentExecutionFrame.PushAction(EEvaluatorActions.InvokeMethod);
+
                     syntaxNodeEvaluator.EvaluateSyntaxNode(
                         invocationExpressionSyntax.Expression,
                         workflowEvaluatorExecutionState);
 
+                    workflowEvaluatorExecutionState.CurrentExecutionFrame.PopAction();
 
-                    if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult != null)
+
+                    if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
                     {
                         var accessedReferenceMember =
-                            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult;
+                            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference;
 
                         foreach (var evaluatedObject in accessedReferenceMember.EvaluatedObjects)
                         {
@@ -76,21 +81,21 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
                                 if (nodeEvaluator != null)
                                 {
-                                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult = null;
+                                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = null;
 
                                     nodeEvaluator.EvaluateSyntaxNode(
                                         argumentSyntax.Expression,
                                         workflowEvaluatorExecutionState);
                                 }
 
-                                if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult != null)
+                                if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
                                 {
                                     workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters[i] =
-                                        workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult;
+                                        workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference;
                                 }
                             }
 
-                            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult = null;
+                            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = null;
 
                             var methodEvaluator =
                                 SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(currentMethod.Declaration);

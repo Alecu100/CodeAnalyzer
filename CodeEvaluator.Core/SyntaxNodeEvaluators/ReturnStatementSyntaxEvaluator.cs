@@ -29,12 +29,12 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     syntaxNodeEvaluator.EvaluateSyntaxNode(returnStatementSyntax.Expression, workflowEvaluatorExecutionState);
                 }
 
-                if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult != null)
+                if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
                 {
                     workflowEvaluatorExecutionState.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
-                        workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult);
+                        workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference);
 
-                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult = null;
+                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = null;
                 }
             }
         }

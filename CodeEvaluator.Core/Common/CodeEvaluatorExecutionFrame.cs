@@ -14,7 +14,7 @@ namespace CodeAnalysis.Core.Common
     {
         private readonly EvaluatedObjectReference _returningMethodParameters = new EvaluatedObjectReference();
 
-        private EvaluatedObjectReference _memberAccessResult;
+        private EvaluatedObjectReference _memberAccessReference;
 
         #region Public Properties
 
@@ -24,10 +24,10 @@ namespace CodeAnalysis.Core.Common
         /// <value>
         ///     The accessed reference.
         /// </value>
-        public EvaluatedObjectReference MemberAccessResult
+        public EvaluatedObjectReference MemberAccessReference
         {
-            get { return _memberAccessResult; }
-            set { _memberAccessResult = value; }
+            get { return _memberAccessReference; }
+            set { _memberAccessReference = value; }
         }
 
         /// <summary>
@@ -95,6 +95,16 @@ namespace CodeAnalysis.Core.Common
 
                 return EEvaluatorActions.None;
             }
+        }
+
+        public void PushAction(EEvaluatorActions action)
+        {
+            Actions.Add(action);
+        }
+
+        public void PopAction()
+        {
+            Actions.RemoveAt(Actions.Count - 1);
         }
 
         #endregion

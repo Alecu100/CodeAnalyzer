@@ -1,4 +1,5 @@
 ﻿using CodeAnalysis.Core.Common;
+using CodeAnalysis.Core.Enums;
 using CodeAnalysis.Core.Members;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -19,9 +20,24 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
             CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
         {
             var identifierNameSyntax = (IdentifierNameSyntax) syntaxNode;
+
+            if (workflowEvaluatorExecutionState.CurrentExecutionFrame.CurrrentAction ==
+                EEvaluatorActions.InvokeConstructor)
+            {
+                TryToFindConstructorReference(workflowEvaluatorExecutionState, identifierNameSyntax);
+            }
+            else
+            {
+                TryToFindMembnerReference(workflowEvaluatorExecutionState, identifierNameSyntax);
+            }
+        }
+
+        private void TryToFindMembnerReference(CodeEvaluatorExecutionState workflowEvaluatorExecutionState,
+            IdentifierNameSyntax identifierNameSyntax)
+        {
             var foundReference = false;
 
-            if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult != null)
+            if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
             {
                 TryToFindReferenceInAccessedReference(
                     workflowEvaluatorExecutionState,
@@ -40,14 +56,11 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                 TryToFindReferenceInThisReference(workflowEvaluatorExecutionState, identifierNameSyntax,
                     ref foundReference);
             }
-
-            TryToFindConstructorReference(workflowEvaluatorExecutionState, identifierNameSyntax);
         }
 
-        private void TryToFindConstructorReference(CodeEvaluatorExecutionState workflowEvaluatorExecutionState, IdentifierNameSyntax identifierNameSyntax)
+        private void TryToFindConstructorReference(CodeEvaluatorExecutionState workflowEvaluatorExecutionState,
+            IdentifierNameSyntax identifierNameSyntax)
         {
-            
-
         }
 
         #endregion
@@ -63,34 +76,40 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
             foreach (
                 var evaluatedObject in
-                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult.EvaluatedObjects)
+                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects)
             {
-                foreach (var field in evaluatedObject.Fields)
+                if (workflowEvaluatorExecutionState.CurrentExecutionFrame.CurrrentAction ==
+                    EEvaluatorActions.InvokeMethod)
                 {
-                    if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText)
+                    foreach (var evaluatedMethod in evaluatedObject.TypeInfo.AccesibleMethods)
                     {
-                        reference.AssignEvaluatedObject(field);
-                        foundReference = true;
+                        if (evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText)
+                        {
+                            var evaluatedDelegate =
+                                new EvaluatedDelegate(
+                                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference.TypeInfo,
+                                    evaluatedObject, evaluatedMethod);
+                            reference.AssignEvaluatedObject(evaluatedDelegate);
+                            foundReference = true;
+                        }
                     }
                 }
-
-                foreach (var evaluatedMethod in evaluatedObject.TypeInfo.AccesibleMethods)
+                else
                 {
-                    if (evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText)
+                    foreach (var field in evaluatedObject.Fields)
                     {
-                        var evaluatedDelegate =
-                            new EvaluatedDelegate(
-                                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult.TypeInfo,
-                                evaluatedObject, evaluatedMethod);
-                        reference.AssignEvaluatedObject(evaluatedDelegate);
-                        foundReference = true;
+                        if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText)
+                        {
+                            reference.AssignEvaluatedObject(field);
+                            foundReference = true;
+                        }
                     }
                 }
             }
 
             if (foundReference)
             {
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult = reference;
+                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = reference;
             }
         }
 
@@ -112,7 +131,7 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 
             if (foundReference)
             {
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult = reference;
+                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = reference;
             }
         }
 
@@ -128,30 +147,37 @@ namespace CodeAnalysis.Core.SyntaxNodeEvaluators
                     workflowEvaluatorExecutionState.CurrentExecutionFrame.ThisReference.EvaluatedObjects
                 )
             {
-                foreach (var field in thisEvaluatedObject.Fields)
+                if (workflowEvaluatorExecutionState.CurrentExecutionFrame.CurrrentAction ==
+                    EEvaluatorActions.InvokeMethod)
                 {
-                    if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText)
+                    foreach (var evaluatedMethod in thisEvaluatedObject.TypeInfo.AccesibleMethods)
                     {
-                        reference.AssignEvaluatedObject(field);
-                        foundReference = true;
+                        if (evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText)
+                        {
+                            var evaluatedDelegate = new EvaluatedDelegate(thisEvaluatedObject.TypeInfo,
+                                thisEvaluatedObject,
+                                evaluatedMethod);
+                            reference.AssignEvaluatedObject(evaluatedDelegate);
+                            foundReference = true;
+                        }
                     }
                 }
-
-                foreach (var evaluatedMethod in thisEvaluatedObject.TypeInfo.AccesibleMethods)
+                else
                 {
-                    if (evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText)
+                    foreach (var field in thisEvaluatedObject.Fields)
                     {
-                        var evaluatedDelegate = new EvaluatedDelegate(thisEvaluatedObject.TypeInfo, thisEvaluatedObject,
-                            evaluatedMethod);
-                        reference.AssignEvaluatedObject(evaluatedDelegate);
-                        foundReference = true;
+                        if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText)
+                        {
+                            reference.AssignEvaluatedObject(field);
+                            foundReference = true;
+                        }
                     }
                 }
             }
 
             if (foundReference)
             {
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessResult = reference;
+                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = reference;
             }
         }
 
