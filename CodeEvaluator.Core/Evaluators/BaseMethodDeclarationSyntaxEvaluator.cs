@@ -1,11 +1,12 @@
-﻿using CodeAnalysis.Core.Common;
-using CodeAnalysis.Core.Interfaces;
-using CodeAnalysis.Core.Members;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using StructureMap;
-
-namespace CodeAnalysis.Core.SyntaxNodeEvaluators
+﻿namespace CodeAnalysis.Core.Evaluators
 {
+    using CodeAnalysis.Core.Common;
+    using CodeAnalysis.Core.Interfaces;
+    using CodeAnalysis.Core.Members;
+
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+    using StructureMap;
 
     #region Using
 
