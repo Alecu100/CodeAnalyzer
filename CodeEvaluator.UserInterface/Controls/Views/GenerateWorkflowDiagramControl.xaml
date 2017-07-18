@@ -76,14 +76,15 @@
                              ItemsSource="{Binding AvailableProjects, RelativeSource={RelativeSource AncestorType={x:Type views:GenerateWorkflowDiagramControl}, Mode=FindAncestor}}"
                              DisplayMemberPath="UniqueName" ScrollViewer.HorizontalScrollBarVisibility="Visible"
                              ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
-                             Height="155" VerticalAlignment="Top" HorizontalAlignment="Left" Width="357" />
+                             Height="155" VerticalAlignment="Top" HorizontalAlignment="Left" Width="357" MouseDoubleClick="LstAvailableProjects_OnMouseDoubleClick">
+                    </ListBox>
 
                     <ListBox x:Name="lstSelectedProjects" Margin="10,40,0,0" Grid.Row="1"
                              ItemsSource="{Binding SelectedProjects, RelativeSource={RelativeSource AncestorType={x:Type views:GenerateWorkflowDiagramControl}, Mode=FindAncestor}}"
                              DisplayMemberPath="UniqueName" ScrollViewer.HorizontalScrollBarVisibility="Visible"
                              ScrollViewer.CanContentScroll="True"
                              ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" Width="357"
-                             Height="155" VerticalAlignment="Top" />
+                             Height="155" VerticalAlignment="Top" MouseDoubleClick="LstSelectedProjects_OnMouseDoubleClick" />
 
 
                     <Label Content="Available Projects" HorizontalAlignment="Left" Margin="10,10,0,0"

@@ -1,21 +1,4 @@
-﻿//  Project              : GLP
-//  Module               : RomSoft.Client.Debug.dll
-//  File                 : GenerateWorkflowDiagramControl.xaml.cs
-//  Author               : Alecsandru
-//  Last Updated         : 11/02/2016 at 16:33
-//  
-// 
-//  Contains             : Implementation of the GenerateWorkflowDiagramControl.xaml.cs class.
-//  Classes              : GenerateWorkflowDiagramControl.xaml.cs
-// 
-//  
-//  ----------------------------------------------------------------------- 
-//   <copyright file="GenerateWorkflowDiagramControl.xaml.cs" company="Sysmex"> 
-//       Copyright (c) Sysmex. All rights reserved. 
-//   </copyright> 
-//  -----------------------------------------------------------------------
-
-namespace CodeEvaluator.UserInterface.Controls.Views
+﻿namespace CodeEvaluator.UserInterface.Controls.Views
 {
     using System;
     using System.Collections.Generic;
@@ -24,6 +7,7 @@ namespace CodeEvaluator.UserInterface.Controls.Views
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
 
     using CodeAnalysis.Core.Interfaces;
     using CodeAnalysis.Core.Listeners;
@@ -50,6 +34,26 @@ namespace CodeEvaluator.UserInterface.Controls.Views
     {
         private void btnExportDiagram_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void LstAvailableProjects_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as IProjectWrapper;
+            if (item != null)
+            {
+                AvailableProjects.Remove(item);
+                SelectedProjects.Add(item);
+            }
+        }
+
+        private void LstSelectedProjects_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as IProjectWrapper;
+            if (item != null)
+            {
+                SelectedProjects.Remove(item);
+                AvailableProjects.Add(item);
+            }
         }
 
         #region Constructors and Destructors
@@ -255,6 +259,7 @@ namespace CodeEvaluator.UserInterface.Controls.Views
         #endregion
 
         #region Private Methods and Operators
+
         private void AddAllClassesFromSyntaxNode(SyntaxNode syntaxNode)
         {
             if (syntaxNode is ClassDeclarationSyntax)
