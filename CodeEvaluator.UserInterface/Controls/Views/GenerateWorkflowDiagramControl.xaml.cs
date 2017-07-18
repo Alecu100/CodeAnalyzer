@@ -182,20 +182,23 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
         public void OnAfterCloseSolution( /*object pUnkReserved*/)
         {
+            ClearWorkspace();
+            //return VSConstants.S_OK;
+        }
+
+        private void ClearWorkspace()
+        {
             LoadedProjects.Clear();
             AvailableProjects.Clear();
             LoadedClasses.Clear();
             LoadedMethods.Clear();
             LoadedProjectItems.Clear();
             SelectedProjects.Clear();
-            //return VSConstants.S_OK;
+            cnvWorkflow.Children.Clear();
         }
 
         public void OnAfterOpenProject(IProjectWrapper loadedProject)
         {
-            //object objProj;
-            //pHierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int) __VSHPROPID.VSHPROPID_ExtObject, out objProj);
-
             if (loadedProject != null && loadedProject.Kind.ToUpperInvariant() == VsConstants.CsProjectKind)
             {
                 var currentProjectSettings =
@@ -208,9 +211,9 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
         public void OnAfterOpenSolution(ISolutionWrapper newSolution /*object pUnkReserved, int fNewSolution*/)
         {
-            //var dte = ObjectFactory.GetInstance<DTE>();
+            ClearWorkspace();
+
             _currentSolution = newSolution;
-            //return VSConstants.S_OK;
         }
 
         public void OnBeforeCloseSolution()
@@ -248,72 +251,6 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
             //return VSConstants.S_OK;
         }
-
-        /// <summary>
-        ///     Notifies listening clients that the project is about to be unloaded.
-        /// </summary>
-        /// <returns>
-        ///     If the method succeeds, it returns <see cref="F:Microsoft.VisualStudio.VSConstants.S_OK" />. If it fails, it
-        ///     returns an error code.
-        /// </returns>
-        /// <param name="pRealHierarchy">
-        ///     [in] Pointer to the <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsHierarchy" />
-        ///     interface of the project that will be unloaded.
-        /// </param>
-        /// <param name="pStubHierarchy">
-        ///     [in] Pointer to the <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsHierarchy" />
-        ///     interface of the placeholder hierarchy for the project being unloaded.
-        /// </param>
-        /// <summary>
-        ///     Queries listening clients as to whether the project can be closed.
-        /// </summary>
-        /// <returns>
-        ///     If the method succeeds, it returns <see cref="F:Microsoft.VisualStudio.VSConstants.S_OK" />. If it fails, it
-        ///     returns an error code.
-        /// </returns>
-        /// <param name="pHierarchy">
-        ///     [in] Pointer to the <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsHierarchy" />
-        ///     interface of the project to be closed.
-        /// </param>
-        /// <param name="fRemoving">
-        ///     [in] true if the project is being removed from the solution before the solution is closed.
-        ///     false if the project is being removed from the solution while the solution is being closed.
-        /// </param>
-        /// <param name="pfCancel">
-        ///     [out] true if the client vetoed the closing of the project. false if the client approved the
-        ///     closing of the project.
-        /// </param>
-        /// <summary>
-        ///     Queries listening clients as to whether the solution can be closed.
-        /// </summary>
-        /// <returns>
-        ///     If the method succeeds, it returns <see cref="F:Microsoft.VisualStudio.VSConstants.S_OK" />. If it fails, it
-        ///     returns an error code.
-        /// </returns>
-        /// <param name="pUnkReserved">[in] Reserved for future use.</param>
-        /// <param name="pfCancel">
-        ///     [out] true if the client vetoed closing the solution. false if the client approved closing the
-        ///     solution.
-        /// </param>
-        /// <summary>
-        ///     Queries listening clients as to whether the project can be unloaded.
-        /// </summary>
-        /// <returns>
-        ///     If the method succeeds, it returns <see cref="F:Microsoft.VisualStudio.VSConstants.S_OK" />. If it fails, it
-        ///     returns an error code.
-        /// </returns>
-        /// <param name="pRealHierarchy">
-        ///     [in] Pointer to the <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsHierarchy" />
-        ///     interface of the project to be unloaded.
-        /// </param>
-        /// <param name="pfCancel">
-        ///     [out] true if the client vetoed unloading the project. false if the client approved unloading
-        ///     the project.
-        /// </param>
-        //public int OnQueryUnloadProject(IVsHierarchy pRealHierarchy, ref int pfCancel)
-        //{
-        //    return VSConstants.S_OK;
-        //}
 
         #endregion
 
