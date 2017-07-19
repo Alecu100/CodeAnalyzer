@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using CodeEvaluator.UserInterface.Controls.Base.Enums;
 using CodeEvaluator.UserInterface.Interfaces;
 using StructureMap;
@@ -141,6 +142,24 @@ namespace CodeEvaluator.UserInterface.Controls.Base
             Initialized += OnInitialized;
 
             Loaded += DesignerItem_Loaded;
+        }
+
+        private void DesignerItem_MouseLeave(object sender, MouseEventArgs mouseEventArgs)
+        {
+            var grdConnectors =
+                  this.FindVisualChildren<Grid>()
+                      .First(x => x.Name == "grdConnectors");
+
+            grdConnectors.Visibility = Visibility.Hidden;
+        }
+
+        private void DesignerItem_MouseEnter(object sender, MouseEventArgs mouseEventArgs)
+        {
+            var grdConnectors =
+                  this.FindVisualChildren<Grid>()
+                      .First(x => x.Name == "grdConnectors");
+
+            grdConnectors.Visibility = Visibility.Visible;
         }
 
         public WorkflowItem()
@@ -332,6 +351,14 @@ namespace CodeEvaluator.UserInterface.Controls.Base
                     }
                 }
             }
+
+            var pathIcon =
+                this.FindVisualChildren<Grid>()
+                    .First(x => x.Name == "grdContent");
+
+            pathIcon.MouseEnter += this.DesignerItem_MouseEnter;
+
+            pathIcon.MouseLeave += this.DesignerItem_MouseLeave;
         }
 
         private IEnumerable<T> FindVisualChildren<T>(DependencyObject obj) where T : DependencyObject
@@ -352,11 +379,6 @@ namespace CodeEvaluator.UserInterface.Controls.Base
         }
 
         private void OnInitialized(object sender, EventArgs eventArgs)
-        {
-            ApplyTemplate();
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             ApplyTemplate();
         }

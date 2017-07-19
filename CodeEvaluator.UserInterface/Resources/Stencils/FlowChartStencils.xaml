@@ -512,9 +512,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
-                    <Grid Width="120" Height="100">
+                    <Grid Width="120" Height="100" x:Name="grdContent">
 
-                        <Path Style="{StaticResource Decision}" ToolTip="Decision" Grid.Column="0" Grid.Row="0">
+                        <Path Style="{StaticResource Decision}" ToolTip="Decision" Grid.Column="0" Grid.Row="0" x:Name="PathIcon">
                             <base1:WorkflowItem.DragThumbTemplate>
                                 <ControlTemplate>
                                     <Path Style="{StaticResource Decision_DragThumb}" />
@@ -529,18 +529,19 @@
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
-                        <base1:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
-                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0"
-                                            x:Name="ConnectorTop" />
-                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.09,0.5"
-                                            x:Name="ConnectorLeft" />
-                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.91,0.5"
-                                            x:Name="ConnectorRight" />
-                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1"
-                                            x:Name="ConnectorBottom" />
-                        </base1:RelativePositionPanel>
+                        <Grid Margin="-5" x:Name="grdConnectors" Visibility="Hidden">
+                            <base1:WorkflowConnector Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <base1:WorkflowConnector Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <base1:WorkflowConnector Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            <base1:WorkflowConnector Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        </Grid>
 
                         <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
+
+
+                        <base1:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll">
+
+                        </base1:DragThumb>
 
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -569,9 +570,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
-                    <Grid Width="120" Height="100" x:Name="Grid">
+                    <Grid Width="120" Height="100" x:Name="grdContent">
 
-                        <Path Style="{StaticResource Process}" ToolTip="Process">
+                        <Path Style="{StaticResource Process}" ToolTip="Process" x:Name="PathIcon">
                             <base1:WorkflowItem.DragThumbTemplate>
                                 <ControlTemplate>
                                     <Path Style="{StaticResource Process_DragThumb}" />
@@ -586,19 +587,18 @@
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
-
-                        <base1:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
-                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0"
-                                            x:Name="ConnectorTop" />
-                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.09,0.5"
-                                            x:Name="ConnectorLeft" />
-                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.91,0.5"
-                                            x:Name="ConnectorRight" />
-                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1"
-                                            x:Name="ConnectorBottom" />
-                        </base1:RelativePositionPanel>
+                        <Grid Margin="-5" x:Name="grdConnectors" Visibility="Hidden">
+                            <base1:WorkflowConnector Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <base1:WorkflowConnector Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <base1:WorkflowConnector Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            <base1:WorkflowConnector Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        </Grid>
 
                         <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
+
+                        <base1:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll">
+                            
+                        </base1:DragThumb>
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -626,9 +626,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
-                    <Grid Width="100" Height="100" x:Name="Grid">
+                    <Grid Width="100" Height="100" x:Name="grdContent">
 
-                        <Path Style="{StaticResource StartStop}" ToolTip="Stop">
+                        <Path Style="{StaticResource StartStop}" ToolTip="Stop" x:Name="PathIcon">
                             <base1:WorkflowItem.DragThumbTemplate>
                                 <ControlTemplate>
                                     <Path Style="{StaticResource Process_DragThumb}" />
@@ -643,19 +643,19 @@
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
-
-                        <base1:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
-                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0"
-                                            x:Name="ConnectorTop" />
-                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.09,0.5"
-                                            x:Name="ConnectorLeft" />
-                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.91,0.5"
-                                            x:Name="ConnectorRight" />
-                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1"
-                                            x:Name="ConnectorBottom" />
-                        </base1:RelativePositionPanel>
+                        <Grid Margin="-5" x:Name="grdConnectors" Visibility="Hidden">
+                            <base1:WorkflowConnector Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <base1:WorkflowConnector Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <base1:WorkflowConnector Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            <base1:WorkflowConnector Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        </Grid>
 
                         <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
+
+
+                        <base1:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll">
+
+                        </base1:DragThumb>
                     </Grid>
 
                     <ControlTemplate.Triggers>
