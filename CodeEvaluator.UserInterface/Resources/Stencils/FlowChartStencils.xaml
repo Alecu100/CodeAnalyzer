@@ -508,22 +508,13 @@
         </ItemsControl.Items>
     </base1:Toolbox>
 
-    <ControlTemplate x:Key="ConnectorDecoratorTemplateStencils" TargetType="{x:Type Control}">
-        <Grid Margin="-5">
-            <base1:WorkflowConnector Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <base1:WorkflowConnector Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <base1:WorkflowConnector Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            <base1:WorkflowConnector Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-        </Grid>
-    </ControlTemplate>
-
     <Style x:Key="WorkflowItemDecission" TargetType="base1:WorkflowItem">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
                     <Grid Width="120" Height="100">
 
-                        <Path Style="{StaticResource Decision}" ToolTip="Decision" Grid.Column="0" Grid.Row="0" x:Name="ImagePath">
+                        <Path Style="{StaticResource Decision}" ToolTip="Decision" Grid.Column="0" Grid.Row="0">
                             <base1:WorkflowItem.DragThumbTemplate>
                                 <ControlTemplate>
                                     <Path Style="{StaticResource Decision_DragThumb}" />
@@ -538,19 +529,18 @@
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
-                        <ContentPresenter x:Name="PART_ContentPresenter"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                              Content="{TemplateBinding ContentControl.Content}"
-                              Margin="{TemplateBinding ContentControl.Padding}"/>
-
-
+                        <base1:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0"
+                                            x:Name="ConnectorTop" />
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.09,0.5"
+                                            x:Name="ConnectorLeft" />
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.91,0.5"
+                                            x:Name="ConnectorRight" />
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1"
+                                            x:Name="ConnectorBottom" />
+                        </base1:RelativePositionPanel>
 
                         <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
-
-                        <Control x:Name="PART_ConnectorDecorator"
-                     Visibility="Hidden"
-                     Template="{StaticResource ConnectorDecoratorTemplateStencils}"/>
 
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -560,12 +550,6 @@
                                     Property="ShowDecorator"
                                     Value="True" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true" SourceName="ImagePath" >
-                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
-                        </Trigger>
-                        <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsDragConnectionOver}">
-                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -587,7 +571,7 @@
                 <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
                     <Grid Width="120" Height="100" x:Name="Grid">
 
-                        <Path Style="{StaticResource Process}" ToolTip="Process" x:Name="ImagePath">
+                        <Path Style="{StaticResource Process}" ToolTip="Process">
                             <base1:WorkflowItem.DragThumbTemplate>
                                 <ControlTemplate>
                                     <Path Style="{StaticResource Process_DragThumb}" />
@@ -602,17 +586,19 @@
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
-                        <ContentPresenter x:Name="PART_ContentPresenter"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                              Content="{TemplateBinding ContentControl.Content}"
-                              Margin="{TemplateBinding ContentControl.Padding}"/>
+
+                        <base1:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0"
+                                            x:Name="ConnectorTop" />
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.09,0.5"
+                                            x:Name="ConnectorLeft" />
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.91,0.5"
+                                            x:Name="ConnectorRight" />
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1"
+                                            x:Name="ConnectorBottom" />
+                        </base1:RelativePositionPanel>
 
                         <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
-
-                        <Control x:Name="PART_ConnectorDecorator"
-                     Visibility="Hidden"
-                     Template="{StaticResource ConnectorDecoratorTemplateStencils}"/>
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -622,12 +608,6 @@
                                     Property="ShowDecorator"
                                     Value="True" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true" SourceName="ImagePath" >
-                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
-                        </Trigger>
-                        <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsDragConnectionOver}">
-                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -648,7 +628,7 @@
                 <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
                     <Grid Width="100" Height="100" x:Name="Grid">
 
-                        <Path Style="{StaticResource StartStop}" ToolTip="Stop" x:Name="ImagePath">
+                        <Path Style="{StaticResource StartStop}" ToolTip="Stop">
                             <base1:WorkflowItem.DragThumbTemplate>
                                 <ControlTemplate>
                                     <Path Style="{StaticResource Process_DragThumb}" />
@@ -664,17 +644,18 @@
                         </StackPanel>
 
 
-                        <ContentPresenter x:Name="PART_ContentPresenter"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                              Content="{TemplateBinding ContentControl.Content}"
-                              Margin="{TemplateBinding ContentControl.Padding}"/>
+                        <base1:RelativePositionPanel Margin="-4" Grid.Column="0" Grid.Row="0">
+                            <base1:WorkflowConnector Orientation="Top" base1:RelativePositionPanel.RelativePosition="0.5,0"
+                                            x:Name="ConnectorTop" />
+                            <base1:WorkflowConnector Orientation="Left" base1:RelativePositionPanel.RelativePosition="0.09,0.5"
+                                            x:Name="ConnectorLeft" />
+                            <base1:WorkflowConnector Orientation="Right" base1:RelativePositionPanel.RelativePosition="0.91,0.5"
+                                            x:Name="ConnectorRight" />
+                            <base1:WorkflowConnector Orientation="Bottom" base1:RelativePositionPanel.RelativePosition="0.5,1"
+                                            x:Name="ConnectorBottom" />
+                        </base1:RelativePositionPanel>
 
                         <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
-
-                        <Control x:Name="PART_ConnectorDecorator"
-                     Visibility="Hidden"
-                     Template="{StaticResource ConnectorDecoratorTemplateStencils}"/>
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -684,12 +665,6 @@
                                     Property="ShowDecorator"
                                     Value="True" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true" SourceName="ImagePath" >
-                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
-                        </Trigger>
-                        <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsDragConnectionOver}">
-                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -138,6 +138,8 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
             Style = newStyle;
 
+            Initialized += OnInitialized;
+
             Loaded += DesignerItem_Loaded;
         }
 
@@ -304,11 +306,6 @@ namespace CodeEvaluator.UserInterface.Controls.Base
                 var contentPresenter = Template.FindName("PART_ContentPresenter", this) as ContentPresenter;
                 if (contentPresenter != null)
                 {
-                    if (VisualTreeHelper.GetChildrenCount(contentPresenter) == 0)
-                    {
-                        return;
-                    }
-
                     var contentVisual = VisualTreeHelper.GetChild(contentPresenter, 0) as UIElement;
                     if (contentVisual != null)
                     {
