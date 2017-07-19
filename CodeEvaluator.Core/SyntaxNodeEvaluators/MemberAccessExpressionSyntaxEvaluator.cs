@@ -1,10 +1,10 @@
-﻿namespace CodeAnalysis.Core.Evaluators
-{
-    using CodeAnalysis.Core.Common;
-    using CodeAnalysis.Core.Enums;
+﻿using CodeAnalysis.Core.Common;
+using CodeAnalysis.Core.Enums;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
+namespace CodeAnalysis.Core.SyntaxNodeEvaluators
+{
 
     #region Using
 

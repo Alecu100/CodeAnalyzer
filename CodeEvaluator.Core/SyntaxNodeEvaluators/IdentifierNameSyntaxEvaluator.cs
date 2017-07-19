@@ -1,14 +1,13 @@
-﻿namespace CodeAnalysis.Core.Evaluators
+﻿using CodeAnalysis.Core.Common;
+using CodeAnalysis.Core.Enums;
+using CodeAnalysis.Core.Interfaces;
+using CodeAnalysis.Core.Members;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using StructureMap;
+
+namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 {
-    using CodeAnalysis.Core.Common;
-    using CodeAnalysis.Core.Enums;
-    using CodeAnalysis.Core.Interfaces;
-    using CodeAnalysis.Core.Members;
-
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-    using StructureMap;
 
     #region Using
 

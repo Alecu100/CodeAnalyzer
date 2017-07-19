@@ -1,12 +1,11 @@
-﻿namespace CodeAnalysis.Core.Evaluators
+﻿using System.Linq;
+using CodeAnalysis.Core.Common;
+using CodeAnalysis.Core.Members;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 {
-    using System.Linq;
-
-    using CodeAnalysis.Core.Common;
-    using CodeAnalysis.Core.Members;
-
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     #region Using
 

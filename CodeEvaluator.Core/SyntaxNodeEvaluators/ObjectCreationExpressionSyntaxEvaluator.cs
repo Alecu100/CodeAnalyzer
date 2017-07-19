@@ -1,12 +1,11 @@
-﻿namespace CodeAnalysis.Core.Evaluators
+﻿using CodeAnalysis.Core.Common;
+using CodeAnalysis.Core.Enums;
+using CodeAnalysis.Core.Members;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace CodeAnalysis.Core.SyntaxNodeEvaluators
 {
-    using CodeAnalysis.Core.Common;
-    using CodeAnalysis.Core.Enums;
-    using CodeAnalysis.Core.Members;
-
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
     public class ObjectCreationExpressionSyntaxEvaluator : BaseSyntaxNodeEvaluator
     {
         #region Protected Methods and Operators
