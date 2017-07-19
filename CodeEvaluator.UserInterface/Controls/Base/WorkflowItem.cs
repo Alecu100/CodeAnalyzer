@@ -40,46 +40,6 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         #endregion
 
-        #region Protected Methods and Operators
-
-        protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
-        {
-            base.OnPreviewMouseDown(e);
-            var designer = VisualTreeHelper.GetParent(this) as WorkflowCanvas;
-
-            // update selection
-            if (designer != null)
-            {
-                if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
-                {
-                    if (IsSelected)
-                    {
-                        IsSelected = false;
-                        designer.SelectedItems.Remove(this);
-                    }
-                    else
-                    {
-                        IsSelected = true;
-                        designer.SelectedItems.Add(this);
-                    }
-                }
-                else if (!IsSelected)
-                {
-                    foreach (var item in designer.SelectedItems)
-                    {
-                        item.IsSelected = false;
-                    }
-
-                    designer.SelectedItems.Clear();
-                    IsSelected = true;
-                    designer.SelectedItems.Add(this);
-                    designer.OnSelectionChanged();
-                }
-            }
-            e.Handled = false;
-        }
-
-        #endregion
 
         #region Static SpecificFields
 
@@ -142,6 +102,43 @@ namespace CodeEvaluator.UserInterface.Controls.Base
             Initialized += OnInitialized;
 
             Loaded += DesignerItem_Loaded;
+
+            MouseDoubleClick += DesignerItem_MouseDoubleClick;
+        }
+
+        private void DesignerItem_MouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            var designer = VisualTreeHelper.GetParent(this) as WorkflowCanvas;
+
+            // update selection
+            if (designer != null)
+            {
+                if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
+                {
+                    if (IsSelected)
+                    {
+                        IsSelected = false;
+                        designer.SelectedItems.Remove(this);
+                    }
+                    else
+                    {
+                        IsSelected = true;
+                        designer.SelectedItems.Add(this);
+                    }
+                }
+                else if (!IsSelected)
+                {
+                    foreach (var item in designer.SelectedItems)
+                    {
+                        item.IsSelected = false;
+                    }
+
+                    designer.SelectedItems.Clear();
+                    IsSelected = true;
+                    designer.SelectedItems.Add(this);
+                    designer.OnSelectionChanged();
+                }
+            }
         }
 
         private void DesignerItem_MouseLeave(object sender, MouseEventArgs mouseEventArgs)
