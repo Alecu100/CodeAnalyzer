@@ -1,10 +1,11 @@
 ﻿using CodeAnalysis.Core.Interfaces;
-using CodeAnalysis.Core.SyntaxNodeEvaluators;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeAnalysis.Core.Common
 {
+    using CodeAnalysis.Core.Evaluators;
 
     #region Using
 
