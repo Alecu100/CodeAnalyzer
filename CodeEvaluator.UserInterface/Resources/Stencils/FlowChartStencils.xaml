@@ -40,7 +40,7 @@
     </Style>
 
     <!-- Process -->
-    <Style x:Key="Process" TargetType="Path" BasedOn="{StaticResource StepFlowChartItemStyle}">
+    <Style x:Key="Process" TargetType="Path" BasedOn="{StaticResource StepFlowChartItemStyle}" >
         <Setter Property="Data" Value="M 0,0 H 480 V320 H 0 Z" />
     </Style>
 

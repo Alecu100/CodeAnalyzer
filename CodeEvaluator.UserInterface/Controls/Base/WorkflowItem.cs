@@ -104,6 +104,29 @@ namespace CodeEvaluator.UserInterface.Controls.Base
             Loaded += DesignerItem_Loaded;
 
             MouseDoubleClick += DesignerItem_MouseDoubleClick;
+
+            DragEnter += DesignerItem_DragEnter;
+
+            DragLeave += DesignerItem_DragLeave;
+
+        }
+
+        private void DesignerItem_DragLeave(object sender, DragEventArgs dragEventArgs)
+        {
+            var grdConnectors =
+                this.FindVisualChildren<Grid>()
+                    .First(x => x.Name == "grdConnectors");
+
+            grdConnectors.Visibility = Visibility.Hidden;
+        }
+
+        private void DesignerItem_DragEnter(object sender, DragEventArgs dragEventArgs)
+        {
+            var grdConnectors =
+               this.FindVisualChildren<Grid>()
+                   .First(x => x.Name == "grdConnectors");
+
+            grdConnectors.Visibility = Visibility.Visible;
         }
 
         private void DesignerItem_MouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
