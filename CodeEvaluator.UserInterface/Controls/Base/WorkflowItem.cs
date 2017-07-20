@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using CodeEvaluator.UserInterface.Controls.Base.Enums;
-using CodeEvaluator.UserInterface.Interfaces;
-using StructureMap;
-
-namespace CodeEvaluator.UserInterface.Controls.Base
+﻿namespace CodeEvaluator.UserInterface.Controls.Base
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+
+    using CodeEvaluator.UserInterface.Controls.Base.Enums;
+    using CodeEvaluator.UserInterface.Interfaces;
+
+    using StructureMap;
 
     #region Using
 
@@ -39,7 +39,6 @@ namespace CodeEvaluator.UserInterface.Controls.Base
         #region SpecificFields
 
         #endregion
-
 
         #region Static SpecificFields
 
@@ -86,14 +85,14 @@ namespace CodeEvaluator.UserInterface.Controls.Base
             switch (Type)
             {
                 case EWorkflowItemType.Process:
-                    newStyle = (Style) xamlResourcesRepository.FindResource("WorkflowItemProcess");
+                    newStyle = (Style)xamlResourcesRepository.FindResource("WorkflowItemProcess");
                     break;
                 case EWorkflowItemType.Decission:
-                    newStyle = (Style) xamlResourcesRepository.FindResource("WorkflowItemDecission");
+                    newStyle = (Style)xamlResourcesRepository.FindResource("WorkflowItemDecission");
                     break;
                 case EWorkflowItemType.Start:
                 case EWorkflowItemType.Stop:
-                    newStyle = (Style) xamlResourcesRepository.FindResource("WorkflowItemStartStop");
+                    newStyle = (Style)xamlResourcesRepository.FindResource("WorkflowItemStartStop");
                     break;
             }
 
@@ -105,28 +104,6 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
             MouseDoubleClick += DesignerItem_MouseDoubleClick;
 
-            DragEnter += DesignerItem_DragEnter;
-
-            DragLeave += DesignerItem_DragLeave;
-
-        }
-
-        private void DesignerItem_DragLeave(object sender, DragEventArgs dragEventArgs)
-        {
-            var grdConnectors =
-                this.FindVisualChildren<Grid>()
-                    .First(x => x.Name == "grdConnectors");
-
-            grdConnectors.Visibility = Visibility.Hidden;
-        }
-
-        private void DesignerItem_DragEnter(object sender, DragEventArgs dragEventArgs)
-        {
-            var grdConnectors =
-               this.FindVisualChildren<Grid>()
-                   .First(x => x.Name == "grdConnectors");
-
-            grdConnectors.Visibility = Visibility.Visible;
         }
 
         private void DesignerItem_MouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -166,18 +143,17 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         private void DesignerItem_MouseLeave(object sender, MouseEventArgs mouseEventArgs)
         {
-            var grdConnectors =
-                  this.FindVisualChildren<Grid>()
-                      .First(x => x.Name == "grdConnectors");
+            var grdConnectors = this.FindVisualChildren<Grid>().First(x => x.Name == "grdConnectors");
 
-            grdConnectors.Visibility = Visibility.Hidden;
+            if (IsDragConnectionOver == false)
+            {
+                grdConnectors.Visibility = Visibility.Hidden;
+            }
         }
 
         private void DesignerItem_MouseEnter(object sender, MouseEventArgs mouseEventArgs)
         {
-            var grdConnectors =
-                  this.FindVisualChildren<Grid>()
-                      .First(x => x.Name == "grdConnectors");
+            var grdConnectors = this.FindVisualChildren<Grid>().First(x => x.Name == "grdConnectors");
 
             grdConnectors.Visibility = Visibility.Visible;
         }
@@ -201,20 +177,49 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public bool IsDragConnectionOver
         {
-            get { return (bool) GetValue(IsDragConnectionOverProperty); }
-            set { SetValue(IsDragConnectionOverProperty, value); }
+            get
+            {
+                return (bool)GetValue(IsDragConnectionOverProperty);
+            }
+            set
+            {
+                SetValue(IsDragConnectionOverProperty, value);
+
+                var grdConnectors = this.FindVisualChildren<Grid>().First(x => x.Name == "grdConnectors");
+                if (value == false)
+                {
+
+                        grdConnectors.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    grdConnectors.Visibility = Visibility.Visible;
+                }
+            }
         }
 
         public bool IsSelected
         {
-            get { return (bool) GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
+            get
+            {
+                return (bool)GetValue(IsSelectedProperty);
+            }
+            set
+            {
+                SetValue(IsSelectedProperty, value);
+            }
         }
 
         public string Label
         {
-            get { return (string) GetValue(LabelProperty); }
-            set { SetValue(LabelProperty, value); }
+            get
+            {
+                return (string)GetValue(LabelProperty);
+            }
+            set
+            {
+                SetValue(LabelProperty, value);
+            }
         }
 
         public EWorkflowItemType Type { get; }
@@ -271,14 +276,13 @@ namespace CodeEvaluator.UserInterface.Controls.Base
         {
             if (depObj != null)
             {
-                var dependencyObjects =
-                    LogicalTreeHelper.GetChildren(depObj).Cast<DependencyObject>().ToList();
+                var dependencyObjects = LogicalTreeHelper.GetChildren(depObj).Cast<DependencyObject>().ToList();
                 for (var i = 0; i < dependencyObjects.Count; i++)
                 {
                     var child = dependencyObjects[i];
                     if (child is T)
                     {
-                        yield return (T) child;
+                        yield return (T)child;
                     }
 
                     foreach (var childOfChild in FindLogicalChildren<T>(child))
@@ -311,12 +315,12 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public static ControlTemplate GetConnectorDecoratorTemplate(UIElement element)
         {
-            return (ControlTemplate) element.GetValue(ConnectorDecoratorTemplateProperty);
+            return (ControlTemplate)element.GetValue(ConnectorDecoratorTemplateProperty);
         }
 
         public static ControlTemplate GetDragThumbTemplate(UIElement element)
         {
-            return (ControlTemplate) element.GetValue(DragThumbTemplateProperty);
+            return (ControlTemplate)element.GetValue(DragThumbTemplateProperty);
         }
 
         public static void SetConnectorDecoratorTemplate(UIElement element, ControlTemplate value)
@@ -372,13 +376,11 @@ namespace CodeEvaluator.UserInterface.Controls.Base
                 }
             }
 
-            var pathIcon =
-                this.FindVisualChildren<Grid>()
-                    .First(x => x.Name == "grdContent");
+            var pathIcon = this.FindVisualChildren<Grid>().First(x => x.Name == "grdContent");
 
-            pathIcon.MouseEnter += this.DesignerItem_MouseEnter;
+            pathIcon.MouseEnter += DesignerItem_MouseEnter;
 
-            pathIcon.MouseLeave += this.DesignerItem_MouseLeave;
+            pathIcon.MouseLeave += DesignerItem_MouseLeave;
         }
 
         private IEnumerable<T> FindVisualChildren<T>(DependencyObject obj) where T : DependencyObject
@@ -388,7 +390,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
                 var child = VisualTreeHelper.GetChild(obj, i);
                 if (child is T)
                 {
-                    yield return (T) child;
+                    yield return (T)child;
                 }
 
                 foreach (var childOfChild in FindVisualChildren<T>(child))
