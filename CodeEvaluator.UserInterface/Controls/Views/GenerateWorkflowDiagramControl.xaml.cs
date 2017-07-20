@@ -9,9 +9,8 @@
     using System.Windows.Controls;
     using System.Windows.Input;
 
-    using CodeAnalysis.Core.Interfaces;
-    using CodeAnalysis.Core.Listeners;
-
+    using CodeEvaluator.Evaluation.Interfaces;
+    using CodeEvaluator.Evaluation.Listeners;
     using CodeEvaluator.Packages.Core;
     using CodeEvaluator.Packages.Core.Interfaces;
     using CodeEvaluator.UserInterface.Interfaces;

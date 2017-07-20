@@ -282,9 +282,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CodeEvaluator.Core\CodeEvaluator.Core.csproj">
-      <Project>{882F4464-2A84-4576-B6EA-1EFFD4FCF4A5}</Project>
-      <Name>CodeEvaluator.Core</Name>
+    <ProjectReference Include="..\CodeEvaluator.Evaluation\CodeEvaluator.Evaluation.csproj">
+      <Project>{882f4464-2a84-4576-b6ea-1effd4fcf4a5}</Project>
+      <Name>CodeEvaluator.Evaluation</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeEvaluator.Packages.Core\CodeEvaluator.Packages.Core.csproj">
       <Project>{C0A5ED9F-551B-4B73-BD08-85DA235F8AAF}</Project>
