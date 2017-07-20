@@ -512,7 +512,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
-                    <Grid Width="120" Height="100" x:Name="grdContent">
+                    <Grid x:Name="grdContent">
 
                         <Path Style="{StaticResource Decision}" ToolTip="Decision" Grid.Column="0" Grid.Row="0" x:Name="PathIcon">
                             <base1:WorkflowItem.DragThumbTemplate>
@@ -556,6 +556,11 @@
             </Setter.Value>
         </Setter>
 
+        <Setter Property="Height" Value="100">
+        </Setter>
+        <Setter Property="Width" Value="100">
+        </Setter>
+
         <Setter Property="DragThumbTemplate">
             <Setter.Value>
                 <ControlTemplate>
@@ -570,7 +575,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
-                    <Grid Width="120" Height="100" x:Name="grdContent">
+                    <Grid x:Name="grdContent">
 
                         <Path Style="{StaticResource Process}" ToolTip="Process" x:Name="PathIcon">
                             <base1:WorkflowItem.DragThumbTemplate>
@@ -613,6 +618,11 @@
             </Setter.Value>
         </Setter>
 
+        <Setter Property="Height" Value="100">
+        </Setter>
+        <Setter Property="Width" Value="120">
+        </Setter>
+
         <Setter Property="base1:WorkflowItem.DragThumbTemplate">
             <Setter.Value>
                 <ControlTemplate>
@@ -626,7 +636,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type base1:WorkflowItem}">
-                    <Grid Width="100" Height="100" x:Name="grdContent">
+                    <Grid x:Name="grdContent">
 
                         <Path Style="{StaticResource StartStop}" ToolTip="Stop" x:Name="PathIcon">
                             <base1:WorkflowItem.DragThumbTemplate>
@@ -668,6 +678,11 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
+        </Setter>
+
+        <Setter Property="Height" Value="100">
+        </Setter>
+        <Setter Property="Width" Value="100">
         </Setter>
 
         <Setter Property="base1:WorkflowItem.DragThumbTemplate">
