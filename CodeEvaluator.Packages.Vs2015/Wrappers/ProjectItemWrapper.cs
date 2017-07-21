@@ -4,6 +4,8 @@ using EnvDTE;
 
 namespace CodeEvaluator.Packages.Vs2015.Wrappers
 {
+    using System;
+
     public class ProjectItemWrapper : IProjectItemWrapper
     {
         private readonly ProjectItem _projectItem;
@@ -15,12 +17,32 @@ namespace CodeEvaluator.Packages.Vs2015.Wrappers
 
         public string Name
         {
-            get { return _projectItem.Name; }
+            get
+            {
+                try
+                {
+                    return _projectItem.Name;
+                }
+                catch (Exception)
+                {
+                    return string.Empty;
+                }
+            }
         }
 
         public string Kind
         {
-            get { return _projectItem.Kind; }
+            get
+            {
+                try
+                {
+                    return _projectItem.Kind; ;
+                }
+                catch (Exception)
+                {
+                    return string.Empty;
+                }
+            }
         }
 
         public IEnumerable<IProjectItemWrapper> ProjectItems
