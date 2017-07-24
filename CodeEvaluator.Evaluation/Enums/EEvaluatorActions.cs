@@ -8,8 +8,8 @@
 
         GetMember,
 
-        InvokeMethod,
+        GetMethod,
 
-        InvokeConstructor
+        GetConstructor
     }
 }

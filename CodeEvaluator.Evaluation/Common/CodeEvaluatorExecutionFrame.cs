@@ -82,31 +82,6 @@
         /// </value>
         public EvaluatedObjectReference ThisReference { get; set; }
 
-        public List<EEvaluatorActions> Actions { get; } = new List<EEvaluatorActions>();
-
-        public EEvaluatorActions CurrrentAction
-        {
-            get
-            {
-                if (Actions.Count > 0)
-                {
-                    return Actions[Actions.Count - 1];
-                }
-
-                return EEvaluatorActions.None;
-            }
-        }
-
-        public void PushAction(EEvaluatorActions action)
-        {
-            Actions.Add(action);
-        }
-
-        public void PopAction()
-        {
-            Actions.RemoveAt(Actions.Count - 1);
-        }
-
         #endregion
     }
 }

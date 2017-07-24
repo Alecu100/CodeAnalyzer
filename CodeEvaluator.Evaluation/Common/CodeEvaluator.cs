@@ -109,7 +109,7 @@
         private void StartEvaluation(MethodDeclarationSyntax startMethod)
         {
             var syntaxNodeEvaluatorFactory = ObjectFactory.GetInstance<ISyntaxNodeEvaluatorFactory>();
-            var syntaxNodeEvaluator = syntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(startMethod);
+            var syntaxNodeEvaluator = syntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(startMethod, EEvaluatorActions.None);
 
             if (syntaxNodeEvaluator != null)
             {

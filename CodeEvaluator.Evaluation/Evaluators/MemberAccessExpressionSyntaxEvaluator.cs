@@ -11,6 +11,12 @@
 
     public class MemberAccessExpressionSyntaxEvaluator : BaseSyntaxNodeEvaluator
     {
+        private EEvaluatorActions _currentAction;
+
+        public MemberAccessExpressionSyntaxEvaluator(EEvaluatorActions currentAction)
+        {
+            _currentAction = currentAction;
+        }
         #region Protected Methods and Operators
 
         protected override void EvaluateSyntaxNodeInternal(
@@ -20,21 +26,17 @@
             var memberAccessExpressionSyntax = (MemberAccessExpressionSyntax) syntaxNode;
 
             var syntaxNodeEvaluator =
-                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(memberAccessExpressionSyntax.Expression);
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(memberAccessExpressionSyntax.Expression, EEvaluatorActions.GetMember);
 
             if (syntaxNodeEvaluator != null)
             {
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.PushAction(EEvaluatorActions.GetMember);
-
                 syntaxNodeEvaluator.EvaluateSyntaxNode(
                     memberAccessExpressionSyntax.Expression,
                     workflowEvaluatorExecutionState);
-
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.PopAction();
             }
 
             syntaxNodeEvaluator =
-                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(memberAccessExpressionSyntax.Name);
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(memberAccessExpressionSyntax.Name, _currentAction);
 
             if (syntaxNodeEvaluator != null)
             {

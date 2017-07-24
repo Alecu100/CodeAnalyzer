@@ -41,12 +41,10 @@
                     thisTypeInfo.UsingDirectives,
                     thisTypeInfo.NamespaceDeclarations);
 
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.LocalReferences.Add(reference);
-
                 if (variableDeclarator.Initializer != null && variableDeclarator.Initializer.Value != null)
                 {
                     var syntaxNodeEvaluator =
-                        SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(variableDeclarator.Initializer);
+                        SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(variableDeclarator.Initializer, EEvaluatorActions.None);
 
                     if (syntaxNodeEvaluator != null)
                     {

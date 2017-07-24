@@ -35,17 +35,13 @@
             if (invocationExpressionSyntax.Expression != null)
             {
                 var syntaxNodeEvaluator =
-                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(invocationExpressionSyntax.Expression);
+                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(invocationExpressionSyntax.Expression, EEvaluatorActions.GetMethod);
 
                 if (syntaxNodeEvaluator != null)
                 {
-                    workflowEvaluatorExecutionState.CurrentExecutionFrame.PushAction(EEvaluatorActions.InvokeMethod);
-
                     syntaxNodeEvaluator.EvaluateSyntaxNode(
                         invocationExpressionSyntax.Expression,
                         workflowEvaluatorExecutionState);
-
-                    workflowEvaluatorExecutionState.CurrentExecutionFrame.PopAction();
 
 
                     if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
@@ -77,7 +73,7 @@
                             {
                                 var argumentSyntax = invocationExpressionSyntax.ArgumentList.Arguments[i];
 
-                                var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(argumentSyntax);
+                                var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(argumentSyntax, EEvaluatorActions.GetMember);
 
                                 if (nodeEvaluator != null)
                                 {
@@ -98,7 +94,7 @@
                             workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = null;
 
                             var methodEvaluator =
-                                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(currentMethod.Declaration);
+                                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(currentMethod.Declaration, EEvaluatorActions.None);
 
                             if (methodEvaluator != null)
                             {

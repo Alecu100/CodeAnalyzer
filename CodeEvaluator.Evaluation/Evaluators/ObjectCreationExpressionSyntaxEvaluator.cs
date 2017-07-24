@@ -18,16 +18,12 @@
             var objectCreationExpressionSyntax = (ObjectCreationExpressionSyntax) syntaxNode;
 
             var syntaxNodeEvaluator =
-                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(objectCreationExpressionSyntax.Type);
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(objectCreationExpressionSyntax.Type, EEvaluatorActions.GetConstructor);
 
             if (syntaxNodeEvaluator != null)
             {
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.PushAction(EEvaluatorActions.InvokeConstructor);
-
                 syntaxNodeEvaluator.EvaluateSyntaxNode(objectCreationExpressionSyntax.Type,
                     workflowEvaluatorExecutionState);
-
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.PopAction();
 
                 if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
                 {
@@ -55,7 +51,7 @@
                         {
                             var argumentSyntax = objectCreationExpressionSyntax.ArgumentList.Arguments[i];
 
-                            var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(argumentSyntax);
+                            var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(argumentSyntax, EEvaluatorActions.GetMember);
 
                             if (nodeEvaluator != null)
                             {
@@ -77,7 +73,7 @@
                         workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = null;
 
                         var constructorEvaluator =
-                            SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(currentMethod.Declaration);
+                            SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(currentMethod.Declaration, EEvaluatorActions.None);
 
                         if (constructorEvaluator != null)
                         {

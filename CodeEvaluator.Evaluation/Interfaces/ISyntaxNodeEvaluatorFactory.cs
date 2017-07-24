@@ -15,7 +15,7 @@
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
         /// <returns></returns>
-        ISyntaxNodeEvaluator GetSyntaxNodeEvaluator(SyntaxNode syntaxNode);
+        ISyntaxNodeEvaluator GetSyntaxNodeEvaluator(SyntaxNode syntaxNode, EEvaluatorActions currentAction);
 
         #endregion
     }

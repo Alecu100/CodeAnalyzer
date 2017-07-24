@@ -28,7 +28,7 @@
 
             foreach (var statementSyntax in blockSyntax.Statements)
             {
-                var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(statementSyntax);
+                var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(statementSyntax, EEvaluatorActions.None);
 
                 if (syntaxNodeEvaluator != null)
                 {

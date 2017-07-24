@@ -19,7 +19,7 @@
         {
             var equalsValueClauseSyntax = (EqualsValueClauseSyntax) syntaxNode;
 
-            var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(equalsValueClauseSyntax.Value);
+            var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(equalsValueClauseSyntax.Value, EEvaluatorActions.None);
 
             if (syntaxNodeEvaluator != null)
             {

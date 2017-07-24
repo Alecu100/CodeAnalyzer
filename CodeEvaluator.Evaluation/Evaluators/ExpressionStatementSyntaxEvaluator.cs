@@ -24,7 +24,7 @@
         {
             var expressionStatementSyntax = (ExpressionStatementSyntax) syntaxNode;
             var syntaxNodeEvaluator =
-                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(expressionStatementSyntax.Expression);
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(expressionStatementSyntax.Expression, EEvaluatorActions.None);
 
             if (syntaxNodeEvaluator != null)
             {

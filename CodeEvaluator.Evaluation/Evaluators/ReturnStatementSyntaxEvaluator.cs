@@ -22,7 +22,7 @@
             if (returnStatementSyntax.Expression != null)
             {
                 var syntaxNodeEvaluator =
-                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(returnStatementSyntax.Expression);
+                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(returnStatementSyntax.Expression, EEvaluatorActions.None);
 
                 if (syntaxNodeEvaluator != null)
                 {

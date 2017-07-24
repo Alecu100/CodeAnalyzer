@@ -81,6 +81,9 @@
     <Compile Include="Configuration\StandardSetupBootstrapper.cs" />
     <Compile Include="Enums\EEvaluatorActions.cs" />
     <Compile Include="Enums\EMemberFlags.cs" />
+    <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForConstructor.cs" />
+    <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMember.cs" />
+    <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMethod.cs" />
     <Compile Include="Extensions\EvaluatedMemberExtensions.cs" />
     <Compile Include="Interfaces\IParsedSourceFilesCache.cs" />
     <Compile Include="Interfaces\ICodeEvaluator.cs" />
@@ -119,7 +122,6 @@
     <Compile Include="Evaluators\EqualsValueClauseSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\ExpressionStatementSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\ForStatementSyntaxEvaluator.cs" />
-    <Compile Include="Evaluators\IdentifierNameSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\IfStatementSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\InvocationExpressionSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\LocalDeclarationStatementSyntaxEvaluator.cs" />

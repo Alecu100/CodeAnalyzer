@@ -30,7 +30,7 @@
             {
                 foreach (var initializer in forStatementSyntax.Initializers)
                 {
-                    var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(initializer);
+                    var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(initializer, EEvaluatorActions.None);
 
                     if (syntaxNodeEvaluator != null)
                     {
@@ -43,7 +43,7 @@
             {
                 foreach (var incrementor in forStatementSyntax.Incrementors)
                 {
-                    var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(incrementor);
+                    var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(incrementor, EEvaluatorActions.None);
 
                     if (syntaxNodeEvaluator != null)
                     {
@@ -55,7 +55,7 @@
             if (forStatementSyntax.Condition != null)
             {
                 var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
-                    forStatementSyntax.Condition);
+                    forStatementSyntax.Condition, EEvaluatorActions.None);
 
                 if (syntaxNodeEvaluator != null)
                 {
@@ -66,7 +66,7 @@
             if (forStatementSyntax.Statement != null)
             {
                 var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
-                    forStatementSyntax.Statement);
+                    forStatementSyntax.Statement, EEvaluatorActions.None);
 
                 if (syntaxNodeEvaluator != null)
                 {

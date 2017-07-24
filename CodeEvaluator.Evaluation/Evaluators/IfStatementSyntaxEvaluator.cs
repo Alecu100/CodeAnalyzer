@@ -28,7 +28,7 @@
 
             if (ifStatementSyntax.Condition != null)
             {
-                var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(ifStatementSyntax.Condition);
+                var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(ifStatementSyntax.Condition, EEvaluatorActions.None);
 
                 if (syntaxNodeEvaluator != null)
                 {
@@ -38,7 +38,7 @@
 
             if (ifStatementSyntax.Statement != null)
             {
-                var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(ifStatementSyntax.Statement);
+                var syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(ifStatementSyntax.Statement, EEvaluatorActions.None);
 
                 if (syntaxNodeEvaluator != null)
                 {
@@ -49,7 +49,7 @@
             if (ifStatementSyntax.Else != null && ifStatementSyntax.Else.Statement != null)
             {
                 var syntaxNodeEvaluator =
-                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(ifStatementSyntax.Else.Statement);
+                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(ifStatementSyntax.Else.Statement, EEvaluatorActions.None);
 
                 if (syntaxNodeEvaluator != null)
                 {

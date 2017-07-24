@@ -25,7 +25,7 @@
             var localDeclarationStatementSyntax = (LocalDeclarationStatementSyntax) syntaxNode;
 
             var syntaxNodeEvaluator =
-                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(localDeclarationStatementSyntax.Declaration);
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(localDeclarationStatementSyntax.Declaration, EEvaluatorActions.None);
 
             if (syntaxNodeEvaluator != null)
             {

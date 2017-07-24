@@ -19,7 +19,7 @@
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
         /// <returns></returns>
-        public ISyntaxNodeEvaluator GetSyntaxNodeEvaluator(SyntaxNode syntaxNode)
+        public ISyntaxNodeEvaluator GetSyntaxNodeEvaluator(SyntaxNode syntaxNode, EEvaluatorActions currentAction)
         {
             if (syntaxNode is MethodDeclarationSyntax)
             {
@@ -78,12 +78,12 @@
 
             if (syntaxNode is MemberAccessExpressionSyntax)
             {
-                return new MemberAccessExpressionSyntaxEvaluator();
+                return new MemberAccessExpressionSyntaxEvaluator(currentAction);
             }
 
             if (syntaxNode is IdentifierNameSyntax)
             {
-                return new IdentifierNameSyntaxEvaluator();
+                return  GetIdentifierNameSyntaxEvaluator(currentAction);
             }
 
             if (syntaxNode is ObjectCreationExpressionSyntax)
@@ -92,6 +92,22 @@
             }
 
             return null;
+        }
+
+        private ISyntaxNodeEvaluator GetIdentifierNameSyntaxEvaluator(EEvaluatorActions currentAction)
+        {
+
+            if (currentAction == EEvaluatorActions.GetMethod)
+            {
+                return new IdentifierNameSyntaxEvaluatorForMethod();
+            }
+
+            if (currentAction == EEvaluatorActions.GetConstructor)
+            {
+                return new IdentifierNameSyntaxEvaluatorForConstructor();
+            }
+
+            return new IdentifierNameSyntaxEvaluatorForMember();
         }
 
         #endregion

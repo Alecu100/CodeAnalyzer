@@ -28,7 +28,7 @@
             InitializeParameters();
 
             var syntaxNodeEvaluator =
-                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(_baseMethodDeclarationSyntax.Body);
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(_baseMethodDeclarationSyntax.Body, EEvaluatorActions.None);
 
             if (syntaxNodeEvaluator != null)
             {
