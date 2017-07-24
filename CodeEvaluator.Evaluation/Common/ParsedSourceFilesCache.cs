@@ -1,7 +1,9 @@
 ﻿namespace CodeEvaluator.Evaluation.Common
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using global::CodeEvaluator.Evaluation.Interfaces;
@@ -25,17 +27,25 @@
         {
             Clear();
 
+            var csCodeFiles = codeFileNames.Where(codefile => codefile.ToLower().EndsWith(".cs"));
+
             Parallel.ForEach(
-                codeFileNames,
+                csCodeFiles,
                 (codeFile, state, arg3) =>
-                {
-                    var sourceText = File.ReadAllText(codeFile);
-                    var syntaxTree = CSharpSyntaxTree.ParseText(sourceText);
-                    lock (this)
                     {
-                        Add(syntaxTree);
-                    }
-                });
+                        try
+                        {
+                            var sourceText = File.ReadAllText(codeFile);
+                            var syntaxTree = CSharpSyntaxTree.ParseText(sourceText);
+                            lock (this)
+                            {
+                                Add(syntaxTree);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    });
         }
 
         #endregion

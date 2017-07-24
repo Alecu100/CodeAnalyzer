@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
-using CodeEvaluator.Packages.Core.Interfaces;
-using EnvDTE;
-using VSLangProj;
-
-namespace CodeEvaluator.Packages.Vs2015.Wrappers
+﻿namespace CodeEvaluator.Packages.Vs2015.Wrappers
 {
+    using System;
+    using System.Collections.Generic;
+
+    using CodeEvaluator.Packages.Core.Interfaces;
+
+    using EnvDTE;
+
+    using VSLangProj;
+
     public class ProjectWrapper : IProjectWrapper
     {
         private readonly Project _project;
@@ -14,24 +18,51 @@ namespace CodeEvaluator.Packages.Vs2015.Wrappers
             _project = project;
         }
 
-        public VSProject VsProject
-        {
-            get { return _project.Object as VSProject; }
-        }
-
         public string Kind
         {
-            get { return _project.Kind; }
+            get
+            {
+                try
+                {
+                    return _project.Kind;
+                    ;
+                }
+                catch (Exception)
+                {
+                    return string.Empty;
+                }
+            }
         }
 
         public string UniqueName
         {
-            get { return _project.UniqueName; }
+            get
+            {
+                try
+                {
+                    return _project.UniqueName;
+                }
+                catch (Exception)
+                {
+                    return string.Empty;
+                }
+            }
         }
 
         public string Name
         {
-            get { return _project.Name; }
+            get
+            {
+                try
+                {
+                    return _project.Name;
+                    ;
+                }
+                catch (Exception)
+                {
+                    return string.Empty;
+                }
+            }
         }
 
         public IEnumerable<IProjectItemWrapper> ProjectItems
@@ -44,7 +75,7 @@ namespace CodeEvaluator.Packages.Vs2015.Wrappers
                 {
                     if (projectItem is ProjectItem)
                     {
-                        projectItemWrappers.Add(new ProjectItemWrapper((ProjectItem) projectItem));
+                        projectItemWrappers.Add(new ProjectItemWrapper((ProjectItem)projectItem));
                     }
                 }
 
@@ -66,7 +97,7 @@ namespace CodeEvaluator.Packages.Vs2015.Wrappers
                     {
                         if (reference is Reference)
                         {
-                            referencesWrappers.Add(new ReferenceWrapper((Reference) reference));
+                            referencesWrappers.Add(new ReferenceWrapper((Reference)reference));
                         }
                     }
                 }
