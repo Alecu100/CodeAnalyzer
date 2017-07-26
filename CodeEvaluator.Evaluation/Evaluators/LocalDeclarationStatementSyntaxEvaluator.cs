@@ -17,10 +17,10 @@
         ///     Evaluates the syntax node.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
-        /// <param name="workflowEvaluatorExecutionState">The workflow evaluator stack.</param>
+        /// <param name="workflowEvaluatorExecutionStack">The workflow evaluator stack.</param>
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
             var localDeclarationStatementSyntax = (LocalDeclarationStatementSyntax) syntaxNode;
 
@@ -31,7 +31,7 @@
             {
                 syntaxNodeEvaluator.EvaluateSyntaxNode(
                     localDeclarationStatementSyntax.Declaration,
-                    workflowEvaluatorExecutionState);
+                    workflowEvaluatorExecutionStack);
             }
         }
 

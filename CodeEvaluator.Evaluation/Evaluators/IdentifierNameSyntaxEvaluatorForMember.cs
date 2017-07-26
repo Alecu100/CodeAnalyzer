@@ -18,29 +18,29 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
 
             var identifierNameSyntax = (IdentifierNameSyntax)syntaxNode;
             var foundReference = false;
 
-            if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
+            if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
             {
                 TryToFindReferenceInAccessedReference(
-                    workflowEvaluatorExecutionState,
+                    workflowEvaluatorExecutionStack,
                     identifierNameSyntax,
                     ref foundReference);
             }
 
             if (foundReference == false)
             {
-                TryToFindReferenceInLocalReferences(workflowEvaluatorExecutionState, identifierNameSyntax,
+                TryToFindReferenceInLocalReferences(workflowEvaluatorExecutionStack, identifierNameSyntax,
                     ref foundReference);
             }
 
             if (foundReference == false)
             {
-                TryToFindReferenceInThisReference(workflowEvaluatorExecutionState, identifierNameSyntax,
+                TryToFindReferenceInThisReference(workflowEvaluatorExecutionStack, identifierNameSyntax,
                     ref foundReference);
             }
         }
@@ -50,7 +50,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
         #region Private Methods and Operators
 
         private void TryToFindReferenceInAccessedReference(
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState,
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack,
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
@@ -58,7 +58,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
             foreach (
                 var evaluatedObject in
-                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects)
+                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects)
             {
                 foreach (var field in evaluatedObject.Fields)
                 {
@@ -73,18 +73,18 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
             if (foundReference)
             {
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = reference;
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = reference;
             }
         }
 
         private void TryToFindReferenceInLocalReferences(
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState,
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack,
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
             var reference = new EvaluatedObjectReference();
 
-            foreach (var localReference in workflowEvaluatorExecutionState.CurrentExecutionFrame.LocalReferences)
+            foreach (var localReference in workflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences)
             {
                 if (localReference.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                 {
@@ -95,12 +95,12 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
             if (foundReference)
             {
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = reference;
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = reference;
             }
         }
 
         private void TryToFindReferenceInThisReference(
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState,
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack,
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
@@ -108,7 +108,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
             foreach (
                 var thisEvaluatedObject in
-                    workflowEvaluatorExecutionState.CurrentExecutionFrame.ThisReference.EvaluatedObjects)
+                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.EvaluatedObjects)
             {
                 foreach (var field in thisEvaluatedObject.Fields)
                 {
@@ -122,7 +122,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
             if (foundReference)
             {
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = reference;
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = reference;
             }
         }
 

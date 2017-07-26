@@ -20,7 +20,7 @@
         /// <param name="targetClass">The target class.</param>
         /// <param name="startMethod">The start method.</param>
         void Evaluate(
-            List<ICodeEvaluatorListener> listeners,
+            List<ISyntaxNodeEvaluatorListener> listeners,
             List<string> codeFileNames,
             ClassDeclarationSyntax targetClass,
             MethodDeclarationSyntax startMethod,

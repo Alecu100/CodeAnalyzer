@@ -28,19 +28,34 @@
         ///     Evaluates the syntax node.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
-        /// <param name="workflowEvaluatorExecutionState">The workflow evaluator stack.</param>
+        /// <param name="workflowEvaluatorExecutionStack">The workflow evaluator stack.</param>
         public virtual void EvaluateSyntaxNode(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
-            var previousSyntaxNode = workflowEvaluatorExecutionState.CurrentExecutionFrame.CurrentSyntaxNode;
-            workflowEvaluatorExecutionState.PushSyntaxNodeEvaluator(this);
-            workflowEvaluatorExecutionState.CurrentExecutionFrame.CurrentSyntaxNode = syntaxNode;
+            var previousSyntaxNode = workflowEvaluatorExecutionStack.CurrentExecutionFrame.CurrentSyntaxNode;
+            workflowEvaluatorExecutionStack.PushSyntaxNodeEvaluator(this);
+            workflowEvaluatorExecutionStack.CurrentExecutionFrame.CurrentSyntaxNode = syntaxNode;
 
-            EvaluateSyntaxNodeInternal(syntaxNode, workflowEvaluatorExecutionState);
+            var syntaxNodeEvaluatorListenerArgs = new SyntaxNodeEvaluatorListenerArgs { CancelEvaluation = false, EvaluatedSyntaxNode = syntaxNode, ExecutionStack = workflowEvaluatorExecutionStack };
 
-            workflowEvaluatorExecutionState.CurrentExecutionFrame.CurrentSyntaxNode = previousSyntaxNode;
-            workflowEvaluatorExecutionState.PopSyntaxNodeEvaluator();
+            foreach (var staticWorkflowListener in workflowEvaluatorExecutionStack.Parameters.Listeners)
+            {
+                staticWorkflowListener.OnBeforeSyntaxNodeEvaluated(this, syntaxNodeEvaluatorListenerArgs);
+            }
+
+            if (!syntaxNodeEvaluatorListenerArgs.CancelEvaluation)
+            {
+                EvaluateSyntaxNodeInternal(syntaxNode, workflowEvaluatorExecutionStack);
+            }
+
+            foreach (var staticWorkflowListener in workflowEvaluatorExecutionStack.Parameters.Listeners)
+            {
+                staticWorkflowListener.OnAfterSyntaxNodeEvaluated(this, syntaxNodeEvaluatorListenerArgs);
+            }
+
+            workflowEvaluatorExecutionStack.CurrentExecutionFrame.CurrentSyntaxNode = previousSyntaxNode;
+            workflowEvaluatorExecutionStack.PopSyntaxNodeEvaluator();
         }
 
         #endregion
@@ -49,7 +64,7 @@
 
         protected virtual void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
         }
 

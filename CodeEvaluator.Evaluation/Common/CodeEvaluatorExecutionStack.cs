@@ -9,7 +9,7 @@
 
     #endregion
 
-    public class CodeEvaluatorExecutionState
+    public class CodeEvaluatorExecutionStack
     {
         #region SpecificFields
 

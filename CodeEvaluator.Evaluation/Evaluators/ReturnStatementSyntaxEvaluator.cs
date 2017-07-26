@@ -15,7 +15,7 @@
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
             var returnStatementSyntax = (ReturnStatementSyntax) syntaxNode;
 
@@ -26,15 +26,15 @@
 
                 if (syntaxNodeEvaluator != null)
                 {
-                    syntaxNodeEvaluator.EvaluateSyntaxNode(returnStatementSyntax.Expression, workflowEvaluatorExecutionState);
+                    syntaxNodeEvaluator.EvaluateSyntaxNode(returnStatementSyntax.Expression, workflowEvaluatorExecutionStack);
                 }
 
-                if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
+                if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
                 {
-                    workflowEvaluatorExecutionState.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
-                        workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference);
+                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
+                        workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference);
 
-                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = null;
+                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
                 }
             }
         }

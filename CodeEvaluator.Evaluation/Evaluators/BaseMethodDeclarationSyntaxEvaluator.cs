@@ -28,7 +28,7 @@
 
         protected EvaluatedMethodBase _evaluatedMethod;
 
-        protected CodeEvaluatorExecutionState _workflowEvaluatorExecutionState;
+        protected CodeEvaluatorExecutionStack WorkflowEvaluatorExecutionStack;
 
         #endregion
 
@@ -42,17 +42,17 @@
                 staticWorkflowEvaluatorExecutionFrameFactory.BuildNewExecutionFrameForMethodCall(
                     _evaluatedMethod,
                     _thisReference);
-            _workflowEvaluatorExecutionState.PushFramePassingParametersFromPreviousFrame(buildNewExecutionFrameForMethodCall);
+            WorkflowEvaluatorExecutionStack.PushFramePassingParametersFromPreviousFrame(buildNewExecutionFrameForMethodCall);
         }
 
         protected void InitializeParameters()
         {
             for (var i = 0; i < _evaluatedMethod.Parameters.Count; i++)
             {
-                if (_workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters.ContainsKey(i))
+                if (WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.ContainsKey(i))
                 {
                     var trackedMethodParameter = _evaluatedMethod.Parameters[i];
-                    var passedParameters = _workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters[i];
+                    var passedParameters = WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[i];
 
                     if (trackedMethodParameter.TypeInfo == null || passedParameters == null)
                     {
@@ -65,8 +65,8 @@
                     trackedVariableReference.Identifier = trackedMethodParameter.Identifier;
                     trackedVariableReference.IdentifierText = trackedMethodParameter.IdentifierText;
                     trackedVariableReference.AssignEvaluatedObject(passedParameters);
-                    _workflowEvaluatorExecutionState.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
-                    _workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters.Remove(i);
+                    WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
+                    WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.Remove(i);
                 }
                 else
                 {
@@ -84,14 +84,14 @@
                     trackedVariableReference.IdentifierText = trackedMethodParameter.IdentifierText;
                     trackedVariableReference.AssignEvaluatedObject(
                         VariableAllocator.AllocateVariable(trackedMethodParameter.TypeInfo));
-                    _workflowEvaluatorExecutionState.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
+                    WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
                 }
             }
         }
 
         protected void ResetExecutionFrame()
         {
-            _workflowEvaluatorExecutionState.PopFramePassingReturnedObjectsToPreviousFrame();
+            WorkflowEvaluatorExecutionStack.PopFramePassingReturnedObjectsToPreviousFrame();
         }
 
         #endregion

@@ -14,8 +14,8 @@
     {
         #region SpecificFields
 
-        private readonly List<ICodeEvaluatorListener> _listeners =
-            new List<ICodeEvaluatorListener>();
+        private readonly List<ISyntaxNodeEvaluatorListener> _listeners =
+            new List<ISyntaxNodeEvaluatorListener>();
 
         #endregion
 
@@ -27,7 +27,7 @@
         /// <value>
         ///     The listeners.
         /// </value>
-        public List<ICodeEvaluatorListener> Listeners
+        public List<ISyntaxNodeEvaluatorListener> Listeners
         {
             get
             {

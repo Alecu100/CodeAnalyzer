@@ -2,8 +2,8 @@
 {
     using System.Linq;
 
+    using CodeEvaluator.Evaluation.Common;
     using CodeEvaluator.Evaluation.Interfaces;
-    using CodeEvaluator.Evaluation.Members;
     using CodeEvaluator.Workflows;
 
     using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -12,7 +12,7 @@
 
     #endregion
 
-    public class WorkflowEvaluatorEvaluatorListener : ICodeEvaluatorListener
+    public class WorkflowEvaluatorEvaluatorListener : ISyntaxNodeEvaluatorListener
     {
         #region Constructors and Destructors
 
@@ -23,40 +23,24 @@
 
         #endregion
 
-        #region Public Methods and Operators
-
-        /// <summary>
-        ///     Called when [method called].
-        /// </summary>
-        /// <param name="classDeclaration">Name of the class.</param>
-        /// <param name="methodDeclaration">Name of the method.</param>
-        public void AfterMethodCalled(
-            ClassDeclarationSyntax classDeclaration,
-            MethodDeclarationSyntax methodDeclaration)
+        public void OnBeforeSyntaxNodeEvaluated(
+            ISyntaxNodeEvaluator syntaxNodeEvaluator,
+            SyntaxNodeEvaluatorListenerArgs args)
         {
-        }
+            var methodCallInvocationExpression = args.EvaluatedSyntaxNode as InvocationExpressionSyntax;
 
-        /// <summary>
-        ///     Afters the variable declared.
-        /// </summary>
-        /// <param name="variable">The variable.</param>
-        public void AfterVariableDeclared(EvaluatedObject variable)
-        {
-        }
+            if (methodCallInvocationExpression == null)
+            {
+                return;
+            }
 
-        /// <summary>
-        ///     Befores the method called.
-        /// </summary>
-        /// <param name="methodCallInvocationExpression">The method call invocation expression.</param>
-        public void BeforeMethodCalled(InvocationExpressionSyntax methodCallInvocationExpression)
-        {
             var syntaxNodes = methodCallInvocationExpression.ChildNodes().ToList();
 
             if (syntaxNodes.Count == 2)
             {
                 if (syntaxNodes[0] is MemberAccessExpressionSyntax)
                 {
-                    var memberAccessExpression = (MemberAccessExpressionSyntax) syntaxNodes[0];
+                    var memberAccessExpression = (MemberAccessExpressionSyntax)syntaxNodes[0];
                     var methodAndClass = memberAccessExpression.ChildNodes().ToList();
 
                     if (methodAndClass.Count == 2)
@@ -91,17 +75,11 @@
             }
         }
 
-        /// <summary>
-        ///     Befores the variable declared.
-        /// </summary>
-        /// <param name="variableDeclaration">The variable declaration.</param>
-        public void BeforeVariableDeclared(
-            VariableDeclarationSyntax variableDeclaration,
-            VariableDeclaratorSyntax variableDeclarator)
+        public void OnAfterSyntaxNodeEvaluated(
+            ISyntaxNodeEvaluator syntaxNodeEvaluator,
+            SyntaxNodeEvaluatorListenerArgs args)
         {
         }
-
-        #endregion
 
         #region Private Methods and Operators
 

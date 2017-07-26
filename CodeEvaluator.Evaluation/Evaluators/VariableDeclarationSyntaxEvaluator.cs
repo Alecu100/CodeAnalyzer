@@ -18,13 +18,13 @@
         ///     Evaluates the syntax node.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
-        /// <param name="workflowEvaluatorExecutionState">The workflow evaluator stack.</param>
+        /// <param name="workflowEvaluatorExecutionStack">The workflow evaluator stack.</param>
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
             var variableDeclarationSyntax = (VariableDeclarationSyntax) syntaxNode;
-            var thisTypeInfo = workflowEvaluatorExecutionState.CurrentExecutionFrame.ThisReference.EvaluatedObjects[0].TypeInfo;
+            var thisTypeInfo = workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.EvaluatedObjects[0].TypeInfo;
 
             foreach (var variableDeclarator in variableDeclarationSyntax.Variables)
             {
@@ -48,19 +48,19 @@
 
                     if (syntaxNodeEvaluator != null)
                     {
-                        syntaxNodeEvaluator.EvaluateSyntaxNode(variableDeclarator.Initializer, workflowEvaluatorExecutionState);
+                        syntaxNodeEvaluator.EvaluateSyntaxNode(variableDeclarator.Initializer, workflowEvaluatorExecutionStack);
 
-                        if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
+                        if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
                         {
                             reference.AssignEvaluatedObject(
-                                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference);
+                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference);
 
-                            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = null;
+                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
                         }
                     }
                 }
 
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.LocalReferences.Add(reference);
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences.Add(reference);
             }
         }
 

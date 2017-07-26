@@ -18,10 +18,10 @@
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
             _baseMethodDeclarationSyntax = (ConstructorDeclarationSyntax) syntaxNode;
-            _workflowEvaluatorExecutionState = workflowEvaluatorExecutionState;
+            WorkflowEvaluatorExecutionStack = workflowEvaluatorExecutionStack;
 
             InitializeThisVariable();
             InitializeExecutionFrame();
@@ -32,7 +32,7 @@
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(_baseMethodDeclarationSyntax.Body, workflowEvaluatorExecutionState);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(_baseMethodDeclarationSyntax.Body, workflowEvaluatorExecutionStack);
             }
 
             ReturnThisReference();
@@ -64,7 +64,7 @@
 
         private void ReturnThisReference()
         {
-            _workflowEvaluatorExecutionState.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
+            WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
                 _thisReference);
         }
 

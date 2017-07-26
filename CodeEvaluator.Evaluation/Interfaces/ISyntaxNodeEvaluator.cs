@@ -16,8 +16,8 @@
         ///     Evaluates the syntax node.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
-        /// <param name="workflowEvaluatorExecutionState">The workflow evaluator stack.</param>
-        void EvaluateSyntaxNode(SyntaxNode syntaxNode, CodeEvaluatorExecutionState workflowEvaluatorExecutionState);
+        /// <param name="workflowEvaluatorExecutionStack">The workflow evaluator stack.</param>
+        void EvaluateSyntaxNode(SyntaxNode syntaxNode, CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack);
 
         #endregion
     }
