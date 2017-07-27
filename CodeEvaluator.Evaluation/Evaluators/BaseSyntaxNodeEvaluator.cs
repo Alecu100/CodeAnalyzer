@@ -29,17 +29,18 @@
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
         /// <param name="workflowEvaluatorExecutionStack">The workflow evaluator stack.</param>
-        public virtual void EvaluateSyntaxNode(
+        public void EvaluateSyntaxNode(
             SyntaxNode syntaxNode,
             CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
             var previousSyntaxNode = workflowEvaluatorExecutionStack.CurrentExecutionFrame.CurrentSyntaxNode;
             workflowEvaluatorExecutionStack.PushSyntaxNodeEvaluator(this);
+            workflowEvaluatorExecutionStack.PushSyntaxNode(syntaxNode);
             workflowEvaluatorExecutionStack.CurrentExecutionFrame.CurrentSyntaxNode = syntaxNode;
 
             var syntaxNodeEvaluatorListenerArgs = new SyntaxNodeEvaluatorListenerArgs { CancelEvaluation = false, EvaluatedSyntaxNode = syntaxNode, ExecutionStack = workflowEvaluatorExecutionStack };
 
-            foreach (var staticWorkflowListener in workflowEvaluatorExecutionStack.Parameters.Listeners)
+            foreach (var staticWorkflowListener in workflowEvaluatorExecutionStack.Parameters.EvaluatorListeners)
             {
                 staticWorkflowListener.OnBeforeSyntaxNodeEvaluated(this, syntaxNodeEvaluatorListenerArgs);
             }
@@ -49,12 +50,13 @@
                 EvaluateSyntaxNodeInternal(syntaxNode, workflowEvaluatorExecutionStack);
             }
 
-            foreach (var staticWorkflowListener in workflowEvaluatorExecutionStack.Parameters.Listeners)
+            foreach (var staticWorkflowListener in workflowEvaluatorExecutionStack.Parameters.EvaluatorListeners)
             {
                 staticWorkflowListener.OnAfterSyntaxNodeEvaluated(this, syntaxNodeEvaluatorListenerArgs);
             }
 
             workflowEvaluatorExecutionStack.CurrentExecutionFrame.CurrentSyntaxNode = previousSyntaxNode;
+            workflowEvaluatorExecutionStack.PopSyntaxNode();
             workflowEvaluatorExecutionStack.PopSyntaxNodeEvaluator();
         }
 

@@ -56,7 +56,7 @@
         {
             ExecutionStack = new CodeEvaluatorExecutionStack();
             ExecutionStack.Parameters = new CodeEvaluatorParameters();
-            ExecutionStack.Parameters.Listeners.AddRange(listeners);
+            ExecutionStack.Parameters.EvaluatorListeners.AddRange(listeners);
         }
 
         private void InitializeExecutionFrame(ClassDeclarationSyntax targetClass, MethodDeclarationSyntax startMethod)

@@ -5,6 +5,8 @@
 
     using global::CodeEvaluator.Evaluation.Interfaces;
 
+    using Microsoft.CodeAnalysis;
+
     #region Using
 
     #endregion
@@ -13,12 +15,12 @@
     {
         #region SpecificFields
 
-        private CodeEvaluatorParameters _parameters;
-
         private readonly List<CodeEvaluatorExecutionFrame> _staticWorkflowEvaluatorExecutionFrames =
             new List<CodeEvaluatorExecutionFrame>();
 
-        private readonly List<ISyntaxNodeEvaluator> _syntaxNodeEvaluators = new List<ISyntaxNodeEvaluator>();
+        private readonly List<ISyntaxNodeEvaluator> _syntaxNodeEvaluatorStack = new List<ISyntaxNodeEvaluator>();
+
+        private readonly List<SyntaxNode> _syntaxNodeStack = new List<SyntaxNode>();
 
         #endregion
 
@@ -49,11 +51,7 @@
         /// <value>
         ///     The parameters.
         /// </value>
-        public CodeEvaluatorParameters Parameters
-        {
-            get { return _parameters; }
-            set { _parameters = value; }
-        }
+        public CodeEvaluatorParameters Parameters { get; set; }
 
         /// <summary>
         ///     Gets the static workflow evaluator execution frames.
@@ -63,7 +61,10 @@
         /// </value>
         public IReadOnlyList<CodeEvaluatorExecutionFrame> StaticWorkflowEvaluatorExecutionFrames
         {
-            get { return _staticWorkflowEvaluatorExecutionFrames; }
+            get
+            {
+                return _staticWorkflowEvaluatorExecutionFrames;
+            }
         }
 
         /// <summary>
@@ -72,9 +73,20 @@
         /// <value>
         ///     The syntax node evaluators.
         /// </value>
-        public IReadOnlyList<ISyntaxNodeEvaluator> SyntaxNodeEvaluators
+        public IReadOnlyList<ISyntaxNodeEvaluator> SyntaxNodeEvaluatorStack
         {
-            get { return _syntaxNodeEvaluators; }
+            get
+            {
+                return _syntaxNodeEvaluatorStack;
+            }
+        }
+
+        public IReadOnlyCollection<SyntaxNode> SyntaxNodeStack
+        {
+            get
+            {
+                return _syntaxNodeStack;
+            }
         }
 
         #endregion
@@ -104,7 +116,7 @@
         /// </summary>
         public void PopSyntaxNodeEvaluator()
         {
-            _syntaxNodeEvaluators.RemoveAt(_syntaxNodeEvaluators.Count - 1);
+            _syntaxNodeEvaluatorStack.RemoveAt(_syntaxNodeEvaluatorStack.Count - 1);
         }
 
         /// <summary>
@@ -133,7 +145,17 @@
         /// <param name="syntaxNodeEvaluator">The syntax node evaluator.</param>
         public void PushSyntaxNodeEvaluator(ISyntaxNodeEvaluator syntaxNodeEvaluator)
         {
-            _syntaxNodeEvaluators.Add(syntaxNodeEvaluator);
+            _syntaxNodeEvaluatorStack.Add(syntaxNodeEvaluator);
+        }
+
+        public void PushSyntaxNode(SyntaxNode syntaxNode)
+        {
+            _syntaxNodeStack.Add(syntaxNode);
+        }
+
+        public void PopSyntaxNode()
+        {
+            _syntaxNodeStack.RemoveAt(_syntaxNodeStack.Count - 1);
         }
 
         #endregion

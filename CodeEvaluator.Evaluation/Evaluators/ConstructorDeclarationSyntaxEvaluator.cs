@@ -20,24 +20,34 @@
             SyntaxNode syntaxNode,
             CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
-            _baseMethodDeclarationSyntax = (ConstructorDeclarationSyntax) syntaxNode;
+            _baseMethodDeclarationSyntax = (ConstructorDeclarationSyntax)syntaxNode;
             WorkflowEvaluatorExecutionStack = workflowEvaluatorExecutionStack;
 
             InitializeThisVariable();
             InitializeExecutionFrame();
             InitializeParameters();
+            AddHistoryToThisVariable(workflowEvaluatorExecutionStack);
 
             var syntaxNodeEvaluator =
-                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(_baseMethodDeclarationSyntax.Body, EEvaluatorActions.None);
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
+                    _baseMethodDeclarationSyntax.Body,
+                    EEvaluatorActions.None);
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(_baseMethodDeclarationSyntax.Body, workflowEvaluatorExecutionStack);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(
+                    _baseMethodDeclarationSyntax.Body,
+                    workflowEvaluatorExecutionStack);
             }
 
             ReturnThisReference();
 
             ResetExecutionFrame();
+        }
+
+        private void AddHistoryToThisVariable(CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
+        {
+            _thisReference.EvaluatedObjects[0].PushHistory(workflowEvaluatorExecutionStack);
         }
 
         #endregion
@@ -57,8 +67,8 @@
                 _evaluatedMethod =
                     trackedVariableTypeInfo.Constructors.First(
                         constructor =>
-                            ((ConstructorDeclarationSyntax) constructor.Declaration).ParameterList.ToString()
-                            == _baseMethodDeclarationSyntax.ParameterList.ToString());
+                        ((ConstructorDeclarationSyntax)constructor.Declaration).ParameterList.ToString()
+                        == _baseMethodDeclarationSyntax.ParameterList.ToString());
             }
         }
 

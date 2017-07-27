@@ -12,6 +12,8 @@ using StructureMap;
 
 namespace CodeEvaluator.Evaluation.Evaluators
 {
+    using CodeEvaluator.Evaluation.Extensions;
+
     public class IdentifierNameSyntaxEvaluatorForMember : BaseMethodDeclarationSyntaxEvaluator
     {
         #region Protected Methods and Operators
@@ -65,6 +67,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
                     if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                     {
                         reference.AssignEvaluatedObject(field);
+                        field.EvaluatedObjects.ForEach(currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
                         foundReference = true;
                     }
                 }
@@ -89,6 +92,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
                 if (localReference.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                 {
                     reference.AssignEvaluatedObject(localReference);
+                    localReference.EvaluatedObjects.ForEach(currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
                     foundReference = true;
                 }
             }
@@ -115,6 +119,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
                     if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                     {
                         reference.AssignEvaluatedObject(field);
+                        field.EvaluatedObjects.ForEach(currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
                         foundReference = true;
                     }
                 }
