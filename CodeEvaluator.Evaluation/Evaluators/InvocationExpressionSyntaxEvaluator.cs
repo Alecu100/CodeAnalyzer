@@ -61,7 +61,11 @@
                                 continue;
                             }
 
-                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[-1] =
+                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters = new EvaluatedMethodPassedParameters();
+
+                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.ThisReference.AssignEvaluatedObject(evaluatedDelegate.Fields.First());
+
+                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated[-1] =
                                 evaluatedDelegate.Fields.First();
 
                             for (var i = 0; i < invocationExpressionSyntax.ArgumentList.Arguments.Count; i++)
@@ -81,7 +85,7 @@
 
                                 if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
                                 {
-                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[i] =
+                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated[i] =
                                         workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
                                 }
                             }

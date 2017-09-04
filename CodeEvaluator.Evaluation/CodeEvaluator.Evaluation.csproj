@@ -70,6 +70,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\InheritanceChainResolver.cs" />
+    <Compile Include="Common\InheritanceChainResolverResult.cs" />
+    <Compile Include="Common\MethodInvocationResolver.cs" />
+    <Compile Include="Common\MethodInvocationResolverResult.cs" />
     <Compile Include="Common\ParsedSourceFilesCache.cs" />
     <Compile Include="Common\CodeEvaluator.cs" />
     <Compile Include="Common\CodeEvaluatorExecutionStack.cs" />
@@ -84,6 +88,8 @@
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForConstructor.cs" />
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMember.cs" />
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMethod.cs" />
+    <Compile Include="Interfaces\IInheritanceChainResolver.cs" />
+    <Compile Include="Interfaces\IMethodInvocationResolver.cs" />
     <Compile Include="Members\EvaluatedMethodPassedParameter.cs" />
     <Compile Include="Members\EvaluatedMethodPassedParameters.cs" />
     <Compile Include="Extensions\EvaluatedMemberExtensions.cs" />

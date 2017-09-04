@@ -64,7 +64,7 @@
 
                             if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
                             {
-                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[i] =
+                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated[i] =
                                     workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
                             }
                         }

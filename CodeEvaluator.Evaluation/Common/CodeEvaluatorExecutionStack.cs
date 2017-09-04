@@ -127,12 +127,12 @@
         {
             if (_staticWorkflowEvaluatorExecutionFrames.Count > 0)
             {
-                executionFrame.PassedMethodParameters.Clear();
+                executionFrame.PassedMethodParametersDeprecated.Clear();
 
                 var previousExecutionFrame = _staticWorkflowEvaluatorExecutionFrames.Last();
-                foreach (var storedInputVariable in previousExecutionFrame.PassedMethodParameters)
+                foreach (var storedInputVariable in previousExecutionFrame.PassedMethodParametersDeprecated)
                 {
-                    executionFrame.PassedMethodParameters.Add(storedInputVariable.Key, storedInputVariable.Value);
+                    executionFrame.PassedMethodParametersDeprecated.Add(storedInputVariable.Key, storedInputVariable.Value);
                 }
             }
 

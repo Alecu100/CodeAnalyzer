@@ -1,21 +1,15 @@
-﻿namespace CodeEvaluator.Evaluation.Common
+﻿using System.Collections.Generic;
+using CodeEvaluator.Evaluation.Members;
+using Microsoft.CodeAnalysis;
+
+namespace CodeEvaluator.Evaluation.Common
 {
-    using System.Collections.Generic;
-
-    using global::CodeEvaluator.Evaluation.Members;
-
-    using Microsoft.CodeAnalysis;
-
     #region Using
 
     #endregion
 
     public class CodeEvaluatorExecutionFrame
     {
-        private readonly EvaluatedObjectReference _returningMethodParameters = new EvaluatedObjectReference();
-
-        private EvaluatedObjectReference _memberAccessReference;
-
         #region Public Properties
 
         /// <summary>
@@ -24,11 +18,7 @@
         /// <value>
         ///     The accessed reference.
         /// </value>
-        public EvaluatedObjectReference MemberAccessReference
-        {
-            get { return _memberAccessReference; }
-            set { _memberAccessReference = value; }
-        }
+        public EvaluatedObjectReference MemberAccessReference { get; set; }
 
         /// <summary>
         ///     Gets or sets the current method.
@@ -60,8 +50,10 @@
         /// <value>
         ///     The stack variables.
         /// </value>
-        public Dictionary<int, EvaluatedObjectReference> PassedMethodParameters { get; } =
+        public Dictionary<int, EvaluatedObjectReference> PassedMethodParametersDeprecated { get; } =
             new Dictionary<int, EvaluatedObjectReference>();
+
+        public EvaluatedMethodPassedParameters PassedMethodParameters { get; set; }
 
         /// <summary>
         ///     Gets the returning method parameters.
@@ -69,10 +61,7 @@
         /// <value>
         ///     The returning method parameters.
         /// </value>
-        public EvaluatedObjectReference ReturningMethodParameters
-        {
-            get { return _returningMethodParameters; }
-        }
+        public EvaluatedObjectReference ReturningMethodParameters { get; } = new EvaluatedObjectReference();
 
         /// <summary>
         ///     Gets or sets the this reference.

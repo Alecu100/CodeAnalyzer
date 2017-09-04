@@ -49,10 +49,10 @@
         {
             for (var i = 0; i < _evaluatedMethod.Parameters.Count; i++)
             {
-                if (WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.ContainsKey(i))
+                if (WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated.ContainsKey(i))
                 {
                     var trackedMethodParameter = _evaluatedMethod.Parameters[i];
-                    var passedParameters = WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[i];
+                    var passedParameters = WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated[i];
 
                     if (trackedMethodParameter.TypeInfo == null || passedParameters == null)
                     {
@@ -66,7 +66,7 @@
                     trackedVariableReference.IdentifierText = trackedMethodParameter.IdentifierText;
                     trackedVariableReference.AssignEvaluatedObject(passedParameters);
                     WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
-                    WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.Remove(i);
+                    WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated.Remove(i);
                 }
                 else
                 {

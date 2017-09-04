@@ -1,11 +1,10 @@
-﻿namespace CodeEvaluator.Evaluation.Configuration
+﻿using CodeEvaluator.Evaluation.Common;
+using CodeEvaluator.Evaluation.Interfaces;
+using CodeEvaluator.Evaluation.Members;
+using StructureMap;
+
+namespace CodeEvaluator.Evaluation.Configuration
 {
-    using CodeEvaluator.Evaluation.Common;
-    using CodeEvaluator.Evaluation.Interfaces;
-    using CodeEvaluator.Evaluation.Members;
-
-    using StructureMap;
-
     public static class StandardSetupBootstrapper
     {
         public static void RegisterStandardComponents()
@@ -35,6 +34,9 @@
                         .Use(new EvaluatorExecutionFrameFactory()));
 
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IEvaluatedObjectAllocator>()));
+            ObjectFactory.Configure(
+                config => config.For<IMethodInvocationResolver>().Use(new MethodInvocationResolver()));
+            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IMethodInvocationResolver>()));
         }
     }
 }
