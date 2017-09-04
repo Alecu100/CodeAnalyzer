@@ -32,11 +32,13 @@ namespace CodeEvaluator.Evaluation.Configuration
                 config =>
                     config.For<IEvaluatorExecutionFrameFactory>()
                         .Use(new EvaluatorExecutionFrameFactory()));
-
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IEvaluatedObjectAllocator>()));
             ObjectFactory.Configure(
                 config => config.For<IMethodInvocationResolver>().Use(new MethodInvocationResolver()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IMethodInvocationResolver>()));
+            ObjectFactory.Configure(
+                config => config.For<IInheritanceChainResolver>().Use(new InheritanceChainResolver()));
+            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<InheritanceChainResolver>()));
         }
     }
 }
