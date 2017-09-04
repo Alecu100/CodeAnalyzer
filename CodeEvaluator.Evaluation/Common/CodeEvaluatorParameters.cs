@@ -6,16 +6,11 @@
 
     #region Using
 
-    
-
     #endregion
 
     public class CodeEvaluatorParameters
     {
         #region SpecificFields
-
-        private readonly List<ICodeEvaluatorListener> _listeners =
-            new List<ICodeEvaluatorListener>();
 
         #endregion
 
@@ -27,15 +22,9 @@
         /// <value>
         ///     The listeners.
         /// </value>
-        public List<ICodeEvaluatorListener> Listeners
-        {
-            get
-            {
-                return _listeners;
-            }
-        }
+        public List<ISyntaxNodeEvaluatorListener> EvaluatorListeners { get; } = new List<ISyntaxNodeEvaluatorListener>();
 
-
+        public int EvaluatedObjectsHistoryLength { get; set; } = 5;
 
         #endregion
     }

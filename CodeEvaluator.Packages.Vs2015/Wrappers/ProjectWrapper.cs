@@ -25,7 +25,6 @@
                 try
                 {
                     return _project.Kind;
-                    ;
                 }
                 catch (Exception)
                 {

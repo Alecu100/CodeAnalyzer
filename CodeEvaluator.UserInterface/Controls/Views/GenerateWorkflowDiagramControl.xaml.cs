@@ -373,7 +373,7 @@
             }
 
             staticWorkflowEvaluator.Evaluate(
-                new List<ICodeEvaluatorListener> { new WorkflowEvaluatorEvaluatorListener() },
+                new List<ISyntaxNodeEvaluatorListener> { new WorkflowEvaluatorEvaluatorListener() },
                 codeFileNames,
                 _selectedClassDeclarationSyntax,
                 _selectedMethodDeclarationSyntax,

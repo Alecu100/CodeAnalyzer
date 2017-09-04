@@ -19,14 +19,14 @@
     {
         #region Public Properties
 
-        public CodeEvaluatorExecutionState ExecutionState { get; private set; }
+        public CodeEvaluatorExecutionStack ExecutionStack { get; private set; }
 
         #endregion
 
         #region Public Methods and Operators
 
         public void Evaluate(
-            List<ICodeEvaluatorListener> listeners,
+            List<ISyntaxNodeEvaluatorListener> listeners,
             List<string> codeFileNames,
             ClassDeclarationSyntax targetClass,
             MethodDeclarationSyntax startMethod,
@@ -52,11 +52,11 @@
         #region Private Methods and Operators
 
         private void InitializeContext(
-            IList<ICodeEvaluatorListener> listeners)
+            IList<ISyntaxNodeEvaluatorListener> listeners)
         {
-            ExecutionState = new CodeEvaluatorExecutionState();
-            ExecutionState.Parameters = new CodeEvaluatorParameters();
-            ExecutionState.Parameters.Listeners.AddRange(listeners);
+            ExecutionStack = new CodeEvaluatorExecutionStack();
+            ExecutionStack.Parameters = new CodeEvaluatorParameters();
+            ExecutionStack.Parameters.EvaluatorListeners.AddRange(listeners);
         }
 
         private void InitializeExecutionFrame(ClassDeclarationSyntax targetClass, MethodDeclarationSyntax startMethod)
@@ -73,7 +73,7 @@
             var initialExecutionFrame =
                 staticWorkflowEvaluatorExecutionFrameFactory.BuildInitialExecutionFrame(trackedTypeInfo, startMethodInfo);
 
-            ExecutionState.PushFramePassingParametersFromPreviousFrame(initialExecutionFrame);
+            ExecutionStack.PushFramePassingParametersFromPreviousFrame(initialExecutionFrame);
         }
 
         private void ParseSourceFilesFromSelectedProjects(IList<string> codeFileNames, List<string> assemblyNames)
@@ -113,7 +113,7 @@
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(startMethod, ExecutionState);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(startMethod, ExecutionStack);
             }
         }
 

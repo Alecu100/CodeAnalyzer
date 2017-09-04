@@ -72,7 +72,7 @@
   <ItemGroup>
     <Compile Include="Common\ParsedSourceFilesCache.cs" />
     <Compile Include="Common\CodeEvaluator.cs" />
-    <Compile Include="Common\CodeEvaluatorExecutionState.cs" />
+    <Compile Include="Common\CodeEvaluatorExecutionStack.cs" />
     <Compile Include="Common\CodeEvaluatorExecutionFrame.cs" />
     <Compile Include="Common\EvaluatorExecutionFrameFactory.cs" />
     <Compile Include="Common\CodeEvaluatorParameters.cs" />
@@ -90,7 +90,7 @@
     <Compile Include="Interfaces\IParsedSourceFilesCache.cs" />
     <Compile Include="Interfaces\ICodeEvaluator.cs" />
     <Compile Include="Interfaces\IEvaluatorExecutionFrameFactory.cs" />
-    <Compile Include="Interfaces\ICodeEvaluatorListener.cs" />
+    <Compile Include="Interfaces\ISyntaxNodeEvaluatorListener.cs" />
     <Compile Include="Interfaces\ISyntaxNodeEvaluator.cs" />
     <Compile Include="Interfaces\ISyntaxNodeEvaluatorFactory.cs" />
     <Compile Include="Interfaces\ISyntaxNodeNamespaceProvider.cs" />
@@ -133,6 +133,7 @@
     <Compile Include="Evaluators\ReturnStatementSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\VariableDeclarationSyntaxEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\SyntaxNodeEvaluatorListenerArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />

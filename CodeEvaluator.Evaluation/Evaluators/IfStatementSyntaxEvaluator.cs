@@ -19,10 +19,10 @@
         ///     Evaluates the syntax node.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
-        /// <param name="workflowEvaluatorExecutionState">The workflow evaluator stack.</param>
+        /// <param name="workflowEvaluatorExecutionStack">The workflow evaluator stack.</param>
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
             var ifStatementSyntax = (IfStatementSyntax)syntaxNode;
 
@@ -32,7 +32,7 @@
 
                 if (syntaxNodeEvaluator != null)
                 {
-                    syntaxNodeEvaluator.EvaluateSyntaxNode(ifStatementSyntax.Condition, workflowEvaluatorExecutionState);
+                    syntaxNodeEvaluator.EvaluateSyntaxNode(ifStatementSyntax.Condition, workflowEvaluatorExecutionStack);
                 }
             }
 
@@ -42,7 +42,7 @@
 
                 if (syntaxNodeEvaluator != null)
                 {
-                    syntaxNodeEvaluator.EvaluateSyntaxNode(ifStatementSyntax.Statement, workflowEvaluatorExecutionState);
+                    syntaxNodeEvaluator.EvaluateSyntaxNode(ifStatementSyntax.Statement, workflowEvaluatorExecutionStack);
                 }
             }
 
@@ -53,7 +53,7 @@
 
                 if (syntaxNodeEvaluator != null)
                 {
-                    syntaxNodeEvaluator.EvaluateSyntaxNode(ifStatementSyntax.Else.Statement, workflowEvaluatorExecutionState);
+                    syntaxNodeEvaluator.EvaluateSyntaxNode(ifStatementSyntax.Else.Statement, workflowEvaluatorExecutionStack);
                 }
             }
         }

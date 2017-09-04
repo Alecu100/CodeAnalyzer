@@ -20,7 +20,7 @@
         /// </value>
         public SyntaxNode SyntaxNode { get; set; }
 
-        public List<SyntaxNode> SyntaxNodeStack { get; set; }
+        public List<SyntaxNode> SyntaxNodeStackSnaphot { get; set; }
 
         #endregion
     }

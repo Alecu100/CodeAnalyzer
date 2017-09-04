@@ -21,7 +21,7 @@
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
             var memberAccessExpressionSyntax = (MemberAccessExpressionSyntax) syntaxNode;
 
@@ -32,7 +32,7 @@
             {
                 syntaxNodeEvaluator.EvaluateSyntaxNode(
                     memberAccessExpressionSyntax.Expression,
-                    workflowEvaluatorExecutionState);
+                    workflowEvaluatorExecutionStack);
             }
 
             syntaxNodeEvaluator =
@@ -42,7 +42,7 @@
             {
                 syntaxNodeEvaluator.EvaluateSyntaxNode(
                     memberAccessExpressionSyntax.Name,
-                    workflowEvaluatorExecutionState);
+                    workflowEvaluatorExecutionStack);
             }
         }
 

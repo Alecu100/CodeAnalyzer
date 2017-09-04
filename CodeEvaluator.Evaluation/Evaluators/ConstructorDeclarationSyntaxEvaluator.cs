@@ -18,26 +18,36 @@
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
-            _baseMethodDeclarationSyntax = (ConstructorDeclarationSyntax) syntaxNode;
-            _workflowEvaluatorExecutionState = workflowEvaluatorExecutionState;
+            _baseMethodDeclarationSyntax = (ConstructorDeclarationSyntax)syntaxNode;
+            WorkflowEvaluatorExecutionStack = workflowEvaluatorExecutionStack;
 
             InitializeThisVariable();
             InitializeExecutionFrame();
             InitializeParameters();
+            AddHistoryToThisVariable(workflowEvaluatorExecutionStack);
 
             var syntaxNodeEvaluator =
-                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(_baseMethodDeclarationSyntax.Body, EEvaluatorActions.None);
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
+                    _baseMethodDeclarationSyntax.Body,
+                    EEvaluatorActions.None);
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(_baseMethodDeclarationSyntax.Body, workflowEvaluatorExecutionState);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(
+                    _baseMethodDeclarationSyntax.Body,
+                    workflowEvaluatorExecutionStack);
             }
 
             ReturnThisReference();
 
             ResetExecutionFrame();
+        }
+
+        private void AddHistoryToThisVariable(CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
+        {
+            _thisReference.EvaluatedObjects[0].PushHistory(workflowEvaluatorExecutionStack);
         }
 
         #endregion
@@ -57,14 +67,14 @@
                 _evaluatedMethod =
                     trackedVariableTypeInfo.Constructors.First(
                         constructor =>
-                            ((ConstructorDeclarationSyntax) constructor.Declaration).ParameterList.ToString()
-                            == _baseMethodDeclarationSyntax.ParameterList.ToString());
+                        ((ConstructorDeclarationSyntax)constructor.Declaration).ParameterList.ToString()
+                        == _baseMethodDeclarationSyntax.ParameterList.ToString());
             }
         }
 
         private void ReturnThisReference()
         {
-            _workflowEvaluatorExecutionState.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
+            WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
                 _thisReference);
         }
 

@@ -12,7 +12,7 @@
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
 
             var objectCreationExpressionSyntax = (ObjectCreationExpressionSyntax) syntaxNode;
@@ -23,12 +23,12 @@
             if (syntaxNodeEvaluator != null)
             {
                 syntaxNodeEvaluator.EvaluateSyntaxNode(objectCreationExpressionSyntax.Type,
-                    workflowEvaluatorExecutionState);
+                    workflowEvaluatorExecutionStack);
 
-                if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
+                if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
                 {
                     var accessedReferenceMember =
-                        workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference;
+                        workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
 
                     foreach (var evaluatedObject in accessedReferenceMember.EvaluatedObjects)
                     {
@@ -55,22 +55,22 @@
 
                             if (nodeEvaluator != null)
                             {
-                                workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = null;
+                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
 
                                 nodeEvaluator.EvaluateSyntaxNode(
                                     argumentSyntax.Expression,
-                                    workflowEvaluatorExecutionState);
+                                    workflowEvaluatorExecutionStack);
                             }
 
-                            if (workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference != null)
+                            if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
                             {
-                                workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters[i] =
-                                    workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference;
+                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[i] =
+                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
                             }
                         }
 
 
-                        workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = null;
+                        workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
 
                         var constructorEvaluator =
                             SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(currentMethod.Declaration, EEvaluatorActions.None);
@@ -78,7 +78,7 @@
                         if (constructorEvaluator != null)
                         {
                             constructorEvaluator.EvaluateSyntaxNode(currentMethod.Declaration,
-                                workflowEvaluatorExecutionState);
+                                workflowEvaluatorExecutionStack);
                         }
                     }
                 }

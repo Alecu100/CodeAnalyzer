@@ -36,7 +36,7 @@ namespace CodeEvaluator.Packages.Vs2015.Wrappers
             {
                 try
                 {
-                    return _projectItem.Kind; ;
+                    return _projectItem.Kind;
                 }
                 catch (Exception)
                 {

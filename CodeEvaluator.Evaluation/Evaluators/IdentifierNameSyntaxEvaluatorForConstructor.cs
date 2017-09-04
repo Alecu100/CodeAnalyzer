@@ -14,13 +14,13 @@ namespace CodeEvaluator.Evaluation.Evaluators
 {
     public class IdentifierNameSyntaxEvaluatorForConstructor : BaseMethodDeclarationSyntaxEvaluator
     {
-        protected override void EvaluateSyntaxNodeInternal(SyntaxNode syntaxNode, CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+        protected override void EvaluateSyntaxNodeInternal(SyntaxNode syntaxNode, CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
             var identifierNameSyntax = (IdentifierNameSyntax)syntaxNode;
             var evaluatedTypesInfoTable = ObjectFactory.GetInstance<IEvaluatedTypesInfoTable>();
 
             var evaluatedTypeInfo = evaluatedTypesInfoTable.GetTypeInfo(identifierNameSyntax.Identifier.ValueText,
-                workflowEvaluatorExecutionState.CurrentExecutionFrame.ThisReference.TypeInfo);
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.TypeInfo);
 
             var reference = new EvaluatedObjectReference();
 
@@ -32,7 +32,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
                 reference.AssignEvaluatedObject(evaluatedDelegate);
             }
 
-            workflowEvaluatorExecutionState.CurrentExecutionFrame.MemberAccessReference = reference;
+            workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = reference;
         }
     }
 }

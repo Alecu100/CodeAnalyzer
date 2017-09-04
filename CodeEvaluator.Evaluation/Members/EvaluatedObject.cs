@@ -1,12 +1,11 @@
 ﻿namespace CodeEvaluator.Evaluation.Members
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using CodeEvaluator.Evaluation.Common;
     using CodeEvaluator.Evaluation.Interfaces;
-
-    using Microsoft.CodeAnalysis;
 
     using StructureMap;
 
@@ -21,14 +20,23 @@
         /// <summary>
         ///     Pushes the history.
         /// </summary>
-        /// <param name="expression">The expression.</param>
-        /// <param name="executionFrame">The execution frame.</param>
-        public void PushHistory(SyntaxNode expression, CodeEvaluatorExecutionFrame executionFrame)
+        /// <param name="executionStack">The execution frame.</param>
+        public void PushHistory(CodeEvaluatorExecutionStack executionStack)
         {
             var evaluatedObjectHistory = new EvaluatedObjectHistory
-            {
-                SyntaxNode = executionFrame.CurrentSyntaxNode
-            };
+                                             {
+                                                 SyntaxNode =
+                                                     executionStack.CurrentExecutionFrame
+                                                     .CurrentSyntaxNode,
+                                                 SyntaxNodeStackSnaphot =
+                                                     executionStack.SyntaxNodeStack.Skip(
+                                                         Math.Max(
+                                                             0,
+                                                             executionStack.SyntaxNodeStack.Count
+                                                             - executionStack.Parameters
+                                                                   .EvaluatedObjectsHistoryLength))
+                                                     .ToList()
+                                             };
 
             _history.Add(evaluatedObjectHistory);
         }
@@ -79,9 +87,11 @@
         /// </value>
         public virtual IReadOnlyList<EvaluatedObjectReference> Fields
         {
-            get { return _fields.Union(_typeInfo.SharedStaticObject._fields).ToList(); }
+            get
+            {
+                return _fields.Union(_typeInfo.SharedStaticObject._fields).ToList();
+            }
         }
-
 
         /// <summary>
         ///     Gets the history.
@@ -91,7 +101,10 @@
         /// </value>
         public virtual List<EvaluatedObjectHistory> History
         {
-            get { return _history; }
+            get
+            {
+                return _history;
+            }
         }
 
         /// <summary>
@@ -110,7 +123,10 @@
         /// </value>
         public virtual EvaluatedTypeInfo TypeInfo
         {
-            get { return _typeInfo; }
+            get
+            {
+                return _typeInfo;
+            }
         }
 
         #endregion

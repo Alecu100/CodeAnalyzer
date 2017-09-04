@@ -23,11 +23,11 @@
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
-            CodeEvaluatorExecutionState workflowEvaluatorExecutionState)
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
             _baseMethodDeclarationSyntax = (MethodDeclarationSyntax) syntaxNode;
             _methodDeclarationSyntax = (MethodDeclarationSyntax) syntaxNode;
-            _workflowEvaluatorExecutionState = workflowEvaluatorExecutionState;
+            WorkflowEvaluatorExecutionStack = workflowEvaluatorExecutionStack;
 
             InitializeThisVariable();
             InitializeExecutionFrame();
@@ -38,7 +38,7 @@
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(_methodDeclarationSyntax.Body, workflowEvaluatorExecutionState);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(_methodDeclarationSyntax.Body, workflowEvaluatorExecutionStack);
             }
 
             ResetExecutionFrame();
@@ -50,8 +50,8 @@
 
         private void InitializeThisVariable()
         {
-            _thisReference = _workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters[-1];
-            _workflowEvaluatorExecutionState.CurrentExecutionFrame.PassedMethodParameters.Remove(-1);
+            _thisReference = WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[-1];
+            WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.Remove(-1);
             _evaluatedMethod =
                 _thisReference.TypeInfo.AccesibleMethods.First(
                     method => method.IdentifierText == _methodDeclarationSyntax.Identifier.ValueText);
