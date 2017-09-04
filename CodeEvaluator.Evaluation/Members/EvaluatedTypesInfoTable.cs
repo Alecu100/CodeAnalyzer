@@ -1,15 +1,13 @@
-﻿namespace CodeEvaluator.Evaluation.Members
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using CodeEvaluator.Dto;
+using CodeEvaluator.Evaluation.Interfaces;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace CodeEvaluator.Evaluation.Members
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
-    using CodeEvaluator.Dto;
-    using CodeEvaluator.Evaluation.Interfaces;
-
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
     #region Using
 
     #endregion
@@ -30,10 +28,7 @@
         /// <value>
         ///     The well known types.
         /// </value>
-        public IReadOnlyList<EvaluatedTypeInfo> InternalTypeInfos
-        {
-            get { return _evaluatedTypeInfos; }
-        }
+        public IReadOnlyList<EvaluatedTypeInfo> InternalTypeInfos => _evaluatedTypeInfos;
 
         #endregion
 
@@ -52,21 +47,19 @@
             List<MemberDeclarationSyntax> namespaceDeclarations)
         {
             var fullNamespace = GetFullTypeNamespace(namespaceDeclarations, typeName);
-            var foundType = _evaluatedTypeInfos.FirstOrDefault(typeInfo => typeInfo.FullIdentifierText == fullNamespace);
+            var foundType =
+                _evaluatedTypeInfos.FirstOrDefault(typeInfo => typeInfo.FullIdentifierText == fullNamespace);
 
             if (foundType != null)
-            {
                 return foundType;
-            }
 
             foreach (var usingDirectiveSyntax in usingDirectives)
             {
                 fullNamespace = GetFullTypeNamespace(usingDirectiveSyntax, typeName);
-                foundType = _evaluatedTypeInfos.FirstOrDefault(typeInfo => typeInfo.FullIdentifierText == fullNamespace);
+                foundType =
+                    _evaluatedTypeInfos.FirstOrDefault(typeInfo => typeInfo.FullIdentifierText == fullNamespace);
                 if (foundType != null)
-                {
                     return foundType;
-                }
             }
 
             return null;
@@ -277,10 +270,8 @@
             foreach (var evaluatedTypeInfo in _evaluatedTypeInfos)
             {
                 foreach (var accesibleField in evaluatedTypeInfo.AccesibleFields)
-                {
                     accesibleField.TypeInfo =
                         evaluatedTypeInfosDtosMappings[evaluatedFieldMappings[accesibleField].TypeInfo];
-                }
 
                 foreach (var accesibleProperty in evaluatedTypeInfo.AccesibleProperties)
                 {
@@ -288,33 +279,23 @@
                         evaluatedTypeInfosDtosMappings[evaluatedPropertyMappings[accesibleProperty].TypeInfo];
 
                     if (accesibleProperty.PropertySetAccessor != null)
-                    {
                         accesibleProperty.PropertySetAccessor.Parameters[0].TypeInfo =
                             evaluatedTypeInfosDtosMappings[
                                 evaluatedMethodParameterMappings[accesibleProperty.PropertySetAccessor.Parameters[0]]
                                     .TypeInfo];
-                    }
                 }
 
                 foreach (var accesibleMethod in evaluatedTypeInfo.AccesibleMethods)
-                {
-                    foreach (var evaluatedMethodParameter in accesibleMethod.Parameters)
-                    {
-                        evaluatedMethodParameter.TypeInfo =
-                            evaluatedTypeInfosDtosMappings[
-                                evaluatedMethodParameterMappings[evaluatedMethodParameter].TypeInfo];
-                    }
-                }
+                foreach (var evaluatedMethodParameter in accesibleMethod.Parameters)
+                    evaluatedMethodParameter.TypeInfo =
+                        evaluatedTypeInfosDtosMappings[
+                            evaluatedMethodParameterMappings[evaluatedMethodParameter].TypeInfo];
 
                 foreach (var evaluatedConstructor in evaluatedTypeInfo.Constructors)
-                {
-                    foreach (var evaluatedMethodParameter in evaluatedConstructor.Parameters)
-                    {
-                        evaluatedMethodParameter.TypeInfo =
-                            evaluatedTypeInfosDtosMappings[
-                                evaluatedMethodParameterMappings[evaluatedMethodParameter].TypeInfo];
-                    }
-                }
+                foreach (var evaluatedMethodParameter in evaluatedConstructor.Parameters)
+                    evaluatedMethodParameter.TypeInfo =
+                        evaluatedTypeInfosDtosMappings[
+                            evaluatedMethodParameterMappings[evaluatedMethodParameter].TypeInfo];
             }
 
             foreach (var evaluatedTypeInfoDto in externalTypeInfos)
@@ -322,32 +303,26 @@
                 var evaluatedTypeInfosDtosMapping = evaluatedTypeInfosDtosMappings[evaluatedTypeInfoDto];
 
                 foreach (var baseTypeInfo in evaluatedTypeInfoDto.BaseTypeInfos)
-                {
                     evaluatedTypeInfosDtosMapping.BaseTypeInfos.Add(evaluatedTypeInfosDtosMappings[baseTypeInfo]);
-                }
             }
         }
 
         private void BuildEvaluatedTypeInfosStaticSharedObjects()
         {
             foreach (var evaluatedTypeInfo in _evaluatedTypeInfos)
-            {
-                foreach (var evaluatedField in evaluatedTypeInfo.SpecificFields)
+            foreach (var evaluatedField in evaluatedTypeInfo.SpecificFields)
+                if ((evaluatedField.MemberFlags & EMemberFlags.Static) != 0)
                 {
-                    if ((evaluatedField.MemberFlags & EMemberFlags.Static) != 0)
-                    {
-                        var evaluatedObjectReference = new EvaluatedObjectReference();
+                    var evaluatedObjectReference = new EvaluatedObjectReference();
 
-                        evaluatedObjectReference.Declaration = evaluatedField.Declaration;
-                        evaluatedObjectReference.TypeInfo = evaluatedField.TypeInfo;
-                        evaluatedObjectReference.Identifier = evaluatedField.Identifier;
-                        evaluatedObjectReference.IdentifierText = evaluatedField.IdentifierText;
-                        evaluatedObjectReference.FullIdentifierText = evaluatedField.FullIdentifierText;
+                    evaluatedObjectReference.Declaration = evaluatedField.Declaration;
+                    evaluatedObjectReference.TypeInfo = evaluatedField.TypeInfo;
+                    evaluatedObjectReference.Identifier = evaluatedField.Identifier;
+                    evaluatedObjectReference.IdentifierText = evaluatedField.IdentifierText;
+                    evaluatedObjectReference.FullIdentifierText = evaluatedField.FullIdentifierText;
 
-                        evaluatedTypeInfo.SharedStaticObject.ModifiableFields.Add(evaluatedObjectReference);
-                    }
+                    evaluatedTypeInfo.SharedStaticObject.ModifiableFields.Add(evaluatedObjectReference);
                 }
-            }
 
             foreach (var evaluatedTypeInfo in _evaluatedTypeInfos)
             {
@@ -382,13 +357,11 @@
             usingDirectiveSyntaxesClone.AddRange(compilationUnitSyntax.Usings);
 
             foreach (var childNode in compilationUnitSyntax.ChildNodes())
-            {
                 BuildEvaluatedTypeInfos(
                     childNode,
                     currentTypeInfo,
                     namespaceDeclarationSyntaxesClone,
                     usingDirectiveSyntaxesClone);
-            }
         }
 
         private void AddNamespace(
@@ -405,13 +378,11 @@
             usingDirectiveSyntaxesClone.AddRange(namespaceDeclarationSyntax.Usings);
 
             foreach (var childNode in namespaceDeclarationSyntax.ChildNodes())
-            {
                 BuildEvaluatedTypeInfos(
                     childNode,
                     currentTypeInfo,
                     namespaceDeclarationSyntaxesClone,
                     usingDirectiveSyntaxesClone);
-            }
         }
 
         private void AddNameToFullNamespace(MemberDeclarationSyntax namespaceDeclaration, StringBuilder fullNamespace)
@@ -421,7 +392,7 @@
             if (namespaceDeclaration is ClassDeclarationSyntax)
             {
                 var cl = (ClassDeclarationSyntax) namespaceDeclaration;
-                fullNamespace.Append( NormalizeName(cl.Identifier.ValueText));
+                fullNamespace.Append(NormalizeName(cl.Identifier.ValueText));
             }
             else if (namespaceDeclaration is NamespaceDeclarationSyntax)
             {
@@ -443,40 +414,22 @@
         private void AddMemberFlagsToMember(EvaluatedMember member, SyntaxTokenList modifierList)
         {
             foreach (var modifier in modifierList)
-            {
                 if (modifier.ValueText == "public")
-                {
                     member.MemberFlags |= EMemberFlags.Public;
-                }
                 else if (modifier.ValueText == "protected")
-                {
                     member.MemberFlags |= EMemberFlags.Protected;
-                }
                 else if (modifier.ValueText == "private")
-                {
                     member.MemberFlags |= EMemberFlags.Private;
-                }
                 else if (modifier.ValueText == "static")
-                {
                     member.MemberFlags |= EMemberFlags.Static;
-                }
                 else if (modifier.ValueText == "virtual")
-                {
                     member.MemberFlags |= EMemberFlags.Virtual;
-                }
                 else if (modifier.ValueText == "override")
-                {
                     member.MemberFlags |= EMemberFlags.Override;
-                }
                 else if (modifier.ValueText == "new")
-                {
                     member.MemberFlags |= EMemberFlags.New;
-                }
                 else if (modifier.ValueText == "abstract")
-                {
                     member.MemberFlags |= EMemberFlags.Abstract;
-                }
-            }
         }
 
         private void AddTypeInfo(
@@ -517,13 +470,11 @@
             _evaluatedTypeInfos.Add(trackedVariableTypeInfo);
 
             foreach (var childNode in typeDeclarationSyntax.ChildNodes())
-            {
                 BuildEvaluatedTypeInfos(
                     childNode,
                     trackedVariableTypeInfo,
                     namespaceDeclarationSyntaxesClone,
                     usingDirectiveSyntaxesClone);
-            }
         }
 
         private void AddTypeInfoConstructor(
@@ -607,11 +558,15 @@
             for (var i = 0; i < methodDeclarationSyntax.ParameterList.Parameters.Count; i++)
             {
                 var evaluatedMethodParameter = new EvaluatedMethodParameter();
-                evaluatedMethodParameter.Declaration = methodDeclarationSyntax.ParameterList.Parameters[i];
+                var parameterSyntax = methodDeclarationSyntax.ParameterList.Parameters[i];
+
+                evaluatedMethodParameter.Declaration = parameterSyntax;
                 evaluatedMethodParameter.Index = i;
-                evaluatedMethodParameter.Identifier = methodDeclarationSyntax.ParameterList.Parameters[i].Identifier;
+                evaluatedMethodParameter.Identifier = parameterSyntax.Identifier;
+                evaluatedMethodParameter.HasDefault = parameterSyntax.Default != null;
                 evaluatedMethodParameter.IdentifierText =
-                    methodDeclarationSyntax.ParameterList.Parameters[i].Identifier.ValueText;
+                    parameterSyntax.Identifier.ValueText;
+
                 evaluatedMethod.Parameters.Add(evaluatedMethodParameter);
             }
         }
@@ -651,16 +606,15 @@
                                                                       + NormalizeName(
                                                                           "Get"
                                                                           +
-                                                                          propertyDeclarationSyntax.Identifier.ValueText);
+                                                                          propertyDeclarationSyntax.Identifier
+                                                                              .ValueText);
 
                     AddMemberFlagsToMember(evaluatedPropertyGetAccessor, accessorDeclarationSyntax.Modifiers);
 
                     evaluatedProperty.PropertyGetAccessor = evaluatedPropertyGetAccessor;
 
                     if (accessorDeclarationSyntax.Body != null)
-                    {
                         evaluatedProperty.IsAutoProperty = false;
-                    }
                     continue;
                 }
 
@@ -673,7 +627,8 @@
                     evaluatedPropertySetAccessor.FullIdentifierText = fullNamespace
                                                                       + NormalizeName(
                                                                           "Set" +
-                                                                          propertyDeclarationSyntax.Identifier.ValueText);
+                                                                          propertyDeclarationSyntax.Identifier
+                                                                              .ValueText);
 
                     AddMemberFlagsToMember(evaluatedPropertySetAccessor, accessorDeclarationSyntax.Modifiers);
 
@@ -685,9 +640,7 @@
                     trackedMethodParameter.Declaration = accessorDeclarationSyntax;
 
                     if (accessorDeclarationSyntax.Body != null)
-                    {
                         evaluatedProperty.IsAutoProperty = false;
-                    }
                 }
             }
         }
@@ -695,13 +648,11 @@
         private void BuildEvaluatedTypeInfos(IList<SyntaxTree> syntaxTrees)
         {
             foreach (var syntaxTree in syntaxTrees)
-            {
                 BuildEvaluatedTypeInfos(
                     syntaxTree.GetRoot(),
                     null,
                     new List<MemberDeclarationSyntax>(),
                     new List<UsingDirectiveSyntax>());
-            }
         }
 
         private void BuildEvaluatedTypeInfos(
@@ -753,15 +704,12 @@
             }
 
             if (syntaxNode is CompilationUnitSyntax)
-            {
                 AddCompilationUnit(syntaxNode, currentTypeInfo, namespaceDeclarations, usingDirectives);
-            }
         }
 
         private void BuildEvaluatedTypeInfosInheritedMembers()
         {
             foreach (var trackedVariableTypeInfo in _evaluatedTypeInfos)
-            {
                 if (trackedVariableTypeInfo.IsReferenceType)
                 {
                     var allTypeInfos = new List<EvaluatedTypeInfo>();
@@ -777,16 +725,12 @@
                         var tempTypeInfo = new List<EvaluatedTypeInfo>();
 
                         foreach (var trackedTypeInfo in allTypeInfos)
-                        {
-                            foreach (var baseVariableTypeInfo in trackedTypeInfo.BaseTypeInfos)
+                        foreach (var baseVariableTypeInfo in trackedTypeInfo.BaseTypeInfos)
+                            if (!allTypeInfos.Contains(baseVariableTypeInfo) && baseVariableTypeInfo.IsReferenceType)
                             {
-                                if (!allTypeInfos.Contains(baseVariableTypeInfo) && baseVariableTypeInfo.IsReferenceType)
-                                {
-                                    tempTypeInfo.Add(baseVariableTypeInfo);
-                                    foundNewTypes = true;
-                                }
+                                tempTypeInfo.Add(baseVariableTypeInfo);
+                                foundNewTypes = true;
                             }
-                        }
 
                         allTypeInfos.AddRange(tempTypeInfo);
                     } while (foundNewTypes);
@@ -798,7 +742,6 @@
                         trackedVariableTypeInfo.AccesibleProperties.AddRange(trackedTypeInfo.Properties);
                     }
                 }
-            }
         }
 
         private void BuildEvaluatedTypeInfosMemberTypeInfos()
@@ -819,9 +762,7 @@
                             trackedVariableTypeInfo.NamespaceDeclarations);
 
                         if (baseTypeInfo != null)
-                        {
                             trackedVariableTypeInfo.BaseTypeInfos.Add(baseTypeInfo);
-                        }
                     }
 
                     foreach (var trackedField in trackedVariableTypeInfo.SpecificFields)
@@ -837,9 +778,7 @@
                                 trackedVariableTypeInfo.NamespaceDeclarations);
 
                             if (wellKnownTypeInfo != null)
-                            {
                                 trackedField.TypeInfo = wellKnownTypeInfo;
-                            }
                         }
                     }
 
@@ -861,32 +800,26 @@
 
                                 if (trackedProperty.PropertySetAccessor != null
                                     && trackedProperty.PropertySetAccessor.Parameters.Count > 0)
-                                {
                                     trackedProperty.PropertySetAccessor.Parameters[0].TypeInfo = wellKnownTypeInfo;
-                                }
                             }
                         }
                     }
 
                     foreach (var trackedMethod in trackedVariableTypeInfo.SpecificMethods)
+                    foreach (var trackedMethodParameter in trackedMethod.Parameters)
                     {
-                        foreach (var trackedMethodParameter in trackedMethod.Parameters)
+                        var parameterSyntax = trackedMethodParameter.Declaration as ParameterSyntax;
+
+                        if (parameterSyntax != null)
                         {
-                            var parameterSyntax = trackedMethodParameter.Declaration as ParameterSyntax;
+                            var typeName = parameterSyntax.Type.GetText().ToString();
+                            var wellKnownTypeInfo = GetTypeInfo(
+                                typeName,
+                                trackedVariableTypeInfo.UsingDirectives,
+                                trackedVariableTypeInfo.NamespaceDeclarations);
 
-                            if (parameterSyntax != null)
-                            {
-                                var typeName = parameterSyntax.Type.GetText().ToString();
-                                var wellKnownTypeInfo = GetTypeInfo(
-                                    typeName,
-                                    trackedVariableTypeInfo.UsingDirectives,
-                                    trackedVariableTypeInfo.NamespaceDeclarations);
-
-                                if (wellKnownTypeInfo != null)
-                                {
-                                    trackedMethodParameter.TypeInfo = wellKnownTypeInfo;
-                                }
-                            }
+                            if (wellKnownTypeInfo != null)
+                                trackedMethodParameter.TypeInfo = wellKnownTypeInfo;
                         }
                     }
                 }
@@ -900,17 +833,13 @@
             var fullNamespace = new StringBuilder();
 
             foreach (var namespaceDeclaration in namespaceDeclarations)
-            {
                 AddNameToFullNamespace(namespaceDeclaration, fullNamespace);
-            }
 
             fullNamespace.Append(".");
             fullNamespace.Append(NormalizeName(typeDeclarationName));
 
             if (fullNamespace.Length > 0 && fullNamespace.ToString().StartsWith("."))
-            {
                 fullNamespace.Remove(0, 1);
-            }
             return fullNamespace.ToString();
         }
 

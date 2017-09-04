@@ -29,6 +29,6 @@
 
         ProtectedInternal = 1024,
 
-        Sealed = 2048
+        Sealed = 2048,
     }
 }

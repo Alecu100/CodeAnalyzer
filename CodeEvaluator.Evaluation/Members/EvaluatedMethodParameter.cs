@@ -23,6 +23,8 @@
         /// </value>
         public EvaluatedTypeInfo TypeInfo { get; set; }
 
+        public bool HasDefault { get; set; }
+
         #endregion
     }
 }
