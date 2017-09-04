@@ -7,7 +7,7 @@ namespace CodeEvaluator.Evaluation.Common
     {
         public bool CanInvokeMethod { get; set; }
 
-        public MethodDeclarationSyntax ResolvedMethod { get; set; }
+        public EvaluatedMethodBase ResolvedMethod { get; set; }
 
         public EvaluatedMethodPassedParameters ResolvedPassedParameters { get; set; }
     }
