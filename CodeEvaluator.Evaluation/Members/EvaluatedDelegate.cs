@@ -8,7 +8,9 @@
 
         private EvaluatedTypeInfo _referenceType;
 
-        public EvaluatedDelegate(EvaluatedTypeInfo referenceType, EvaluatedObject evaluatedObject,
+        private readonly List<EvaluatedMethod> _methodGroup = new List<EvaluatedMethod>();
+
+        public EvaluatedDelegate(EvaluatedTypeInfo referenceType, EvaluatedObject evaluatedObject, IEnumerable<EvaluatedMethod> methodGroups,
             EvaluatedMethodBase method)
         {
             var evaluatedObjectReference = new EvaluatedObjectDirectReference();
@@ -17,6 +19,7 @@
             _fields.Add(evaluatedObjectReference);
             _method = method;
             _referenceType = referenceType;
+            _methodGroup.AddRange(methodGroups);
         }
 
         public EvaluatedDelegate(EvaluatedTypeInfo referenceType,
@@ -29,10 +32,15 @@
         public EvaluatedMethodBase Method
         {
             get { return _method; }
-            set { _method = value; }
         }
 
-        public List<EvaluatedMethod> MethodGroup { get; set; } = new List<EvaluatedMethod>();
+        public List<EvaluatedMethod> MethodGroup
+        {
+            get
+            {
+                return _methodGroup;
+            }
+        }
 
         public override IReadOnlyList<EvaluatedObjectReference> Fields
         {

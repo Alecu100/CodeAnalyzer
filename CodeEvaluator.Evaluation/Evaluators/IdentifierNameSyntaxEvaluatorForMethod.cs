@@ -51,20 +51,21 @@ namespace CodeEvaluator.Evaluation.Evaluators
                 var evaluatedObject in
                     workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects)
             {
+                var foundMethod = evaluatedObject.TypeInfo.AccesibleMethods.FirstOrDefault(
+                    evaluatedMethod => evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText);
+                var foundMethods =
+                    evaluatedObject.TypeInfo.AccesibleMethods.Where(
+                        evaluatedMethod => evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText);
 
-                    foreach (var evaluatedMethod in evaluatedObject.TypeInfo.AccesibleMethods)
-                    {
-                        if (evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText)
-                        {
-                            var evaluatedDelegate =
-                                new EvaluatedDelegate(
-                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.TypeInfo,
-                                    evaluatedObject, evaluatedMethod);
-                            reference.AssignEvaluatedObject(evaluatedDelegate);
-                            foundReference = true;
-                        }
-                    }
-
+                if (foundMethod != null)
+                {
+                    var evaluatedDelegate =
+                              new EvaluatedDelegate(
+                                  workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.TypeInfo,
+                                  evaluatedObject, foundMethods, foundMethod);
+                    reference.AssignEvaluatedObject(evaluatedDelegate);
+                    foundReference = true;
+                }
             }
 
             if (foundReference == false)
@@ -124,31 +125,33 @@ namespace CodeEvaluator.Evaluation.Evaluators
                 var thisEvaluatedObject in
                     workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.EvaluatedObjects)
             {
+                var foundMethod = thisEvaluatedObject.TypeInfo.AccesibleMethods.FirstOrDefault(
+                  evaluatedMethod => evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText);
+                var foundMethods =
+                    thisEvaluatedObject.TypeInfo.AccesibleMethods.Where(
+                        evaluatedMethod => evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText);
 
-                foreach (var evaluatedMethod in thisEvaluatedObject.TypeInfo.AccesibleMethods)
+                if (foundMethod != null)
                 {
-                    if (evaluatedMethod.IdentifierText == identifierNameSyntax.Identifier.ValueText)
-                    {
-                        var evaluatedDelegate = new EvaluatedDelegate(thisEvaluatedObject.TypeInfo,
-                            thisEvaluatedObject,
-                            evaluatedMethod);
-                        reference.AssignEvaluatedObject(evaluatedDelegate);
-                        foundReference = true;
-                    }
+                    var evaluatedDelegate =
+                              new EvaluatedDelegate(
+                                  workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.TypeInfo,
+                                  thisEvaluatedObject, foundMethods, foundMethod);
+                    reference.AssignEvaluatedObject(evaluatedDelegate);
+                    foundReference = true;
                 }
             }
 
 
-            foreach (
-                var thisEvaluatedObject in
-                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.EvaluatedObjects)
+            if (foundReference == false)
             {
-                if (foundReference == false)
+                foreach (var thisEvaluatedObject in
+                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.EvaluatedObjects)
                 {
                     foreach (var field in thisEvaluatedObject.Fields)
                     {
-                        if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText &&
-                            field.EvaluatedObjects.All(evaluatedObject => evaluatedObject is EvaluatedDelegate))
+                        if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText
+                            && field.EvaluatedObjects.All(evaluatedObject => evaluatedObject is EvaluatedDelegate))
                         {
                             reference.AssignEvaluatedObject(field);
                             foundReference = true;
