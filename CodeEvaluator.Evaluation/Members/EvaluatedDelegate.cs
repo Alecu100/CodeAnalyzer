@@ -11,7 +11,7 @@
         public EvaluatedDelegate(EvaluatedTypeInfo referenceType, EvaluatedObject evaluatedObject,
             EvaluatedMethodBase method)
         {
-            var evaluatedObjectReference = new EvaluatedObjectReference();
+            var evaluatedObjectReference = new EvaluatedObjectDirectReference();
             evaluatedObjectReference.AssignEvaluatedObject(evaluatedObject);
 
             _fields.Add(evaluatedObjectReference);
@@ -31,6 +31,8 @@
             get { return _method; }
             set { _method = value; }
         }
+
+        public List<EvaluatedMethod> MethodGroup { get; set; } = new List<EvaluatedMethod>();
 
         public override IReadOnlyList<EvaluatedObjectReference> Fields
         {

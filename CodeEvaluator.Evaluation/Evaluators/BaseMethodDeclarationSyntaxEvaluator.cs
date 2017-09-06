@@ -59,7 +59,7 @@
                         continue;
                     }
 
-                    var trackedVariableReference = new EvaluatedObjectReference();
+                    var trackedVariableReference = new EvaluatedObjectDirectReference();
                     trackedVariableReference.Declaration = trackedMethodParameter.Declaration;
                     trackedVariableReference.TypeInfo = trackedMethodParameter.TypeInfo;
                     trackedVariableReference.Identifier = trackedMethodParameter.Identifier;
@@ -77,7 +77,7 @@
                         continue;
                     }
 
-                    var trackedVariableReference = new EvaluatedObjectReference();
+                    var trackedVariableReference = new EvaluatedObjectDirectReference();
                     trackedVariableReference.Declaration = trackedMethodParameter.Declaration;
                     trackedVariableReference.TypeInfo = trackedMethodParameter.TypeInfo;
                     trackedVariableReference.Identifier = trackedMethodParameter.Identifier;

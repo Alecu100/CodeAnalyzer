@@ -61,7 +61,7 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The returning method parameters.
         /// </value>
-        public EvaluatedObjectReference ReturningMethodParameters { get; } = new EvaluatedObjectReference();
+        public EvaluatedObjectReference ReturningMethodParameters { get; } = new EvaluatedObjectDirectReference();
 
         /// <summary>
         ///     Gets or sets the this reference.

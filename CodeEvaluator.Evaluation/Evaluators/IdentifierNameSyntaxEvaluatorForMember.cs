@@ -56,7 +56,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
-            var reference = new EvaluatedObjectReference();
+            var reference = new EvaluatedObjectDirectReference();
 
             foreach (
                 var evaluatedObject in
@@ -85,7 +85,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
-            var reference = new EvaluatedObjectReference();
+            var reference = new EvaluatedObjectDirectReference();
 
             foreach (var localReference in workflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences)
             {
@@ -108,7 +108,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
-            var reference = new EvaluatedObjectReference();
+            var reference = new EvaluatedObjectDirectReference();
 
             foreach (
                 var thisEvaluatedObject in

@@ -19,7 +19,7 @@
         {
             var codeEvaluatorExecutionFrame = new CodeEvaluatorExecutionFrame();
 
-            var thisEvaluatedObjectReference = new EvaluatedObjectReference();
+            var thisEvaluatedObjectReference = new EvaluatedObjectDirectReference();
             if (startMethod.IsStatic())
             {
                 thisEvaluatedObjectReference.AssignEvaluatedObject(evaluatedType.SharedStaticObject);

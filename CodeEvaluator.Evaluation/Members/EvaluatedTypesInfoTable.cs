@@ -313,7 +313,7 @@ namespace CodeEvaluator.Evaluation.Members
             foreach (var evaluatedField in evaluatedTypeInfo.SpecificFields)
                 if ((evaluatedField.MemberFlags & EMemberFlags.Static) != 0)
                 {
-                    var evaluatedObjectReference = new EvaluatedObjectReference();
+                    var evaluatedObjectReference = new EvaluatedObjectDirectReference();
 
                     evaluatedObjectReference.Declaration = evaluatedField.Declaration;
                     evaluatedObjectReference.TypeInfo = evaluatedField.TypeInfo;

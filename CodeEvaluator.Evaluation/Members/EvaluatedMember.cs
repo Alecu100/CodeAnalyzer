@@ -9,7 +9,7 @@
     #endregion
 
     [Serializable]
-    public class EvaluatedMember
+    public abstract class EvaluatedMember
     {
         #region Public Properties
 

@@ -22,7 +22,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
             var evaluatedTypeInfo = evaluatedTypesInfoTable.GetTypeInfo(identifierNameSyntax.Identifier.ValueText,
                 workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.TypeInfo);
 
-            var reference = new EvaluatedObjectReference();
+            var reference = new EvaluatedObjectDirectReference();
 
             foreach (var evaluatedConstructor in evaluatedTypeInfo.Constructors)
             {

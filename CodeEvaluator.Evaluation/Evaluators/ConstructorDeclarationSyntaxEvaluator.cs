@@ -61,7 +61,7 @@
 
             if (trackedVariableTypeInfo != null)
             {
-                _thisReference = new EvaluatedObjectReference();
+                _thisReference = new EvaluatedObjectDirectReference();
                 _thisReference.AssignEvaluatedObject(VariableAllocator.AllocateVariable(trackedVariableTypeInfo));
                 _thisReference.TypeInfo = trackedVariableTypeInfo;
                 _evaluatedMethod =

@@ -1,6 +1,6 @@
 ﻿namespace CodeEvaluator.Evaluation.Members
 {
-    public class EvaluatedMethodPassedParameter : EvaluatedObjectReference
+    public class EvaluatedMethodPassedParameter : EvaluatedObjectDirectReference
     {
         public int Index { get; set; }
     }

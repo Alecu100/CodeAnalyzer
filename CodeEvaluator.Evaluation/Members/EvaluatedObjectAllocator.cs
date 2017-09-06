@@ -26,7 +26,7 @@
             foreach (
                 var trackedField in typeInfo.AccesibleFields.Where(field => !field.IsStatic()))
             {
-                var trackedVariableReference = new EvaluatedObjectReference();
+                var trackedVariableReference = new EvaluatedObjectDirectReference();
                 trackedVariableReference.Declaration = trackedField.Declaration;
                 trackedVariableReference.TypeInfo = trackedField.TypeInfo;
                 trackedVariableReference.Identifier = trackedField.Identifier;
@@ -41,7 +41,7 @@
             {
                 if (trackedProperty.IsAutoProperty)
                 {
-                    var trackedVariableReference = new EvaluatedObjectReference();
+                    var trackedVariableReference = new EvaluatedObjectDirectReference();
                     trackedVariableReference.Declaration = trackedProperty.Declaration;
                     trackedVariableReference.TypeInfo = trackedProperty.TypeInfo;
                     trackedVariableReference.IdentifierText = "<" + trackedProperty.IdentifierText + ">";

@@ -28,7 +28,7 @@
 
             foreach (var variableDeclarator in variableDeclarationSyntax.Variables)
             {
-                var reference = new EvaluatedObjectReference
+                var reference = new EvaluatedObjectDirectReference
                 {
                     Declaration = variableDeclarationSyntax,
                     Declarator = variableDeclarator,

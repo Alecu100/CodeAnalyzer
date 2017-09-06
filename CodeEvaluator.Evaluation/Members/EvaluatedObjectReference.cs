@@ -10,11 +10,10 @@
     #endregion
 
     [Serializable]
-    public class EvaluatedObjectReference : EvaluatedMember
+    public abstract class EvaluatedObjectReference : EvaluatedMember
     {
         #region SpecificFields
 
-        private readonly List<EvaluatedObject> _evaluatedObjects = new List<EvaluatedObject>();
         private VariableDeclaratorSyntax _declarator;
 
         #endregion
@@ -55,10 +54,7 @@
         /// <value>
         ///     The evaluatedObject.
         /// </value>
-        public IReadOnlyList<EvaluatedObject> EvaluatedObjects
-        {
-            get { return _evaluatedObjects; }
-        }
+        public abstract IReadOnlyList<EvaluatedObject> EvaluatedObjects { get; }
 
         #endregion
 
@@ -68,32 +64,14 @@
         ///     Adds the evaluatedObject.
         /// </summary>
         /// <param name="evaluatedObject">The evaluatedObject.</param>
-        public void AssignEvaluatedObject(EvaluatedObject evaluatedObject)
-        {
-            AssignTypeInfoIfMissing(evaluatedObject);
-            _evaluatedObjects.Add(evaluatedObject);
-        }
+        public abstract void AssignEvaluatedObject(EvaluatedObject evaluatedObject);
 
-        public void AssignEvaluatedObject(EvaluatedObjectReference evaluatedObjectReference)
-        {
-            foreach (var evaluatedObject in evaluatedObjectReference.EvaluatedObjects)
-            {
-                AssignTypeInfoIfMissing(evaluatedObject);
-                _evaluatedObjects.Add(evaluatedObject);
-            }
-        }
+        public abstract void AssignEvaluatedObject(EvaluatedObjectReference evaluatedObjectReference);
 
 
-        public void AssignEvaluatedObjects(IEnumerable<EvaluatedObject> evaluatedObjects)
-        {
-            foreach (var evaluatedObject in evaluatedObjects)
-            {
-                AssignTypeInfoIfMissing(evaluatedObject);
-                _evaluatedObjects.Add(evaluatedObject);
-            }
-        }
+        public abstract void AssignEvaluatedObjects(IEnumerable<EvaluatedObject> evaluatedObjects);
 
-        private void AssignTypeInfoIfMissing(EvaluatedObject evaluatedObject)
+        protected void AssignTypeInfoIfMissing(EvaluatedObject evaluatedObject)
         {
             if (TypeInfo == null)
             {
