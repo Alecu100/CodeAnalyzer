@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CodeEvaluator.Evaluation.Common;
-using CodeEvaluator.Evaluation.Interfaces;
-using CodeEvaluator.Evaluation.Members;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using StructureMap;
-
-namespace CodeEvaluator.Evaluation.Evaluators
+﻿namespace CodeEvaluator.Evaluation.Evaluators
 {
+    using CodeEvaluator.Evaluation.Common;
     using CodeEvaluator.Evaluation.Extensions;
+    using CodeEvaluator.Evaluation.Members;
+
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     public class IdentifierNameSyntaxEvaluatorForMember : BaseMethodDeclarationSyntaxEvaluator
     {
@@ -22,7 +15,6 @@ namespace CodeEvaluator.Evaluation.Evaluators
             SyntaxNode syntaxNode,
             CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
-
             var identifierNameSyntax = (IdentifierNameSyntax)syntaxNode;
             var foundReference = false;
 
@@ -36,13 +28,17 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
             if (foundReference == false)
             {
-                TryToFindReferenceInLocalReferences(workflowEvaluatorExecutionStack, identifierNameSyntax,
+                TryToFindReferenceInLocalReferences(
+                    workflowEvaluatorExecutionStack,
+                    identifierNameSyntax,
                     ref foundReference);
             }
 
             if (foundReference == false)
             {
-                TryToFindReferenceInThisReference(workflowEvaluatorExecutionStack, identifierNameSyntax,
+                TryToFindReferenceInThisReference(
+                    workflowEvaluatorExecutionStack,
+                    identifierNameSyntax,
                     ref foundReference);
             }
         }
@@ -58,20 +54,19 @@ namespace CodeEvaluator.Evaluation.Evaluators
         {
             var reference = new EvaluatedObjectDirectReference();
 
-            foreach (
-                var evaluatedObject in
-                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects)
+            foreach (var evaluatedObject in
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects)
             {
                 foreach (var field in evaluatedObject.Fields)
                 {
                     if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                     {
                         reference.AssignEvaluatedObject(field);
-                        field.EvaluatedObjects.ForEach(currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
+                        field.EvaluatedObjects.ForEach(
+                            currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
                         foundReference = true;
                     }
                 }
-                
             }
 
             if (foundReference)
@@ -92,7 +87,8 @@ namespace CodeEvaluator.Evaluation.Evaluators
                 if (localReference.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                 {
                     reference.AssignEvaluatedObject(localReference);
-                    localReference.EvaluatedObjects.ForEach(currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
+                    localReference.EvaluatedObjects.ForEach(
+                        currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
                     foundReference = true;
                 }
             }
@@ -110,16 +106,16 @@ namespace CodeEvaluator.Evaluation.Evaluators
         {
             var reference = new EvaluatedObjectDirectReference();
 
-            foreach (
-                var thisEvaluatedObject in
-                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.EvaluatedObjects)
+            foreach (var thisEvaluatedObject in
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.EvaluatedObjects)
             {
                 foreach (var field in thisEvaluatedObject.Fields)
                 {
                     if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                     {
                         reference.AssignEvaluatedObject(field);
-                        field.EvaluatedObjects.ForEach(currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
+                        field.EvaluatedObjects.ForEach(
+                            currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
                         foundReference = true;
                     }
                 }

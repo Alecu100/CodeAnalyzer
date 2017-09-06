@@ -8,7 +8,7 @@ namespace CodeEvaluator.Evaluation.Members
 {
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    public class EvaluatedObjectDirectReference : EvaluatedObjectReference
+    public class EvaluatedObjectDirectReference : EvaluatedObjectReferenceBase
     {
         #region SpecificFields
 
@@ -52,7 +52,7 @@ namespace CodeEvaluator.Evaluation.Members
             _evaluatedObjects.Add(evaluatedObject);
         }
 
-        public override void AssignEvaluatedObject(EvaluatedObjectReference evaluatedObjectReference)
+        public override void AssignEvaluatedObject(EvaluatedObjectReferenceBase evaluatedObjectReference)
         {
             foreach (var evaluatedObject in evaluatedObjectReference.EvaluatedObjects)
             {

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CodeEvaluator.Evaluation.Members
+﻿namespace CodeEvaluator.Evaluation.Members
 {
-    public class EvaluatedObjectIndirectReference : EvaluatedObjectReference
-    {
-        private EvaluatedObjectReference _internalReference;
+    using System.Collections.Generic;
 
-        public EvaluatedObjectIndirectReference(EvaluatedObjectReference internalReference)
+    public class EvaluatedObjectIndirectReference : EvaluatedObjectReferenceBase
+    {
+        private readonly EvaluatedObjectReferenceBase _internalReference;
+
+        public EvaluatedObjectIndirectReference(EvaluatedObjectReferenceBase internalReference)
         {
             _internalReference = internalReference;
         }
@@ -28,7 +24,7 @@ namespace CodeEvaluator.Evaluation.Members
             _internalReference.AssignEvaluatedObject(evaluatedObject);
         }
 
-        public override void AssignEvaluatedObject(EvaluatedObjectReference evaluatedObjectReference)
+        public override void AssignEvaluatedObject(EvaluatedObjectReferenceBase evaluatedObjectReference)
         {
             _internalReference.AssignEvaluatedObject(evaluatedObjectReference);
         }

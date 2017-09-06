@@ -24,7 +24,7 @@
 
         protected BaseMethodDeclarationSyntax _baseMethodDeclarationSyntax;
 
-        protected EvaluatedObjectReference _thisReference;
+        protected EvaluatedObjectReferenceBase _thisReference;
 
         protected EvaluatedMethodBase _evaluatedMethod;
 

@@ -122,7 +122,7 @@
     <Compile Include="Members\EvaluatedObject.cs" />
     <Compile Include="Members\EvaluatedObjectAllocator.cs" />
     <Compile Include="Members\EvaluatedObjectHistory.cs" />
-    <Compile Include="Members\EvaluatedObjectReference.cs" />
+    <Compile Include="Members\EvaluatedObjectReferenceBase.cs" />
     <Compile Include="Members\EvaluatedObjectsHeap.cs" />
     <Compile Include="Members\EvaluatedTypesInfoTable.cs" />
     <Compile Include="Evaluators\BaseMethodDeclarationSyntaxEvaluator.cs" />

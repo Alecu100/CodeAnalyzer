@@ -11,7 +11,7 @@
     {
         CodeEvaluatorExecutionFrame BuildNewExecutionFrameForMethodCall(
             EvaluatedMethodBase targetMethod,
-            EvaluatedObjectReference thisReference);
+            EvaluatedObjectReferenceBase thisReference);
 
 
         CodeEvaluatorExecutionFrame BuildInitialExecutionFrame(EvaluatedTypeInfo evaluatedType, EvaluatedMethod startMethod);

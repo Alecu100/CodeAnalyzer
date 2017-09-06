@@ -25,19 +25,20 @@
             SyntaxNode syntaxNode,
             CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
-            var invocationExpressionSyntax = (InvocationExpressionSyntax) syntaxNode;
+            var invocationExpressionSyntax = (InvocationExpressionSyntax)syntaxNode;
 
             if (invocationExpressionSyntax.Expression != null)
             {
                 var syntaxNodeEvaluator =
-                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(invocationExpressionSyntax.Expression, EEvaluatorActions.GetMethod);
+                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
+                        invocationExpressionSyntax.Expression,
+                        EEvaluatorActions.GetMethod);
 
                 if (syntaxNodeEvaluator != null)
                 {
                     syntaxNodeEvaluator.EvaluateSyntaxNode(
                         invocationExpressionSyntax.Expression,
                         workflowEvaluatorExecutionStack);
-
 
                     if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
                     {
@@ -51,19 +52,20 @@
                                 continue;
                             }
 
-                            var evaluatedDelegate = (EvaluatedDelegate) evaluatedObject;
+                            var evaluatedDelegate = (EvaluatedDelegate)evaluatedObject;
 
-                            var currentMethod =
-                                evaluatedDelegate.Method;
+                            var currentMethod = evaluatedDelegate.Method;
 
                             if (currentMethod == null)
                             {
                                 continue;
                             }
 
-                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters = new EvaluatedMethodPassedParameters();
+                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters =
+                                new EvaluatedMethodPassedParameters();
 
-                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.ThisReference.AssignEvaluatedObject(evaluatedDelegate.Fields.First());
+                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.ThisReference
+                                .AssignEvaluatedObject(evaluatedDelegate.Fields.First());
 
                             workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated[-1] =
                                 evaluatedDelegate.Fields.First();
@@ -72,7 +74,9 @@
                             {
                                 var argumentSyntax = invocationExpressionSyntax.ArgumentList.Arguments[i];
 
-                                var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(argumentSyntax, EEvaluatorActions.GetMember);
+                                var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
+                                    argumentSyntax,
+                                    EEvaluatorActions.GetMember);
 
                                 if (nodeEvaluator != null)
                                 {
@@ -85,7 +89,8 @@
 
                                 if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
                                 {
-                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated[i] =
+                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame
+                                        .PassedMethodParametersDeprecated[i] =
                                         workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
                                 }
                             }
@@ -93,11 +98,15 @@
                             workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
 
                             var methodEvaluator =
-                                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(currentMethod.Declaration, EEvaluatorActions.None);
+                                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
+                                    currentMethod.Declaration,
+                                    EEvaluatorActions.None);
 
                             if (methodEvaluator != null)
                             {
-                                methodEvaluator.EvaluateSyntaxNode(currentMethod.Declaration, workflowEvaluatorExecutionStack);
+                                methodEvaluator.EvaluateSyntaxNode(
+                                    currentMethod.Declaration,
+                                    workflowEvaluatorExecutionStack);
                             }
                         }
                     }

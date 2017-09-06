@@ -41,7 +41,7 @@
 
         public CodeEvaluatorExecutionFrame BuildNewExecutionFrameForMethodCall(
             EvaluatedMethodBase targetMethod,
-            EvaluatedObjectReference thisReference)
+            EvaluatedObjectReferenceBase thisReference)
         {
             var newExecutionFrameForMethodCall = new CodeEvaluatorExecutionFrame();
 

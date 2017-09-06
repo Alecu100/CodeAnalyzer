@@ -45,7 +45,7 @@
 
         #region Constructors and Destructors
 
-        public EvaluatedObject(EvaluatedTypeInfo typeInfo, List<EvaluatedObjectReference> fields)
+        public EvaluatedObject(EvaluatedTypeInfo typeInfo, List<EvaluatedObjectReferenceBase> fields)
         {
             ObjectFactory.BuildUp(this);
 
@@ -71,7 +71,7 @@
 
         protected readonly List<EvaluatedObjectHistory> _history = new List<EvaluatedObjectHistory>();
 
-        protected readonly List<EvaluatedObjectReference> _fields = new List<EvaluatedObjectReference>();
+        protected readonly List<EvaluatedObjectReferenceBase> _fields = new List<EvaluatedObjectReferenceBase>();
 
         protected EvaluatedTypeInfo _typeInfo;
 
@@ -85,7 +85,7 @@
         /// <value>
         ///     The member variables.
         /// </value>
-        public virtual IReadOnlyList<EvaluatedObjectReference> Fields
+        public virtual IReadOnlyList<EvaluatedObjectReferenceBase> Fields
         {
             get
             {

@@ -18,7 +18,7 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The accessed reference.
         /// </value>
-        public EvaluatedObjectReference MemberAccessReference { get; set; }
+        public EvaluatedObjectReferenceBase MemberAccessReference { get; set; }
 
         /// <summary>
         ///     Gets or sets the current method.
@@ -42,7 +42,7 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The local variables.
         /// </value>
-        public List<EvaluatedObjectReference> LocalReferences { get; } = new List<EvaluatedObjectReference>();
+        public List<EvaluatedObjectReferenceBase> LocalReferences { get; } = new List<EvaluatedObjectReferenceBase>();
 
         /// <summary>
         ///     Gets or sets the stack variables.
@@ -50,8 +50,8 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The stack variables.
         /// </value>
-        public Dictionary<int, EvaluatedObjectReference> PassedMethodParametersDeprecated { get; } =
-            new Dictionary<int, EvaluatedObjectReference>();
+        public Dictionary<int, EvaluatedObjectReferenceBase> PassedMethodParametersDeprecated { get; } =
+            new Dictionary<int, EvaluatedObjectReferenceBase>();
 
         public EvaluatedMethodPassedParameters PassedMethodParameters { get; set; }
 
@@ -61,7 +61,7 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The returning method parameters.
         /// </value>
-        public EvaluatedObjectReference ReturningMethodParameters { get; } = new EvaluatedObjectDirectReference();
+        public EvaluatedObjectReferenceBase ReturningMethodParameters { get; } = new EvaluatedObjectDirectReference();
 
         /// <summary>
         ///     Gets or sets the this reference.
@@ -69,7 +69,7 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The this reference.
         /// </value>
-        public EvaluatedObjectReference ThisReference { get; set; }
+        public EvaluatedObjectReferenceBase ThisReference { get; set; }
 
         #endregion
     }
