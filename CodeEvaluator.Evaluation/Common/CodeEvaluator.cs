@@ -1,16 +1,12 @@
-﻿namespace CodeEvaluator.Evaluation.Common
+﻿using System.Collections.Generic;
+using System.Linq;
+using CodeEvaluator.Dto;
+using CodeEvaluator.Evaluation.Interfaces;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using StructureMap;
+
+namespace CodeEvaluator.Evaluation.Common
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using global::CodeEvaluator.Dto;
-    using global::CodeEvaluator.Evaluation.Interfaces;
-
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-    using StructureMap;
-
     #region Using
 
     #endregion
@@ -71,7 +67,8 @@
             var staticWorkflowEvaluatorExecutionFrameFactory =
                 ObjectFactory.GetInstance<IEvaluatorExecutionFrameFactory>();
             var initialExecutionFrame =
-                staticWorkflowEvaluatorExecutionFrameFactory.BuildInitialExecutionFrame(trackedTypeInfo, startMethodInfo);
+                staticWorkflowEvaluatorExecutionFrameFactory.BuildInitialExecutionFrame(trackedTypeInfo,
+                    startMethodInfo);
 
             ExecutionStack.PushFramePassingParametersFromPreviousFrame(initialExecutionFrame);
         }
@@ -84,20 +81,12 @@
             var evaluatedTypesInfoTable = ObjectFactory.GetInstance<IEvaluatedTypesInfoTable>();
             evaluatedTypesInfoTable.ClearTypeInfos();
 
-            try
-            {
-                var assemblyTypesReader = ObjectFactory.GetInstance<IAssemblyTypesReader>();
-                var evaluatedTypeInfos = assemblyTypesReader.ReadTypeInfos(assemblyNames);
+            var assemblyTypesReader = ObjectFactory.GetInstance<IAssemblyTypesReader>();
+            var externalTypeInfos = assemblyTypesReader.ReadTypeInfos(assemblyNames);
 
-                evaluatedTypesInfoTable.RebuildExternalTypeInfos(evaluatedTypeInfos);
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                evaluatedTypesInfoTable.RebuildWellKnownTypesWithMethods(parsedSourceFilesCache);
-            }
+            evaluatedTypesInfoTable.RebuildExternalTypeInfos(externalTypeInfos);
+
+            evaluatedTypesInfoTable.RebuildWellKnownTypesWithMethods(parsedSourceFilesCache);
         }
 
         private void ResetSharedResources()
@@ -109,12 +98,11 @@
         private void StartEvaluation(MethodDeclarationSyntax startMethod)
         {
             var syntaxNodeEvaluatorFactory = ObjectFactory.GetInstance<ISyntaxNodeEvaluatorFactory>();
-            var syntaxNodeEvaluator = syntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(startMethod, EEvaluatorActions.None);
+            var syntaxNodeEvaluator =
+                syntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(startMethod, EEvaluatorActions.None);
 
             if (syntaxNodeEvaluator != null)
-            {
                 syntaxNodeEvaluator.EvaluateSyntaxNode(startMethod, ExecutionStack);
-            }
         }
 
         #endregion

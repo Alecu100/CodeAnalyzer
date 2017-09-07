@@ -1,12 +1,10 @@
-﻿namespace CodeEvaluator.Evaluation.Common
+﻿using System.Collections.Generic;
+using CodeEvaluator.Evaluation.Interfaces;
+using CodeEvaluator.Evaluation.Members;
+using StructureMap;
+
+namespace CodeEvaluator.Evaluation.Common
 {
-    using System.Collections.Generic;
-
-    using global::CodeEvaluator.Evaluation.Interfaces;
-    using global::CodeEvaluator.Evaluation.Members;
-
-    using StructureMap;
-
     public class MethodInvocationResolver : IMethodInvocationResolver
     {
         public MethodInvocationResolver()
@@ -38,14 +36,14 @@
                     methodDelegate.TypeInfo);
 
                 return new MethodInvocationResolverResult
-                           {
-                               CanInvokeMethod = true,
-                               ResolvedMethod = resolvedTargetMethod,
-                               ResolvedPassedParameters = methodParametersToAssign
-                           };
+                {
+                    CanInvokeMethod = true,
+                    ResolvedMethod = resolvedTargetMethod,
+                    ResolvedPassedParameters = methodParametersToAssign
+                };
             }
 
-            return new MethodInvocationResolverResult { CanInvokeMethod = false };
+            return new MethodInvocationResolverResult {CanInvokeMethod = false};
         }
 
         private EvaluatedMethodBase ResolveTargetMethod(
@@ -66,47 +64,50 @@
             {
                 var currentParameter = evaluatedMethodBase.Parameters[parameterIndex];
 
-                if (currentParameter.HasDefault == false)
+                if (currentParameter.HasDefault == false && mandatoryParameters.Count >= parameterIndex)
+                    return false;
+
+                EvaluatedObjectReferenceBase currentParameterValue = null;
+
+                if (parameterIndex < mandatoryParameters.Count)
                 {
-                    if (mandatoryParameters.Count >= parameterIndex)
-                    {
-                        return false;
-                    }
-
-                    if (NoInheritanceChainFound(currentParameter, mandatoryParameters[parameterIndex]))
-                    {
-                        return false;
-                    }
-
-                    var evaluatedObjectReference = GetParameterReference(currentParameter, mandatoryParameters[parameterIndex]);
-
-                    methodParametersToAssign[parameterIndex] = evaluatedObjectReference;
+                    currentParameterValue = mandatoryParameters[parameterIndex];
                 }
                 else
                 {
-                    
+                    if (!optionalParameters.ContainsKey(currentParameter.IdentifierText))
+                        return false;
+
+                    currentParameterValue = optionalParameters[currentParameter.IdentifierText];
                 }
+
+                if (NoInheritanceChainFound(currentParameter, currentParameterValue))
+                    return false;
+
+                var currentParameterPassedValue =
+                    GetParameterReference(currentParameter, currentParameterValue);
+
+                methodParametersToAssign[parameterIndex] = currentParameterPassedValue;
             }
 
             return true;
         }
 
-        private EvaluatedObjectReferenceBase GetParameterReference(EvaluatedMethodParameter currentParameter, EvaluatedObjectReferenceBase parameterValue)
+        private EvaluatedObjectReferenceBase GetParameterReference(EvaluatedMethodParameter currentParameter,
+            EvaluatedObjectReferenceBase parameterValue)
         {
             if (currentParameter.IsByReference)
-            {
                 return new EvaluatedObjectIndirectReference(parameterValue);
-            }
 
             return new EvaluatedObjectDirectReference(parameterValue);
         }
 
         private bool NoInheritanceChainFound(
             EvaluatedMethodParameter currentParameter,
-            EvaluatedObjectReferenceBase mandatoryParameter)
+            EvaluatedObjectReferenceBase parameterValue)
         {
             var inheritanceChainResolverResult =
-                InheritanceChainResolver.ResolveInheritanceChain(mandatoryParameter.TypeInfo, currentParameter.TypeInfo);
+                InheritanceChainResolver.ResolveInheritanceChain(parameterValue.TypeInfo, currentParameter.TypeInfo);
 
             return inheritanceChainResolverResult.IsValid;
         }
