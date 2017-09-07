@@ -90,8 +90,6 @@
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMethod.cs" />
     <Compile Include="Interfaces\IInheritanceChainResolver.cs" />
     <Compile Include="Interfaces\IMethodInvocationResolver.cs" />
-    <Compile Include="Members\EvaluatedMethodPassedParameter.cs" />
-    <Compile Include="Members\EvaluatedMethodPassedParameters.cs" />
     <Compile Include="Extensions\EvaluatedMemberExtensions.cs" />
     <Compile Include="Interfaces\IParsedSourceFilesCache.cs" />
     <Compile Include="Interfaces\ICodeEvaluator.cs" />

@@ -50,10 +50,8 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The stack variables.
         /// </value>
-        public Dictionary<int, EvaluatedObjectReferenceBase> PassedMethodParametersDeprecated { get; } =
+        public Dictionary<int, EvaluatedObjectReferenceBase> PassedMethodParameters { get; } =
             new Dictionary<int, EvaluatedObjectReferenceBase>();
-
-        public EvaluatedMethodPassedParameters PassedMethodParameters { get; set; }
 
         /// <summary>
         ///     Gets the returning method parameters.

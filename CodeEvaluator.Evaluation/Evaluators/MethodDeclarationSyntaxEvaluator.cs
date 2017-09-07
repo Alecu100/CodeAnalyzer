@@ -50,8 +50,8 @@
 
         private void InitializeThisVariable()
         {
-            _thisReference = WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated[-1];
-            WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated.Remove(-1);
+            _thisReference = WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[-1];
+            WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.Remove(-1);
             _evaluatedMethod =
                 _thisReference.TypeInfo.AccesibleMethods.First(
                     method => method.IdentifierText == _methodDeclarationSyntax.Identifier.ValueText);

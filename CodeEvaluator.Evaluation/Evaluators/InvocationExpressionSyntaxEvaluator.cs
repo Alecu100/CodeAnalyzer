@@ -1,12 +1,16 @@
 ﻿namespace CodeEvaluator.Evaluation.Evaluators
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using CodeEvaluator.Evaluation.Common;
+    using CodeEvaluator.Evaluation.Interfaces;
     using CodeEvaluator.Evaluation.Members;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+    using StructureMap;
 
     #region Using
 
@@ -14,6 +18,13 @@
 
     public class InvocationExpressionSyntaxEvaluator : BaseSyntaxNodeEvaluator
     {
+        public InvocationExpressionSyntaxEvaluator()
+        {
+            ObjectFactory.BuildUp(this);
+        }
+
+        public IMethodInvocationResolver MethodInvocationResolver { get; set; }
+
         #region Protected Methods and Operators
 
         /// <summary>
@@ -40,62 +51,61 @@
                         invocationExpressionSyntax.Expression,
                         workflowEvaluatorExecutionStack);
 
-                    if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
+                    if (CanInvokeMethod(workflowEvaluatorExecutionStack))
                     {
                         var accessedReferenceMember =
                             workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
 
+                        var mandatoryParamenters = new List<EvaluatedObjectReferenceBase>();
+                        var optionalParameters = new Dictionary<string, EvaluatedObjectReferenceBase>();
+
+                        workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.Clear();
+
+                        for (var i = 0; i < invocationExpressionSyntax.ArgumentList.Arguments.Count; i++)
+                        {
+                            var argumentSyntax = invocationExpressionSyntax.ArgumentList.Arguments[i];
+
+                            var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
+                                argumentSyntax,
+                                EEvaluatorActions.GetMember);
+
+                            if (nodeEvaluator != null)
+                            {
+                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
+
+                                nodeEvaluator.EvaluateSyntaxNode(
+                                    argumentSyntax.Expression,
+                                    workflowEvaluatorExecutionStack);
+                            }
+
+                            if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
+                            {
+                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[i] =
+                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
+                            }
+
+                            if (argumentSyntax.NameColon != null)
+                            {
+                                optionalParameters.Add(
+                                    argumentSyntax.NameColon.Name.Identifier.ValueText,
+                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference);
+                            }
+                            else
+                            {
+                                mandatoryParamenters.Add(
+                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference);
+                            }
+                        }
+
+                        workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
+
                         foreach (var evaluatedObject in accessedReferenceMember.EvaluatedObjects)
                         {
-                            if (!(evaluatedObject is EvaluatedDelegate))
-                            {
-                                continue;
-                            }
-
                             var evaluatedDelegate = (EvaluatedDelegate)evaluatedObject;
-
                             var currentMethod = evaluatedDelegate.Method;
 
-                            if (currentMethod == null)
-                            {
-                                continue;
-                            }
-
-                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters =
-                                new EvaluatedMethodPassedParameters();
-
-                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.ThisReference
-                                .AssignEvaluatedObject(evaluatedDelegate.Fields.First());
-
-                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParametersDeprecated[-1] =
+                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[-1] =
                                 evaluatedDelegate.Fields.First();
-
-                            for (var i = 0; i < invocationExpressionSyntax.ArgumentList.Arguments.Count; i++)
-                            {
-                                var argumentSyntax = invocationExpressionSyntax.ArgumentList.Arguments[i];
-
-                                var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
-                                    argumentSyntax,
-                                    EEvaluatorActions.GetMember);
-
-                                if (nodeEvaluator != null)
-                                {
-                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
-
-                                    nodeEvaluator.EvaluateSyntaxNode(
-                                        argumentSyntax.Expression,
-                                        workflowEvaluatorExecutionStack);
-                                }
-
-                                if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
-                                {
-                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame
-                                        .PassedMethodParametersDeprecated[i] =
-                                        workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
-                                }
-                            }
-
-                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
 
                             var methodEvaluator =
                                 SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
@@ -108,10 +118,27 @@
                                     currentMethod.Declaration,
                                     workflowEvaluatorExecutionStack);
                             }
+
+                            var methodInvocationResolverResult =
+                                MethodInvocationResolver.ResolveMethodInvocation(
+                                    evaluatedDelegate,
+                                    mandatoryParamenters,
+                                    optionalParameters);
+
+                            if (methodInvocationResolverResult.CanInvokeMethod)
+                            {
+                            }
                         }
                     }
                 }
             }
+        }
+
+        private static bool CanInvokeMethod(CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
+        {
+            return workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null
+                   && workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects.All(
+                       o => o is EvaluatedDelegate);
         }
 
         #endregion

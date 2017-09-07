@@ -137,12 +137,11 @@
 
                 if (foundMethod != null)
                 {
-                    var evaluatedDelegate =
-                        new EvaluatedDelegate(
-                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.TypeInfo,
-                            thisEvaluatedObject,
-                            foundMethods,
-                            foundMethod);
+                    var evaluatedDelegate = new EvaluatedDelegate(
+                        thisEvaluatedObject.TypeInfo,
+                        thisEvaluatedObject,
+                        foundMethods,
+                        foundMethod);
                     reference.AssignEvaluatedObject(evaluatedDelegate);
                     foundReference = true;
                 }

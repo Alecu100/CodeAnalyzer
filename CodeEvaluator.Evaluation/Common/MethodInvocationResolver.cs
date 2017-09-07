@@ -1,46 +1,61 @@
-﻿using System.Collections.Generic;
-using CodeEvaluator.Evaluation.Interfaces;
-using CodeEvaluator.Evaluation.Members;
-using StructureMap;
-
-namespace CodeEvaluator.Evaluation.Common
+﻿namespace CodeEvaluator.Evaluation.Common
 {
+    using System.Collections.Generic;
+
+    using global::CodeEvaluator.Evaluation.Interfaces;
+    using global::CodeEvaluator.Evaluation.Members;
+
+    using StructureMap;
+
     public class MethodInvocationResolver : IMethodInvocationResolver
     {
-        public MethodInvocationResolverResult ResolveMethodInvocation(EvaluatedObject targetObject,
-            List<EvaluatedMethodBase> availableMethods, EvaluatedTypeInfo referenceType,
-            EvaluatedMethodPassedParameters passedParameters)
+        public MethodInvocationResolverResult ResolveMethodInvocation(
+            EvaluatedDelegate methodDelegate,
+            List<EvaluatedObjectReferenceBase> mandatoryParameters,
+            Dictionary<string, EvaluatedObjectReferenceBase> optionalParameters)
         {
-            foreach (var evaluatedMethodBase in availableMethods)
+            foreach (var evaluatedMethodBase in methodDelegate.TargetMethodGroup)
             {
-                var methodParametersToAssign = new EvaluatedMethodPassedParameters();
+                var methodParametersToAssign = new Dictionary<int, EvaluatedObjectReferenceBase>();
 
-                if (!TryToAssignParameters(evaluatedMethodBase, passedParameters, methodParametersToAssign))
-                    continue;
+                if (
+                    !TryToAssignParameters(
+                        evaluatedMethodBase,
+                        mandatoryParameters,
+                        optionalParameters,
+                        methodParametersToAssign)) continue;
 
-                var resolvedTargetMethod = ResolveTargetMethod(evaluatedMethodBase, targetObject, referenceType);
+                var resolvedTargetMethod = ResolveTargetMethod(
+                    evaluatedMethodBase,
+                    methodDelegate.TargetObject,
+                    methodDelegate.TypeInfo);
 
                 return new MethodInvocationResolverResult
-                {
-                    CanInvokeMethod = true,
-                    ResolvedMethod = resolvedTargetMethod,
-                    ResolvedPassedParameters = methodParametersToAssign
-                };
+                           {
+                               CanInvokeMethod = true,
+                               ResolvedMethod = resolvedTargetMethod,
+                               ResolvedPassedParameters = methodParametersToAssign
+                           };
             }
 
-            return new MethodInvocationResolverResult {CanInvokeMethod = false};
+            return new MethodInvocationResolverResult { CanInvokeMethod = false };
         }
 
-        private EvaluatedMethodBase ResolveTargetMethod(EvaluatedMethodBase evaluatedMethodBase,
-            EvaluatedObject targetObject, EvaluatedTypeInfo referenceType)
+        private EvaluatedMethodBase ResolveTargetMethod(
+            EvaluatedMethodBase evaluatedMethodBase,
+            EvaluatedObject targetObject,
+            EvaluatedTypeInfo referenceType)
         {
             var inheritanceChainResolver = ObjectFactory.GetInstance<IInheritanceChainResolver>();
 
             return evaluatedMethodBase;
         }
 
-        private bool TryToAssignParameters(EvaluatedMethodBase evaluatedMethodBase,
-            EvaluatedMethodPassedParameters passedParameters, EvaluatedMethodPassedParameters methodParametersToAssign)
+        private bool TryToAssignParameters(
+            EvaluatedMethodBase evaluatedMethodBase,
+            List<EvaluatedObjectReferenceBase> mandatoryParameters,
+            Dictionary<string, EvaluatedObjectReferenceBase> optionalParameters,
+            Dictionary<int, EvaluatedObjectReferenceBase> methodParametersToAssign)
         {
             return true;
         }

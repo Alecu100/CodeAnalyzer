@@ -16,7 +16,7 @@
             _fields.Add(evaluatedObjectReference);
             Method = method;
             TypeInfo = referenceType;
-            MethodGroup.AddRange(methodGroups);
+            TargetMethodGroup.AddRange(methodGroups);
         }
 
         public EvaluatedDelegate(EvaluatedTypeInfo referenceType, EvaluatedMethodBase method)
@@ -27,7 +27,15 @@
 
         public EvaluatedMethodBase Method { get; }
 
-        public List<EvaluatedMethod> MethodGroup { get; } = new List<EvaluatedMethod>();
+        public List<EvaluatedMethod> TargetMethodGroup { get; } = new List<EvaluatedMethod>();
+
+        public EvaluatedObject TargetObject
+        {
+            get
+            {
+                return _fields[0].EvaluatedObjects[0];
+            }
+        }
 
         public override IReadOnlyList<EvaluatedObjectReferenceBase> Fields
         {

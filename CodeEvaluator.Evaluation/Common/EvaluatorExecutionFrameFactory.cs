@@ -33,7 +33,7 @@
             }
 
             codeEvaluatorExecutionFrame.ThisReference = thisEvaluatedObjectReference;
-            codeEvaluatorExecutionFrame.PassedMethodParametersDeprecated[-1] = thisEvaluatedObjectReference;
+            codeEvaluatorExecutionFrame.PassedMethodParameters[-1] = thisEvaluatedObjectReference;
             codeEvaluatorExecutionFrame.CurrentMethod = startMethod;
 
             return codeEvaluatorExecutionFrame;
