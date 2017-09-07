@@ -82,8 +82,6 @@ namespace CodeEvaluator.Evaluation.Common
                 if (currentMethod == null)
                     continue;
 
-                resolvedTargetMethod = currentMethod;
-
                 var derivedMethod = currentMethod;
 
                 if (inheritanceIndex < classInheritanceChain.Count - 1)
@@ -106,6 +104,8 @@ namespace CodeEvaluator.Evaluation.Common
                         !(derivedMethod.IsOverride() || derivedMethod.IsNew()))
                         return true;
                 }
+
+                resolvedTargetMethod = currentMethod;
             }
 
             return true;
