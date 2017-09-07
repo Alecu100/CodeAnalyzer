@@ -11,6 +11,9 @@
             _internalReference = internalReference;
 
             TypeInfo = internalReference.TypeInfo;
+            Identifier = internalReference.Identifier;
+            FullIdentifierText = internalReference.FullIdentifierText;
+            IdentifierText = internalReference.IdentifierText;
         }
 
         public override IReadOnlyList<EvaluatedObject> EvaluatedObjects
