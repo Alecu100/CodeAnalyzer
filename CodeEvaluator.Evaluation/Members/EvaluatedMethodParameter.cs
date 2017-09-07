@@ -25,6 +25,8 @@
 
         public bool HasDefault { get; set; }
 
+        public bool IsByReference { get; set; }
+
         #endregion
     }
 }

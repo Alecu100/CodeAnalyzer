@@ -1,18 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CodeEvaluator.Evaluation.Members
+﻿namespace CodeEvaluator.Evaluation.Members
 {
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
+    using System.Collections.Generic;
 
     public class EvaluatedObjectDirectReference : EvaluatedObjectReferenceBase
     {
+        #region Public Properties
+
+        /// <summary>
+        ///     Gets or sets the evaluatedObject.
+        /// </summary>
+        /// <value>
+        ///     The evaluatedObject.
+        /// </value>
+        public override IReadOnlyList<EvaluatedObject> EvaluatedObjects
+        {
+            get
+            {
+                return _evaluatedObjects;
+            }
+        }
+
+        #endregion
+
         #region SpecificFields
 
         private readonly List<EvaluatedObject> _evaluatedObjects = new List<EvaluatedObject>();
+
+        public EvaluatedObjectDirectReference()
+        {
+        }
+
+        public EvaluatedObjectDirectReference(EvaluatedObjectReferenceBase referenceToCopy)
+        {
+            AssignEvaluatedObject(referenceToCopy);
+        }
 
         #endregion
 
@@ -24,35 +45,19 @@ namespace CodeEvaluator.Evaluation.Members
 
         #endregion
 
-        #region Public Properties
-
-
-        /// <summary>
-        ///     Gets or sets the evaluatedObject.
-        /// </summary>
-        /// <value>
-        ///     The evaluatedObject.
-        /// </value>
-        public override IReadOnlyList<EvaluatedObject> EvaluatedObjects
-        {
-            get { return _evaluatedObjects; }
-        }
-
-        #endregion
-
         #region Public Methods and Operators
 
         /// <summary>
         ///     Adds the evaluatedObject.
         /// </summary>
         /// <param name="evaluatedObject">The evaluatedObject.</param>
-        public override void AssignEvaluatedObject(EvaluatedObject evaluatedObject)
+        public sealed override void AssignEvaluatedObject(EvaluatedObject evaluatedObject)
         {
             AssignTypeInfoIfMissing(evaluatedObject);
             _evaluatedObjects.Add(evaluatedObject);
         }
 
-        public override void AssignEvaluatedObject(EvaluatedObjectReferenceBase evaluatedObjectReference)
+        public sealed override void AssignEvaluatedObject(EvaluatedObjectReferenceBase evaluatedObjectReference)
         {
             foreach (var evaluatedObject in evaluatedObjectReference.EvaluatedObjects)
             {
@@ -61,8 +66,7 @@ namespace CodeEvaluator.Evaluation.Members
             }
         }
 
-
-        public override void AssignEvaluatedObjects(IEnumerable<EvaluatedObject> evaluatedObjects)
+        public sealed override void AssignEvaluatedObjects(IEnumerable<EvaluatedObject> evaluatedObjects)
         {
             foreach (var evaluatedObject in evaluatedObjects)
             {
