@@ -9,6 +9,8 @@
         public EvaluatedObjectIndirectReference(EvaluatedObjectReferenceBase internalReference)
         {
             _internalReference = internalReference;
+
+            TypeInfo = internalReference.TypeInfo;
         }
 
         public override IReadOnlyList<EvaluatedObject> EvaluatedObjects
