@@ -32,12 +32,12 @@
 
         public EvaluatedObjectDirectReference(EvaluatedObjectReferenceBase referenceToCopy)
         {
-            AssignEvaluatedObject(referenceToCopy);
-
             TypeInfo = referenceToCopy.TypeInfo;
             Identifier = referenceToCopy.Identifier;
             FullIdentifierText = referenceToCopy.FullIdentifierText;
             IdentifierText = referenceToCopy.IdentifierText;
+
+            AssignEvaluatedObject(referenceToCopy);
         }
 
         #endregion
