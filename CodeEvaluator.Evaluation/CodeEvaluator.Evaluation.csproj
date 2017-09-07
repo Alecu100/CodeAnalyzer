@@ -74,6 +74,7 @@
     <Compile Include="Common\InheritanceChainResolverResult.cs" />
     <Compile Include="Common\MethodInvocationResolver.cs" />
     <Compile Include="Common\MethodInvocationResolverResult.cs" />
+    <Compile Include="Common\MethodSignatureComparer.cs" />
     <Compile Include="Common\ParsedSourceFilesCache.cs" />
     <Compile Include="Common\CodeEvaluator.cs" />
     <Compile Include="Common\CodeEvaluatorExecutionStack.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Interfaces\IInheritanceChainResolver.cs" />
     <Compile Include="Interfaces\IMethodInvocationResolver.cs" />
     <Compile Include="Extensions\EvaluatedMemberExtensions.cs" />
+    <Compile Include="Interfaces\IMethodSignatureComparer.cs" />
     <Compile Include="Interfaces\IParsedSourceFilesCache.cs" />
     <Compile Include="Interfaces\ICodeEvaluator.cs" />
     <Compile Include="Interfaces\IEvaluatorExecutionFrameFactory.cs" />

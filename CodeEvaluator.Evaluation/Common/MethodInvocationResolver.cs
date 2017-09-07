@@ -30,10 +30,16 @@ namespace CodeEvaluator.Evaluation.Common
                         optionalParameters,
                         methodParametersToAssign)) continue;
 
-                var resolvedTargetMethod = ResolveTargetMethod(
+                EvaluatedMethodBase resolvedTargetMethod = null;
+
+                if (!TryToResolveTargetMethod(
                     evaluatedMethodBase,
                     methodDelegate.TargetObject,
-                    methodDelegate.TypeInfo);
+                    methodDelegate.TypeInfo,
+                    ref resolvedTargetMethod))
+                {
+                    return new MethodInvocationResolverResult { CanInvokeMethod = false };
+                }
 
                 return new MethodInvocationResolverResult
                 {
@@ -46,12 +52,23 @@ namespace CodeEvaluator.Evaluation.Common
             return new MethodInvocationResolverResult {CanInvokeMethod = false};
         }
 
-        private EvaluatedMethodBase ResolveTargetMethod(
+        private bool TryToResolveTargetMethod(
             EvaluatedMethodBase evaluatedMethodBase,
             EvaluatedObject targetObject,
-            EvaluatedTypeInfo referenceType)
+            EvaluatedTypeInfo referenceType,
+            ref EvaluatedMethodBase resolvedTargetMethod)
         {
-            return evaluatedMethodBase;
+            var inheritanceChainResolverResult =
+                InheritanceChainResolver.ResolveInheritanceChain(referenceType, targetObject.TypeInfo);
+
+            if (inheritanceChainResolverResult.IsValid == false)
+                return false;
+
+            var classInheritanceChain = inheritanceChainResolverResult.ResolvedInheritanceChain;
+
+
+
+            return true;
         }
 
         private bool TryToAssignParameters(
@@ -76,7 +93,12 @@ namespace CodeEvaluator.Evaluation.Common
                 else
                 {
                     if (!optionalParameters.ContainsKey(currentParameter.IdentifierText))
-                        return false;
+                    {
+                        currentParameterValue = new EvaluatedObjectDirectReference();
+
+                        currentParameterValue.TypeInfo = currentParameter.TypeInfo;
+                        currentParameterValue.IdentifierText = currentParameter.IdentifierText;
+                    }
 
                     currentParameterValue = optionalParameters[currentParameter.IdentifierText];
                 }

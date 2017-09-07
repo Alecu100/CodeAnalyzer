@@ -39,6 +39,9 @@ namespace CodeEvaluator.Evaluation.Configuration
             ObjectFactory.Configure(
                 config => config.For<IInheritanceChainResolver>().Use(new InheritanceChainResolver()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<InheritanceChainResolver>()));
+            ObjectFactory.Configure(
+                config => config.For<IMethodSignatureComparer>().Use(new MethodSignatureComparer()));
+            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IMethodSignatureComparer>()));
         }
     }
 }
