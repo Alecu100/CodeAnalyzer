@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using CodeEvaluator.Evaluation.Extensions;
 using CodeEvaluator.Evaluation.Interfaces;
 using CodeEvaluator.Evaluation.Members;
 using StructureMap;
@@ -13,6 +15,8 @@ namespace CodeEvaluator.Evaluation.Common
         }
 
         public IInheritanceChainResolver InheritanceChainResolver { get; set; }
+
+        public IMethodSignatureComparer MethodSignatureComparer { get; set; }
 
         public MethodInvocationResolverResult ResolveMethodInvocation(
             EvaluatedDelegate methodDelegate,
@@ -37,9 +41,7 @@ namespace CodeEvaluator.Evaluation.Common
                     methodDelegate.TargetObject,
                     methodDelegate.TypeInfo,
                     ref resolvedTargetMethod))
-                {
-                    return new MethodInvocationResolverResult { CanInvokeMethod = false };
-                }
+                    return new MethodInvocationResolverResult {CanInvokeMethod = false};
 
                 return new MethodInvocationResolverResult
                 {
@@ -66,7 +68,45 @@ namespace CodeEvaluator.Evaluation.Common
 
             var classInheritanceChain = inheritanceChainResolverResult.ResolvedInheritanceChain;
 
+            resolvedTargetMethod = evaluatedMethodBase;
 
+            if (classInheritanceChain.Count == 1)
+                return true;
+
+            for (var inheritanceIndex = 0; inheritanceIndex < classInheritanceChain.Count; inheritanceIndex++)
+            {
+                var currentMethod = classInheritanceChain[inheritanceIndex]
+                    .SpecificMethods.FirstOrDefault(
+                        method => MethodSignatureComparer.HaveSameSignature(evaluatedMethodBase, method));
+
+                if (currentMethod == null)
+                    continue;
+
+                resolvedTargetMethod = currentMethod;
+
+                var derivedMethod = currentMethod;
+
+                if (inheritanceIndex < classInheritanceChain.Count - 1)
+                {
+                    derivedMethod = classInheritanceChain[inheritanceIndex + 1]
+                        .SpecificMethods.FirstOrDefault(
+                            method => MethodSignatureComparer.HaveSameSignature(evaluatedMethodBase, method));
+
+                    if (derivedMethod != null &&
+                        classInheritanceChain[inheritanceIndex].IsInterfaceType &&
+                        classInheritanceChain[inheritanceIndex + 1].IsInterfaceType == false &&
+                        !derivedMethod.IsVirtualOrAbstract())
+                        return true;
+
+                    if (!currentMethod.IsVirtualOrAbstract() &&
+                        classInheritanceChain[inheritanceIndex].IsInterfaceType == false)
+                        return true;
+
+                    if ((currentMethod.IsVirtualOrAbstract() || currentMethod.IsOverride()) && derivedMethod != null &&
+                        !(derivedMethod.IsOverride() || derivedMethod.IsNew()))
+                        return true;
+                }
+            }
 
             return true;
         }
