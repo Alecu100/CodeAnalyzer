@@ -1,27 +1,24 @@
-﻿namespace CodeEvaluator.UserInterface.Controls.Views
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using CodeEvaluator.Evaluation.Interfaces;
+using CodeEvaluator.Evaluation.Listeners;
+using CodeEvaluator.Packages.Core;
+using CodeEvaluator.Packages.Core.Interfaces;
+using CodeEvaluator.UserInterface.Interfaces;
+using CodeEvaluator.Workflows;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using StructureMap;
+
+namespace CodeEvaluator.UserInterface.Controls.Views
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.IO;
-    using System.Linq;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Input;
-
-    using CodeEvaluator.Evaluation.Interfaces;
-    using CodeEvaluator.Evaluation.Listeners;
-    using CodeEvaluator.Packages.Core;
-    using CodeEvaluator.Packages.Core.Interfaces;
-    using CodeEvaluator.UserInterface.Interfaces;
-    using CodeEvaluator.Workflows;
-
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-    using StructureMap;
-
     #region Using
 
     #endregion
@@ -37,7 +34,7 @@
 
         private void LstAvailableProjects_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var item = ((FrameworkElement)e.OriginalSource).DataContext as IProjectWrapper;
+            var item = ((FrameworkElement) e.OriginalSource).DataContext as IProjectWrapper;
             if (item != null)
             {
                 AvailableProjects.Remove(item);
@@ -47,12 +44,17 @@
 
         private void LstSelectedProjects_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var item = ((FrameworkElement)e.OriginalSource).DataContext as IProjectWrapper;
+            var item = ((FrameworkElement) e.OriginalSource).DataContext as IProjectWrapper;
             if (item != null)
             {
                 SelectedProjects.Remove(item);
                 AvailableProjects.Add(item);
             }
+        }
+
+        private void BtnClear_OnClick(object sender, RoutedEventArgs e)
+        {
+            cnvWorkflow.Children.Clear();
         }
 
         #region Constructors and Destructors
@@ -78,12 +80,8 @@
                         _currentSolution != null ? _currentSolution.FullName : string.Empty);
 
                 if (solution != null)
-                {
                     foreach (var project in solution.Projects)
-                    {
                         AddLoadedProject(project, currentProjectSettings);
-                    }
-                }
             }
             catch (Exception)
             {
@@ -95,13 +93,9 @@
             LoadedProjects.Add(project);
 
             if (currentProjectSettings != null && currentProjectSettings.SelectedProjects.Contains(project.UniqueName))
-            {
                 SelectedProjects.Add(project);
-            }
             else
-            {
                 AvailableProjects.Add(project);
-            }
 
             if (currentProjectSettings != null && currentProjectSettings.SelectedProjectName == project.UniqueName)
             {
@@ -171,13 +165,7 @@
         public ObservableCollection<IProjectWrapper> SelectedProjects { get; } =
             new ObservableCollection<IProjectWrapper>();
 
-        public ISystemSettings SystemSettings
-        {
-            get
-            {
-                return ObjectFactory.GetInstance<ISystemSettings>();
-            }
-        }
+        public ISystemSettings SystemSettings => ObjectFactory.GetInstance<ISystemSettings>();
 
         #endregion
 
@@ -222,34 +210,30 @@
         public void OnBeforeCloseSolution()
         {
             if (_currentSolution == null)
-            {
                 return;
-            }
 
             var selectedProjects = new List<string>();
 
             foreach (var selectedProject in SelectedProjects)
-            {
                 selectedProjects.Add(selectedProject.UniqueName);
-            }
 
             SystemSettings.AddOrReplaceProjectSettings(
                 new ProjectSettings
-                    {
-                        SelectedProjects = selectedProjects,
-                        SelectedClassName =
-                            _selectedClassDeclarationSyntax != null
-                                ? _selectedClassDeclarationSyntax.Identifier.ValueText
-                                : null,
-                        SelectedMethodName =
-                            _selectedMethodDeclarationSyntax != null
-                                ? _selectedMethodDeclarationSyntax.Identifier.ValueText
-                                : null,
-                        SelectedProjectName =
-                            _selectedProject != null ? _selectedProject.UniqueName : null,
-                        SelectedFileName = _selectedFile != null ? _selectedFile.Name : null,
-                        FullSolutionName = _currentSolution.FullName
-                    });
+                {
+                    SelectedProjects = selectedProjects,
+                    SelectedClassName =
+                        _selectedClassDeclarationSyntax != null
+                            ? _selectedClassDeclarationSyntax.Identifier.ValueText
+                            : null,
+                    SelectedMethodName =
+                        _selectedMethodDeclarationSyntax != null
+                            ? _selectedMethodDeclarationSyntax.Identifier.ValueText
+                            : null,
+                    SelectedProjectName =
+                        _selectedProject != null ? _selectedProject.UniqueName : null,
+                    SelectedFileName = _selectedFile != null ? _selectedFile.Name : null,
+                    FullSolutionName = _currentSolution.FullName
+                });
             SystemSettings.Save();
 
             //return VSConstants.S_OK;
@@ -270,9 +254,7 @@
             }
 
             foreach (var childNode in syntaxNode.ChildNodes())
-            {
                 AddAllClassesFromSyntaxNode(childNode);
-            }
         }
 
         private void AddClassesFromFile(string fileName)
@@ -294,12 +276,8 @@
             }
 
             foreach (var childNode in syntaxNode.ChildNodes())
-            {
                 if (!(childNode is ClassDeclarationSyntax))
-                {
                     AddMethodsFromClassBody(childNode);
-                }
-            }
         }
 
         private void BtnAddProject_OnClick(object sender, RoutedEventArgs e)
@@ -313,9 +291,7 @@
                     var project = selectedItem as IProjectWrapper;
 
                     if (project != null)
-                    {
                         itemsToAdd.Add(project);
-                    }
                 }
 
                 foreach (var project in itemsToAdd)
@@ -337,9 +313,7 @@
                     var project = selectedItem as IProjectWrapper;
 
                     if (project != null)
-                    {
                         itemsToRemove.Add(project);
-                    }
                 }
 
                 foreach (var project in itemsToRemove)
@@ -361,19 +335,15 @@
             var codeFileNames = new List<string>();
 
             foreach (var allSourceFileNamesFromProject in allSourceFileNamesFromProjects)
-            {
                 codeFileNames.AddRange(allSourceFileNamesFromProject.FileNames);
-            }
 
             var assemblyFileNames = new List<string>();
 
             foreach (var allReferencesFromProject in allReferencesFromProjects)
-            {
                 assemblyFileNames.Add(allReferencesFromProject.Path);
-            }
 
             staticWorkflowEvaluator.Evaluate(
-                new List<ISyntaxNodeEvaluatorListener> { new WorkflowEvaluatorEvaluatorListener() },
+                new List<ISyntaxNodeEvaluatorListener> {new WorkflowEvaluatorEvaluatorListener()},
                 codeFileNames,
                 _selectedClassDeclarationSyntax,
                 _selectedMethodDeclarationSyntax,
@@ -388,9 +358,7 @@
         private void CmbStartMethod_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0 && e.AddedItems[0] is MethodDeclarationSyntax)
-            {
                 _selectedMethodDeclarationSyntax = e.AddedItems[0] as MethodDeclarationSyntax;
-            }
         }
 
         private void CmbTargetClass_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -413,9 +381,7 @@
                 _selectedFile = projectItem;
 
                 foreach (var fileName in projectItem.FileNames)
-                {
                     AddClassesFromFile(fileName);
-                }
             }
         }
 
@@ -423,11 +389,11 @@
         {
             if (e.AddedItems.Count > 0 && e.AddedItems[0] is IProjectWrapper)
             {
-                var project = (IProjectWrapper)e.AddedItems[0];
+                var project = (IProjectWrapper) e.AddedItems[0];
                 LoadedProjectItems.Clear();
                 var sourceFilesProvider = ObjectFactory.GetInstance<IProjectFilesProvider>();
                 var allSourceFileNamesFromProjects =
-                    sourceFilesProvider.GetAllSourceFileNamesFromProjects(new List<IProjectWrapper> { project })
+                    sourceFilesProvider.GetAllSourceFileNamesFromProjects(new List<IProjectWrapper> {project})
                         .ToList();
 
                 _selectedProject = project;
@@ -435,9 +401,7 @@
                 allSourceFileNamesFromProjects.Sort(CompareSourceFiles);
 
                 foreach (var sourceFile in allSourceFileNamesFromProjects)
-                {
                     LoadedProjectItems.Add(sourceFile);
-                }
 
                 if (SelectedProjects.All(p => p != project))
                 {
