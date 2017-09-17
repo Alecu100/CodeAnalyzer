@@ -98,7 +98,7 @@ namespace CodeEvaluator.Evaluation.Common
                     break;
 
                 if (currentResolvedMethodType.IsInterfaceType == false &&
-                    lastResolvedMethodType.IsInterfaceType)
+                    lastResolvedMethodType.IsInterfaceType && !currentResolvedMethod.IsVirtualOrAbstract())
                 {
                     lastResolvedMethod = currentResolvedMethod;
                     break;
