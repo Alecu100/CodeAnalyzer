@@ -1,7 +1,7 @@
-﻿namespace CodeEvaluator.Evaluation.Members
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace CodeEvaluator.Evaluation.Members
+{
     public class EvaluatedObjectDirectReference : EvaluatedObjectReferenceBase
     {
         #region Public Properties
@@ -12,13 +12,7 @@
         /// <value>
         ///     The evaluatedObject.
         /// </value>
-        public override IReadOnlyList<EvaluatedObject> EvaluatedObjects
-        {
-            get
-            {
-                return _evaluatedObjects;
-            }
-        }
+        public override IReadOnlyList<EvaluatedObject> EvaluatedObjects => _evaluatedObjects;
 
         #endregion
 
@@ -38,6 +32,11 @@
             IdentifierText = referenceToCopy.IdentifierText;
 
             AssignEvaluatedObject(referenceToCopy);
+        }
+
+        public EvaluatedObjectDirectReference(EvaluatedObject evaluatedObject)
+        {
+            AssignEvaluatedObject(evaluatedObject);
         }
 
         #endregion

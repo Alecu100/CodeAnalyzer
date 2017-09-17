@@ -36,6 +36,9 @@ namespace CodeEvaluator.Evaluation.Common
 
                 EvaluatedMethodBase resolvedTargetMethod = null;
 
+                methodParametersToAssign[-1] = new EvaluatedObjectDirectReference();
+                methodParametersToAssign[-1].AssignEvaluatedObject(methodDelegate.TargetObject);
+
                 if (methodDelegate.TypeInfo == methodDelegate.TargetObject.TypeInfo)
                     resolvedTargetMethod = evaluatedMethodBase;
                 else if (!TryToResolveTargetMethod(
