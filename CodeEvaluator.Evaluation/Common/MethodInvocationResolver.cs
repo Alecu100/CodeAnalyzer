@@ -36,7 +36,9 @@ namespace CodeEvaluator.Evaluation.Common
 
                 EvaluatedMethodBase resolvedTargetMethod = null;
 
-                if (!TryToResolveTargetMethod(
+                if (methodDelegate.TypeInfo == methodDelegate.TargetObject.TypeInfo)
+                    resolvedTargetMethod = evaluatedMethodBase;
+                else if (!TryToResolveTargetMethod(
                     evaluatedMethodBase,
                     methodDelegate.TargetObject,
                     methodDelegate.TypeInfo,

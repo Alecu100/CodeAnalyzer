@@ -7,6 +7,6 @@ namespace CodeEvaluator.Evaluation.Common
     {
         public bool IsValid { get; set; }
 
-        public List<EvaluatedTypeInfo> ResolvedInheritanceChain { get; set; }
+        public List<EvaluatedTypeInfo> ResolvedInheritanceChain { get; set; } = new List<EvaluatedTypeInfo>();
     }
 }
