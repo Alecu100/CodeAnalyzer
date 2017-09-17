@@ -634,10 +634,10 @@ namespace CodeEvaluator.Evaluation.Members
 
                     evaluatedProperty.PropertySetAccessor = evaluatedPropertySetAccessor;
 
-                    var trackedMethodParameter = new EvaluatedMethodParameter();
-                    trackedMethodParameter.Index = 0;
-                    trackedMethodParameter.IdentifierText = "value";
-                    trackedMethodParameter.Declaration = accessorDeclarationSyntax;
+                    var evaluatedMethodParameter = new EvaluatedMethodParameter();
+                    evaluatedMethodParameter.Index = 0;
+                    evaluatedMethodParameter.IdentifierText = "value";
+                    evaluatedMethodParameter.Declaration = accessorDeclarationSyntax;
 
                     if (accessorDeclarationSyntax.Body != null)
                         evaluatedProperty.IsAutoProperty = false;
@@ -805,22 +805,34 @@ namespace CodeEvaluator.Evaluation.Members
                         }
                     }
 
-                    foreach (var trackedMethod in trackedVariableTypeInfo.SpecificMethods)
-                    foreach (var trackedMethodParameter in trackedMethod.Parameters)
+                    foreach (var evaluatedMethod in trackedVariableTypeInfo.SpecificMethods)
                     {
-                        var parameterSyntax = trackedMethodParameter.Declaration as ParameterSyntax;
-
-                        if (parameterSyntax != null)
+                        foreach (var evaluatedMethodParameter in evaluatedMethod.Parameters)
                         {
-                            var typeName = parameterSyntax.Type.GetText().ToString();
-                            var wellKnownTypeInfo = GetTypeInfo(
-                                typeName,
-                                trackedVariableTypeInfo.UsingDirectives,
-                                trackedVariableTypeInfo.NamespaceDeclarations);
+                            var parameterSyntax = evaluatedMethodParameter.Declaration as ParameterSyntax;
 
-                            if (wellKnownTypeInfo != null)
-                                trackedMethodParameter.TypeInfo = wellKnownTypeInfo;
+                            if (parameterSyntax != null)
+                            {
+                                var typeName = parameterSyntax.Type.GetText().ToString();
+                                var wellKnownTypeInfo = GetTypeInfo(
+                                    typeName,
+                                    trackedVariableTypeInfo.UsingDirectives,
+                                    trackedVariableTypeInfo.NamespaceDeclarations);
+
+                                if (wellKnownTypeInfo != null)
+                                    evaluatedMethodParameter.TypeInfo = wellKnownTypeInfo;
+                            }
                         }
+
+
+                        var returnedTypeName = ((MethodDeclarationSyntax) evaluatedMethod.Declaration).ReturnType
+                            .GetText()
+                            .ToString();
+                        var returnedTypeInfo = GetTypeInfo(
+                            returnedTypeName,
+                            trackedVariableTypeInfo.UsingDirectives,
+                            trackedVariableTypeInfo.NamespaceDeclarations);
+                        evaluatedMethod.ReturnType = returnedTypeInfo;
                     }
                 }
             }

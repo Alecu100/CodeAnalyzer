@@ -1,11 +1,10 @@
-﻿namespace CodeEvaluator.Evaluation.Common
+﻿using CodeEvaluator.Evaluation.Extensions;
+using CodeEvaluator.Evaluation.Interfaces;
+using CodeEvaluator.Evaluation.Members;
+using StructureMap;
+
+namespace CodeEvaluator.Evaluation.Common
 {
-    using global::CodeEvaluator.Evaluation.Extensions;
-    using global::CodeEvaluator.Evaluation.Interfaces;
-    using global::CodeEvaluator.Evaluation.Members;
-
-    using StructureMap;
-
     #region Using
 
     #endregion
@@ -48,6 +47,8 @@
             newExecutionFrameForMethodCall.CurrentMethod = targetMethod;
             newExecutionFrameForMethodCall.ThisReference = thisReference;
             newExecutionFrameForMethodCall.CurrentSyntaxNode = targetMethod.Declaration;
+            newExecutionFrameForMethodCall.ReturningMethodParameters =
+                new EvaluatedObjectDirectReference {TypeInfo = targetMethod.ReturnType};
 
             return newExecutionFrameForMethodCall;
         }
