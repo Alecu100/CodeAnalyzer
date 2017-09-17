@@ -55,7 +55,7 @@ namespace CodeEvaluator.Evaluation.Common
         }
 
         private bool TryToResolveTargetMethod(
-            EvaluatedMethodBase evaluatedMethodBase,
+            EvaluatedMethodBase baseSignatureMethod,
             EvaluatedObject targetObject,
             EvaluatedTypeInfo referenceType,
             ref EvaluatedMethodBase resolvedTargetMethod)
@@ -68,46 +68,42 @@ namespace CodeEvaluator.Evaluation.Common
 
             var classInheritanceChain = inheritanceChainResolverResult.ResolvedInheritanceChain;
 
-            resolvedTargetMethod = evaluatedMethodBase;
-
             if (classInheritanceChain.Count == 1)
-                return true;
-
-            for (var inheritanceIndex = 0; inheritanceIndex < classInheritanceChain.Count; inheritanceIndex++)
             {
-                var currentMethod = classInheritanceChain[inheritanceIndex]
-                    .SpecificMethods.FirstOrDefault(
-                        method => MethodSignatureComparer.HaveSameSignature(evaluatedMethodBase, method));
-
-                if (currentMethod == null)
-                    continue;
-
-                var derivedMethod = currentMethod;
-
-                if (inheritanceIndex < classInheritanceChain.Count - 1)
-                {
-                    derivedMethod = classInheritanceChain[inheritanceIndex + 1]
-                        .SpecificMethods.FirstOrDefault(
-                            method => MethodSignatureComparer.HaveSameSignature(evaluatedMethodBase, method));
-
-                    if (derivedMethod != null &&
-                        classInheritanceChain[inheritanceIndex].IsInterfaceType &&
-                        classInheritanceChain[inheritanceIndex + 1].IsInterfaceType == false &&
-                        !derivedMethod.IsVirtualOrAbstract())
-                        return true;
-
-                    if (!currentMethod.IsVirtualOrAbstract() &&
-                        classInheritanceChain[inheritanceIndex].IsInterfaceType == false)
-                        return true;
-
-                    if ((currentMethod.IsVirtualOrAbstract() || currentMethod.IsOverride()) && derivedMethod != null &&
-                        !(derivedMethod.IsOverride() || derivedMethod.IsNew()))
-                        return true;
-                }
-
-                resolvedTargetMethod = currentMethod;
+                resolvedTargetMethod = baseSignatureMethod;
+                return true;
             }
 
+            var lastResolvedMethod = baseSignatureMethod;
+            var lastResolvedMethodType = referenceType;
+
+            for (var inheritanceIndex = 1; inheritanceIndex < classInheritanceChain.Count; inheritanceIndex++)
+            {
+                var currentResolvedMethod = classInheritanceChain[inheritanceIndex]
+                    .SpecificMethods.FirstOrDefault(
+                        method => MethodSignatureComparer.HaveSameSignature(baseSignatureMethod, method));
+
+                var currentResolvedMethodType = classInheritanceChain[inheritanceIndex];
+
+                if (currentResolvedMethod == null)
+                    continue;
+
+                if ((lastResolvedMethod.IsVirtualOrAbstract() || lastResolvedMethod.IsOverride()) &&
+                    (!currentResolvedMethod.IsOverride() || currentResolvedMethod.IsNew()))
+                    break;
+
+                if (currentResolvedMethodType.IsInterfaceType == false &&
+                    lastResolvedMethodType.IsInterfaceType)
+                {
+                    lastResolvedMethod = currentResolvedMethod;
+                    break;
+                }
+
+                lastResolvedMethod = currentResolvedMethod;
+                lastResolvedMethodType = currentResolvedMethodType;
+            }
+
+            resolvedTargetMethod = lastResolvedMethod;
             return true;
         }
 

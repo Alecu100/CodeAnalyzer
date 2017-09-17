@@ -1,4 +1,5 @@
-﻿using CodeEvaluator.Evaluation.Interfaces;
+﻿using System;
+using CodeEvaluator.Evaluation.Interfaces;
 using CodeEvaluator.Evaluation.Members;
 
 namespace CodeEvaluator.Evaluation.Common
@@ -7,6 +8,10 @@ namespace CodeEvaluator.Evaluation.Common
     {
         public bool HaveSameSignature(EvaluatedMethodBase methodtoCompareAgainst, EvaluatedMethodBase methodToCompare)
         {
+            if (!string.Equals(methodtoCompareAgainst.IdentifierText, methodToCompare.IdentifierText,
+                StringComparison.InvariantCultureIgnoreCase))
+                return false;
+
             if (methodtoCompareAgainst.Parameters.Count != methodToCompare.Parameters.Count)
                 return false;
 
