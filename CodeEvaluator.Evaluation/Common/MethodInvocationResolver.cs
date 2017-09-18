@@ -23,13 +23,13 @@ namespace CodeEvaluator.Evaluation.Common
             List<EvaluatedObjectReferenceBase> mandatoryParameters,
             Dictionary<string, EvaluatedObjectReferenceBase> optionalParameters)
         {
-            foreach (var evaluatedMethodBase in methodDelegate.TargetMethodGroup)
+            foreach (var evaluatedMethodDerived in methodDelegate.TargetMethodGroup)
             {
                 var methodParametersToAssign = new Dictionary<int, EvaluatedObjectReferenceBase>();
 
                 if (
                     !TryToAssignParameters(
-                        evaluatedMethodBase,
+                        evaluatedMethodDerived,
                         mandatoryParameters,
                         optionalParameters,
                         methodParametersToAssign)) continue;
@@ -40,9 +40,9 @@ namespace CodeEvaluator.Evaluation.Common
                 methodParametersToAssign[-1].AssignEvaluatedObject(methodDelegate.TargetObject);
 
                 if (methodDelegate.TypeInfo == methodDelegate.TargetObject.TypeInfo)
-                    resolvedTargetMethod = evaluatedMethodBase;
+                    resolvedTargetMethod = evaluatedMethodDerived;
                 else if (!TryToResolveTargetMethod(
-                    evaluatedMethodBase,
+                    evaluatedMethodDerived,
                     methodDelegate.TargetObject,
                     methodDelegate.TypeInfo,
                     ref resolvedTargetMethod))
@@ -60,7 +60,7 @@ namespace CodeEvaluator.Evaluation.Common
         }
 
         private bool TryToResolveTargetMethod(
-            EvaluatedMethodBase baseSignatureMethod,
+            EvaluatedMethodBase derivedSignatureMethod,
             EvaluatedObject targetObject,
             EvaluatedTypeInfo referenceType,
             ref EvaluatedMethodBase resolvedTargetMethod)
@@ -75,23 +75,31 @@ namespace CodeEvaluator.Evaluation.Common
 
             if (classInheritanceChain.Count == 1)
             {
-                resolvedTargetMethod = baseSignatureMethod;
+                resolvedTargetMethod = derivedSignatureMethod;
                 return true;
             }
 
-            var lastResolvedMethod = baseSignatureMethod;
-            var lastResolvedMethodType = referenceType;
+            EvaluatedMethodBase lastResolvedMethod = null;
+            EvaluatedTypeInfo lastResolvedMethodType = null;
 
             for (var inheritanceIndex = 1; inheritanceIndex < classInheritanceChain.Count; inheritanceIndex++)
             {
                 var currentResolvedMethod = classInheritanceChain[inheritanceIndex]
                     .SpecificMethods.FirstOrDefault(
-                        method => MethodSignatureComparer.HaveSameSignature(baseSignatureMethod, method));
+                        method => MethodSignatureComparer.HaveSameSignature(derivedSignatureMethod, method));
 
                 var currentResolvedMethodType = classInheritanceChain[inheritanceIndex];
 
                 if (currentResolvedMethod == null)
                     continue;
+
+                if (lastResolvedMethod == null)
+                {
+                    lastResolvedMethod = currentResolvedMethod;
+                    lastResolvedMethodType = currentResolvedMethodType;
+
+                    continue;
+                }
 
                 if ((lastResolvedMethod.IsVirtualOrAbstract() || lastResolvedMethod.IsOverride()) &&
                     (!currentResolvedMethod.IsOverride() || currentResolvedMethod.IsNew()))

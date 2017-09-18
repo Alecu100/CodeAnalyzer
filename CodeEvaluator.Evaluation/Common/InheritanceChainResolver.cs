@@ -13,6 +13,11 @@ namespace CodeEvaluator.Evaluation.Common
             ResolveInheritanceChainRecursive(baseType,
                 derivedType, inheritanceChainResolverResult);
 
+            if (inheritanceChainResolverResult.IsValid)
+            {
+                inheritanceChainResolverResult.ResolvedInheritanceChain.Reverse();
+            }
+
             return inheritanceChainResolverResult;
         }
 
