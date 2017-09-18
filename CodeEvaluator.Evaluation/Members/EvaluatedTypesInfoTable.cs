@@ -5,6 +5,7 @@
     using System.Text;
 
     using CodeEvaluator.Dto;
+    using CodeEvaluator.Evaluation.Extensions;
     using CodeEvaluator.Evaluation.Interfaces;
 
     using Microsoft.CodeAnalysis;
@@ -20,6 +21,8 @@
 
         private readonly List<EvaluatedTypeInfo> _evaluatedTypeInfos = new List<EvaluatedTypeInfo>();
 
+        private readonly Dictionary<string, EvaluatedTypeInfo> _evaluatedTypeInfosHashMap = new Dictionary<string, EvaluatedTypeInfo>();
+
         #endregion
 
         #region Public Properties
@@ -30,7 +33,7 @@
         /// <value>
         ///     The well known types.
         /// </value>
-        public IReadOnlyList<EvaluatedTypeInfo> InternalTypeInfos => _evaluatedTypeInfos;
+        public IReadOnlyList<EvaluatedTypeInfo> EvaluatedTypeInfos => _evaluatedTypeInfos;
 
         #endregion
 
@@ -49,15 +52,20 @@
             List<MemberDeclarationSyntax> namespaceDeclarations)
         {
             var fullNamespace = GetFullTypeNamespace(namespaceDeclarations, typeName);
-            var foundType = _evaluatedTypeInfos.FirstOrDefault(typeInfo => typeInfo.FullIdentifierText == fullNamespace);
 
-            if (foundType != null) return foundType;
+            if (_evaluatedTypeInfosHashMap.ContainsKey(fullNamespace))
+            {
+                return _evaluatedTypeInfosHashMap[fullNamespace];
+            }
 
             foreach (var usingDirectiveSyntax in usingDirectives)
             {
                 fullNamespace = GetFullTypeNamespace(usingDirectiveSyntax, typeName);
-                foundType = _evaluatedTypeInfos.FirstOrDefault(typeInfo => typeInfo.FullIdentifierText == fullNamespace);
-                if (foundType != null) return foundType;
+
+                if (_evaluatedTypeInfosHashMap.ContainsKey(fullNamespace))
+                {
+                    return _evaluatedTypeInfosHashMap[fullNamespace];
+                }
             }
 
             return null;
@@ -121,6 +129,7 @@
         public void ClearTypeInfos()
         {
             _evaluatedTypeInfos.Clear();
+            _evaluatedTypeInfosHashMap.Clear();
         }
 
         public void RebuildExternalTypeInfos(IList<EvaluatedTypeInfoDto> externalTypeInfos)
@@ -261,6 +270,7 @@
                 evaluatedTypeInfosDtosMappings[evaluatedTypeInfoDto] = evaluatedTypeInfo;
 
                 _evaluatedTypeInfos.Add(evaluatedTypeInfo);
+                _evaluatedTypeInfosHashMap[evaluatedTypeInfo.FullIdentifierText] = evaluatedTypeInfo;
             }
 
             foreach (var evaluatedTypeInfo in _evaluatedTypeInfos)
@@ -304,7 +314,7 @@
 
         private void BuildEvaluatedTypeInfosStaticSharedObjects()
         {
-            foreach (var evaluatedTypeInfo in _evaluatedTypeInfos)
+            foreach (var evaluatedTypeInfo in _evaluatedTypeInfos.Where(typeInfo => typeInfo.IsWellKnown()))
                 foreach (var evaluatedField in evaluatedTypeInfo.SpecificFields)
                     if ((evaluatedField.MemberFlags & EMemberFlags.Static) != 0)
                     {
@@ -319,7 +329,7 @@
                         evaluatedTypeInfo.SharedStaticObject.ModifiableFields.Add(evaluatedObjectReference);
                     }
 
-            foreach (var evaluatedTypeInfo in _evaluatedTypeInfos)
+            foreach (var evaluatedTypeInfo in _evaluatedTypeInfos.Where(typeInfo => typeInfo.IsWellKnown()))
             {
                 var baseType =
                     evaluatedTypeInfo.BaseTypeInfos.FirstOrDefault(
@@ -428,12 +438,13 @@
             var typeDeclarationSyntax = (BaseTypeDeclarationSyntax)syntaxNode;
             var fullNamespace = GetFullTypeNamespace(namespaceDeclarations, typeDeclarationSyntax.Identifier.ValueText);
 
+
             var trackedVariableTypeInfo = GetTypeInfo(
                 typeDeclarationSyntax.Identifier.ValueText,
                 usingDirectives,
                 namespaceDeclarations);
 
-            if (trackedVariableTypeInfo == null)
+            if (!_evaluatedTypeInfosHashMap.ContainsKey(fullNamespace))
             {
                 trackedVariableTypeInfo = new EvaluatedTypeInfo();
                 trackedVariableTypeInfo.Declaration = typeDeclarationSyntax;
@@ -455,7 +466,11 @@
 
             namespaceDeclarationSyntaxesClone.Add(typeDeclarationSyntax);
 
-            _evaluatedTypeInfos.Add(trackedVariableTypeInfo);
+            if (!_evaluatedTypeInfosHashMap.ContainsKey(fullNamespace))
+            {
+                _evaluatedTypeInfos.Add(trackedVariableTypeInfo);
+                _evaluatedTypeInfosHashMap[fullNamespace] = trackedVariableTypeInfo;
+            }
 
             foreach (var childNode in typeDeclarationSyntax.ChildNodes())
                 BuildEvaluatedTypeInfos(
@@ -733,7 +748,7 @@
             {
                 var baseTypeDeclarationSyntax = trackedVariableTypeInfo.Declaration as BaseTypeDeclarationSyntax;
 
-                if (baseTypeDeclarationSyntax != null)
+                if (baseTypeDeclarationSyntax != null && trackedVariableTypeInfo.IsWellKnown())
                 {
                     if (baseTypeDeclarationSyntax.BaseList != null)
                         foreach (var baseTypeSyntax in baseTypeDeclarationSyntax.BaseList.Types)

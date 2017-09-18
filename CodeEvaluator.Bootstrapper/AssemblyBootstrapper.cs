@@ -14,6 +14,8 @@ namespace CodeEvaluator.Bootstrapper
             var shouldStillTryToLoadAssemblies = true;
 
             assemblyNames.Sort();
+            searchDirectories = searchDirectories.Distinct().ToList();
+            assemblyNames = assemblyNames.Distinct().ToList();
 
             foreach (var assemblyName in assemblyNames)
             {

@@ -22,7 +22,7 @@
         /// <value>
         ///     The well known types.
         /// </value>
-        IReadOnlyList<EvaluatedTypeInfo> InternalTypeInfos { get; }
+        IReadOnlyList<EvaluatedTypeInfo> EvaluatedTypeInfos { get; }
 
         #endregion
 

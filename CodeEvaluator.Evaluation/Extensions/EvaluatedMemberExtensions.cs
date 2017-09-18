@@ -27,6 +27,11 @@ namespace CodeEvaluator.Evaluation.Extensions
             return (method.MemberFlags & EMemberFlags.New) != 0;
         }
 
+        public static bool IsWellKnown(this EvaluatedTypeInfo evaluatedTypeInfo)
+        {
+            return (evaluatedTypeInfo.MemberFlags & EMemberFlags.External) == 0;
+        }
+
 
         public static void ForEach(
             this IReadOnlyCollection<EvaluatedObject> evaluatedObjects,
