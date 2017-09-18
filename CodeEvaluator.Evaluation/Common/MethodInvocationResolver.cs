@@ -180,7 +180,7 @@ namespace CodeEvaluator.Evaluation.Common
             var inheritanceChainResolverResult =
                 InheritanceChainResolver.ResolveInheritanceChain(parameterValue.TypeInfo, currentParameter.TypeInfo);
 
-            return inheritanceChainResolverResult.IsValid;
+            return inheritanceChainResolverResult.IsValid == false;
         }
     }
 }
