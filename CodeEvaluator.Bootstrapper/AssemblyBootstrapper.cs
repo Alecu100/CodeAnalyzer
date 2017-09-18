@@ -13,6 +13,8 @@ namespace CodeEvaluator.Bootstrapper
             var assembliesQueue = new List<string>();
             var shouldStillTryToLoadAssemblies = true;
 
+            assemblyNames.Sort();
+
             foreach (var assemblyName in assemblyNames)
             {
                 assembliesQueue.Add(assemblyName);
@@ -52,6 +54,8 @@ namespace CodeEvaluator.Bootstrapper
             {
                 if (TryToLoadAssemblyFromDirectory(searchDirectory, assemblyName))
                 {
+                    searchDirectories.Remove(searchDirectory);
+                    searchDirectories.Insert(0, searchDirectory);
                     return true;
                 }
             }
