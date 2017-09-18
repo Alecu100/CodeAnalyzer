@@ -52,7 +52,7 @@
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
-            var reference = new EvaluatedObjectDirectReference();
+            EvaluatedObjectReferenceBase reference = null;
 
             foreach (var evaluatedObject in
                 workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects)
@@ -61,7 +61,7 @@
                 {
                     if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                     {
-                        reference.AssignEvaluatedObject(field);
+                        reference = field;
                         field.EvaluatedObjects.ForEach(
                             currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
                         foundReference = true;
@@ -80,13 +80,13 @@
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
-            var reference = new EvaluatedObjectDirectReference();
+            EvaluatedObjectReferenceBase reference = null;
 
             foreach (var localReference in workflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences)
             {
                 if (localReference.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                 {
-                    reference.AssignEvaluatedObject(localReference);
+                    reference = localReference;
                     localReference.EvaluatedObjects.ForEach(
                         currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
                     foundReference = true;
@@ -104,7 +104,7 @@
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
-            var reference = new EvaluatedObjectDirectReference();
+            EvaluatedObjectReferenceBase reference = null;
 
             foreach (var thisEvaluatedObject in
                 workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.EvaluatedObjects)
@@ -113,7 +113,7 @@
                 {
                     if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText)
                     {
-                        reference.AssignEvaluatedObject(field);
+                        reference = field;
                         field.EvaluatedObjects.ForEach(
                             currentObject => currentObject.PushHistory(workflowEvaluatorExecutionStack));
                         foundReference = true;
