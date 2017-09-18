@@ -122,7 +122,7 @@ namespace CodeEvaluator.Evaluation.Common
             {
                 var currentParameter = evaluatedMethodBase.Parameters[parameterIndex];
 
-                if (currentParameter.HasDefault == false && mandatoryParameters.Count >= parameterIndex)
+                if (currentParameter.HasDefault == false && mandatoryParameters.Count <= parameterIndex)
                     return false;
 
                 EvaluatedObjectReferenceBase currentParameterValue = null;

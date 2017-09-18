@@ -43,7 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMyParameterType1.cs" />
+    <Compile Include="IMyParameterType2.cs" />
     <Compile Include="MyClass1.cs" />
+    <Compile Include="MyParameterType1.cs" />
+    <Compile Include="MyParameterType2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

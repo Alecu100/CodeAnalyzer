@@ -59,13 +59,12 @@
                         continue;
                     }
 
-                    var trackedVariableReference = new EvaluatedObjectDirectReference();
-                    trackedVariableReference.Declaration = trackedMethodParameter.Declaration;
-                    trackedVariableReference.TypeInfo = trackedMethodParameter.TypeInfo;
-                    trackedVariableReference.Identifier = trackedMethodParameter.Identifier;
-                    trackedVariableReference.IdentifierText = trackedMethodParameter.IdentifierText;
-                    trackedVariableReference.AssignEvaluatedObject(passedParameters);
-                    WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences.Add(trackedVariableReference);
+                    passedParameters.Declaration = trackedMethodParameter.Declaration;
+                    passedParameters.Identifier = trackedMethodParameter.Identifier;
+                    passedParameters.IdentifierText = trackedMethodParameter.IdentifierText;
+                    passedParameters.TypeInfo = trackedMethodParameter.TypeInfo;
+
+                    WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences.Add(passedParameters);
                     WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.Remove(i);
                 }
                 else

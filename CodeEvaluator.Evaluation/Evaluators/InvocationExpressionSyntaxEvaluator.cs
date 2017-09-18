@@ -103,17 +103,17 @@ namespace CodeEvaluator.Evaluation.Evaluators
                                 {
                                     workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[
                                         evaluatedObjectReferenceBase.Key] = evaluatedObjectReferenceBase.Value;
-
-                                    var methodEvaluator =
-                                        SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
-                                            methodInvocationResolverResult.ResolvedMethod.Declaration,
-                                            EEvaluatorActions.None);
-
-                                    if (methodEvaluator != null)
-                                        methodEvaluator.EvaluateSyntaxNode(
-                                            methodInvocationResolverResult.ResolvedMethod.Declaration,
-                                            workflowEvaluatorExecutionStack);
                                 }
+
+                                var methodEvaluator =
+                                       SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
+                                           methodInvocationResolverResult.ResolvedMethod.Declaration,
+                                           EEvaluatorActions.None);
+
+                                if (methodEvaluator != null)
+                                    methodEvaluator.EvaluateSyntaxNode(
+                                        methodInvocationResolverResult.ResolvedMethod.Declaration,
+                                        workflowEvaluatorExecutionStack);
                             }
                         }
                     }
