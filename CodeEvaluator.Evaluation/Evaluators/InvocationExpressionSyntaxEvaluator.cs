@@ -61,7 +61,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
                             var argumentSyntax = invocationExpressionSyntax.ArgumentList.Arguments[i];
 
                             var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
-                                argumentSyntax,
+                                argumentSyntax.Expression,
                                 EEvaluatorActions.GetMember);
 
                             if (nodeEvaluator != null)

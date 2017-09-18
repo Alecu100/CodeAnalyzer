@@ -86,6 +86,7 @@
     <Compile Include="Configuration\StandardSetupBootstrapper.cs" />
     <Compile Include="Enums\EEvaluatorActions.cs" />
     <Compile Include="Enums\EMemberFlags.cs" />
+    <Compile Include="Evaluators\ArgumentSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForConstructor.cs" />
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMember.cs" />
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMethod.cs" />

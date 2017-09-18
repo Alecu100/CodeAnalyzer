@@ -83,7 +83,12 @@
 
             if (syntaxNode is IdentifierNameSyntax)
             {
-                return  GetIdentifierNameSyntaxEvaluator(currentAction);
+                return GetIdentifierNameSyntaxEvaluator(currentAction);
+            }
+
+            if (syntaxNode is ArgumentSyntax)
+            {
+                return new ArgumentSyntaxEvaluator();
             }
 
             if (syntaxNode is ObjectCreationExpressionSyntax)
@@ -96,7 +101,6 @@
 
         private ISyntaxNodeEvaluator GetIdentifierNameSyntaxEvaluator(EEvaluatorActions currentAction)
         {
-
             if (currentAction == EEvaluatorActions.GetMethod)
             {
                 return new IdentifierNameSyntaxEvaluatorForMethod();
