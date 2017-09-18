@@ -25,8 +25,8 @@
             SyntaxNode syntaxNode,
             CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
-            _baseMethodDeclarationSyntax = (MethodDeclarationSyntax) syntaxNode;
-            _methodDeclarationSyntax = (MethodDeclarationSyntax) syntaxNode;
+            _baseMethodDeclarationSyntax = (MethodDeclarationSyntax)syntaxNode;
+            _methodDeclarationSyntax = (MethodDeclarationSyntax)syntaxNode;
             WorkflowEvaluatorExecutionStack = workflowEvaluatorExecutionStack;
 
             InitializeThisVariable();
@@ -34,7 +34,9 @@
             InitializeParameters();
 
             var syntaxNodeEvaluator =
-                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(_baseMethodDeclarationSyntax.Body, EEvaluatorActions.None);
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
+                    _baseMethodDeclarationSyntax.Body,
+                    EEvaluatorActions.None);
 
             if (syntaxNodeEvaluator != null)
             {
@@ -52,9 +54,31 @@
         {
             _thisReference = WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[-1];
             WorkflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.Remove(-1);
-            _evaluatedMethod =
-                _thisReference.TypeInfo.AccesibleMethods.First(
-                    method => method.IdentifierText == _methodDeclarationSyntax.Identifier.ValueText);
+            _evaluatedMethod = _thisReference.TypeInfo.AccesibleMethods.FirstOrDefault(
+                method =>
+                    {
+                        var methodDeclarationSyntax = (MethodDeclarationSyntax)method.Declaration;
+
+                        if (methodDeclarationSyntax.Identifier.ValueText
+                            != _methodDeclarationSyntax.Identifier.ValueText)
+                        {
+                            return false;
+                        }
+
+                        if (methodDeclarationSyntax.ParameterList.GetText().ToString()
+                            != _methodDeclarationSyntax.ParameterList.GetText().ToString())
+                        {
+                            return false;
+                        }
+
+                        if (methodDeclarationSyntax.ReturnType.GetText().ToString()
+                            != _methodDeclarationSyntax.ReturnType.GetText().ToString())
+                        {
+                            return false;
+                        }
+
+                        return true;
+                    });
         }
 
         #endregion
