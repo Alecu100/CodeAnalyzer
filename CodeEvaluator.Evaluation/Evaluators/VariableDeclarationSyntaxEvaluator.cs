@@ -10,7 +10,7 @@
 
     #endregion
 
-    public class VariableDeclarationSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class VariableDeclarationSyntaxEvaluator : SyntaxNodeEvaluator
     {
         #region Protected Methods and Operators
 

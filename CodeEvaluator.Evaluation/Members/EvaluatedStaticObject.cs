@@ -8,12 +8,12 @@
         {
         }
 
-        public override IReadOnlyList<EvaluatedObjectReferenceBase> Fields
+        public override IReadOnlyList<EvaluatedObjectReference> Fields
         {
             get { return _fields; }
         }
 
-        public List<EvaluatedObjectReferenceBase> ModifiableFields
+        public List<EvaluatedObjectReference> ModifiableFields
         {
             get { return _fields; }
         }

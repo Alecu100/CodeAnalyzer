@@ -8,8 +8,8 @@
     public interface IMethodInvocationResolver
     {
         MethodInvocationResolverResult ResolveMethodInvocation(
-            EvaluatedDelegate methodDelegate,
-            List<EvaluatedObjectReferenceBase> mandatoryParameters,
-            Dictionary<string, EvaluatedObjectReferenceBase> optionalParameters);
+            EvaluatedInvokableObject methodInvokableObject,
+            List<EvaluatedObjectReference> mandatoryParameters,
+            Dictionary<string, EvaluatedObjectReference> optionalParameters);
     }
 }

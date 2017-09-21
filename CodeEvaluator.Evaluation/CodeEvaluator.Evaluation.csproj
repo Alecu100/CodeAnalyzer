@@ -112,7 +112,7 @@
     <Compile Include="Members\EvaluatedMethod.cs" />
     <Compile Include="Members\EvaluatedMethodBase.cs" />
     <Compile Include="Members\EvaluatedMethodParameter.cs" />
-    <Compile Include="Members\EvaluatedDelegate.cs" />
+    <Compile Include="Members\EvaluatedInvokableObject.cs" />
     <Compile Include="Members\EvaluatedObjectDirectReference.cs" />
     <Compile Include="Members\EvaluatedObjectIndirectReference.cs" />
     <Compile Include="Members\EvaluatedProperty.cs" />
@@ -123,11 +123,11 @@
     <Compile Include="Members\EvaluatedObject.cs" />
     <Compile Include="Members\EvaluatedObjectAllocator.cs" />
     <Compile Include="Members\EvaluatedObjectHistory.cs" />
-    <Compile Include="Members\EvaluatedObjectReferenceBase.cs" />
+    <Compile Include="Members\EvaluatedObjectReference.cs" />
     <Compile Include="Members\EvaluatedObjectsHeap.cs" />
     <Compile Include="Members\EvaluatedTypesInfoTable.cs" />
     <Compile Include="Evaluators\BaseMethodDeclarationSyntaxEvaluator.cs" />
-    <Compile Include="Evaluators\BaseSyntaxNodeEvaluator.cs" />
+    <Compile Include="Evaluators\SyntaxNodeEvaluator.cs" />
     <Compile Include="Evaluators\BlockSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\ConstructorDeclarationSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\EqualsValueClauseSyntaxEvaluator.cs" />

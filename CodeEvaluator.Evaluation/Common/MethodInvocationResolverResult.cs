@@ -11,6 +11,6 @@ namespace CodeEvaluator.Evaluation.Common
 
         public EvaluatedMethodBase ResolvedMethod { get; set; }
 
-        public Dictionary<int, EvaluatedObjectReferenceBase> ResolvedPassedParameters { get; set; }
+        public Dictionary<int, EvaluatedObjectReference> ResolvedPassedParameters { get; set; }
     }
 }

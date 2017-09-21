@@ -11,11 +11,11 @@
 
     #endregion
 
-    public abstract class BaseSyntaxNodeEvaluator : ISyntaxNodeEvaluator
+    public abstract class SyntaxNodeEvaluator : ISyntaxNodeEvaluator
     {
         #region Constructors and Destructors
 
-        protected BaseSyntaxNodeEvaluator()
+        protected SyntaxNodeEvaluator()
         {
             ObjectFactory.BuildUp(this);
         }

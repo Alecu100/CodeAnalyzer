@@ -11,7 +11,7 @@
 
     #endregion
 
-    public class IfStatementSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class IfStatementSyntaxEvaluator : SyntaxNodeEvaluator
     {
         #region Protected Methods and Operators
 

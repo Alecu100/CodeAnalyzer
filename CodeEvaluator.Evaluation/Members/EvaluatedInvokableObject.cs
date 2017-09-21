@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
 
-    public class EvaluatedDelegate : EvaluatedObject
+    public class EvaluatedInvokableObject : EvaluatedObject
     {
-        public EvaluatedDelegate(
+        public EvaluatedInvokableObject(
             EvaluatedTypeInfo referenceType,
             EvaluatedObject evaluatedObject,
             IEnumerable<EvaluatedMethod> methodGroups,
@@ -19,7 +19,7 @@
             TargetMethodGroup.AddRange(methodGroups);
         }
 
-        public EvaluatedDelegate(EvaluatedTypeInfo referenceType, EvaluatedMethodBase method)
+        public EvaluatedInvokableObject(EvaluatedTypeInfo referenceType, EvaluatedMethodBase method)
         {
             Method = method;
             TypeInfo = referenceType;
@@ -37,7 +37,7 @@
             }
         }
 
-        public override IReadOnlyList<EvaluatedObjectReferenceBase> Fields
+        public override IReadOnlyList<EvaluatedObjectReference> Fields
         {
             get
             {

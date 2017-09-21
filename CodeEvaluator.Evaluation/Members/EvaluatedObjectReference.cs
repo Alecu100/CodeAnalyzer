@@ -10,7 +10,7 @@
     #endregion
 
     [Serializable]
-    public abstract class EvaluatedObjectReferenceBase : EvaluatedMember
+    public abstract class EvaluatedObjectReference : EvaluatedMember
     {
         #region SpecificFields
 
@@ -72,7 +72,7 @@
         /// <param name="evaluatedObject">The evaluatedObject.</param>
         public abstract void AssignEvaluatedObject(EvaluatedObject evaluatedObject);
 
-        public abstract void AssignEvaluatedObject(EvaluatedObjectReferenceBase evaluatedObjectReference);
+        public abstract void AssignEvaluatedObject(EvaluatedObjectReference evaluatedObjectReference);
 
         public abstract void AssignEvaluatedObjects(IEnumerable<EvaluatedObject> evaluatedObjects);
 

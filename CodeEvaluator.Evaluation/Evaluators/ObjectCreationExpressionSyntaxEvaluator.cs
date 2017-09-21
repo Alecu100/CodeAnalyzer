@@ -6,7 +6,7 @@
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    public class ObjectCreationExpressionSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class ObjectCreationExpressionSyntaxEvaluator : SyntaxNodeEvaluator
     {
         #region Protected Methods and Operators
 
@@ -32,12 +32,12 @@
 
                     foreach (var evaluatedObject in accessedReferenceMember.EvaluatedObjects)
                     {
-                        if (!(evaluatedObject is EvaluatedDelegate))
+                        if (!(evaluatedObject is EvaluatedInvokableObject))
                         {
                             continue;
                         }
 
-                        var evaluatedDelegate = (EvaluatedDelegate) evaluatedObject;
+                        var evaluatedDelegate = (EvaluatedInvokableObject) evaluatedObject;
 
                         var currentMethod =
                             evaluatedDelegate.Method;

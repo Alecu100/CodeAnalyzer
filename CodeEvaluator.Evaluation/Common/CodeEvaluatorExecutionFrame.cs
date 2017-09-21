@@ -18,7 +18,7 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The accessed reference.
         /// </value>
-        public EvaluatedObjectReferenceBase MemberAccessReference { get; set; }
+        public EvaluatedObjectReference MemberAccessReference { get; set; }
 
         /// <summary>
         ///     Gets or sets the current method.
@@ -42,7 +42,7 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The local variables.
         /// </value>
-        public List<EvaluatedObjectReferenceBase> LocalReferences { get; } = new List<EvaluatedObjectReferenceBase>();
+        public List<EvaluatedObjectReference> LocalReferences { get; } = new List<EvaluatedObjectReference>();
 
         /// <summary>
         ///     Gets or sets the stack variables.
@@ -50,8 +50,8 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The stack variables.
         /// </value>
-        public Dictionary<int, EvaluatedObjectReferenceBase> PassedMethodParameters { get; } =
-            new Dictionary<int, EvaluatedObjectReferenceBase>();
+        public Dictionary<int, EvaluatedObjectReference> PassedMethodParameters { get; } =
+            new Dictionary<int, EvaluatedObjectReference>();
 
         /// <summary>
         ///     Gets the returning method parameters.
@@ -59,7 +59,7 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The returning method parameters.
         /// </value>
-        public EvaluatedObjectReferenceBase ReturningMethodParameters { get; set; }
+        public EvaluatedObjectReference ReturningMethodParameters { get; set; }
 
         /// <summary>
         ///     Gets or sets the this reference.
@@ -67,7 +67,7 @@ namespace CodeEvaluator.Evaluation.Common
         /// <value>
         ///     The this reference.
         /// </value>
-        public EvaluatedObjectReferenceBase ThisReference { get; set; }
+        public EvaluatedObjectReference ThisReference { get; set; }
 
         #endregion
     }

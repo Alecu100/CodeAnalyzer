@@ -62,7 +62,7 @@
                 if (foundMethod != null)
                 {
                     var evaluatedDelegate =
-                        new EvaluatedDelegate(
+                        new EvaluatedInvokableObject(
                             workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.TypeInfo,
                             evaluatedObject,
                             foundMethods,
@@ -80,7 +80,7 @@
                     foreach (var field in evaluatedObject.Fields)
                     {
                         if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText
-                            && field.EvaluatedObjects.All(evaluatedObject2 => evaluatedObject2 is EvaluatedDelegate))
+                            && field.EvaluatedObjects.All(evaluatedObject2 => evaluatedObject2 is EvaluatedInvokableObject))
                         {
                             reference.AssignEvaluatedObject(field);
                             foundReference = true;
@@ -105,7 +105,7 @@
             foreach (var localReference in workflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences)
             {
                 if (localReference.IdentifierText == identifierNameSyntax.Identifier.ValueText
-                    && localReference.EvaluatedObjects.All(evaluatedObject => evaluatedObject is EvaluatedDelegate))
+                    && localReference.EvaluatedObjects.All(evaluatedObject => evaluatedObject is EvaluatedInvokableObject))
                 {
                     reference.AssignEvaluatedObject(localReference);
                     foundReference = true;
@@ -137,7 +137,7 @@
 
                 if (foundMethod != null)
                 {
-                    var evaluatedDelegate = new EvaluatedDelegate(
+                    var evaluatedDelegate = new EvaluatedInvokableObject(
                         thisEvaluatedObject.TypeInfo,
                         thisEvaluatedObject,
                         foundMethods,
@@ -155,7 +155,7 @@
                     foreach (var field in thisEvaluatedObject.Fields)
                     {
                         if (field.IdentifierText == identifierNameSyntax.Identifier.ValueText
-                            && field.EvaluatedObjects.All(evaluatedObject => evaluatedObject is EvaluatedDelegate))
+                            && field.EvaluatedObjects.All(evaluatedObject => evaluatedObject is EvaluatedInvokableObject))
                         {
                             reference.AssignEvaluatedObject(field);
                             foundReference = true;

@@ -12,7 +12,7 @@
 
     #endregion
 
-    public class BaseMethodDeclarationSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class BaseMethodDeclarationSyntaxEvaluator : SyntaxNodeEvaluator
     {
         #region Public Properties
 
@@ -24,7 +24,7 @@
 
         protected BaseMethodDeclarationSyntax _baseMethodDeclarationSyntax;
 
-        protected EvaluatedObjectReferenceBase _thisReference;
+        protected EvaluatedObjectReference _thisReference;
 
         protected EvaluatedMethodBase _evaluatedMethod;
 

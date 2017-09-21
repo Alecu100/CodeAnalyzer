@@ -27,7 +27,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
             foreach (var evaluatedConstructor in evaluatedTypeInfo.Constructors)
             {
                 var evaluatedDelegate =
-                    new EvaluatedDelegate(
+                    new EvaluatedInvokableObject(
                         evaluatedTypeInfo, evaluatedConstructor);
                 reference.AssignEvaluatedObject(evaluatedDelegate);
             }

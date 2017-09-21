@@ -5,7 +5,7 @@
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    public class ArgumentSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class ArgumentSyntaxEvaluator : SyntaxNodeEvaluator
     {
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,

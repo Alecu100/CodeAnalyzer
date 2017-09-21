@@ -9,7 +9,7 @@
 
     #endregion
 
-    public class EqualsValueClauseSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class EqualsValueClauseSyntaxEvaluator : SyntaxNodeEvaluator
     {
         #region Protected Methods and Operators
 

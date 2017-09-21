@@ -9,7 +9,7 @@
 
     #endregion
 
-    public class MemberAccessExpressionSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class MemberAccessExpressionSyntaxEvaluator : SyntaxNodeEvaluator
     {
         private EEvaluatorActions _currentAction;
 
