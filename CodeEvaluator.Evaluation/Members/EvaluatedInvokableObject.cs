@@ -1,58 +1,52 @@
-﻿namespace CodeEvaluator.Evaluation.Members
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace CodeEvaluator.Evaluation.Members
+{
     public class EvaluatedInvokableObject : EvaluatedObject
     {
         public EvaluatedInvokableObject(
             EvaluatedTypeInfo referenceType,
             EvaluatedObject evaluatedObject,
-            IEnumerable<EvaluatedMethod> methodGroups,
-            EvaluatedMethodBase method)
+            IEnumerable<EvaluatedMethodBase> methodGroups)
         {
             var evaluatedObjectReference = new EvaluatedObjectDirectReference();
             evaluatedObjectReference.AssignEvaluatedObject(evaluatedObject);
 
             _fields.Add(evaluatedObjectReference);
-            Method = method;
             TypeInfo = referenceType;
             TargetMethodGroup.AddRange(methodGroups);
         }
 
-        public EvaluatedInvokableObject(EvaluatedTypeInfo referenceType, EvaluatedMethodBase method)
+        public EvaluatedInvokableObject(
+            EvaluatedTypeInfo referenceType,
+            IEnumerable<EvaluatedMethodBase> methodGroups)
         {
-            Method = method;
+            TypeInfo = referenceType;
+            TargetMethodGroup.AddRange(methodGroups);
+        }
+
+        public EvaluatedInvokableObject(EvaluatedTypeInfo referenceType)
+        {
             TypeInfo = referenceType;
         }
 
-        public EvaluatedMethodBase Method { get; }
-
-        public List<EvaluatedMethod> TargetMethodGroup { get; } = new List<EvaluatedMethod>();
+        public List<EvaluatedMethodBase> TargetMethodGroup { get; } = new List<EvaluatedMethodBase>();
 
         public EvaluatedObject TargetObject
         {
-            get
-            {
-                return _fields[0].EvaluatedObjects[0];
-            }
+            get { return _fields.Count > 0 ? _fields[0].EvaluatedObjects[0] : null; }
         }
 
         public override IReadOnlyList<EvaluatedObjectReference> Fields
         {
-            get
-            {
-                return _fields;
-            }
+            get { return _fields; }
         }
 
         public override EvaluatedTypeInfo TypeInfo { get; }
 
         public override List<EvaluatedObjectHistory> History
         {
-            get
-            {
-                return _fields[0].EvaluatedObjects[0].History;
-            }
+            get { return _fields[0].EvaluatedObjects[0].History; }
         }
     }
 }

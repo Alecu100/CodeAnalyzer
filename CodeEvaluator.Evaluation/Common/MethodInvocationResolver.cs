@@ -36,10 +36,14 @@ namespace CodeEvaluator.Evaluation.Common
 
                 EvaluatedMethodBase resolvedTargetMethod = null;
 
-                methodParametersToAssign[-1] = new EvaluatedObjectDirectReference();
-                methodParametersToAssign[-1].AssignEvaluatedObject(methodInvokableObject.TargetObject);
+                if (methodInvokableObject.TargetObject != null)
+                {
+                    methodParametersToAssign[-1] = new EvaluatedObjectDirectReference();
+                    methodParametersToAssign[-1].AssignEvaluatedObject(methodInvokableObject.TargetObject);
+                }
 
-                if (methodInvokableObject.TypeInfo == methodInvokableObject.TargetObject.TypeInfo)
+                if (methodInvokableObject.TargetObject == null ||
+                    methodInvokableObject.TypeInfo == methodInvokableObject.TargetObject.TypeInfo)
                     resolvedTargetMethod = evaluatedMethodDerived;
                 else if (!TryToResolveTargetMethod(
                     evaluatedMethodDerived,

@@ -24,13 +24,11 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
             var reference = new EvaluatedObjectDirectReference();
 
-            foreach (var evaluatedConstructor in evaluatedTypeInfo.Constructors)
-            {
-                var evaluatedDelegate =
-                    new EvaluatedInvokableObject(
-                        evaluatedTypeInfo, evaluatedConstructor);
-                reference.AssignEvaluatedObject(evaluatedDelegate);
-            }
+            var evaluatedDelegate =
+                  new EvaluatedInvokableObject(
+                      evaluatedTypeInfo, evaluatedTypeInfo.Constructors.Cast<EvaluatedMethodBase>());
+
+            reference.AssignEvaluatedObject(evaluatedDelegate);
 
             workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = reference;
         }
