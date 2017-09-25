@@ -40,7 +40,7 @@ namespace CodeEvaluator.Evaluation.Common
 
         public CodeEvaluatorExecutionFrame BuildNewExecutionFrameForMethodCall(
             EvaluatedMethodBase targetMethod,
-            EvaluatedObjectReferenceBase thisReference)
+            EvaluatedObjectReference thisReference)
         {
             var newExecutionFrameForMethodCall = new CodeEvaluatorExecutionFrame();
 

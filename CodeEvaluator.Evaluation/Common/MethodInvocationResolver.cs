@@ -19,13 +19,13 @@ namespace CodeEvaluator.Evaluation.Common
         public IMethodSignatureComparer MethodSignatureComparer { get; set; }
 
         public MethodInvocationResolverResult ResolveMethodInvocation(
-            EvaluatedDelegate methodDelegate,
-            List<EvaluatedObjectReferenceBase> mandatoryParameters,
-            Dictionary<string, EvaluatedObjectReferenceBase> optionalParameters)
+            EvaluatedInvokableObject methodInvokableObject,
+            List<EvaluatedObjectReference> mandatoryParameters,
+            Dictionary<string, EvaluatedObjectReference> optionalParameters)
         {
-            foreach (var evaluatedMethodDerived in methodDelegate.TargetMethodGroup)
+            foreach (var evaluatedMethodDerived in methodInvokableObject.TargetMethodGroup)
             {
-                var methodParametersToAssign = new Dictionary<int, EvaluatedObjectReferenceBase>();
+                var methodParametersToAssign = new Dictionary<int, EvaluatedObjectReference>();
 
                 if (
                     !TryToAssignParameters(
@@ -36,15 +36,19 @@ namespace CodeEvaluator.Evaluation.Common
 
                 EvaluatedMethodBase resolvedTargetMethod = null;
 
-                methodParametersToAssign[-1] = new EvaluatedObjectDirectReference();
-                methodParametersToAssign[-1].AssignEvaluatedObject(methodDelegate.TargetObject);
+                if (methodInvokableObject.TargetObject != null)
+                {
+                    methodParametersToAssign[-1] = new EvaluatedObjectDirectReference();
+                    methodParametersToAssign[-1].AssignEvaluatedObject(methodInvokableObject.TargetObject);
+                }
 
-                if (methodDelegate.TypeInfo == methodDelegate.TargetObject.TypeInfo)
+                if (methodInvokableObject.TargetObject == null ||
+                    methodInvokableObject.TypeInfo == methodInvokableObject.TargetObject.TypeInfo)
                     resolvedTargetMethod = evaluatedMethodDerived;
                 else if (!TryToResolveTargetMethod(
                     evaluatedMethodDerived,
-                    methodDelegate.TargetObject,
-                    methodDelegate.TypeInfo,
+                    methodInvokableObject.TargetObject,
+                    methodInvokableObject.TypeInfo,
                     ref resolvedTargetMethod))
                     return new MethodInvocationResolverResult {CanInvokeMethod = false};
 
@@ -122,9 +126,9 @@ namespace CodeEvaluator.Evaluation.Common
 
         private bool TryToAssignParameters(
             EvaluatedMethodBase evaluatedMethodBase,
-            List<EvaluatedObjectReferenceBase> mandatoryParameters,
-            Dictionary<string, EvaluatedObjectReferenceBase> optionalParameters,
-            Dictionary<int, EvaluatedObjectReferenceBase> methodParametersToAssign)
+            List<EvaluatedObjectReference> mandatoryParameters,
+            Dictionary<string, EvaluatedObjectReference> optionalParameters,
+            Dictionary<int, EvaluatedObjectReference> methodParametersToAssign)
         {
             for (var parameterIndex = 0; parameterIndex < evaluatedMethodBase.Parameters.Count; parameterIndex++)
             {
@@ -133,7 +137,7 @@ namespace CodeEvaluator.Evaluation.Common
                 if (currentParameter.HasDefault == false && mandatoryParameters.Count <= parameterIndex)
                     return false;
 
-                EvaluatedObjectReferenceBase currentParameterValue = null;
+                EvaluatedObjectReference currentParameterValue = null;
 
                 if (parameterIndex < mandatoryParameters.Count)
                 {
@@ -164,8 +168,8 @@ namespace CodeEvaluator.Evaluation.Common
             return true;
         }
 
-        private EvaluatedObjectReferenceBase GetParameterReference(EvaluatedMethodParameter currentParameter,
-            EvaluatedObjectReferenceBase parameterValue)
+        private EvaluatedObjectReference GetParameterReference(EvaluatedMethodParameter currentParameter,
+            EvaluatedObjectReference parameterValue)
         {
             if (currentParameter.IsByReference)
                 return new EvaluatedObjectIndirectReference(parameterValue);
@@ -175,7 +179,7 @@ namespace CodeEvaluator.Evaluation.Common
 
         private bool NoInheritanceChainFound(
             EvaluatedMethodParameter currentParameter,
-            EvaluatedObjectReferenceBase parameterValue)
+            EvaluatedObjectReference parameterValue)
         {
             var inheritanceChainResolverResult =
                 InheritanceChainResolver.ResolveInheritanceChain(parameterValue.TypeInfo, currentParameter.TypeInfo);

@@ -21,7 +21,7 @@
         /// <returns></returns>
         public EvaluatedObject AllocateVariable(EvaluatedTypeInfo typeInfo)
         {
-            var fields = new List<EvaluatedObjectReferenceBase>();
+            var fields = new List<EvaluatedObjectReference>();
 
             foreach (
                 var trackedField in typeInfo.AccesibleFields.Where(field => !field.IsStatic()))

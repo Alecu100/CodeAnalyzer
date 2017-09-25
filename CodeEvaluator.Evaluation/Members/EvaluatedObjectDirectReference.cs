@@ -2,7 +2,7 @@
 
 namespace CodeEvaluator.Evaluation.Members
 {
-    public class EvaluatedObjectDirectReference : EvaluatedObjectReferenceBase
+    public class EvaluatedObjectDirectReference : EvaluatedObjectReference
     {
         #region Public Properties
 
@@ -24,7 +24,7 @@ namespace CodeEvaluator.Evaluation.Members
         {
         }
 
-        public EvaluatedObjectDirectReference(EvaluatedObjectReferenceBase referenceToCopy)
+        public EvaluatedObjectDirectReference(EvaluatedObjectReference referenceToCopy)
         {
             TypeInfo = referenceToCopy.TypeInfo;
             Identifier = referenceToCopy.Identifier;
@@ -61,7 +61,7 @@ namespace CodeEvaluator.Evaluation.Members
             _evaluatedObjects.Add(evaluatedObject);
         }
 
-        public sealed override void AssignEvaluatedObject(EvaluatedObjectReferenceBase evaluatedObjectReference)
+        public sealed override void AssignEvaluatedObject(EvaluatedObjectReference evaluatedObjectReference)
         {
             foreach (var evaluatedObject in evaluatedObjectReference.EvaluatedObjects)
             {

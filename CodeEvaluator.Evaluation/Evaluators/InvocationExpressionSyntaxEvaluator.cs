@@ -13,7 +13,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
     #endregion
 
-    public class InvocationExpressionSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class InvocationExpressionSyntaxEvaluator : SyntaxNodeEvaluator
     {
         public InvocationExpressionSyntaxEvaluator()
         {
@@ -53,8 +53,8 @@ namespace CodeEvaluator.Evaluation.Evaluators
                         var accessedReferenceMember =
                             workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
 
-                        var mandatoryParamenters = new List<EvaluatedObjectReferenceBase>();
-                        var optionalParameters = new Dictionary<string, EvaluatedObjectReferenceBase>();
+                        var mandatoryParamenters = new List<EvaluatedObjectReference>();
+                        var optionalParameters = new Dictionary<string, EvaluatedObjectReference>();
 
                         for (var i = 0; i < invocationExpressionSyntax.ArgumentList.Arguments.Count; i++)
                         {
@@ -86,7 +86,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
                         foreach (var evaluatedObject in accessedReferenceMember.EvaluatedObjects)
                         {
-                            var evaluatedDelegate = (EvaluatedDelegate) evaluatedObject;
+                            var evaluatedDelegate = (EvaluatedInvokableObject) evaluatedObject;
 
                             var methodInvocationResolverResult =
                                 MethodInvocationResolver.ResolveMethodInvocation(
@@ -125,7 +125,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
         {
             return workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null
                    && workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects.All(
-                       o => o is EvaluatedDelegate);
+                       o => o is EvaluatedInvokableObject);
         }
 
         #endregion

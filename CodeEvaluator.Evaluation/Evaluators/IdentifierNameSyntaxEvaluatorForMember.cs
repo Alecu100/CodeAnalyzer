@@ -52,7 +52,7 @@
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
-            EvaluatedObjectReferenceBase reference = null;
+            EvaluatedObjectReference reference = null;
 
             foreach (var evaluatedObject in
                 workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects)
@@ -80,7 +80,7 @@
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
-            EvaluatedObjectReferenceBase reference = null;
+            EvaluatedObjectReference reference = null;
 
             foreach (var localReference in workflowEvaluatorExecutionStack.CurrentExecutionFrame.LocalReferences)
             {
@@ -104,7 +104,7 @@
             IdentifierNameSyntax identifierNameSyntax,
             ref bool foundReference)
         {
-            EvaluatedObjectReferenceBase reference = null;
+            EvaluatedObjectReference reference = null;
 
             foreach (var thisEvaluatedObject in
                 workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.EvaluatedObjects)

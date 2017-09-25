@@ -1,88 +1,115 @@
-﻿namespace CodeEvaluator.Evaluation.Evaluators
+﻿using System.Collections.Generic;
+using System.Linq;
+using CodeEvaluator.Evaluation.Common;
+using CodeEvaluator.Evaluation.Interfaces;
+using CodeEvaluator.Evaluation.Members;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using StructureMap;
+
+namespace CodeEvaluator.Evaluation.Evaluators
 {
-    using CodeEvaluator.Evaluation.Common;
-    using CodeEvaluator.Evaluation.Members;
-
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-    public class ObjectCreationExpressionSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class ObjectCreationExpressionSyntaxEvaluator : SyntaxNodeEvaluator
     {
+        public ObjectCreationExpressionSyntaxEvaluator()
+        {
+            ObjectFactory.BuildUp(this);
+        }
+
+        public IMethodInvocationResolver MethodInvocationResolver { get; set; }
+
         #region Protected Methods and Operators
 
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,
             CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
-
             var objectCreationExpressionSyntax = (ObjectCreationExpressionSyntax) syntaxNode;
 
             var syntaxNodeEvaluator =
-                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(objectCreationExpressionSyntax.Type, EEvaluatorActions.GetConstructor);
+                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(objectCreationExpressionSyntax.Type,
+                    EEvaluatorActions.GetConstructor);
 
             if (syntaxNodeEvaluator != null)
             {
                 syntaxNodeEvaluator.EvaluateSyntaxNode(objectCreationExpressionSyntax.Type,
                     workflowEvaluatorExecutionStack);
 
-                if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
+                if (CanInvokeMethod(workflowEvaluatorExecutionStack))
                 {
                     var accessedReferenceMember =
                         workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
 
+                    var mandatoryParamenters = new List<EvaluatedObjectReference>();
+                    var optionalParameters = new Dictionary<string, EvaluatedObjectReference>();
+
+                    for (var i = 0; i < objectCreationExpressionSyntax.ArgumentList.Arguments.Count; i++)
+                    {
+                        var argumentSyntax = objectCreationExpressionSyntax.ArgumentList.Arguments[i];
+
+                        var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
+                            argumentSyntax.Expression,
+                            EEvaluatorActions.GetMember);
+
+                        if (nodeEvaluator != null)
+                        {
+                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
+
+                            nodeEvaluator.EvaluateSyntaxNode(
+                                argumentSyntax.Expression,
+                                workflowEvaluatorExecutionStack);
+                        }
+
+                        if (argumentSyntax.NameColon != null)
+                            optionalParameters.Add(
+                                argumentSyntax.NameColon.Name.Identifier.ValueText,
+                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference);
+                        else
+                            mandatoryParamenters.Add(
+                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference);
+                    }
+
+                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
+
                     foreach (var evaluatedObject in accessedReferenceMember.EvaluatedObjects)
                     {
-                        if (!(evaluatedObject is EvaluatedDelegate))
+                        var evaluatedDelegate = (EvaluatedInvokableObject) evaluatedObject;
+
+                        var methodInvocationResolverResult =
+                            MethodInvocationResolver.ResolveMethodInvocation(
+                                evaluatedDelegate,
+                                mandatoryParamenters,
+                                optionalParameters);
+
+                        if (methodInvocationResolverResult.CanInvokeMethod)
                         {
-                            continue;
-                        }
+                            workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters.Clear();
 
-                        var evaluatedDelegate = (EvaluatedDelegate) evaluatedObject;
+                            foreach (var evaluatedObjectReferenceBase in methodInvocationResolverResult
+                                .ResolvedPassedParameters)
+                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[
+                                    evaluatedObjectReferenceBase.Key] = evaluatedObjectReferenceBase.Value;
 
-                        var currentMethod =
-                            evaluatedDelegate.Method;
+                            var methodEvaluator =
+                                SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
+                                    methodInvocationResolverResult.ResolvedMethod.Declaration,
+                                    EEvaluatorActions.None);
 
-                        if (currentMethod == null)
-                        {
-                            continue;
-                        }
-
-                        for (var i = 0; i < objectCreationExpressionSyntax.ArgumentList.Arguments.Count; i++)
-                        {
-                            var argumentSyntax = objectCreationExpressionSyntax.ArgumentList.Arguments[i];
-
-                            var nodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(argumentSyntax, EEvaluatorActions.GetMember);
-
-                            if (nodeEvaluator != null)
-                            {
-                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
-
-                                nodeEvaluator.EvaluateSyntaxNode(
-                                    argumentSyntax.Expression,
+                            if (methodEvaluator != null)
+                                methodEvaluator.EvaluateSyntaxNode(
+                                    methodInvocationResolverResult.ResolvedMethod.Declaration,
                                     workflowEvaluatorExecutionStack);
-                            }
-
-                            if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
-                            {
-                                workflowEvaluatorExecutionStack.CurrentExecutionFrame.PassedMethodParameters[i] =
-                                    workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
-                            }
-                        }
-
-
-                        workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
-
-                        var constructorEvaluator =
-                            SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(currentMethod.Declaration, EEvaluatorActions.None);
-
-                        if (constructorEvaluator != null)
-                        {
-                            constructorEvaluator.EvaluateSyntaxNode(currentMethod.Declaration,
-                                workflowEvaluatorExecutionStack);
                         }
                     }
                 }
             }
+        }
+
+        private static bool CanInvokeMethod(CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
+        {
+            return workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null
+                   && workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects.All(
+                       o => o is EvaluatedInvokableObject);
         }
 
         #endregion

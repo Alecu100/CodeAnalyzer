@@ -9,7 +9,7 @@
 
     #endregion
 
-    public class ReturnStatementSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class ReturnStatementSyntaxEvaluator : SyntaxNodeEvaluator
     {
         #region Protected Methods and Operators
 

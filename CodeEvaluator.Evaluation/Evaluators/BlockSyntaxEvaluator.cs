@@ -11,7 +11,7 @@
 
     #endregion
 
-    public class BlockSyntaxEvaluator : BaseSyntaxNodeEvaluator
+    public class BlockSyntaxEvaluator : SyntaxNodeEvaluator
     {
         #region Protected Methods and Operators
 
