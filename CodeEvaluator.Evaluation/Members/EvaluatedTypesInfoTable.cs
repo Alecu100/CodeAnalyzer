@@ -17,14 +17,6 @@
 
     public class EvaluatedTypesInfoTable : IEvaluatedTypesInfoTable
     {
-        #region SpecificFields
-
-        private readonly List<EvaluatedTypeInfo> _evaluatedTypeInfos = new List<EvaluatedTypeInfo>();
-
-        private readonly Dictionary<string, EvaluatedTypeInfo> _evaluatedTypeInfosHashMap = new Dictionary<string, EvaluatedTypeInfo>();
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
@@ -34,6 +26,15 @@
         ///     The well known types.
         /// </value>
         public IReadOnlyList<EvaluatedTypeInfo> EvaluatedTypeInfos => _evaluatedTypeInfos;
+
+        #endregion
+
+        #region SpecificFields
+
+        private readonly List<EvaluatedTypeInfo> _evaluatedTypeInfos = new List<EvaluatedTypeInfo>();
+
+        private readonly Dictionary<string, EvaluatedTypeInfo> _evaluatedTypeInfosHashMap =
+            new Dictionary<string, EvaluatedTypeInfo>();
 
         #endregion
 
@@ -339,9 +340,17 @@
                 {
                     evaluatedTypeInfo.SharedStaticObject.ModifiableFields.AddRange(baseType.SharedStaticObject.Fields);
 
-                    baseType =
-                        evaluatedTypeInfo.BaseTypeInfos.FirstOrDefault(
+                    var newBaseType = baseType.BaseTypeInfos.FirstOrDefault(
                             typeInfo => typeInfo.IsReferenceType && !typeInfo.IsInterfaceType);
+
+                    if (newBaseType != null && newBaseType != baseType)
+                    {
+                        baseType = newBaseType;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
         }
@@ -437,7 +446,6 @@
         {
             var typeDeclarationSyntax = (BaseTypeDeclarationSyntax)syntaxNode;
             var fullNamespace = GetFullTypeNamespace(namespaceDeclarations, typeDeclarationSyntax.Identifier.ValueText);
-
 
             var trackedVariableTypeInfo = GetTypeInfo(
                 typeDeclarationSyntax.Identifier.ValueText,
