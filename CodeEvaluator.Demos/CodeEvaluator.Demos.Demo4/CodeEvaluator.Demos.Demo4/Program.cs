@@ -49,6 +49,8 @@ namespace CodeEvaluator.Demos.Demo4
 
             myClass1.MethodOverloaded(type2);
 
+            StaticMyClass.StaticMyMethod();
+
             WorkflowEvaluator.StopWorkflow();
         }
 

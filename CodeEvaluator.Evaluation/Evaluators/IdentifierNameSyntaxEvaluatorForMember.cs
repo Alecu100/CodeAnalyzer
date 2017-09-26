@@ -41,6 +41,29 @@
                     identifierNameSyntax,
                     ref foundReference);
             }
+
+            if (foundReference == false)
+            {
+                TryToFindStaticReference(workflowEvaluatorExecutionStack, identifierNameSyntax, ref foundReference);
+            }
+        }
+
+        private void TryToFindStaticReference(
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack,
+            IdentifierNameSyntax identifierNameSyntax,
+            ref bool foundReference)
+        {
+            var evaluatedTypeInfo = EvaluatedTypesInfoTable.GetTypeInfo(
+                identifierNameSyntax.Identifier.ValueText,
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.ThisReference.TypeInfo);
+
+            if (evaluatedTypeInfo != null)
+            {
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference =
+                    new EvaluatedObjectDirectReference(evaluatedTypeInfo.SharedStaticObject);
+
+                foundReference = true;
+            }
         }
 
         #endregion
