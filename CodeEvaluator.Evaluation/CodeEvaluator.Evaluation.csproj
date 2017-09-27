@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Common\InheritanceChainResolver.cs" />
     <Compile Include="Common\InheritanceChainResolverResult.cs" />
+    <Compile Include="Common\KeywordToTypeInfoRemapper.cs" />
     <Compile Include="Common\MethodInvocationResolver.cs" />
     <Compile Include="Common\MethodInvocationResolverResult.cs" />
     <Compile Include="Common\MethodSignatureComparer.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMethod.cs" />
     <Compile Include="Extensions\EvaluatedObjectReferenceExtensions.cs" />
     <Compile Include="Interfaces\IInheritanceChainResolver.cs" />
+    <Compile Include="Interfaces\IKeywordToTypeInfoRemapper.cs" />
     <Compile Include="Interfaces\IMethodInvocationResolver.cs" />
     <Compile Include="Extensions\EvaluatedMemberExtensions.cs" />
     <Compile Include="Interfaces\IMethodSignatureComparer.cs" />

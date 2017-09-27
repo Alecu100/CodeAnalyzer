@@ -39,6 +39,8 @@
         private readonly Dictionary<string, EvaluatedTypeInfo> _evaluatedTypeInfosHashMap =
             new Dictionary<string, EvaluatedTypeInfo>();
 
+        private IKeywordToTypeInfoRemapper _keywordToTypeInfoRemapper;
+
         #endregion
 
         #region Public Methods and Operators
@@ -355,6 +357,14 @@
                         break;
                     }
                 }
+            }
+        }
+
+        private void LoadKeywordToTypeInfoRemapperIfNeeded()
+        {
+            if (_keywordToTypeInfoRemapper == null)
+            {
+                _keywordToTypeInfoRemapper = ObjectFactory.GetInstance<IKeywordToTypeInfoRemapper>();
             }
         }
 
@@ -868,6 +878,13 @@
             List<MemberDeclarationSyntax> namespaceDeclarations,
             string typeDeclarationName)
         {
+            LoadKeywordToTypeInfoRemapperIfNeeded();
+
+            if (_keywordToTypeInfoRemapper.IsKeywordTypeInfo(typeDeclarationName))
+            {
+                return _keywordToTypeInfoRemapper.GetMappedTypeInfo(typeDeclarationName);
+            }
+
             var fullNamespace = new StringBuilder();
 
             foreach (var namespaceDeclaration in namespaceDeclarations) AddNameToFullNamespace(namespaceDeclaration, fullNamespace);
@@ -881,6 +898,13 @@
 
         private string GetFullTypeNamespace(UsingDirectiveSyntax usingDirective, string typeDeclarationName)
         {
+            LoadKeywordToTypeInfoRemapperIfNeeded();
+
+            if (_keywordToTypeInfoRemapper.IsKeywordTypeInfo(typeDeclarationName))
+            {
+                return _keywordToTypeInfoRemapper.GetMappedTypeInfo(typeDeclarationName);
+            }
+
             var fullNamespace = new StringBuilder();
 
             fullNamespace.Append(usingDirective.Name);

@@ -1,10 +1,11 @@
-﻿using CodeEvaluator.Evaluation.Common;
-using CodeEvaluator.Evaluation.Interfaces;
-using CodeEvaluator.Evaluation.Members;
-using StructureMap;
-
-namespace CodeEvaluator.Evaluation.Configuration
+﻿namespace CodeEvaluator.Evaluation.Configuration
 {
+    using CodeEvaluator.Evaluation.Common;
+    using CodeEvaluator.Evaluation.Interfaces;
+    using CodeEvaluator.Evaluation.Members;
+
+    using StructureMap;
+
     public static class StandardSetupBootstrapper
     {
         public static void RegisterStandardComponents()
@@ -20,14 +21,16 @@ namespace CodeEvaluator.Evaluation.Configuration
                 config => config.For<ISyntaxNodeNamespaceProvider>().Use(() => new SyntaxNodeNamespaceProvider()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<ISyntaxNodeNamespaceProvider>()));
 
-            ObjectFactory.Configure(
-                config => config.For<ICodeEvaluator>().Use(() => new Common.CodeEvaluator()));
+            ObjectFactory.Configure(config => config.For<ICodeEvaluator>().Use(() => new CodeEvaluator()));
 
             ObjectFactory.Configure(config => config.For<IParsedSourceFilesCache>().Use(new ParsedSourceFilesCache()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IParsedSourceFilesCache>()));
 
             ObjectFactory.Configure(
-                config => config.For<IEvaluatedTypesInfoTable>().Use(new EvaluatedTypesInfoTable()));
+                config => config.For<IKeywordToTypeInfoRemapper>().Use(new KeywordToTypeInfoRemapper()));
+            ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IKeywordToTypeInfoRemapper>()));
+
+            ObjectFactory.Configure(config => config.For<IEvaluatedTypesInfoTable>().Use(new EvaluatedTypesInfoTable()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IEvaluatedTypesInfoTable>()));
             ObjectFactory.Configure(
                 config => config.For<IEvaluatedObjectAllocator>().Use(new EvaluatedObjectAllocator()));
@@ -35,13 +38,10 @@ namespace CodeEvaluator.Evaluation.Configuration
             ObjectFactory.Configure(config => config.For<IEvaluatedObjectsHeap>().Use(new EvaluatedObjectsHeap()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IEvaluatedObjectsHeap>()));
             ObjectFactory.Configure(
-                config =>
-                    config.For<IEvaluatorExecutionFrameFactory>()
-                        .Use(new EvaluatorExecutionFrameFactory()));
+                config => config.For<IEvaluatorExecutionFrameFactory>().Use(new EvaluatorExecutionFrameFactory()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IEvaluatedObjectAllocator>()));
 
-            ObjectFactory.Configure(
-                config => config.For<IMethodSignatureComparer>().Use(new MethodSignatureComparer()));
+            ObjectFactory.Configure(config => config.For<IMethodSignatureComparer>().Use(new MethodSignatureComparer()));
             ObjectFactory.Configure(config => config.SetAllProperties(x => x.OfType<IMethodSignatureComparer>()));
 
             ObjectFactory.Configure(
