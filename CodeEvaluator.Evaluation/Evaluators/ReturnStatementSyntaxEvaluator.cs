@@ -1,6 +1,7 @@
 ﻿namespace CodeEvaluator.Evaluation.Evaluators
 {
     using CodeEvaluator.Evaluation.Common;
+    using CodeEvaluator.Evaluation.Extensions;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -22,14 +23,16 @@
             if (returnStatementSyntax.Expression != null)
             {
                 var syntaxNodeEvaluator =
-                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(returnStatementSyntax.Expression, EEvaluatorActions.None);
+                    SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(returnStatementSyntax.Expression, EEvaluatorActions.GetMember);
+
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
 
                 if (syntaxNodeEvaluator != null)
                 {
                     syntaxNodeEvaluator.EvaluateSyntaxNode(returnStatementSyntax.Expression, workflowEvaluatorExecutionStack);
                 }
 
-                if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
+                if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.IsNotNull())
                 {
                     workflowEvaluatorExecutionStack.CurrentExecutionFrame.ReturningMethodParameters.AssignEvaluatedObject(
                         workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference);

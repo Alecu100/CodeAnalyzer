@@ -46,6 +46,13 @@
             {
                 TryToFindStaticReference(workflowEvaluatorExecutionStack, identifierNameSyntax, ref foundReference);
             }
+
+            if (foundReference == false)
+            {
+                var identifierNameSyntaxEvaluatorForMethod = new IdentifierNameSyntaxEvaluatorForMethod();
+
+                identifierNameSyntaxEvaluatorForMethod.EvaluateSyntaxNode(syntaxNode, workflowEvaluatorExecutionStack);
+            }
         }
 
         private void TryToFindStaticReference(

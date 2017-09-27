@@ -1,6 +1,7 @@
 ﻿namespace CodeEvaluator.Evaluation.Evaluators
 {
     using CodeEvaluator.Evaluation.Common;
+    using CodeEvaluator.Evaluation.Extensions;
     using CodeEvaluator.Evaluation.Members;
 
     using Microsoft.CodeAnalysis;
@@ -44,13 +45,13 @@
                 if (variableDeclarator.Initializer != null && variableDeclarator.Initializer.Value != null)
                 {
                     var syntaxNodeEvaluator =
-                        SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(variableDeclarator.Initializer, EEvaluatorActions.None);
+                        SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(variableDeclarator.Initializer, EEvaluatorActions.GetMember);
 
                     if (syntaxNodeEvaluator != null)
                     {
                         syntaxNodeEvaluator.EvaluateSyntaxNode(variableDeclarator.Initializer, workflowEvaluatorExecutionStack);
 
-                        if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null)
+                        if (workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.IsNotNull())
                         {
                             reference.AssignEvaluatedObject(
                                 workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference);

@@ -9,6 +9,8 @@ using StructureMap;
 
 namespace CodeEvaluator.Evaluation.Evaluators
 {
+    using CodeEvaluator.Evaluation.Extensions;
+
     public class ObjectCreationExpressionSyntaxEvaluator : SyntaxNodeEvaluator
     {
         public ObjectCreationExpressionSyntaxEvaluator()
@@ -107,7 +109,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
         private static bool CanInvokeMethod(CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
-            return workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference != null
+            return workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.IsNotNull()
                    && workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.EvaluatedObjects.All(
                        o => o is EvaluatedInvokableObject);
         }

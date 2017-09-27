@@ -96,6 +96,11 @@
                 return new ObjectCreationExpressionSyntaxEvaluator();
             }
 
+            if (syntaxNode is AssignmentExpressionSyntax)
+            {
+                return new AssignmentExpressionSyntaxEvaluator();
+            }
+
             return null;
         }
 
