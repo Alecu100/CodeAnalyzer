@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CodeEvaluator.Evaluation.Evaluators
+﻿namespace CodeEvaluator.Evaluation.Evaluators
 {
     using CodeEvaluator.Evaluation.Common;
     using CodeEvaluator.Evaluation.Extensions;
@@ -14,7 +8,9 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
     public class AssignmentExpressionSyntaxEvaluator : SyntaxNodeEvaluator
     {
-        protected override void EvaluateSyntaxNodeInternal(SyntaxNode syntaxNode, CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
+        protected override void EvaluateSyntaxNodeInternal(
+            SyntaxNode syntaxNode,
+            CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
             workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
 
@@ -26,12 +22,13 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
             if (syntaxNodeEvaluator != null)
             {
-                syntaxNodeEvaluator.EvaluateSyntaxNode(assignmentExpressionSyntax.Right, workflowEvaluatorExecutionStack);
+                syntaxNodeEvaluator.EvaluateSyntaxNode(
+                    assignmentExpressionSyntax.Right,
+                    workflowEvaluatorExecutionStack);
             }
 
             var valueToAssign = workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
             workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;
-
 
             syntaxNodeEvaluator = SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
                 assignmentExpressionSyntax.Left,
@@ -45,7 +42,8 @@ namespace CodeEvaluator.Evaluation.Evaluators
             if (valueToAssign.IsNotNull()
                 && workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.IsNotNull())
             {
-                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.AssignEvaluatedObject(valueToAssign);
+                workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference.AssignEvaluatedObject(
+                    valueToAssign);
             }
 
             workflowEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference = null;

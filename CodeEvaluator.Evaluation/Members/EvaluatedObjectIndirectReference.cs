@@ -11,10 +11,7 @@
         {
             _internalReferences.AddRange(internalReferences);
 
-            TypeInfo = internalReferences.First().TypeInfo;
-            Identifier = internalReferences.First().Identifier;
-            FullIdentifierText = internalReferences.First().FullIdentifierText;
-            IdentifierText = internalReferences.First().IdentifierText;
+            AddTypeInfoIfMissing(internalReferences.First());
         }
 
         public EvaluatedObjectIndirectReference()
@@ -25,10 +22,7 @@
         {
             _internalReferences.Add(internalReference);
 
-            TypeInfo = internalReference.TypeInfo;
-            Identifier = internalReference.Identifier;
-            FullIdentifierText = internalReference.FullIdentifierText;
-            IdentifierText = internalReference.IdentifierText;
+            AddTypeInfoIfMissing(internalReference);
         }
 
         public override IReadOnlyList<EvaluatedObject> EvaluatedObjects
@@ -57,6 +51,19 @@
         public void AssignEvaluatedObjectReference(EvaluatedObjectReference evaluatedObjectReference)
         {
             _internalReferences.Add(evaluatedObjectReference);
+
+            AddTypeInfoIfMissing(evaluatedObjectReference);
+        }
+
+        private void AddTypeInfoIfMissing(EvaluatedObjectReference evaluatedObjectReference)
+        {
+            if (TypeInfo == null)
+            {
+                TypeInfo = evaluatedObjectReference.TypeInfo;
+                Identifier = evaluatedObjectReference.Identifier;
+                FullIdentifierText = evaluatedObjectReference.FullIdentifierText;
+                IdentifierText = evaluatedObjectReference.IdentifierText;
+            }
         }
     }
 }
