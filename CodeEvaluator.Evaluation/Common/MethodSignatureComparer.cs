@@ -9,7 +9,7 @@ namespace CodeEvaluator.Evaluation.Common
         public bool HaveSameSignature(EvaluatedMethodBase methodtoCompareAgainst, EvaluatedMethodBase methodToCompare)
         {
             if (!string.Equals(methodtoCompareAgainst.IdentifierText, methodToCompare.IdentifierText,
-                StringComparison.InvariantCultureIgnoreCase))
+                StringComparison.Ordinal))
                 return false;
 
             if (methodtoCompareAgainst.Parameters.Count != methodToCompare.Parameters.Count)

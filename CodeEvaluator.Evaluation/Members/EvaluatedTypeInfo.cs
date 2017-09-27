@@ -151,7 +151,7 @@ namespace CodeEvaluator.Evaluation.Members
         /// <value>
         ///     The properties.
         /// </value>
-        public List<EvaluatedProperty> Properties { get; } = new List<EvaluatedProperty>();
+        public List<EvaluatedProperty> SpecificProperties { get; } = new List<EvaluatedProperty>();
 
         /// <summary>
         ///     Gets the using directives.

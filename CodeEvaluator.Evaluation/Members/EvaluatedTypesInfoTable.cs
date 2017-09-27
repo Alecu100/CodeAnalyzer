@@ -1,5 +1,6 @@
 ﻿namespace CodeEvaluator.Evaluation.Members
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -10,6 +11,8 @@
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+    using StructureMap;
 
     #region Using
 
@@ -601,7 +604,7 @@
 
             AddMemberFlagsToMember(evaluatedProperty, propertyDeclarationSyntax.Modifiers);
 
-            currentTypeInfo.Properties.Add(evaluatedProperty);
+            currentTypeInfo.SpecificProperties.Add(evaluatedProperty);
 
             foreach (var accessorDeclarationSyntax in propertyDeclarationSyntax.AccessorList.Accessors)
             {
@@ -741,11 +744,33 @@
                     }
                     while (foundNewTypes);
 
+                    var methodSignatureComparer =
+                        ObjectFactory.GetInstance<IMethodSignatureComparer>();
+
                     foreach (var trackedTypeInfo in allTypeInfos)
                     {
-                        trackedVariableTypeInfo.AccesibleMethods.AddRange(trackedTypeInfo.SpecificMethods);
+                        var newMethods = trackedTypeInfo.SpecificMethods.Where(
+                            baseMethod =>
+                            trackedVariableTypeInfo.AccesibleMethods.All(
+                                specificMethod =>
+                                !methodSignatureComparer.HaveSameSignature(baseMethod, specificMethod)));
+
+                        trackedVariableTypeInfo.AccesibleMethods.AddRange(
+                            newMethods);
+
                         trackedVariableTypeInfo.AccesibleFields.AddRange(trackedTypeInfo.SpecificFields);
-                        trackedVariableTypeInfo.AccesibleProperties.AddRange(trackedTypeInfo.Properties);
+
+                        var newProperties = trackedTypeInfo.SpecificProperties.Where(
+                            baseProperty =>
+                            trackedVariableTypeInfo.AccesibleProperties.All(
+                                specificProperty =>
+                                !string.Equals(
+                                    baseProperty.IdentifierText,
+                                    specificProperty.IdentifierText,
+                                    StringComparison.Ordinal)));
+
+                        trackedVariableTypeInfo.AccesibleProperties.AddRange(
+                            newProperties);
                     }
                 }
         }
@@ -787,7 +812,7 @@
                         }
                     }
 
-                    foreach (var trackedProperty in trackedVariableTypeInfo.Properties)
+                    foreach (var trackedProperty in trackedVariableTypeInfo.SpecificProperties)
                     {
                         var propertyDeclarationSyntax = trackedProperty.Declaration as PropertyDeclarationSyntax;
 
