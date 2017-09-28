@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-
-namespace CodeEvaluator.Bootstrapper
+﻿namespace CodeEvaluator.Bootstrapper
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+
     public class AssemblyBootstrapper : MarshalByRefObject
     {
         public void LoadAssemblies(List<string> searchDirectories, List<string> assemblyNames)
@@ -30,6 +30,15 @@ namespace CodeEvaluator.Bootstrapper
 
                 foreach (var assembly in assembliesQueue)
                 {
+                    if (TryToDirectlyLoadAssemblyWithFullPath(assembly))
+                    {
+                        shouldStillTryToLoadAssemblies = true;
+
+                        assembliesToRemove.Add(assembly);
+
+                        continue;
+                    }
+
                     if (TryToLoadAssembly(searchDirectories, assembly))
                     {
                         shouldStillTryToLoadAssemblies = true;
@@ -43,6 +52,29 @@ namespace CodeEvaluator.Bootstrapper
                     assembliesQueue.Remove(assemblyToRemove);
                 }
             }
+        }
+
+        private bool TryToDirectlyLoadAssemblyWithFullPath(string assemblyName)
+        {
+            if (HasFullPathForAssembly(assemblyName))
+            {
+                if (!assemblyName.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    assemblyName = assemblyName + ".dll";
+                }
+
+                try
+                {
+                    Assembly.LoadFile(assemblyName);
+
+                    return true;
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return false;
         }
 
         private bool TryToLoadAssembly(List<string> searchDirectories, string assemblyName)
@@ -63,6 +95,11 @@ namespace CodeEvaluator.Bootstrapper
             }
 
             return false;
+        }
+
+        private bool HasFullPathForAssembly(string assemblyName)
+        {
+            return (assemblyName.Contains("/") || assemblyName.Contains("\\")) && assemblyName.Contains(":");
         }
 
         private bool TryToLoadAssemblyFromDirectory(string searchDirectory, string assemblyName)
