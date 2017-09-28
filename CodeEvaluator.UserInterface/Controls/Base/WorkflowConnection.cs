@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,12 +12,37 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 {
     #region Using
 
-    
-
     #endregion
 
     public class WorkflowConnection : Control, ISelectable, INotifyPropertyChanged
     {
+        #region Constructors and Destructors
+
+        public WorkflowConnection(WorkflowConnector source, WorkflowConnector sink)
+        {
+            Source = source;
+            Sink = sink;
+            Unloaded += Connection_Unloaded;
+        }
+
+        #endregion
+
+        #region Public Events
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Protected Methods and Operators
+
+        internal void HideAdorner()
+        {
+            if (_connectionAdorner != null)
+                _connectionAdorner.Visibility = Visibility.Collapsed;
+        }
+
+        #endregion
+
         #region SpecificFields
 
         public EArrowSymbol sinkArrowSymbol = EArrowSymbol.Arrow;
@@ -52,31 +76,11 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         #endregion
 
-        #region Constructors and Destructors
-
-        public WorkflowConnection(WorkflowConnector source, WorkflowConnector sink)
-        {
-            Source = source;
-            Sink = sink;
-            base.Unloaded += Connection_Unloaded;
-        }
-
-        #endregion
-
-        #region Public Events
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
         #region Public Properties
 
         public double AnchorAngleSink
         {
-            get
-            {
-                return _anchorAngleSink;
-            }
+            get { return _anchorAngleSink; }
             set
             {
                 if (_anchorAngleSink != value)
@@ -89,10 +93,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public double AnchorAngleSource
         {
-            get
-            {
-                return _anchorAngleSource;
-            }
+            get { return _anchorAngleSource; }
             set
             {
                 if (_anchorAngleSource != value)
@@ -107,10 +108,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public Point AnchorPositionSink
         {
-            get
-            {
-                return _anchorPositionSink;
-            }
+            get { return _anchorPositionSink; }
             set
             {
                 if (_anchorPositionSink != value)
@@ -123,10 +121,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public Point AnchorPositionSource
         {
-            get
-            {
-                return _anchorPositionSource;
-            }
+            get { return _anchorPositionSource; }
             set
             {
                 if (_anchorPositionSource != value)
@@ -139,10 +134,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public bool IsSelected
         {
-            get
-            {
-                return _isSelected;
-            }
+            get { return _isSelected; }
             set
             {
                 if (_isSelected != value)
@@ -150,13 +142,9 @@ namespace CodeEvaluator.UserInterface.Controls.Base
                     _isSelected = value;
                     OnPropertyChanged("IsSelected");
                     if (_isSelected)
-                    {
                         ShowAdorner();
-                    }
                     else
-                    {
                         HideAdorner();
-                    }
                 }
             }
         }
@@ -165,10 +153,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public Point LabelPosition
         {
-            get
-            {
-                return _labelPosition;
-            }
+            get { return _labelPosition; }
             set
             {
                 if (_labelPosition != value)
@@ -181,10 +166,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public PathGeometry PathGeometry
         {
-            get
-            {
-                return _pathGeometry;
-            }
+            get { return _pathGeometry; }
             set
             {
                 if (_pathGeometry != value)
@@ -198,10 +180,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public WorkflowConnector Sink
         {
-            get
-            {
-                return _sink;
-            }
+            get { return _sink; }
             set
             {
                 if (_sink != value)
@@ -226,10 +205,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public EArrowSymbol SinkArrowSymbol
         {
-            get
-            {
-                return sinkArrowSymbol;
-            }
+            get { return sinkArrowSymbol; }
             set
             {
                 if (sinkArrowSymbol != value)
@@ -242,10 +218,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public WorkflowConnector Source
         {
-            get
-            {
-                return _source;
-            }
+            get { return _source; }
             set
             {
                 if (_source != value)
@@ -271,10 +244,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public EArrowSymbol SourceArrowSymbol
         {
-            get
-            {
-                return _sourceArrowSymbol;
-            }
+            get { return _sourceArrowSymbol; }
             set
             {
                 if (_sourceArrowSymbol != value)
@@ -289,10 +259,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
 
         public DoubleCollection StrokeDashArray
         {
-            get
-            {
-                return _strokeDashArray;
-            }
+            get { return _strokeDashArray; }
             set
             {
                 if (_strokeDashArray != value)
@@ -300,18 +267,6 @@ namespace CodeEvaluator.UserInterface.Controls.Base
                     _strokeDashArray = value;
                     OnPropertyChanged("StrokeDashArray");
                 }
-            }
-        }
-
-        #endregion
-
-        #region Protected Methods and Operators
-
-        internal void HideAdorner()
-        {
-            if (_connectionAdorner != null)
-            {
-                _connectionAdorner.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -328,7 +283,6 @@ namespace CodeEvaluator.UserInterface.Controls.Base
             // usual selection business
             var designer = VisualTreeHelper.GetParent(this) as WorkflowCanvas;
             if (designer != null)
-            {
                 if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
                 {
                     if (IsSelected)
@@ -345,25 +299,20 @@ namespace CodeEvaluator.UserInterface.Controls.Base
                 else if (!IsSelected)
                 {
                     foreach (var item in designer.SelectedItems)
-                    {
                         item.IsSelected = false;
-                    }
 
                     designer.SelectedItems.Clear();
                     IsSelected = true;
                     designer.SelectedItems.Add(this);
                 }
-            }
             e.Handled = false;
         }
 
         protected void OnPropertyChanged(string name)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
+            var handler = PropertyChanged;
             if (handler != null)
-            {
                 handler(this, new PropertyChangedEventArgs(name));
-            }
         }
 
         #endregion
@@ -381,9 +330,12 @@ namespace CodeEvaluator.UserInterface.Controls.Base
             // remove adorner
             if (_connectionAdorner != null)
             {
-                var designer = VisualTreeHelper.GetParent(this) as WorkflowCanvas;
+                var designer = this.FindParent<WorkflowCanvas>();
 
-                AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(designer);
+                if (designer == null)
+                    return;
+
+                var adornerLayer = AdornerLayer.GetAdornerLayer(designer);
                 if (adornerLayer != null)
                 {
                     adornerLayer.Remove(_connectionAdorner);
@@ -397,9 +349,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
             // whenever the 'Position' property of the source or sink Connector 
             // changes we must update the connection path geometry
             if (e.PropertyName.Equals("Position"))
-            {
                 UpdatePathGeometry();
-            }
         }
 
         private void ShowAdorner()
@@ -407,9 +357,12 @@ namespace CodeEvaluator.UserInterface.Controls.Base
             // the ConnectionAdorner is created once for each Connection
             if (_connectionAdorner == null)
             {
-                var designer = VisualTreeHelper.GetParent(this) as WorkflowCanvas;
+                var designer = this.FindParent<WorkflowCanvas>();
 
-                AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(designer);
+                if (designer == null)
+                    return;
+
+                var adornerLayer = AdornerLayer.GetAdornerLayer(designer);
                 if (adornerLayer != null)
                 {
                     _connectionAdorner = new WorkflowConnectionAdorner(designer, this);
@@ -449,7 +402,7 @@ namespace CodeEvaluator.UserInterface.Controls.Base
             if (Source != null && Sink != null)
             {
                 var geometry = new PathGeometry();
-                List<Point> linePoints = PathFinder.GetConnectionLine(Source.GetInfo(), Sink.GetInfo(), true);
+                var linePoints = PathFinder.GetConnectionLine(Source.GetInfo(), Sink.GetInfo(), true);
                 if (linePoints.Count > 0)
                 {
                     var figure = new PathFigure();
