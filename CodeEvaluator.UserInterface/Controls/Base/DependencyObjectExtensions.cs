@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace CodeEvaluator.UserInterface.Controls.Base
 {
-    public static class DependencyObjectHelpers
+    public static class DependencyObjectExtensions
     {
         #region Public Methods and Operators
 
