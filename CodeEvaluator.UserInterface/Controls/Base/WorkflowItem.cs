@@ -64,7 +64,6 @@
             typeof(WorkflowItem),
             new FrameworkPropertyMetadata(false));
 
-
         public static readonly DependencyProperty LabelProperty = DependencyProperty.Register(
             "Label",
             typeof(string),
@@ -101,10 +100,48 @@
 
             Initialized += OnInitialized;
 
-            Loaded += WorkflowItem_Loaded;
+            Loaded += DesignerItem_Loaded;
+
+            MouseDoubleClick += DesignerItem_MouseDoubleClick;
+
         }
 
-        private void WorkflowItem_MouseLeave(object sender, MouseEventArgs mouseEventArgs)
+        private void DesignerItem_MouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            var designer = VisualTreeHelper.GetParent(this) as WorkflowCanvas;
+
+            // update selection
+            if (designer != null)
+            {
+                if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
+                {
+                    if (IsSelected)
+                    {
+                        IsSelected = false;
+                        designer.SelectedItems.Remove(this);
+                    }
+                    else
+                    {
+                        IsSelected = true;
+                        designer.SelectedItems.Add(this);
+                    }
+                }
+                else if (!IsSelected)
+                {
+                    foreach (var item in designer.SelectedItems)
+                    {
+                        item.IsSelected = false;
+                    }
+
+                    designer.SelectedItems.Clear();
+                    IsSelected = true;
+                    designer.SelectedItems.Add(this);
+                    designer.OnSelectionChanged();
+                }
+            }
+        }
+
+        private void DesignerItem_MouseLeave(object sender, MouseEventArgs mouseEventArgs)
         {
             var grdConnectors = this.FindVisualChildren<Grid>().First(x => x.Name == "grdConnectors");
 
@@ -114,7 +151,7 @@
             }
         }
 
-        private void WorkflowItem_MouseEnter(object sender, MouseEventArgs mouseEventArgs)
+        private void DesignerItem_MouseEnter(object sender, MouseEventArgs mouseEventArgs)
         {
             var grdConnectors = this.FindVisualChildren<Grid>().First(x => x.Name == "grdConnectors");
 
@@ -123,7 +160,7 @@
 
         public WorkflowItem()
         {
-            Loaded += WorkflowItem_Loaded;
+            Loaded += DesignerItem_Loaded;
         }
 
         static WorkflowItem()
@@ -151,7 +188,8 @@
                 var grdConnectors = this.FindVisualChildren<Grid>().First(x => x.Name == "grdConnectors");
                 if (value == false)
                 {
-                    grdConnectors.Visibility = Visibility.Hidden;
+
+                        grdConnectors.Visibility = Visibility.Hidden;
                 }
                 else
                 {
@@ -234,6 +272,47 @@
 
         #region Public Methods and Operators
 
+        public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                var dependencyObjects = LogicalTreeHelper.GetChildren(depObj).Cast<DependencyObject>().ToList();
+                for (var i = 0; i < dependencyObjects.Count; i++)
+                {
+                    var child = dependencyObjects[i];
+                    if (child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (var childOfChild in FindLogicalChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
+        }
+
+        public static T FindParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            //get parent item
+            var parentObject = VisualTreeHelper.GetParent(child);
+
+            //we've reached the end of the tree
+            if (parentObject == null)
+            {
+                return null;
+            }
+
+            //check if the parent matches the type we're looking for
+            var parent = parentObject as T;
+            if (parent != null)
+            {
+                return parent;
+            }
+            return FindParent<T>(parentObject);
+        }
+
         public static ControlTemplate GetConnectorDecoratorTemplate(UIElement element)
         {
             return (ControlTemplate)element.GetValue(ConnectorDecoratorTemplateProperty);
@@ -258,7 +337,7 @@
 
         #region Private Methods and Operators
 
-        private void WorkflowItem_Loaded(object sender, RoutedEventArgs e)
+        private void DesignerItem_Loaded(object sender, RoutedEventArgs e)
         {
             // if DragThumbTemplate and ConnectorDecoratorTemplate properties of this class
             // are set these templates are applied; 
@@ -299,9 +378,9 @@
 
             var pathIcon = this.FindVisualChildren<Grid>().First(x => x.Name == "grdContent");
 
-            pathIcon.MouseEnter += WorkflowItem_MouseEnter;
+            pathIcon.MouseEnter += DesignerItem_MouseEnter;
 
-            pathIcon.MouseLeave += WorkflowItem_MouseLeave;
+            pathIcon.MouseLeave += DesignerItem_MouseLeave;
         }
 
         private IEnumerable<T> FindVisualChildren<T>(DependencyObject obj) where T : DependencyObject

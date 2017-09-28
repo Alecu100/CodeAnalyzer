@@ -76,7 +76,7 @@
     <Compile Include="Controls\Base\Adorners\RubberbandAdorner.cs" />
     <Compile Include="Controls\Base\Adorners\WorkflowConnectionAdorner.cs" />
     <Compile Include="Controls\Base\Adorners\WorkflowConnectorAdorner.cs" />
-    <Compile Include="Controls\Base\DependencyObjectExtensions.cs" />
+    <Compile Include="Controls\Base\DependencyObjectHelpers.cs" />
     <Compile Include="Controls\Base\DragableScrollViewer.cs" />
     <Compile Include="Controls\Base\DragThumb.cs" />
     <Compile Include="Controls\Base\Enums\EArrowSymbol.cs" />

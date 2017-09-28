@@ -1,17 +1,19 @@
-﻿namespace CodeEvaluator.UserInterface.Controls.Base
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Markup;
-    using System.Windows.Media;
-    using System.Xml;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Markup;
+using System.Windows.Media;
+using System.Xml;
 
+namespace CodeEvaluator.UserInterface.Controls.Base
+{
     #region Using
+
+    
 
     #endregion
 
@@ -36,6 +38,34 @@
 
         #endregion
 
+        #region SpecificFields
+
+        private readonly ScaleTransform _scaleTransform;
+
+        private Point? _rubberbandSelectionStartPoint;
+
+        // keep track of selected items 
+        private List<ISelectable> _selectedItems;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public WorkflowCanvas()
+        {
+            AllowDrop = true;
+            _scaleTransform = new ScaleTransform(1, 1);
+            LayoutTransform = _scaleTransform;
+        }
+
+        #endregion
+
+        #region Public Events
+
+        public event SelectionChangedHandler SelectionChanged;
+
+        #endregion
+
         #region Public Properties
 
         public List<ISelectable> SelectedItems
@@ -56,12 +86,6 @@
 
         #endregion
 
-        #region Public Events
-
-        public event SelectionChangedHandler SelectionChanged;
-
-        #endregion
-
         #region Public Methods and Operators
 
         public void OnSelectionChanged()
@@ -74,109 +98,22 @@
 
         #endregion
 
-        #region SpecificFields
-
-        private readonly ScaleTransform _scaleTransform;
-
-        private Point? _rubberbandSelectionStartPoint;
-
-        // keep track of selected items 
-        private List<ISelectable> _selectedItems;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        public WorkflowCanvas()
-        {
-            AllowDrop = true;
-            _scaleTransform = new ScaleTransform(1, 1);
-            LayoutTransform = _scaleTransform;
-            Background = new SolidColorBrush();
-            Background.Opacity = 0;
-
-            PreviewMouseLeftButtonDown += WorkflowCanvas_OnPreviewMouseLeftButtonDown;
-            MouseLeftButtonDown += WorkflowCanvas_OnPreviewMouseLeftButtonDown;
-        }
-
-        private void WorkflowCanvas_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-        {
-            if (mouseButtonEventArgs.ClickCount == 2)
-            {
-                var hitTestResult = VisualTreeHelper.HitTest(this, Mouse.GetPosition(this));
-
-                var workflowItem = hitTestResult.VisualHit as WorkflowItem;
-
-                if (workflowItem == null)
-                {
-                    workflowItem = hitTestResult.VisualHit.FindParent<WorkflowItem>();
-                }
-
-                if (workflowItem != null)
-                {
-                    if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) == ModifierKeys.None)
-                    {
-                        foreach (var item in SelectedItems)
-                        {
-                            item.IsSelected = false;
-                        }
-                        SelectedItems.Clear();
-                    }
-
-                    if (workflowItem.IsSelected)
-                    {
-                        workflowItem.IsSelected = false;
-                        SelectedItems.Remove(workflowItem);
-                    }
-                    else
-                    {
-                        workflowItem.IsSelected = true;
-                        SelectedItems.Add(workflowItem);
-                    }
-
-                    OnSelectionChanged();
-                }
-                else if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) == ModifierKeys.None)
-                {
-                    foreach (var item in SelectedItems)
-                    {
-                        item.IsSelected = false;
-                    }
-
-                    SelectedItems.Clear();
-                    OnSelectionChanged();
-                }
-
-                if (workflowItem != null && workflowItem.IsSelected == false)
-                {
-                    Mouse.OverrideCursor = Cursors.Hand;
-                }
-
-                if (workflowItem != null && workflowItem.IsSelected)
-                {
-                    Mouse.OverrideCursor = Cursors.SizeAll;
-                }
-            }
-        }
-
-        #endregion
-
         #region Protected Methods and Operators
 
         protected override Size MeasureOverride(Size constraint)
         {
             var size = new Size();
-            foreach (UIElement element in Children)
+            foreach (UIElement element in base.Children)
             {
-                var left = GetLeft(element);
-                var top = GetTop(element);
+                double left = GetLeft(element);
+                double top = GetTop(element);
                 left = double.IsNaN(left) ? 0 : left;
                 top = double.IsNaN(top) ? 0 : top;
 
                 //measure desired size for each child
                 element.Measure(constraint);
 
-                var desiredSize = element.DesiredSize;
+                Size desiredSize = element.DesiredSize;
                 if (!double.IsNaN(desiredSize.Width) && !double.IsNaN(desiredSize.Height))
                 {
                     size.Width = Math.Max(size.Width, left + desiredSize.Width);
@@ -193,21 +130,21 @@
         {
             base.OnDrop(e);
             var dragObject = e.Data.GetData(typeof(DragObject)) as DragObject;
-            if (dragObject != null && !string.IsNullOrEmpty(dragObject.Xaml))
+            if (dragObject != null && !String.IsNullOrEmpty(dragObject.Xaml))
             {
                 WorkflowItem newItem = null;
-                var content = XamlReader.Load(XmlReader.Create(new StringReader(dragObject.Xaml)));
+                Object content = XamlReader.Load(XmlReader.Create(new StringReader(dragObject.Xaml)));
 
                 if (content != null)
                 {
                     newItem = new WorkflowItem();
                     newItem.Content = content;
 
-                    var position = e.GetPosition(this);
+                    Point position = e.GetPosition(this);
 
                     if (dragObject.DesiredSize.HasValue)
                     {
-                        var desiredSize = dragObject.DesiredSize.Value;
+                        Size desiredSize = dragObject.DesiredSize.Value;
                         newItem.Width = desiredSize.Width;
                         newItem.Height = desiredSize.Height;
 
@@ -272,7 +209,7 @@
             if (_rubberbandSelectionStartPoint.HasValue)
             {
                 // create rubberband adorner
-                var adornerLayer = AdornerLayer.GetAdornerLayer(this);
+                AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this);
                 if (adornerLayer != null)
                 {
                     var adorner = new RubberbandAdorner(this, _rubberbandSelectionStartPoint);
