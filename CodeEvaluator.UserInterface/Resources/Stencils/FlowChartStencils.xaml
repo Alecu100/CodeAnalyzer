@@ -529,6 +529,10 @@
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
+                        <base1:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll">
+
+                        </base1:DragThumb>
+
                         <Grid Margin="-5" x:Name="grdConnectors" Visibility="Hidden">
                             <base1:WorkflowConnector Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <base1:WorkflowConnector Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
@@ -537,12 +541,6 @@
                         </Grid>
 
                         <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
-
-
-                        <base1:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll">
-
-                        </base1:DragThumb>
-
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected"
@@ -592,6 +590,10 @@
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
+                        <base1:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll">
+
+                        </base1:DragThumb>
+
                         <Grid Margin="-5" x:Name="grdConnectors" Visibility="Hidden">
                             <base1:WorkflowConnector Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <base1:WorkflowConnector Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
@@ -600,10 +602,6 @@
                         </Grid>
 
                         <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
-
-                        <base1:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll">
-                            
-                        </base1:DragThumb>
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -653,6 +651,11 @@
                                 FontSize="12" FontWeight="Bold" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
 
+
+                        <base1:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll">
+
+                        </base1:DragThumb>
+
                         <Grid Margin="-5" x:Name="grdConnectors" Visibility="Hidden">
                             <base1:WorkflowConnector Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <base1:WorkflowConnector Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
@@ -661,11 +664,6 @@
                         </Grid>
 
                         <base1:ResizeDecorator x:Name="PART_DesignerItemDecorator" />
-
-
-                        <base1:DragThumb x:Name="PART_DragThumb" Cursor="SizeAll">
-
-                        </base1:DragThumb>
                     </Grid>
 
                     <ControlTemplate.Triggers>

@@ -56,6 +56,62 @@ namespace CodeEvaluator.UserInterface.Controls.Base
             AllowDrop = true;
             _scaleTransform = new ScaleTransform(1, 1);
             LayoutTransform = _scaleTransform;
+            Background = new SolidColorBrush();
+            Background.Opacity = 0;
+
+            PreviewMouseLeftButtonDown += WorkflowCanvas_OnPreviewMouseLeftButtonDown;
+        }
+
+        private void WorkflowCanvas_OnPreviewMouseLeftButtonDown(
+            object sender,
+            MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            if (mouseButtonEventArgs.ClickCount == 2)
+            {
+                var hitTestResult = VisualTreeHelper.HitTest(this, Mouse.GetPosition(this));
+
+                var workflowItem = hitTestResult.VisualHit as WorkflowItem;
+
+                if (workflowItem == null)
+                {
+                    workflowItem = hitTestResult.VisualHit.FindParent<WorkflowItem>();
+                }
+
+                if (workflowItem != null)
+                {
+                    if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) == ModifierKeys.None)
+                    {
+                        foreach (var item in SelectedItems)
+                        {
+                            item.IsSelected = false;
+                        }
+                        SelectedItems.Clear();
+                    }
+
+                    if (workflowItem.IsSelected)
+                    {
+                        workflowItem.IsSelected = false;
+                        SelectedItems.Remove(workflowItem);
+                    }
+                    else
+                    {
+                        workflowItem.IsSelected = true;
+                        SelectedItems.Add(workflowItem);
+                    }
+
+                    OnSelectionChanged();
+                }
+                else if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) == ModifierKeys.None)
+                {
+                    foreach (var item in SelectedItems)
+                    {
+                        item.IsSelected = false;
+                    }
+
+                    SelectedItems.Clear();
+                    OnSelectionChanged();
+                }
+            }
         }
 
         #endregion

@@ -100,48 +100,10 @@
 
             Initialized += OnInitialized;
 
-            Loaded += DesignerItem_Loaded;
-
-            MouseDoubleClick += DesignerItem_MouseDoubleClick;
-
+            Loaded += WorkflowItem_Loaded;
         }
 
-        private void DesignerItem_MouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-        {
-            var designer = VisualTreeHelper.GetParent(this) as WorkflowCanvas;
-
-            // update selection
-            if (designer != null)
-            {
-                if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
-                {
-                    if (IsSelected)
-                    {
-                        IsSelected = false;
-                        designer.SelectedItems.Remove(this);
-                    }
-                    else
-                    {
-                        IsSelected = true;
-                        designer.SelectedItems.Add(this);
-                    }
-                }
-                else if (!IsSelected)
-                {
-                    foreach (var item in designer.SelectedItems)
-                    {
-                        item.IsSelected = false;
-                    }
-
-                    designer.SelectedItems.Clear();
-                    IsSelected = true;
-                    designer.SelectedItems.Add(this);
-                    designer.OnSelectionChanged();
-                }
-            }
-        }
-
-        private void DesignerItem_MouseLeave(object sender, MouseEventArgs mouseEventArgs)
+        private void WorkflowItem_MouseLeave(object sender, MouseEventArgs mouseEventArgs)
         {
             var grdConnectors = this.FindVisualChildren<Grid>().First(x => x.Name == "grdConnectors");
 
@@ -151,7 +113,7 @@
             }
         }
 
-        private void DesignerItem_MouseEnter(object sender, MouseEventArgs mouseEventArgs)
+        private void WorkflowItem_MouseEnter(object sender, MouseEventArgs mouseEventArgs)
         {
             var grdConnectors = this.FindVisualChildren<Grid>().First(x => x.Name == "grdConnectors");
 
@@ -160,7 +122,7 @@
 
         public WorkflowItem()
         {
-            Loaded += DesignerItem_Loaded;
+            Loaded += WorkflowItem_Loaded;
         }
 
         static WorkflowItem()
@@ -188,8 +150,7 @@
                 var grdConnectors = this.FindVisualChildren<Grid>().First(x => x.Name == "grdConnectors");
                 if (value == false)
                 {
-
-                        grdConnectors.Visibility = Visibility.Hidden;
+                    grdConnectors.Visibility = Visibility.Hidden;
                 }
                 else
                 {
@@ -337,7 +298,7 @@
 
         #region Private Methods and Operators
 
-        private void DesignerItem_Loaded(object sender, RoutedEventArgs e)
+        private void WorkflowItem_Loaded(object sender, RoutedEventArgs e)
         {
             // if DragThumbTemplate and ConnectorDecoratorTemplate properties of this class
             // are set these templates are applied; 
@@ -378,9 +339,9 @@
 
             var pathIcon = this.FindVisualChildren<Grid>().First(x => x.Name == "grdContent");
 
-            pathIcon.MouseEnter += DesignerItem_MouseEnter;
+            pathIcon.MouseEnter += WorkflowItem_MouseEnter;
 
-            pathIcon.MouseLeave += DesignerItem_MouseLeave;
+            pathIcon.MouseLeave += WorkflowItem_MouseLeave;
         }
 
         private IEnumerable<T> FindVisualChildren<T>(DependencyObject obj) where T : DependencyObject
