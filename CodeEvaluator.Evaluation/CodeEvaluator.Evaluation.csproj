@@ -92,6 +92,7 @@
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForConstructor.cs" />
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMember.cs" />
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMethod.cs" />
+    <Compile Include="Evaluators\LiteralExpressionSyntaxEvaluator.cs" />
     <Compile Include="Extensions\EvaluatedObjectReferenceExtensions.cs" />
     <Compile Include="Interfaces\IInheritanceChainResolver.cs" />
     <Compile Include="Interfaces\IKeywordToTypeInfoRemapper.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Members\EvaluatedConstructor.cs" />
     <Compile Include="Members\EvaluatedField.cs" />
     <Compile Include="Members\EvaluatedGenericParameter.cs" />
+    <Compile Include="Members\EvaluatedLiteralObject.cs" />
     <Compile Include="Members\EvaluatedMember.cs" />
     <Compile Include="Members\EvaluatedMethod.cs" />
     <Compile Include="Members\EvaluatedMethodBase.cs" />

@@ -101,6 +101,11 @@
                 return new AssignmentExpressionSyntaxEvaluator();
             }
 
+            if (syntaxNode is LiteralExpressionSyntax)
+            {
+                return new LiteralExpressionSyntaxEvaluator();
+            }
+
             return null;
         }
 

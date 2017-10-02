@@ -27,6 +27,126 @@
             _keywordToTypeInfoMappings["char"] = "System.Char";
         }
 
+        public string ObjectTypeName
+        {
+            get
+            {
+                return "System.Object";
+            }
+        }
+
+        public string ShortTypeName
+        {
+            get
+            {
+                return "System.Int16";
+            }
+        }
+
+        public string IntTypeName
+        {
+            get
+            {
+                return "System.Int32";
+            }
+        }
+
+        public string LongTypeName
+        {
+            get
+            {
+                return "System.Int64";
+            }
+        }
+
+        public string UShortTypeName
+        {
+            get
+            {
+                return "System.UInt16";
+            }
+        }
+
+        public string UIntTypeName
+        {
+            get
+            {
+                return "System.UInt32";
+            }
+        }
+
+        public string ULongTypeName
+        {
+            get
+            {
+                return "System.UInt64";
+            }
+        }
+
+        public string StringTypeName
+        {
+            get
+            {
+                return "System.String";
+            }
+        }
+
+        public string BoolTypeName
+        {
+            get
+            {
+                return "System.Boolean";
+            }
+        }
+
+        public string FloatTypeName
+        {
+            get
+            {
+                return "System.Single";
+            }
+        }
+
+        public string DoubleTypeName
+        {
+            get
+            {
+                return "System.Double";
+            }
+        }
+
+        public string DecimalTypeName
+        {
+            get
+            {
+                return "System.Decimal";
+            }
+        }
+
+        public string ByteTypeName
+        {
+            get
+            {
+                return "System.Byte";
+            }
+        }
+
+        public string SByteTypeName
+        {
+            get
+            {
+                return "System.SByte";
+            }
+        }
+
+        public string CharTypeName
+        {
+            get
+            {
+                return "System.Char";
+            }
+        }
+
         public bool IsKeywordTypeInfo(string keywordTypeInfo)
         {
             return _keywordToTypeInfoMappings.ContainsKey(keywordTypeInfo);

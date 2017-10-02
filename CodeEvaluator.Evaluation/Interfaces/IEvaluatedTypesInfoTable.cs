@@ -56,6 +56,8 @@
         /// <returns></returns>
         EvaluatedTypeInfo GetTypeInfo(BaseTypeDeclarationSyntax typeDeclaration);
 
+        EvaluatedTypeInfo GetTypeInfo(string typeName);
+
         /// <summary>
         ///     Rebuilds the well known methods.
         /// </summary>
