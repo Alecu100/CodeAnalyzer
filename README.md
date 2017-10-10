@@ -18,3 +18,15 @@ To generate a workflow diagram, the code execution simulator scans for specific 
 The possible method calls are: "WorkflowEvaluator.AddDecision", "WorkflowEvaluator.BeginWorkflow", "WorkflowEvaluator.EndWorkflow", "WorkflowEvaluator.AddProcess" and "WorkflowEvaluator.AddDecision".
 
 I added a quick video demo at the following address: https://www.youtube.com/watch?v=F3pjRgD0D6c
+
+There are still a lot of things left to do on this:
+
+- create lazy initializers for evaluated object types to generate for example default empty constructor, code for automatic properties and so on
+
+- add Id string property to WorkflowEvaluatorStep to better indentify a step, multiple differents steps might have the same name
+
+- create generic support for individual methods different from generic support for types, create a generic overload of the method each time it is requested and register it in the type, rewrite the method code to use the concrete types
+
+- create generic support for types emitting a new instance of a generic type, rewrite the code to add concrete passed implementations of the type inside the code
+
+- add support for properties, add new special references and objects to properties which call get and set on the property to get or set a type
