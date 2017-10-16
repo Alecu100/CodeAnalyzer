@@ -1,9 +1,8 @@
-﻿namespace CodeEvaluator.Evaluation.Members
+﻿using System;
+using Microsoft.CodeAnalysis;
+
+namespace CodeEvaluator.Evaluation.Members
 {
-    using System;
-
-    using Microsoft.CodeAnalysis;
-
     #region Using
 
     #endregion
@@ -46,6 +45,8 @@
         public string IdentifierText { get; set; }
 
         public EMemberFlags MemberFlags { get; set; }
+
+        public bool IsFinalized { get; set; }
 
         #endregion
     }

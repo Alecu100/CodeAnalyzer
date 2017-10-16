@@ -109,6 +109,7 @@
     <Compile Include="Interfaces\IEvaluatedObjectAllocator.cs" />
     <Compile Include="Interfaces\IEvaluatedObjectsHeap.cs" />
     <Compile Include="Interfaces\IEvaluatedTypesInfoTable.cs" />
+    <Compile Include="Interfaces\IEvaluatedTypeInfoFinalizer.cs" />
     <Compile Include="Listeners\WorkflowEvaluatorEvaluatorListener.cs" />
     <Compile Include="Members\EvaluatedConstructor.cs" />
     <Compile Include="Members\EvaluatedField.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Evaluators\ObjectCreationExpressionSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\ReturnStatementSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\VariableDeclarationSyntaxEvaluator.cs" />
+    <Compile Include="Members\Finalizers\AddDefaultConstructorFinalizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\SyntaxNodeEvaluatorListenerArgs.cs" />
   </ItemGroup>
