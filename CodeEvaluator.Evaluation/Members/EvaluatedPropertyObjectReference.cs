@@ -135,5 +135,10 @@ namespace CodeEvaluator.Evaluation.Members
             foreach (var evaluatedObject in evaluatedObjects)
                 AssignEvaluatedObject(evaluatedObject);
         }
+
+        public void AssignEvaluatedProperty(EvaluatedPropertyObject evaluatedPropertyObject)
+        {
+            EvaluatedPropertyObjects.Add(evaluatedPropertyObject);
+        }
     }
 }
