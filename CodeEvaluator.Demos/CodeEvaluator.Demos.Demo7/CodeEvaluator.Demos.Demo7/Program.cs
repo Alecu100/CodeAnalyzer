@@ -20,6 +20,9 @@ namespace CodeEvaluator.Demos.Demo7
             myClassWithProperty.MyClassForProperty1 = new MyClassForProperty1();
             myClassWithProperty.MyClassForProperty2 = new MyClassForProperty2();
 
+            myClassWithProperty.MyClassForProperty1.MyMethod1();
+            myClassWithProperty.MyClassForProperty2.MyMethod2();
+
             WorkflowEvaluator.EndWorkflow();
         }
     }

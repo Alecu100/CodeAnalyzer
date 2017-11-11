@@ -691,6 +691,8 @@ namespace CodeEvaluator.Evaluation.Members
                     evaluatedMethodParameter.IdentifierText = "value";
                     evaluatedMethodParameter.Declaration = accessorDeclarationSyntax;
 
+                    evaluatedPropertySetAccessor.Parameters.Add(evaluatedMethodParameter);
+
                     if (accessorDeclarationSyntax.Body != null) evaluatedProperty.IsAutoProperty = false;
                 }
             }

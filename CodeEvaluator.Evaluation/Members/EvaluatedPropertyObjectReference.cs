@@ -39,6 +39,9 @@ namespace CodeEvaluator.Evaluation.Members
 
             if (methodInvocationResolverResult.CanInvokeMethod)
             {
+                var previousAccessedReference = evaluatedPropertyObject.CodeEvaluatorExecutionStack
+                    .CurrentExecutionFrame.MemberAccessReference;
+
                 var previousPassedArguments = new Dictionary<int, EvaluatedObjectReference>();
 
                 var passedMethodParameters = evaluatedPropertyObject.CodeEvaluatorExecutionStack.CurrentExecutionFrame
@@ -68,7 +71,13 @@ namespace CodeEvaluator.Evaluation.Members
                 foreach (var evaluatedObjectReference in previousPassedArguments)
                     passedMethodParameters[evaluatedObjectReference.Key] = evaluatedObjectReference.Value;
 
-                return evaluatedPropertyObject.CodeEvaluatorExecutionStack.CurrentExecutionFrame.MemberAccessReference;
+                var memberAccesReferencetoReturn = evaluatedPropertyObject.CodeEvaluatorExecutionStack
+                    .CurrentExecutionFrame.MemberAccessReference;
+
+                evaluatedPropertyObject.CodeEvaluatorExecutionStack
+                    .CurrentExecutionFrame.MemberAccessReference = previousAccessedReference;
+
+                return memberAccesReferencetoReturn;
             }
 
             return null;
@@ -95,6 +104,9 @@ namespace CodeEvaluator.Evaluation.Members
             {
                 var previousPassedArguments = new Dictionary<int, EvaluatedObjectReference>();
 
+                var previousAccessedReference = evaluatedPropertyObject.CodeEvaluatorExecutionStack
+                    .CurrentExecutionFrame.MemberAccessReference;
+
                 var passedMethodParameters = evaluatedPropertyObject.CodeEvaluatorExecutionStack.CurrentExecutionFrame
                     .PassedMethodParameters;
 
@@ -121,6 +133,9 @@ namespace CodeEvaluator.Evaluation.Members
 
                 foreach (var evaluatedObjectReference in previousPassedArguments)
                     passedMethodParameters[evaluatedObjectReference.Key] = evaluatedObjectReference.Value;
+
+                evaluatedPropertyObject.CodeEvaluatorExecutionStack
+                    .CurrentExecutionFrame.MemberAccessReference = previousAccessedReference;
             }
         }
 
