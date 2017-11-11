@@ -1,14 +1,15 @@
-﻿namespace CodeEvaluator.Evaluation.Interfaces
+﻿using System.Collections.Generic;
+using CodeEvaluator.Evaluation.Common;
+using CodeEvaluator.Evaluation.Members;
+
+namespace CodeEvaluator.Evaluation.Interfaces
 {
-    using System.Collections.Generic;
-
-    using CodeEvaluator.Evaluation.Common;
-    using CodeEvaluator.Evaluation.Members;
-
     public interface IMethodInvocationResolver
     {
         MethodInvocationResolverResult ResolveMethodInvocation(
-            EvaluatedInvokableObject methodInvokableObject,
+            List<EvaluatedMethodBase> targetMethodGroup,
+            EvaluatedObject targetObject,
+            EvaluatedTypeInfo referenceType,
             List<EvaluatedObjectReference> mandatoryParameters,
             Dictionary<string, EvaluatedObjectReference> optionalParameters);
     }

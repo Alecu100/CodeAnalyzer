@@ -86,11 +86,12 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
                         foreach (var evaluatedObject in accessedReferenceMember.EvaluatedObjects)
                         {
-                            var evaluatedDelegate = (EvaluatedInvokableObject) evaluatedObject;
+                            var invokableObject = (EvaluatedInvokableObject) evaluatedObject;
 
                             var methodInvocationResolverResult =
                                 MethodInvocationResolver.ResolveMethodInvocation(
-                                    evaluatedDelegate,
+                                    invokableObject.TargetMethodGroup, invokableObject.TargetObject,
+                                    invokableObject.TypeInfo,
                                     mandatoryParamenters,
                                     optionalParameters);
 

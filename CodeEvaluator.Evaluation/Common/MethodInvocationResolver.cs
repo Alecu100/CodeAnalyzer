@@ -19,11 +19,13 @@ namespace CodeEvaluator.Evaluation.Common
         public IMethodSignatureComparer MethodSignatureComparer { get; set; }
 
         public MethodInvocationResolverResult ResolveMethodInvocation(
-            EvaluatedInvokableObject methodInvokableObject,
+            List<EvaluatedMethodBase> targetMethodGroup,
+            EvaluatedObject targetObject,
+            EvaluatedTypeInfo referenceType,
             List<EvaluatedObjectReference> mandatoryParameters,
             Dictionary<string, EvaluatedObjectReference> optionalParameters)
         {
-            foreach (var evaluatedMethodDerived in methodInvokableObject.TargetMethodGroup)
+            foreach (var evaluatedMethodDerived in targetMethodGroup)
             {
                 var methodParametersToAssign = new Dictionary<int, EvaluatedObjectReference>();
 
@@ -36,19 +38,19 @@ namespace CodeEvaluator.Evaluation.Common
 
                 EvaluatedMethodBase resolvedTargetMethod = null;
 
-                if (methodInvokableObject.TargetObject != null)
+                if (targetObject != null)
                 {
                     methodParametersToAssign[-1] = new EvaluatedObjectDirectReference();
-                    methodParametersToAssign[-1].AssignEvaluatedObject(methodInvokableObject.TargetObject);
+                    methodParametersToAssign[-1].AssignEvaluatedObject(targetObject);
                 }
 
-                if (methodInvokableObject.TargetObject == null ||
-                    methodInvokableObject.TypeInfo == methodInvokableObject.TargetObject.TypeInfo)
+                if (targetObject == null ||
+                    referenceType == targetObject.TypeInfo)
                     resolvedTargetMethod = evaluatedMethodDerived;
                 else if (!TryToResolveTargetMethod(
                     evaluatedMethodDerived,
-                    methodInvokableObject.TargetObject,
-                    methodInvokableObject.TypeInfo,
+                    targetObject,
+                    referenceType,
                     ref resolvedTargetMethod))
                     return new MethodInvocationResolverResult {CanInvokeMethod = false};
 

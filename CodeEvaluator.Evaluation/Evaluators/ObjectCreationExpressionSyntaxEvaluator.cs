@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeEvaluator.Evaluation.Common;
+using CodeEvaluator.Evaluation.Extensions;
 using CodeEvaluator.Evaluation.Interfaces;
 using CodeEvaluator.Evaluation.Members;
 using Microsoft.CodeAnalysis;
@@ -9,8 +10,6 @@ using StructureMap;
 
 namespace CodeEvaluator.Evaluation.Evaluators
 {
-    using CodeEvaluator.Evaluation.Extensions;
-
     public class ObjectCreationExpressionSyntaxEvaluator : SyntaxNodeEvaluator
     {
         public ObjectCreationExpressionSyntaxEvaluator()
@@ -79,7 +78,7 @@ namespace CodeEvaluator.Evaluation.Evaluators
 
                         var methodInvocationResolverResult =
                             MethodInvocationResolver.ResolveMethodInvocation(
-                                evaluatedDelegate,
+                                evaluatedDelegate.TargetMethodGroup, null, evaluatedDelegate.TypeInfo,
                                 mandatoryParamenters,
                                 optionalParameters);
 

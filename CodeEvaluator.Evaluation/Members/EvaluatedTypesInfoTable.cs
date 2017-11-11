@@ -656,11 +656,12 @@ namespace CodeEvaluator.Evaluation.Members
                     evaluatedPropertyGetAccessor.IdentifierText = propertyDeclarationSyntax.Identifier.ValueText;
                     evaluatedPropertyGetAccessor.FullIdentifierText = fullNamespace
                                                                       + NormalizeName(
-                                                                          "Get"
+                                                                          "get_"
                                                                           + propertyDeclarationSyntax.Identifier
                                                                               .ValueText);
 
                     AddMemberFlagsToMember(evaluatedPropertyGetAccessor, accessorDeclarationSyntax.Modifiers);
+                    AddMemberFlagsToMember(evaluatedPropertyGetAccessor, propertyDeclarationSyntax.Modifiers);
 
                     evaluatedProperty.PropertyGetAccessor = evaluatedPropertyGetAccessor;
 
@@ -676,11 +677,12 @@ namespace CodeEvaluator.Evaluation.Members
                     evaluatedPropertySetAccessor.IdentifierText = propertyDeclarationSyntax.Identifier.ValueText;
                     evaluatedPropertySetAccessor.FullIdentifierText = fullNamespace
                                                                       + NormalizeName(
-                                                                          "Set"
+                                                                          "set_"
                                                                           + propertyDeclarationSyntax.Identifier
                                                                               .ValueText);
 
                     AddMemberFlagsToMember(evaluatedPropertySetAccessor, accessorDeclarationSyntax.Modifiers);
+                    AddMemberFlagsToMember(evaluatedPropertySetAccessor, propertyDeclarationSyntax.Modifiers);
 
                     evaluatedProperty.PropertySetAccessor = evaluatedPropertySetAccessor;
 
@@ -870,6 +872,9 @@ namespace CodeEvaluator.Evaluation.Members
                                 if (trackedProperty.PropertySetAccessor != null
                                     && trackedProperty.PropertySetAccessor.Parameters.Count > 0)
                                     trackedProperty.PropertySetAccessor.Parameters[0].TypeInfo = wellKnownTypeInfo;
+
+                                if (trackedProperty.PropertyGetAccessor != null)
+                                    trackedProperty.PropertyGetAccessor.ReturnType = wellKnownTypeInfo;
                             }
                         }
                     }

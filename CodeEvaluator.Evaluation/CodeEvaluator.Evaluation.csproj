@@ -124,6 +124,8 @@
     <Compile Include="Members\EvaluatedObjectIndirectReference.cs" />
     <Compile Include="Members\EvaluatedProperty.cs" />
     <Compile Include="Members\EvaluatedPropertyGetAccessor.cs" />
+    <Compile Include="Members\EvaluatedPropertyObject.cs" />
+    <Compile Include="Members\EvaluatedPropertyObjectReference.cs" />
     <Compile Include="Members\EvaluatedPropertySetAccessor.cs" />
     <Compile Include="Members\EvaluatedStaticObject.cs" />
     <Compile Include="Members\EvaluatedTypeInfo.cs" />
