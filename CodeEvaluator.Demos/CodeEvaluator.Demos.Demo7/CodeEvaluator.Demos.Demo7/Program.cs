@@ -23,7 +23,7 @@ namespace CodeEvaluator.Demos.Demo7
             myClassWithProperty.MyClassForProperty1.MyMethod1();
             myClassWithProperty.MyClassForProperty2.MyMethod2();
 
-            WorkflowEvaluator.EndWorkflow();
+            WorkflowEvaluator.StopWorkflow();
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeEvaluator.Evaluation.Evaluators
 {
-    public class IdentifierNameSyntaxEvaluatorForMethod : BaseMethodDeclarationSyntaxEvaluator
+    public class IdentifierNameSyntaxEvaluatorForMethod : SyntaxNodeEvaluator
     {
         protected override void EvaluateSyntaxNodeInternal(
             SyntaxNode syntaxNode,

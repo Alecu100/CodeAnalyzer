@@ -12,7 +12,7 @@ using StructureMap;
 
 namespace CodeEvaluator.Evaluation.Evaluators
 {
-    public class IdentifierNameSyntaxEvaluatorForConstructor : BaseMethodDeclarationSyntaxEvaluator
+    public class IdentifierNameSyntaxEvaluatorForConstructor : SyntaxNodeEvaluator
     {
         protected override void EvaluateSyntaxNodeInternal(SyntaxNode syntaxNode, CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {

@@ -14,6 +14,8 @@
 
     public class ConstructorDeclarationSyntaxEvaluator : BaseMethodDeclarationSyntaxEvaluator
     {
+        private ConstructorDeclarationSyntax _baseMethodDeclarationSyntax;
+
         #region Protected Methods and Operators
 
         protected override void EvaluateSyntaxNodeInternal(

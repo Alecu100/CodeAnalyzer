@@ -22,7 +22,7 @@ namespace CodeEvaluator.Evaluation.Extensions
                 return evaluatedPropertyObjectReference.EvaluatedPropertyObjects.Any();
             }
 
-            return evaluatedObjectReference.EvaluatedObjects.Any();
+            return true;
         }
     }
 }

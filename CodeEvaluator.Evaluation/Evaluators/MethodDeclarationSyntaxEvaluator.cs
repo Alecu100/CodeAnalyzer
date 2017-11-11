@@ -25,7 +25,6 @@
             SyntaxNode syntaxNode,
             CodeEvaluatorExecutionStack workflowEvaluatorExecutionStack)
         {
-            _baseMethodDeclarationSyntax = (MethodDeclarationSyntax)syntaxNode;
             _methodDeclarationSyntax = (MethodDeclarationSyntax)syntaxNode;
             WorkflowEvaluatorExecutionStack = workflowEvaluatorExecutionStack;
 
@@ -35,7 +34,7 @@
 
             var syntaxNodeEvaluator =
                 SyntaxNodeEvaluatorFactory.GetSyntaxNodeEvaluator(
-                    _baseMethodDeclarationSyntax.Body,
+                    _methodDeclarationSyntax.Body,
                     EEvaluatorActions.None);
 
             if (syntaxNodeEvaluator != null)

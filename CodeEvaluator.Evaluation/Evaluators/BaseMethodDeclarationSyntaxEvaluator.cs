@@ -22,8 +22,6 @@
 
         #region SpecificFields
 
-        protected BaseMethodDeclarationSyntax _baseMethodDeclarationSyntax;
-
         protected EvaluatedObjectReference _thisReference;
 
         protected EvaluatedMethodBase _evaluatedMethod;

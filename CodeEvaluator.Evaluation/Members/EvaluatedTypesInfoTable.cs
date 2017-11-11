@@ -651,7 +651,7 @@ namespace CodeEvaluator.Evaluation.Members
                 if (accessorDeclarationSyntax.Keyword.ValueText == "get")
                 {
                     var evaluatedPropertyGetAccessor = new EvaluatedPropertyGetAccessor();
-                    evaluatedPropertyGetAccessor.Declaration = accessorDeclarationSyntax.Body;
+                    evaluatedPropertyGetAccessor.Declaration = accessorDeclarationSyntax;
                     evaluatedPropertyGetAccessor.Identifier = propertyDeclarationSyntax.Identifier;
                     evaluatedPropertyGetAccessor.IdentifierText = propertyDeclarationSyntax.Identifier.ValueText;
                     evaluatedPropertyGetAccessor.FullIdentifierText = fullNamespace
@@ -672,7 +672,7 @@ namespace CodeEvaluator.Evaluation.Members
                 if (accessorDeclarationSyntax.Keyword.ValueText == "set")
                 {
                     var evaluatedPropertySetAccessor = new EvaluatedPropertySetAccessor();
-                    evaluatedPropertySetAccessor.Declaration = accessorDeclarationSyntax.Body;
+                    evaluatedPropertySetAccessor.Declaration = accessorDeclarationSyntax;
                     evaluatedPropertySetAccessor.Identifier = propertyDeclarationSyntax.Identifier;
                     evaluatedPropertySetAccessor.IdentifierText = propertyDeclarationSyntax.Identifier.ValueText;
                     evaluatedPropertySetAccessor.FullIdentifierText = fullNamespace

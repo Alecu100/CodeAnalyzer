@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeEvaluator.Evaluation.Evaluators
 {
-    public class IdentifierNameSyntaxEvaluatorForMember : BaseMethodDeclarationSyntaxEvaluator
+    public class IdentifierNameSyntaxEvaluatorForMember : SyntaxNodeEvaluator
     {
         #region Protected Methods and Operators
 

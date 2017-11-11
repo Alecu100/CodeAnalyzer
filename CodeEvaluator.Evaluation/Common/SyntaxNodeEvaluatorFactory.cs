@@ -1,11 +1,10 @@
-﻿namespace CodeEvaluator.Evaluation.Common
+﻿using CodeEvaluator.Evaluation.Evaluators;
+using CodeEvaluator.Evaluation.Interfaces;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace CodeEvaluator.Evaluation.Common
 {
-    using global::CodeEvaluator.Evaluation.Evaluators;
-    using global::CodeEvaluator.Evaluation.Interfaces;
-
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
     #region Using
 
     #endregion
@@ -22,89 +21,58 @@
         public ISyntaxNodeEvaluator GetSyntaxNodeEvaluator(SyntaxNode syntaxNode, EEvaluatorActions currentAction)
         {
             if (syntaxNode is MethodDeclarationSyntax)
-            {
                 return new MethodDeclarationSyntaxEvaluator();
-            }
+
+            if (syntaxNode is AccessorDeclarationSyntax)
+                return new AccessorDeclarationSyntaxEvaluator();
 
             if (syntaxNode is BlockSyntax)
-            {
                 return new BlockSyntaxEvaluator();
-            }
 
             if (syntaxNode is ExpressionStatementSyntax)
-            {
                 return new ExpressionStatementSyntaxEvaluator();
-            }
 
             if (syntaxNode is InvocationExpressionSyntax)
-            {
                 return new InvocationExpressionSyntaxEvaluator();
-            }
 
             if (syntaxNode is IfStatementSyntax)
-            {
                 return new IfStatementSyntaxEvaluator();
-            }
 
             if (syntaxNode is LocalDeclarationStatementSyntax)
-            {
                 return new LocalDeclarationStatementSyntaxEvaluator();
-            }
 
             if (syntaxNode is ForStatementSyntax)
-            {
                 return new ForStatementSyntaxEvaluator();
-            }
 
             if (syntaxNode is ConstructorDeclarationSyntax)
-            {
                 return new ConstructorDeclarationSyntaxEvaluator();
-            }
 
             if (syntaxNode is EqualsValueClauseSyntax)
-            {
                 return new EqualsValueClauseSyntaxEvaluator();
-            }
 
             if (syntaxNode is ReturnStatementSyntax)
-            {
                 return new ReturnStatementSyntaxEvaluator();
-            }
 
             if (syntaxNode is VariableDeclarationSyntax)
-            {
                 return new VariableDeclarationSyntaxEvaluator();
-            }
 
             if (syntaxNode is MemberAccessExpressionSyntax)
-            {
                 return new MemberAccessExpressionSyntaxEvaluator(currentAction);
-            }
 
             if (syntaxNode is IdentifierNameSyntax)
-            {
                 return GetIdentifierNameSyntaxEvaluator(currentAction);
-            }
 
             if (syntaxNode is ArgumentSyntax)
-            {
                 return new ArgumentSyntaxEvaluator();
-            }
 
             if (syntaxNode is ObjectCreationExpressionSyntax)
-            {
                 return new ObjectCreationExpressionSyntaxEvaluator();
-            }
 
             if (syntaxNode is AssignmentExpressionSyntax)
-            {
                 return new AssignmentExpressionSyntaxEvaluator();
-            }
 
             if (syntaxNode is LiteralExpressionSyntax)
-            {
                 return new LiteralExpressionSyntaxEvaluator();
-            }
 
             return null;
         }
@@ -112,14 +80,10 @@
         private ISyntaxNodeEvaluator GetIdentifierNameSyntaxEvaluator(EEvaluatorActions currentAction)
         {
             if (currentAction == EEvaluatorActions.GetMethod)
-            {
                 return new IdentifierNameSyntaxEvaluatorForMethod();
-            }
 
             if (currentAction == EEvaluatorActions.GetConstructor)
-            {
                 return new IdentifierNameSyntaxEvaluatorForConstructor();
-            }
 
             return new IdentifierNameSyntaxEvaluatorForMember();
         }

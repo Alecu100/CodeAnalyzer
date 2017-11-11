@@ -153,6 +153,11 @@ namespace CodeEvaluator.Evaluation.Members
 
         public void AssignEvaluatedProperty(EvaluatedPropertyObject evaluatedPropertyObject)
         {
+            if (TypeInfo == null)
+            {
+                TypeInfo = evaluatedPropertyObject.TargetProperty.TypeInfo;
+            }
+
             EvaluatedPropertyObjects.Add(evaluatedPropertyObject);
         }
     }
