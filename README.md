@@ -1,5 +1,5 @@
 # CodeAnalyzer
-A sort of dynamic code analyzer that simulates the actual C# code execution
+A sort of dynamic code analyzer that simulates the actual C# code execution. It looks into all the execution branches starting from an entry point.
 
 This currently works only for Visual Studio 2015 as a package. 
 
@@ -21,7 +21,7 @@ I added a quick video demo at the following address: https://www.youtube.com/wat
 
 There are still a lot of things left to do on this:
 
-- create lazy initializers for evaluated object types to generate for example default empty constructor, code for automatic properties and so on
+- create lazy initializers for evaluated object types to generate for example default empty constructor, code for automatic properties and so on (Done)
 
 - add Id string property to WorkflowEvaluatorStep to better indentify a step, multiple differents steps might have the same name
 
@@ -29,4 +29,4 @@ There are still a lot of things left to do on this:
 
 - create generic support for types emitting a new instance of a generic type, rewrite the code to add concrete passed implementations of the type inside the code
 
-- add support for properties, add new special references and objects to properties which call get and set on the property to get or set a type
+- add support for properties, add new special references and objects to properties which call get and set on the property to get or set a type (Done)
