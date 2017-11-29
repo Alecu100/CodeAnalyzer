@@ -1,11 +1,11 @@
 # CodeAnalyzer
-A sort of dynamic code analyzer that simulates the actual C# code execution
+A sort of dynamic code analyzer that simulates the actual C# code execution. It looks into all the execution branches starting from an entry point.
 
 This currently works only for Visual Studio 2015 as a package. 
 
 To run this just set the CodeEvaluator.Packages.Vs2015 as the startup project and press F5 to start in debug mode or without debug mode if you prefer. A new instance of Visual Studio will be launched.
 
-This actually is a partially implemented C# interpreter. It takes and evaluates each line of code. It builds a table of all the types included in the code files and in compiled assemblies.
+This actually is a partially implemented C# interpreter. It takes and evaluates each line of code. It builds a table of all the types included in the code files and in compiled assemblies. It actually features a fully fledged execution stack with frames like in the CoreCLR complete with multiple reference types too.
 
 Then using the type information it starts evaluating the code calling methods, creating new objects and doing various other operations.
 
@@ -21,7 +21,7 @@ I added a quick video demo at the following address: https://www.youtube.com/wat
 
 There are still a lot of things left to do on this:
 
-- create lazy initializers for evaluated object types to generate for example default empty constructor, code for automatic properties and so on
+- create lazy initializers for evaluated object types to generate for example default empty constructor, code for automatic properties and so on (Done)
 
 - add Id string property to WorkflowEvaluatorStep to better indentify a step, multiple differents steps might have the same name
 
@@ -29,4 +29,4 @@ There are still a lot of things left to do on this:
 
 - create generic support for types emitting a new instance of a generic type, rewrite the code to add concrete passed implementations of the type inside the code
 
-- add support for properties, add new special references and objects to properties which call get and set on the property to get or set a type
+- add support for properties, add new special references and objects to properties which call get and set on the property to get or set a type (Done)
