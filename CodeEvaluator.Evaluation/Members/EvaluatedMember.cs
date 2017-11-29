@@ -1,8 +1,11 @@
-﻿using System;
-using Microsoft.CodeAnalysis;
-
-namespace CodeEvaluator.Evaluation.Members
+﻿namespace CodeEvaluator.Evaluation.Members
 {
+    using System;
+
+    using CodeEvaluator.Evaluation.Exceptions;
+
+    using Microsoft.CodeAnalysis;
+
     #region Using
 
     #endregion
@@ -10,6 +13,18 @@ namespace CodeEvaluator.Evaluation.Members
     [Serializable]
     public abstract class EvaluatedMember
     {
+        private SyntaxNode _declaration;
+
+        private string _fullIdentifierText;
+
+        private SyntaxToken _identifier;
+
+        private string _identifierText;
+
+        private bool _isFinalized;
+
+        private EMemberFlags _memberFlags;
+
         #region Public Properties
 
         /// <summary>
@@ -18,7 +33,19 @@ namespace CodeEvaluator.Evaluation.Members
         /// <value>
         ///     The declaration.
         /// </value>
-        public SyntaxNode Declaration { get; set; }
+        public SyntaxNode Declaration
+        {
+            get
+            {
+                return _declaration;
+            }
+            set
+            {
+                ThrowExceptionIfFinalized();
+
+                _declaration = value;
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the full name.
@@ -26,7 +53,19 @@ namespace CodeEvaluator.Evaluation.Members
         /// <value>
         ///     The full name.
         /// </value>
-        public string FullIdentifierText { get; set; }
+        public string FullIdentifierText
+        {
+            get
+            {
+                return _fullIdentifierText;
+            }
+            set
+            {
+                ThrowExceptionIfFinalized();
+
+                _fullIdentifierText = value;
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the name of the identifier.
@@ -34,7 +73,19 @@ namespace CodeEvaluator.Evaluation.Members
         /// <value>
         ///     The name of the identifier.
         /// </value>
-        public SyntaxToken Identifier { get; set; }
+        public SyntaxToken Identifier
+        {
+            get
+            {
+                return _identifier;
+            }
+            set
+            {
+                ThrowExceptionIfFinalized();
+
+                _identifier = value;
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the identifier text.
@@ -42,11 +93,55 @@ namespace CodeEvaluator.Evaluation.Members
         /// <value>
         ///     The identifier text.
         /// </value>
-        public string IdentifierText { get; set; }
+        public string IdentifierText
+        {
+            get
+            {
+                return _identifierText;
+            }
+            set
+            {
+                ThrowExceptionIfFinalized();
 
-        public EMemberFlags MemberFlags { get; set; }
+                _identifierText = value;
+            }
+        }
 
-        public bool IsFinalized { get; set; }
+        public EMemberFlags MemberFlags
+        {
+            get
+            {
+                return _memberFlags;
+            }
+            set
+            {
+                ThrowExceptionIfFinalized();
+
+                _memberFlags = value;
+            }
+        }
+
+        public bool IsFinalized
+        {
+            get
+            {
+                return _isFinalized;
+            }
+            set
+            {
+                ThrowExceptionIfFinalized();
+
+                _isFinalized = value;
+            }
+        }
+
+        protected void ThrowExceptionIfFinalized()
+        {
+            if (_isFinalized)
+            {
+                throw new TypeInfoFinalizedException("EvaluatedTypeInfo is already finalized!");
+            }
+        }
 
         #endregion
     }

@@ -37,8 +37,8 @@
         /// <returns></returns>
         EvaluatedTypeInfo GetTypeInfo(
             string typeName,
-            List<UsingDirectiveSyntax> usingDirectives,
-            List<MemberDeclarationSyntax> namespaceDeclarations);
+            IList<UsingDirectiveSyntax> usingDirectives,
+            IList<MemberDeclarationSyntax> namespaceDeclarations);
 
         EvaluatedTypeInfo GetTypeInfo(string typeName, EvaluatedTypeInfo evaluatedTypeInfo);
 

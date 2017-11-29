@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\EvaluatedMembersList.cs" />
     <Compile Include="Common\InheritanceChainResolver.cs" />
     <Compile Include="Common\InheritanceChainResolverResult.cs" />
     <Compile Include="Common\KeywordToTypeInfoRemapper.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMember.cs" />
     <Compile Include="Evaluators\IdentifierNameSyntaxEvaluatorForMethod.cs" />
     <Compile Include="Evaluators\LiteralExpressionSyntaxEvaluator.cs" />
+    <Compile Include="Exceptions\TypeInfoFinalizedException.cs" />
     <Compile Include="Extensions\EvaluatedObjectReferenceExtensions.cs" />
     <Compile Include="Interfaces\IInheritanceChainResolver.cs" />
     <Compile Include="Interfaces\IKeywordToTypeInfoRemapper.cs" />
