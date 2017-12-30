@@ -44,17 +44,22 @@ namespace CodeEvaluator.Evaluation.Members.Finalizers
 
         public override void FinalizeTypeInfo(EvaluatedTypeInfo evaluatedTypeInfo)
         {
-            foreach (var accesibleProperty in evaluatedTypeInfo.AccesibleProperties)
-                if (accesibleProperty.IsAutoProperty && !accesibleProperty.IsFinalized)
+            foreach (var specificProperty in evaluatedTypeInfo.SpecificProperties)
+                if (specificProperty.IsAutoProperty && !specificProperty.IsFinalized)
                 {
-                    GenerateBackingField(evaluatedTypeInfo, accesibleProperty);
+                    GenerateBackingField(evaluatedTypeInfo, specificProperty);
 
-                    if (accesibleProperty.PropertyGetAccessor != null)
-                        GenerateGetter(evaluatedTypeInfo, accesibleProperty);
+                    if (specificProperty.PropertyGetAccessor != null)
+                        GenerateGetter(evaluatedTypeInfo, specificProperty);
 
-                    if (accesibleProperty.PropertyGetAccessor != null)
-                        GenerateSetter(evaluatedTypeInfo, accesibleProperty);
+                    if (specificProperty.PropertyGetAccessor != null)
+                        GenerateSetter(evaluatedTypeInfo, specificProperty);
                 }
+        }
+
+        public override int Priority
+        {
+            get { return 5; }
         }
 
         private void GenerateSetter(EvaluatedTypeInfo evaluatedTypeInfo, EvaluatedProperty accesibleProperty)
@@ -135,7 +140,6 @@ namespace CodeEvaluator.Evaluation.Members.Finalizers
             evaluatedField.MemberFlags = EMemberFlags.Private;
 
             evaluatedTypeInfo.SpecificFields.Add(evaluatedField);
-            evaluatedTypeInfo.AccesibleFields.Add(evaluatedField);
         }
     }
 }

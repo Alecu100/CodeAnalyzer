@@ -45,5 +45,10 @@ namespace CodeEvaluator.Evaluation.Members.Finalizers
                 evaluatedTypeInfo.Constructors.Add(evaluatedConstructor);
             }
         }
+
+        public override int Priority
+        {
+            get { return 0; }
+        }
     }
 }

@@ -128,8 +128,6 @@
 
             BuildEvaluatedTypeInfosMemberTypeInfos();
 
-            BuildEvaluatedTypeInfosInheritedMembers();
-
             BuildEvaluatedTypeInfosStaticSharedObjects();
 
             MarkEvaluatedTypeInfosReadyToBeFinalized();
@@ -733,65 +731,6 @@
             }
 
             if (syntaxNode is CompilationUnitSyntax) AddCompilationUnit(syntaxNode, currentTypeInfo, namespaceDeclarations, usingDirectives);
-        }
-
-        private void BuildEvaluatedTypeInfosInheritedMembers()
-        {
-            foreach (var trackedVariableTypeInfo in _evaluatedTypeInfos)
-                if (trackedVariableTypeInfo.IsReferenceType)
-                {
-                    var allTypeInfos = new List<EvaluatedTypeInfo>();
-
-                    allTypeInfos.Add(trackedVariableTypeInfo);
-
-                    bool foundNewTypes;
-
-                    do
-                    {
-                        foundNewTypes = false;
-
-                        var tempTypeInfo = new List<EvaluatedTypeInfo>();
-
-                        foreach (var trackedTypeInfo in allTypeInfos)
-                            foreach (var baseVariableTypeInfo in trackedTypeInfo.BaseTypeInfos)
-                                if (!allTypeInfos.Contains(baseVariableTypeInfo) && baseVariableTypeInfo.IsReferenceType)
-                                {
-                                    tempTypeInfo.Add(baseVariableTypeInfo);
-                                    foundNewTypes = true;
-                                }
-
-                        allTypeInfos.AddRange(tempTypeInfo);
-                    }
-                    while (foundNewTypes);
-
-                    var methodSignatureComparer = ObjectFactory.GetInstance<IMethodSignatureComparer>();
-
-                    foreach (var trackedTypeInfo in allTypeInfos)
-                    {
-                        var newMethods =
-                            trackedTypeInfo.SpecificMethods.Where(
-                                baseMethod =>
-                                trackedVariableTypeInfo.AccesibleMethods.All(
-                                    specificMethod =>
-                                    !methodSignatureComparer.HaveSameSignature(baseMethod, specificMethod)));
-
-                        trackedVariableTypeInfo.AccesibleMethods.AddRange(newMethods);
-
-                        trackedVariableTypeInfo.AccesibleFields.AddRange(trackedTypeInfo.SpecificFields);
-
-                        var newProperties =
-                            trackedTypeInfo.SpecificProperties.Where(
-                                baseProperty =>
-                                trackedVariableTypeInfo.AccesibleProperties.All(
-                                    specificProperty =>
-                                    !string.Equals(
-                                        baseProperty.IdentifierText,
-                                        specificProperty.IdentifierText,
-                                        StringComparison.Ordinal)));
-
-                        trackedVariableTypeInfo.AccesibleProperties.AddRange(newProperties);
-                    }
-                }
         }
 
         private void BuildEvaluatedTypeInfosMemberTypeInfos()

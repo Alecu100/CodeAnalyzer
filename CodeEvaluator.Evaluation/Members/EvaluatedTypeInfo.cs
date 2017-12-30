@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace CodeEvaluator.Evaluation.Members
 {
     using System;
@@ -87,7 +89,7 @@ namespace CodeEvaluator.Evaluation.Members
         {
             if (!IsFinalized && IsReadyToBeFinalized)
             {
-                var evaluatedTypeInfoFinalizers = ObjectFactory.GetAllInstances<IEvaluatedTypeInfoFinalizer>();
+                var evaluatedTypeInfoFinalizers = ObjectFactory.GetAllInstances<IEvaluatedTypeInfoFinalizer>().OrderBy(finalizer => finalizer.Priority);
 
                 IsReadyToBeFinalized = false;
 

@@ -63,6 +63,9 @@ namespace CodeEvaluator.Evaluation.Configuration
 
             ObjectFactory.Configure(config => config.For<IEvaluatedTypeInfoFinalizer>()
                 .AddInstances(a => a.Object(new AddDefaultPropertiesImplementationFinalizer())));
+
+            ObjectFactory.Configure(config => config.For<IEvaluatedTypeInfoFinalizer>()
+                .AddInstances(a => a.Object(new AddInheritedMembersFinalizer())));
         }
     }
 }

@@ -9,7 +9,9 @@ namespace CodeEvaluator.Evaluation.Members.Finalizers
     {
         public void FinalizeTypeInfo(EvaluatedTypeInfo evaluatedTypeInfo)
         {
-            if (evaluatedTypeInfo.IsValueType)
+            if (evaluatedTypeInfo.IsValueType &&
+                evaluatedTypeInfo.FullIdentifierText != CodeEvaluatorConstants.ObjectTypeName &&
+                evaluatedTypeInfo.FullIdentifierText != CodeEvaluatorConstants.ValueTypeName)
             {
                 var evaluatedTypesInfoTable = ObjectFactory.GetInstance<IEvaluatedTypesInfoTable>();
 
@@ -17,8 +19,9 @@ namespace CodeEvaluator.Evaluation.Members.Finalizers
 
                 evaluatedTypeInfo.BaseTypeInfos.Add(valueTypeInfo);
             }
-            else if (evaluatedTypeInfo.IsReferenceType &&
-                     evaluatedTypeInfo.FullIdentifierText != CodeEvaluatorConstants.ObjectTypeName)
+            else if ((evaluatedTypeInfo.IsReferenceType &&
+                     evaluatedTypeInfo.FullIdentifierText != CodeEvaluatorConstants.ObjectTypeName) ||
+                     evaluatedTypeInfo.FullIdentifierText == CodeEvaluatorConstants.ValueTypeName)
             {
                 if (evaluatedTypeInfo.BaseTypeInfos.All(baseType => !baseType.IsReferenceType))
                 {
@@ -29,6 +32,11 @@ namespace CodeEvaluator.Evaluation.Members.Finalizers
                     evaluatedTypeInfo.BaseTypeInfos.Add(valueTypeInfo);
                 }
             }
+        }
+
+        public int Priority
+        {
+            get { return 0; }
         }
     }
 }

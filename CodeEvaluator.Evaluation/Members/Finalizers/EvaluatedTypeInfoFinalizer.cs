@@ -6,6 +6,7 @@ namespace CodeEvaluator.Evaluation.Members.Finalizers
     public abstract class EvaluatedTypeInfoFinalizer : IEvaluatedTypeInfoFinalizer
     {
         public abstract void FinalizeTypeInfo(EvaluatedTypeInfo evaluatedTypeInfo);
+        public abstract int Priority { get; }
 
         protected string GetTypeKind(EvaluatedTypeInfo evaluatedTypeInfo)
         {

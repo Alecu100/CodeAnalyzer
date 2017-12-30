@@ -5,5 +5,7 @@ namespace CodeEvaluator.Evaluation.Interfaces
     public interface IEvaluatedTypeInfoFinalizer
     {
         void FinalizeTypeInfo(EvaluatedTypeInfo evaluatedTypeInfo);
+
+        int Priority { get; }
     }
 }
