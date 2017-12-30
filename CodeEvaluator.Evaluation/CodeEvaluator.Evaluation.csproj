@@ -156,6 +156,8 @@
     <Compile Include="Evaluators\VariableDeclarationSyntaxEvaluator.cs" />
     <Compile Include="Members\Finalizers\AddDefaultBaseClassFinalizer.cs" />
     <Compile Include="Members\Finalizers\AddDefaultConstructorFinalizer.cs" />
+    <Compile Include="Members\Finalizers\AddDefaultPropertiesImplementationFinalizer.cs" />
+    <Compile Include="Members\Finalizers\EvaluatedTypeInfoFinalizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\SyntaxNodeEvaluatorListenerArgs.cs" />
   </ItemGroup>

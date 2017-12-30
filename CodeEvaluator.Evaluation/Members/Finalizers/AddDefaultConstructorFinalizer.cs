@@ -1,12 +1,11 @@
 ﻿using System.Linq;
 using CodeEvaluator.Evaluation.Extensions;
-using CodeEvaluator.Evaluation.Interfaces;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeEvaluator.Evaluation.Members.Finalizers
 {
-    public class AddDefaultConstructorFinalizer : IEvaluatedTypeInfoFinalizer
+    public class AddDefaultConstructorFinalizer : EvaluatedTypeInfoFinalizer
     {
         private const string ConstructorFormat = @"namespace {0} 
             {{
@@ -18,11 +17,11 @@ namespace CodeEvaluator.Evaluation.Members.Finalizers
                 }}
             }}";
 
-        public void FinalizeTypeInfo(EvaluatedTypeInfo evaluatedTypeInfo)
+        public override void FinalizeTypeInfo(EvaluatedTypeInfo evaluatedTypeInfo)
         {
             if (!evaluatedTypeInfo.Constructors.Any() && evaluatedTypeInfo.IsStatic() == false)
             {
-                var typeKind = evaluatedTypeInfo.IsValueType ? "struct" : "class";
+                var typeKind = GetTypeKind(evaluatedTypeInfo);
                 var generatedConstructorCode = string.Format(ConstructorFormat,
                     GetNamespace(evaluatedTypeInfo.IdentifierText, evaluatedTypeInfo.FullIdentifierText),
                     evaluatedTypeInfo.IdentifierText,
@@ -45,11 +44,6 @@ namespace CodeEvaluator.Evaluation.Members.Finalizers
 
                 evaluatedTypeInfo.Constructors.Add(evaluatedConstructor);
             }
-        }
-
-        private string GetNamespace(string identifier, string fullIdentifier)
-        {
-            return fullIdentifier.TrimEnd(identifier.ToArray()).TrimEnd('.');
         }
     }
 }

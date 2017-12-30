@@ -23,6 +23,14 @@ namespace CodeEvaluator.Demos.Demo7
             myClassWithProperty.MyClassForProperty1.MyMethod1();
             myClassWithProperty.MyClassForProperty2.MyMethod2();
 
+            var myClassWithAutoProperty = new MyClassWithAutoProperty();
+
+            myClassWithAutoProperty.MyClassForProperty1 = new MyClassForProperty1();
+            myClassWithAutoProperty.MyClassForProperty2 = new MyClassForProperty2();
+
+            myClassWithAutoProperty.MyClassForProperty1.MyMethod1();
+            myClassWithAutoProperty.MyClassForProperty2.MyMethod2();
+
             WorkflowEvaluator.StopWorkflow();
         }
     }

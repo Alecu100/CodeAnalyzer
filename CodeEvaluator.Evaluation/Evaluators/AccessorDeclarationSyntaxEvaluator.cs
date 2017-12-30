@@ -50,11 +50,16 @@ namespace CodeEvaluator.Evaluation.Evaluators
             var evaluatedProperty = _thisReference.TypeInfo.AccesibleProperties.FirstOrDefault(
                 property =>
                 {
-                    var propertyDeclarationSyntax = (PropertyDeclarationSyntax) property.Declaration;
-
-                    if (propertyDeclarationSyntax.AccessorList.Accessors.Any(
-                        accesor => accesor == _accessorDeclarationSyntax))
+                    if (property.PropertyGetAccessor != null && property.PropertyGetAccessor.Declaration == _accessorDeclarationSyntax)
+                    {
                         return true;
+                    }
+
+                    if (property.PropertySetAccessor != null &&
+                        property.PropertySetAccessor.Declaration == _accessorDeclarationSyntax)
+                    {
+                        return true;
+                    }
 
                     return false;
                 });

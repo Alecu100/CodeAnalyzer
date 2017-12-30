@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="MyClassForProperty1.cs" />
     <Compile Include="MyClassForProperty2.cs" />
+    <Compile Include="MyClassWithAutoProperty.cs" />
     <Compile Include="MyClassWithProperty.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

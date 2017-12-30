@@ -550,16 +550,18 @@
                 var fullNamespace = GetFullTypeNamespace(
                     namespaceDeclarations,
                     variableDeclaratorSyntax.Identifier.ValueText);
-                var trackedField = new EvaluatedField();
-                trackedField.Declaration = fieldDeclarationSyntax;
-                trackedField.FullIdentifierText = fullNamespace;
-                trackedField.Identifier = variableDeclaratorSyntax.Identifier;
-                trackedField.IdentifierText = variableDeclaratorSyntax.Identifier.ValueText;
-                trackedField.InitializerExpression = variableDeclaratorSyntax.Initializer;
 
-                AddMemberFlagsToMember(trackedField, fieldDeclarationSyntax.Modifiers);
+                var evaluatedField = new EvaluatedField();
 
-                currentTypeInfo.SpecificFields.Add(trackedField);
+                evaluatedField.Declaration = fieldDeclarationSyntax;
+                evaluatedField.FullIdentifierText = fullNamespace;
+                evaluatedField.Identifier = variableDeclaratorSyntax.Identifier;
+                evaluatedField.IdentifierText = variableDeclaratorSyntax.Identifier.ValueText;
+                evaluatedField.InitializerExpression = variableDeclaratorSyntax.Initializer;
+
+                AddMemberFlagsToMember(evaluatedField, fieldDeclarationSyntax.Modifiers);
+
+                currentTypeInfo.SpecificFields.Add(evaluatedField);
             }
         }
 
