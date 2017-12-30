@@ -12,7 +12,7 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="40d9f297-25fb-4264-99ed-7785f8331c94" Version="1.0" Language="en-US" Publisher="Microsoft Corp." />
+    <Identity Id="99a8ee3a-13db-4bea-b139-af41a28b9caa" Version="1.0" Language="en-US" Publisher="Alecu ." />
     <DisplayName>Code Analyzer</DisplayName>
     <Description xml:space="preserve">Code analyzer tools for Visual Studio 2015</Description>
   </Metadata>

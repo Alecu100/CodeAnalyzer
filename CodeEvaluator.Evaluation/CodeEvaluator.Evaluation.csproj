@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\CodeEvaluatorConstants.cs" />
     <Compile Include="Common\EvaluatedMembersList.cs" />
     <Compile Include="Common\InheritanceChainResolver.cs" />
     <Compile Include="Common\InheritanceChainResolverResult.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Evaluators\ObjectCreationExpressionSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\ReturnStatementSyntaxEvaluator.cs" />
     <Compile Include="Evaluators\VariableDeclarationSyntaxEvaluator.cs" />
+    <Compile Include="Members\Finalizers\AddDefaultBaseClassFinalizer.cs" />
     <Compile Include="Members\Finalizers\AddDefaultConstructorFinalizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\SyntaxNodeEvaluatorListenerArgs.cs" />
