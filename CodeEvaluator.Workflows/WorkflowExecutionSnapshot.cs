@@ -15,7 +15,7 @@ namespace CodeEvaluator.Workflows
 
         public WorkflowExecutionSnapshot()
         {
-            _startStep = new WorkflowStep(EWorkflowStepType.Start, "Start");
+            _startStep = new WorkflowStep(EWorkflowStepType.Start, "Start", "Start");
             _activeWorkflow = new Workflow(StartStep);
 
             _startStep.ActiveChildWorkflows.Add(_activeWorkflow);

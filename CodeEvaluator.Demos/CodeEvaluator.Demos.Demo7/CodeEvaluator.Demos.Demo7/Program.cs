@@ -13,7 +13,7 @@ namespace CodeEvaluator.Demos.Demo7
         {
             WorkflowEvaluator.BeginWorkflow();
 
-            WorkflowEvaluator.AddProcess("Main Process", "Main Process");
+            WorkflowEvaluator.AddProcess("Main Process", "Main Process", "Main Process");
 
             var myClassWithProperty = new MyClassWithProperty();
 

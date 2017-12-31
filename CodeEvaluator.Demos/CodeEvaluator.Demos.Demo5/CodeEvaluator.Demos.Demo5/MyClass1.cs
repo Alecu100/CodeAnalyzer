@@ -11,7 +11,7 @@ namespace CodeEvaluator.Demos.Demo5
     {
         public override void MyMethod()
         {
-            WorkflowEvaluator.AddProcess("MyClass1 Method1", "MyClass1 Method1");
+            WorkflowEvaluator.AddProcess("MyClass1 Method1", "MyClass1 Method1", "MyClass1 Method1");
         }
 
         public MyClass1()

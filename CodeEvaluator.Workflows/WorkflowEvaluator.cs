@@ -25,9 +25,9 @@ namespace CodeEvaluator.Workflows
         ///     Adds the decision.
         /// </summary>
         /// <param name="name">The name.</param>
-        public static void AddDecision(string name, string description)
+        public static void AddDecision(string id, string name, string description)
         {
-            var workflowStep = new WorkflowStep(EWorkflowStepType.Decision, CurrentExecutionSnapshot.ActiveWorkflow);
+            var workflowStep = new WorkflowStep(EWorkflowStepType.Decision, id, CurrentExecutionSnapshot.ActiveWorkflow);
             workflowStep.Label = name;
             workflowStep.Description = description;
             CurrentExecutionSnapshot.ActiveWorkflow.Steps.Add(workflowStep);
@@ -42,9 +42,9 @@ namespace CodeEvaluator.Workflows
         ///     Adds the process.
         /// </summary>
         /// <param name="name">The name.</param>
-        public static void AddProcess(string name, string description)
+        public static void AddProcess(string id, string name, string description)
         {
-            var workflowStep = new WorkflowStep(EWorkflowStepType.Process, CurrentExecutionSnapshot.ActiveWorkflow);
+            var workflowStep = new WorkflowStep(EWorkflowStepType.Process, id, CurrentExecutionSnapshot.ActiveWorkflow);
             workflowStep.Label = name;
             workflowStep.Description = description;
             CurrentExecutionSnapshot.ActiveWorkflow.Steps.Add(workflowStep);
@@ -97,7 +97,7 @@ namespace CodeEvaluator.Workflows
         /// </summary>
         public static void StopWorkflow()
         {
-            var stopStep = new WorkflowStep(EWorkflowStepType.Stop, "Stop");
+            var stopStep = new WorkflowStep(EWorkflowStepType.Stop, "Stop", "Stop");
             CurrentExecutionSnapshot.ActiveWorkflow.ParentStep.ActiveChildWorkflows.Remove(
                 CurrentExecutionSnapshot.ActiveWorkflow);
             CurrentExecutionSnapshot.ActiveWorkflow.LastStep.NextStep = stopStep;

@@ -11,7 +11,7 @@ namespace CodeEvaluator.Demos.Demo6
     {
         public void MyMethod()
         {
-            WorkflowEvaluator.AddProcess("Process default contructor", "Process default contructor");
+            WorkflowEvaluator.AddProcess("Process default contructor", "Process default contructor", "Process default contructor");
         }
     }
 }

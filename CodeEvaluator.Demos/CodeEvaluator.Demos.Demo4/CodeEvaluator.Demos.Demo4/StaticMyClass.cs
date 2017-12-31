@@ -11,7 +11,7 @@ namespace CodeEvaluator.Demos.Demo4
     {
         public static void StaticMyMethod()
         {
-            WorkflowEvaluator.AddProcess("StaticClass Process1", "StaticClass Process1");
+            WorkflowEvaluator.AddProcess("StaticClass Process1", "StaticClass Process1", "StaticClass Process1");
         }
     }
 }

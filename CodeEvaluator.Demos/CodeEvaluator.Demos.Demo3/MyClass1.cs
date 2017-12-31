@@ -16,12 +16,12 @@ namespace CodeEvaluator.Demos.Demo3
 
         public void Method1()
         {
-            WorkflowEvaluator.AddProcess("Method1 Process1", "Method1 Process1");
+            WorkflowEvaluator.AddProcess("Method1 Process1", "Method1 Process1", "Method1 Process1");
         }
 
         public void Method2()
         {
-            WorkflowEvaluator.AddProcess("Method2 Process1", "Method2 Process1");
+            WorkflowEvaluator.AddProcess("Method2 Process1", "Method2 Process1", "Method2 Process1");
         }
     }
 }

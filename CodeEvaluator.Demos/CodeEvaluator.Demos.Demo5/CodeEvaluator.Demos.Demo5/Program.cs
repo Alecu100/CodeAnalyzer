@@ -17,21 +17,21 @@ namespace CodeEvaluator.Demos.Demo5
 
             MyClassBase myClass = GetMyClass();
 
-            WorkflowEvaluator.AddDecision("Decission1", "Decission1");
+            WorkflowEvaluator.AddDecision("Decission1", "Decission1", "Decission1");
 
             WorkflowEvaluator.BeginWorkflow();
 
-            WorkflowEvaluator.AddProcess("Process3", "Process3");
+            WorkflowEvaluator.AddProcess("Process3", "Process3", "Process3");
 
             WorkflowEvaluator.EndWorkflow();
 
             WorkflowEvaluator.BeginWorkflow();
 
-            WorkflowEvaluator.AddProcess("Process55", "Process55");
+            WorkflowEvaluator.AddProcess("Process55", "Process55", "Process55");
 
             WorkflowEvaluator.EndWorkflow();
 
-            WorkflowEvaluator.AddProcess("Process4345", "Process4345");
+            WorkflowEvaluator.AddProcess("Process4345", "Process4345", "Process4345");
 
             myClass = GetMyClass3();
 

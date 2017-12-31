@@ -11,7 +11,7 @@ namespace CodeEvaluator.Demos.Demo7
     {
         public void MyMethod2()
         {
-            WorkflowEvaluator.AddProcess("MyClassForProperty Method2", "MyClassForProperty Method2");
+            WorkflowEvaluator.AddProcess("MyClassForProperty Method2", "MyClassForProperty Method2", "MyClassForProperty Method2");
         }
     }
 }

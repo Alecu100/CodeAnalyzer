@@ -15,7 +15,7 @@ namespace CodeEvaluator.Demos.Demo6
 
             WorkflowEvaluator.BeginWorkflow();
 
-            WorkflowEvaluator.AddProcess("Main Process", "Main Process");
+            WorkflowEvaluator.AddProcess("Main Process", "Main Process", "Main Process");
 
             var myClassInstance = new MyClassWithoutConstructor();
 

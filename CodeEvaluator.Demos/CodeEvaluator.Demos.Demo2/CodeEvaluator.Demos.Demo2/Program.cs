@@ -14,33 +14,33 @@ namespace CodeEvaluator.Demos.Demo2
 
             Process2();
 
-            WorkflowEvaluator.AddDecision("Decission1", "Decission1");
+            WorkflowEvaluator.AddDecision("Decission1", "Decission1", "Decission1");
 
             WorkflowEvaluator.BeginWorkflow();
 
-            WorkflowEvaluator.AddProcess("Process3", "Process3");
+            WorkflowEvaluator.AddProcess("Process3", "Process3", "Process3");
 
             WorkflowEvaluator.EndWorkflow();
 
             WorkflowEvaluator.BeginWorkflow();
 
-            WorkflowEvaluator.AddProcess("Process55", "Process55");
+            WorkflowEvaluator.AddProcess("Process55", "Process55", "Process55");
 
             WorkflowEvaluator.EndWorkflow();
 
-            WorkflowEvaluator.AddProcess("Process4345", "Process4345");
+            WorkflowEvaluator.AddProcess("Process4345", "Process4345", "Process4345");
 
             WorkflowEvaluator.StopWorkflow();
         }
 
         private static void Process2()
         {
-            WorkflowEvaluator.AddProcess("Process2", "Process2");
+            WorkflowEvaluator.AddProcess("Process2","Process2", "Process2");
         }
 
         private static void Process1()
         {
-            WorkflowEvaluator.AddProcess("Process1", "Process1");
+            WorkflowEvaluator.AddProcess("Process1", "Process1", "Process1");
         }
     }
 }

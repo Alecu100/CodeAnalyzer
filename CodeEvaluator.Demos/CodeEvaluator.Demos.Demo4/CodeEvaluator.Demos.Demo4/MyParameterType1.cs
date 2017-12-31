@@ -11,7 +11,7 @@ namespace CodeEvaluator.Demos.Demo4
     {
         public void Method()
         {
-            WorkflowEvaluator.AddProcess("MyParameterType1 Process1", "MyParameterType1 Process1");
+            WorkflowEvaluator.AddProcess("MyParameterType1 Process1", "MyParameterType1 Process1", "MyParameterType1 Process1");
         }
 
         public MyParameterType1()

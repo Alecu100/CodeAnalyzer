@@ -88,17 +88,25 @@
             var arguments = methodCallInvocationExpression.ArgumentList.Arguments;
             string name = null;
             string description = null;
+            string id = null;
 
-            if (arguments.Count == 2)
+            if (arguments.Count == 3)
             {
-                var nameArgument = arguments[0].ChildNodes().FirstOrDefault();
+                var idArgument = arguments[0].ChildNodes().FirstOrDefault();
+
+                if (idArgument is LiteralExpressionSyntax)
+                {
+                    id = idArgument.GetText().ToString().Trim('\"');
+                }
+
+                var nameArgument = arguments[1].ChildNodes().FirstOrDefault();
 
                 if (nameArgument is LiteralExpressionSyntax)
                 {
                     name = nameArgument.GetText().ToString().Trim('\"');
                 }
 
-                var descriptionArgument = arguments[1].ChildNodes().FirstOrDefault();
+                var descriptionArgument = arguments[2].ChildNodes().FirstOrDefault();
 
                 if (descriptionArgument is LiteralExpressionSyntax)
                 {
@@ -108,18 +116,26 @@
 
             if (name != null)
             {
-                WorkflowEvaluator.AddDecision(name, description);
+                WorkflowEvaluator.AddDecision(id, name, description);
             }
         }
 
         private void ExecuteAddProcess(InvocationExpressionSyntax methodCallInvocationExpression)
         {
             var arguments = methodCallInvocationExpression.ArgumentList.Arguments;
+            string id = null;
             string name = null;
             string description = null;
 
-            if (arguments.Count == 2)
+            if (arguments.Count == 3)
             {
+                var idArgument = arguments[0].ChildNodes().FirstOrDefault();
+
+                if (idArgument is LiteralExpressionSyntax)
+                {
+                    id = idArgument.GetText().ToString().Trim('\"');
+                }
+
                 var nameArgument = arguments[0].ChildNodes().FirstOrDefault();
 
                 if (nameArgument is LiteralExpressionSyntax)
@@ -137,7 +153,7 @@
 
             if (name != null)
             {
-                WorkflowEvaluator.AddProcess(name, description);
+                WorkflowEvaluator.AddProcess(id, name, description);
             }
         }
 

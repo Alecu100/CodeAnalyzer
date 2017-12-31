@@ -29,6 +29,8 @@ namespace CodeEvaluator.Workflows
 
         private readonly EWorkflowStepType _type;
 
+        public readonly string _id;
+
         #endregion
 
         #region Constructors and Destructors
@@ -37,19 +39,21 @@ namespace CodeEvaluator.Workflows
         ///     Initializes a new instance of the <see cref="WorkflowStep" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
-        public WorkflowStep(EWorkflowStepType type)
+        public WorkflowStep(EWorkflowStepType type, string id)
         {
             _type = type;
+            _id = id;
         }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="WorkflowStep" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
-        public WorkflowStep(EWorkflowStepType type, string label)
+        public WorkflowStep(EWorkflowStepType type, string id, string label)
         {
             _type = type;
             _label = label;
+            _id = id;
         }
 
         /// <summary>
@@ -57,8 +61,9 @@ namespace CodeEvaluator.Workflows
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="parentWorkflow">The parent scope.</param>
-        public WorkflowStep(EWorkflowStepType type, Workflow parentWorkflow)
+        public WorkflowStep(EWorkflowStepType type, string id, Workflow parentWorkflow)
         {
+            _id = id;
             _type = type;
             _parentWorkflow = parentWorkflow;
         }
@@ -68,8 +73,9 @@ namespace CodeEvaluator.Workflows
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="parentWorkflow">The parent scope.</param>
-        public WorkflowStep(EWorkflowStepType type, Workflow parentWorkflow, string label)
+        public WorkflowStep(EWorkflowStepType type, string id, Workflow parentWorkflow, string label)
         {
+            _id = id;
             _type = type;
             _parentWorkflow = parentWorkflow;
             _label = label;
@@ -181,6 +187,11 @@ namespace CodeEvaluator.Workflows
             {
                 return _type;
             }
+        }
+
+        public string Id
+        {
+            get { return _id; }
         }
 
         #endregion
