@@ -23,10 +23,12 @@ There are still a lot of things left to do on this:
 
 - create lazy initializers for evaluated object types to generate for example default empty constructor, code for automatic properties and so on (Done)
 
-- add Id string property to WorkflowEvaluatorStep to better indentify a step, multiple differents steps might have the same name
+- add Id string property to WorkflowEvaluatorStep to better indentify a step, multiple differents steps might have the same name (Done)
 
 - create generic support for individual methods different from generic support for types, create a generic overload of the method each time it is requested and register it in the type, rewrite the method code to use the concrete types
 
 - create generic support for types emitting a new instance of a generic type, rewrite the code to add concrete passed implementations of the type inside the code
 
 - add support for properties, add new special references and objects to properties which call get and set on the property to get or set a type (Done)
+
+- add proper support for intentifying members based on type and member name
