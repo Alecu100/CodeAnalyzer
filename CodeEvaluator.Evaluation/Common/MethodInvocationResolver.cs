@@ -25,6 +25,14 @@ namespace CodeEvaluator.Evaluation.Common
             List<EvaluatedObjectReference> mandatoryParameters,
             Dictionary<string, EvaluatedObjectReference> optionalParameters)
         {
+            if (referenceType == null)
+            {
+                return new MethodInvocationResolverResult
+                {
+                    CanInvokeMethod = false
+                };
+            }
+
             foreach (var evaluatedMethodDerived in targetMethodGroup)
             {
                 var methodParametersToAssign = new Dictionary<int, EvaluatedObjectReference>();
