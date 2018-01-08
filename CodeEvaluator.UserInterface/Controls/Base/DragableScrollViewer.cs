@@ -1,12 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-
-namespace CodeEvaluator.UserInterface.Controls.Base
+﻿namespace CodeEvaluator.UserInterface.Controls.Base
 {
-    #region Using
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
 
-    
+    #region Using
 
     #endregion
 
@@ -15,6 +13,18 @@ namespace CodeEvaluator.UserInterface.Controls.Base
         #region Constants
 
         private const double Slowdown = 0.4; //The number 200 is found from experiments, it should be corrected
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public DragableScrollViewer()
+        {
+            MouseLeave += OnMouseLeave;
+            MouseUp += OnMouseUp;
+            MouseMove += OnMouseMove;
+            MouseDown += OnMouseDown;
+        }
 
         #endregion
 
@@ -31,18 +41,6 @@ namespace CodeEvaluator.UserInterface.Controls.Base
         private Point? _startPosition;
 
         private double _startVerticallOffset;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        public DragableScrollViewer()
-        {
-            MouseLeave += OnMouseLeave;
-            MouseUp += OnMouseUp;
-            MouseMove += OnMouseMove;
-            MouseDown += OnMouseDown;
-        }
 
         #endregion
 

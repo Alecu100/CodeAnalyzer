@@ -105,7 +105,9 @@
             <GroupBox Grid.Column="1" Header="Workflow Diagram" Margin="10" Grid.RowSpan="2" Grid.Row="0"
                       x:Name="grpWorkflow">
                 <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" x:Name="scrlWorkflow" Width="357" Margin="10">
-                    <base:WorkflowCanvas  x:Name="cnvWorkflow" />
+                    <Grid>
+                        <base:WorkflowCanvas  x:Name="cnvWorkflow" />
+                    </Grid>
                 </ScrollViewer>
 
             </GroupBox>

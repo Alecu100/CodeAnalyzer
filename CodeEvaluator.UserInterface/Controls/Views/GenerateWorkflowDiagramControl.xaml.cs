@@ -20,8 +20,10 @@ using StructureMap;
 namespace CodeEvaluator.UserInterface.Controls.Views
 {
     using System.Globalization;
+    using System.Threading.Tasks;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using System.Windows.Threading;
 
     using Microsoft.Win32;
 
@@ -41,6 +43,16 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
             if (saveFileDialog.ShowDialog() == true)
             {
+
+                double dpiX = 96d, dpiY = 96d;
+                var source = PresentationSource.FromVisual(this);
+
+                if (source != null)
+                {
+                    dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
+                    dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
+                }
+
                 // Save current canvas transform
                 Transform transform = cnvWorkflow.LayoutTransform;
                 // reset current transform (in case it is scaled or rotated)
@@ -51,21 +63,20 @@ namespace CodeEvaluator.UserInterface.Controls.Views
 
                 cnvWorkflow.Measure(size);
                 cnvWorkflow.Arrange(new Rect(size));
-
-                var rtb = new RenderTargetBitmap(
+                var renderTargetBitmapToSave = new RenderTargetBitmap(
                     (int)cnvWorkflow.ActualWidth,
                     (int)cnvWorkflow.ActualHeight,
-                    96d,
-                    96d,
+                    dpiX,
+                    dpiY,
                     PixelFormats.Default);
-                rtb.Render(cnvWorkflow);
+                renderTargetBitmapToSave.Render(cnvWorkflow);
 
                 var filename = saveFileDialog.FileName;
 
                 if (filename.ToLower(CultureInfo.InvariantCulture).EndsWith("png"))
                 {
                     BitmapEncoder pngEncoder = new PngBitmapEncoder();
-                    pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+                    pngEncoder.Frames.Add(BitmapFrame.Create(renderTargetBitmapToSave));
 
                     using (var fs = File.OpenWrite(filename))
                     {
@@ -75,7 +86,7 @@ namespace CodeEvaluator.UserInterface.Controls.Views
                 else if (filename.ToLower().EndsWith("jpg"))
                 {
                     BitmapEncoder jpgEncoder = new JpegBitmapEncoder();
-                    jpgEncoder.Frames.Add(BitmapFrame.Create(rtb));
+                    jpgEncoder.Frames.Add(BitmapFrame.Create(renderTargetBitmapToSave));
 
                     using (var fs = File.OpenWrite(filename))
                     {
@@ -83,9 +94,20 @@ namespace CodeEvaluator.UserInterface.Controls.Views
                     }
                 }
 
+                var verticalScroll = scrlWorkflow.VerticalOffset;
+                var horizontalScroll = scrlWorkflow.HorizontalOffset;
                 cnvWorkflow.LayoutTransform = transform;
-                cnvWorkflow.InvalidateVisual();
-                scrlWorkflow.InvalidateVisual();
+
+                Task.Delay(1).ContinueWith(
+                    _ =>
+                        {
+                            scrlWorkflow.Dispatcher.Invoke(
+                                () =>
+                                    {
+                                        scrlWorkflow.ScrollToVerticalOffset(verticalScroll);
+                                        scrlWorkflow.ScrollToHorizontalOffset(horizontalScroll);
+                                    });
+                        });
             }
         }
 
