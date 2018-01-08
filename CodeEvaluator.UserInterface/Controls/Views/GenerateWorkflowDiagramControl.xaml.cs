@@ -19,6 +19,12 @@ using StructureMap;
 
 namespace CodeEvaluator.UserInterface.Controls.Views
 {
+    using System.Globalization;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+
+    using Microsoft.Win32;
+
     #region Using
 
     #endregion
@@ -30,6 +36,57 @@ namespace CodeEvaluator.UserInterface.Controls.Views
     {
         private void btnExportDiagram_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Png image (*.png)|*.png|Jpeg image (*.jpg)|*.jpg";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                // Save current canvas transform
+                Transform transform = cnvWorkflow.LayoutTransform;
+                // reset current transform (in case it is scaled or rotated)
+                cnvWorkflow.LayoutTransform = null;
+
+                // Get the size of canvas
+                Size size = new Size(cnvWorkflow.ActualWidth, cnvWorkflow.ActualHeight);
+
+                cnvWorkflow.Measure(size);
+                cnvWorkflow.Arrange(new Rect(size));
+
+                var rtb = new RenderTargetBitmap(
+                    (int)cnvWorkflow.ActualWidth,
+                    (int)cnvWorkflow.ActualHeight,
+                    96d,
+                    96d,
+                    PixelFormats.Default);
+                rtb.Render(cnvWorkflow);
+
+                var filename = saveFileDialog.FileName;
+
+                if (filename.ToLower(CultureInfo.InvariantCulture).EndsWith("png"))
+                {
+                    BitmapEncoder pngEncoder = new PngBitmapEncoder();
+                    pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+
+                    using (var fs = File.OpenWrite(filename))
+                    {
+                        pngEncoder.Save(fs);
+                    }
+                }
+                else if (filename.ToLower().EndsWith("jpg"))
+                {
+                    BitmapEncoder jpgEncoder = new JpegBitmapEncoder();
+                    jpgEncoder.Frames.Add(BitmapFrame.Create(rtb));
+
+                    using (var fs = File.OpenWrite(filename))
+                    {
+                        jpgEncoder.Save(fs);
+                    }
+                }
+
+                cnvWorkflow.LayoutTransform = transform;
+                cnvWorkflow.InvalidateVisual();
+                scrlWorkflow.InvalidateVisual();
+            }
         }
 
         private void LstAvailableProjects_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
